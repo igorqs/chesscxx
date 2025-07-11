@@ -1,0 +1,748 @@
+fen_format_fixtures:
+  - - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    - "[Result \"*\"]\n\n*"
+    - "[Result \"*\"]\n\n*"
+    - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    - |-
+      rnbqkbnr
+      pppppppp
+      ........
+      ........
+      ........
+      ........
+      PPPPPPPP
+      RNBQKBNR
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 0
+      Fullmove number: 1
+    - |-
+      { white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, g2, f2, e2, d2, c2, b2, a2], black pawns: [h7, g7, f7, e7, d7, c7, b7, a7], black king: [e8], black queen: [d8], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 0
+      Fullmove number: 1
+    - "{ \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -\": 1 }"
+  - - "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295"
+    - "[Result \"1/2-1/2\"]\n[FEN \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295\"]\n[SetUp \"1\"]\n\n1/2-1/2"
+    - "[Result \"1/2-1/2\"]\n[FEN \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295\"]\n[SetUp \"1\"]\n\n1/2-1/2"
+    - "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295"
+    - |-
+      r..qk..Q
+      pppppppp
+      .nb.Pbnr
+      ........
+      R..Pp...
+      ........
+      ........
+      .NBQKBNR
+      Active color: black
+      Castling availability: Kq
+      En passant target square: d3
+      Halfmove clock: 4294967295
+      Fullmove number: 4294967295
+    - |-
+      { white king: [e1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a4], white pawns: [d4, e6], white queens: [d1, h8], black bishops: [f6, c6], black knights: [g6, b6], black pawns: [h7, g7, f7, e7, d7, e4, c7, b7, a7], black king: [e8], black queen: [d8], black rooks: [h6, a8] }
+      Active color: black
+      Castling availability: Kq
+      En passant target square: d3
+      Halfmove clock: 4294967295
+      Fullmove number: 4294967295
+    - "{ \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq -\": 1 }"
+  - - "rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3"
+    - "[Result \"0-1\"]\n[FEN \"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3\"]\n[SetUp \"1\"]\n\n0-1"
+    - "[Result \"0-1\"]\n[FEN \"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3\"]\n[SetUp \"1\"]\n\n0-1"
+    - "rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3"
+    - |-
+      rnb.kbnr
+      pppp.ppp
+      ........
+      ....p...
+      ......Pq
+      .....P..
+      PPPPP..P
+      RNBQKBNR
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 3
+    - |-
+      { white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, e2, c2, b2, a2, f3, d2, g4], black queen: [h4], black pawns: [e5, h7, g7, f7, d7, c7, b7, a7], black king: [e8], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 3
+    - "{ \"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq -\": 1 }"
+  - - "7k/7P/5B1K/8/8/8/8/8 b - - 1 1"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/5B1K/8/8/8/8/8 b - - 1 1\"]\n[SetUp \"1\"]\n\n1-0"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/5B1K/8/8/8/8/8 b - - 1 1\"]\n[SetUp \"1\"]\n\n1-0"
+    - "7k/7P/5B1K/8/8/8/8/8 b - - 1 1"
+    - |-
+      .......k
+      .......P
+      .....B.K
+      ........
+      ........
+      ........
+      ........
+      ........
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 1
+    - |-
+      { white king: [h6], white bishop: [f6], white pawn: [h7], black king: [h8] }
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 1
+    - "{ \"7k/7P/5B1K/8/8/8/8/8 b - -\": 1 }"
+
+format_fixtures:
+  - - ""
+    - "[Result \"*\"]\n\n*"
+    - "[Result \"*\"]\n\n*"
+    - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    - |-
+      rnbqkbnr
+      pppppppp
+      ........
+      ........
+      ........
+      ........
+      PPPPPPPP
+      RNBQKBNR
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 0
+      Fullmove number: 1
+    - |-
+      { white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, g2, f2, e2, d2, c2, b2, a2], black pawns: [h7, g7, f7, e7, d7, c7, b7, a7], black king: [e8], black queen: [d8], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 0
+      Fullmove number: 1
+    - "{ \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -\": 1 }"
+  - - "[FEN \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295\"]"
+    - "[Result \"1/2-1/2\"]\n[FEN \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295\"]\n[SetUp \"1\"]\n\n1/2-1/2"
+    - "[Result \"1/2-1/2\"]\n[FEN \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295\"]\n[SetUp \"1\"]\n\n1/2-1/2"
+    - "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295"
+    - |-
+      r..qk..Q
+      pppppppp
+      .nb.Pbnr
+      ........
+      R..Pp...
+      ........
+      ........
+      .NBQKBNR
+      Active color: black
+      Castling availability: Kq
+      En passant target square: d3
+      Halfmove clock: 4294967295
+      Fullmove number: 4294967295
+    - |-
+      { white king: [e1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a4], white pawns: [d4, e6], white queens: [d1, h8], black bishops: [f6, c6], black knights: [g6, b6], black pawns: [h7, g7, f7, e7, d7, e4, c7, b7, a7], black king: [e8], black queen: [d8], black rooks: [h6, a8] }
+      Active color: black
+      Castling availability: Kq
+      En passant target square: d3
+      Halfmove clock: 4294967295
+      Fullmove number: 4294967295
+    - "{ \"r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq -\": 1 }"
+  - - "f3 e5 g4 Qh4"
+    - "[Result \"0-1\"]\n\n1. f3 e5 2. g4 Qh4# 0-1"
+    - "[Result \"0-1\"]\n\n1. f3 e5 2. g4 Qh4# 0-1"
+    - "rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3"
+    - |-
+      rnb.kbnr
+      pppp.ppp
+      ........
+      ....p...
+      ......Pq
+      .....P..
+      PPPPP..P
+      RNBQKBNR
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 3
+    - |-
+      { white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [f3, h2, e2, g4, d2, c2, b2, a2], black pawns: [e5, h7, g7, f7, d7, c7, b7, a7], black king: [e8], black queen: [h4], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+      Active color: white
+      Castling availability: KQkq
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 3
+    - "{ \"rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq -\": 1, \"rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq -\": 1, \"rnbqkbnr/pppp1ppp/8/4p3/8/5P2/PPPPP1PP/RNBQKBNR w KQkq -\": 1, \"rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq -\": 1, \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -\": 1 }"
+  - - "[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 1\"]Bf6"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 1\"]\n[SetUp \"1\"]\n\n1. Bf6# 1-0"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 1\"]\n[SetUp \"1\"]\n\n1. Bf6# 1-0"
+    - "7k/7P/5B1K/8/8/8/8/8 b - - 1 1"
+    - |-
+      .......k
+      .......P
+      .....B.K
+      ........
+      ........
+      ........
+      ........
+      ........
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 1
+    - |-
+      { white bishop: [f6], white king: [h6], white pawn: [h7], black king: [h8] }
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 1
+    - "{ \"7k/7P/5B1K/8/8/8/8/8 b - -\": 1, \"7k/7P/7K/8/7B/8/8/8 w - -\": 1 }"
+
+unique_repetition_tracker_fixtures:
+  - ""
+  - "e4"
+  - "e4 e5"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"] e5"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1\"]"
+  - "[FEN \"8/8/8/8/8/4k3/2n1p3/4K3 w - - 0 1\"]"
+  - "e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6 Nd6"
+
+unique_final_position_fixtures:
+  - "e4"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1\"]"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1\"] Nc6"
+  - "e4 e5"
+  - "[FEN \"rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2\"]"
+  - "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 1 2\"]"
+  - ""
+
+game_equality_fixtures:
+  - ["", "  \n  \t", "[Tag\"\"]", "{comment}", "[Tag\"\"] {comment}", "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\"]"]
+  - ["e4", "1. e4", "[Foo\"\"] {comment} e4", "{comment} e4 {comment}", "Pe2xe4#", "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\"] e4", "e4 *"]
+  - ["e4 e5", "1. e4 e5", "e4 {comment} e5 {comment}", "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\"]\n1. e4 e5"]
+  - - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"] e5"
+    - "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"][Bar\"\"] e5 *"
+    - "[Bar\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"][Foo\"\"] e5 *"
+    - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"][Bar\"\"][Foo\"\"] e5 *"
+  - - "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]"
+    - "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"][Bar\"\"] *"
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1\"]", "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1\"][Bar\"\"] *"]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1\"]", "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1\"][Bar\"\"] *"]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2\"]", "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2\"][Bar\"\"] *"]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2\"]", "[Foo\"\"][FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2\"][Bar\"\"] *"]
+  - ["[FEN \"8/8/8/8/8/4k3/2n1p3/4K3 w - - 0 1\"]", "[FEN \"8/8/8/8/8/4k3/2n1p3/4K3 w - - 0 1\"] 0-1", "[FEN \"8/8/8/8/8/4k3/2n1p3/4K3 w - - 0 1\"] 1-0"]
+  - ["e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6 Nd6", "1. e4 c6\n2. d4 d5\n3. Nc3 dxe4\n4. Nxe4 Nd7\n5. Qe2 Ngf6\n6. Nd6\n {comment}"]
+
+position_fixtures:
+  - "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295"
+  - "k1K5/8/8/8/8/8/8/8 w - - 0 1"
+  - "4k3/8/8/8/8/8/5p2/4K3 w - - 0 1"
+  - "4k3/8/8/8/B7/8/8/4K3 b - - 0 1"
+  - "1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQk - 0 1"
+  - "rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Kkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w Qkq - 0 1"
+  - "rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ - 0 1"
+  - "rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w kq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 1 1"
+  - "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
+  - "rnbqkbnr/pppp1ppp/8/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967295 4294967295"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 4294967295 4294967295"
+
+outcome_fixtures:
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 100 100\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 100 51\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 101 51\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 101 52\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 100 100\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 100 51\"]", kDraw, kFiftyMoveRule]
+  - ["[FEN \"4k3/8/8/8/8/8/8/4K3 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"4k3/8/8/8/8/8/8/3NK3 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"3nk3/8/8/8/8/8/8/4K3 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"4k3/8/8/8/8/8/8/B1B1K3 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"b1b1k3/8/8/8/8/8/8/4K3 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"1b1bkb1b/b1B1b1B1/1b1b1b1b/b1b1b1B1/1B1B1B1B/B1B1B1b1/1B1B1B1b/b1BKB1b1 w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"B1BkB1B1/1B1B1B1B/B1B1B1B1/1B1B1B1B/B1B1b1b1/1b1b1b1b/b1b1b1b1/1b1bKb1b w - - 0 1\"]", kDraw, kInsufficientMaterial]
+  - ["[FEN \"4k3/4P3/4K3/8/8/8/8/8 b - - 0 1\"]", kDraw, kStalemate]
+  - ["[FEN \"4k3/8/8/8/8/3q1q2/8/4K3 w - - 0 1\"]", kDraw, kStalemate]
+  - ["[FEN \"4k3/p4p2/P2Q4/7B/8/8/8/4K3 b - - 0 1\"]", kDraw, kStalemate]
+  - ["Nc3 Nc6 Nb1 Nb8 Nc3 Nc6 Nb1 Nb8", kDraw, kThreefoldRepetition]
+  - ["Nc3 Nc6 Nb1 Nb8 Nc3 Nc6 Nb1 Nb8 Na3 Nc6 Nb1", kDraw, kThreefoldRepetition]
+  - ["[FEN \"4k3/4r3/8/4Pp2/8/8/8/R3K3 w - f6 0 1\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1 Re7", kDraw, kThreefoldRepetition]
+  - ["[FEN \"4k3/4r3/8/5p2/8/8/8/R4K2 w - f6 0 2\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1 Re7", kDraw, kThreefoldRepetition]
+  - ["Nc3 Nc6 Ne4 Na5 Nc5 Nc4 Na4 Ne5 Nc3 Nc6 Ne4 Ne5 Ng5 Ng4 Ne4 Ne5 Nc3 Nc6", kDraw, kThreefoldRepetition]
+  - ["[FEN \"4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1\"]Kf8 Kf1 Ke8 Ke1 Kf8 Kf1 Ke8 Ke1 Kf8", kDraw, kThreefoldRepetition]
+  - ["[FEN \"8/pP6/8/8/8/2k5/8/2K5 w - - 0 1\"] Kd1 Kc4 Ke1 Kb3 Kd1 Kc3 Kc1 Kd4 Kd1 Kc3 Kc1 Kb4 Kb1 Kc3 Kc1", kDraw, kThreefoldRepetition]
+  - ["[FEN \"8/8/8/8/8/4k3/2n1p3/4K3 w - - 0 1\"]", kBlackWins, ~]
+  - ["[FEN \"4k3/7P/8/b7/8/2Q5/r7/1r2K3 w - - 0 1\"]", kBlackWins, ~]
+  - ["f3 e5 g4 Qh4", kBlackWins, ~]
+  - ["e4 e5 Nf3 Nc6 Bc4 Nd4 Nxe5 Qg5 Nxf7 Qxg2 Rf1 Qxe4 Be2 Nf3", kBlackWins, ~]
+  - ["e4 e5 Ne2 Qh4 Nbc3 Nc6 g3 Qg5 d4 Nxd4 Bxg5 Nf3", kBlackWins, ~]
+  - ["[FEN \"4k3/2N1P3/4K3/8/8/8/8/8 b - - 0 1\"]", kWhiteWins, ~]
+  - ["[FEN \"1R2k3/R7/2q5/8/B7/8/7p/4K3 b - - 0 1\"]", kWhiteWins, ~]
+  - ["e4 f6 d4 g5 Qh5", kWhiteWins, ~]
+  - ["e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6 Nd6", kWhiteWins, ~]
+  - ["e4 e5 Bc4 Nc6 Qh5 Nf6 Qxf7", kWhiteWins, ~]
+  - ["e4 e5 Bc4 d6 Nf3 Bg4 Nc3 g6 Nxe5 Bxd1 Bxf7 Ke7 Nd5", kWhiteWins, ~]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 99 101\"]", ~, ~]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 99 100\"]", ~, ~]
+  - ["[FEN \"4k3/4P3/4K3/8/8/8/p7/8 b - - 0 1\"]", ~, ~]
+  - ["[FEN \"4k3/4r3/8/4Pp2/8/8/8/R4K2 w - f6 0 1\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1 Re7", ~, ~]
+  - ["Nc3 Nc6 Nb1 Nb8 Nc3 Nc6 Nb1", ~, ~]
+  - ["Nc3 Nc6 Nb1 Nb8 Nc3 Nc6 Nb1 Nb8 Na3 Nc6", ~, ~]
+  - ["[FEN \"4k3/4r3/8/4Pp2/8/8/8/R3K3 w - f6 0 1\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1", ~, ~]
+  - ["[FEN \"4k3/4r3/8/5p2/8/8/8/R4K2 w - f6 0 2\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1", ~, ~]
+  - ["Nc3 Nc6 Ne4 Na5 Nc5 Nc4 Na4 Ne5 Nc3 Nc6 Ne4 Ne5 Ng5 Ng4 Ne4 Ne5 Nc3", ~, ~]
+  - ["[FEN \"4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1\"]Kf8 Kf1 Ke8 Ke1 Kf8 Kf1 Ke8 Ke1", ~, ~]
+  - ["[FEN \"4k3/3p4/8/8/8/8/8/3NK3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"3nk3/8/8/8/8/8/3P4/4K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"4k3/8/8/8/8/8/2P5/3NK3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"3nk3/2p5/8/8/8/8/8/4K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"3nk3/8/8/8/8/8/8/3NK3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"4k3/8/8/8/8/8/8/2NNK3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"2nnk3/8/8/8/8/8/8/4K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"4k3/8/8/8/8/8/8/BB2K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"bb2k3/8/8/8/8/8/8/4K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"1b2k3/8/8/8/8/8/8/1B2K3 w - - 0 1\"]", ~, ~]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\"]", ~, ~]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1\"] Rg1 Nf6 Rh1 Ng8 Rg1 Nf6 Rh1 Ng8", ~, ~]
+  - ["[FEN \"8/pP6/8/8/8/2k5/8/2K5 w - - 0 1\"] Kd1 Kc4 Ke1 Kb3 Kd1 Kc3 Kc1 Kd4 Kd1 Kc3 Kc1", ~, ~]
+  - ["", ~, ~]
+
+move_fixtures:
+  - ["", [], []]
+  - ["Pe2xe4+", [e4], [e2e4]]
+  - ["Pe2xe4+ e5", [e4, e5], [e2e4, e7e5]]
+  - - "1. b3 e5 2. Bb2 d5# 3. Bb2xe5# Qe7 4. Bc7 Nc6 5. Nc3 d4 6. e4 e3 7. Qh5 Rb8 8. O-O-O d2 9. Rd2 Ne5 10. Nf3 Ngh6 11. Bc4 Neg4 12. Re1 Nf2 13. Rd8"
+    - [b3,   e5,  Bb2,   d5, Bxe5,  Qe7, Bxc7,  Nc6,  Nc3,   d4,   e4, dxe3,  Qh5,  Rb8, O-O-O, exd2+, Rxd2,  Ne5,  Nf3,  Nh6,  Bc4, Neg4,  Re1, Nxf2, "Rd8#"]
+    - [b2b3, e7e5, c1b2, d7d5, b2e5, d8e7, e5c7, b8c6, b1c3, d5d4, e2e4, d4e3, d1h5, a8b8,  e1c1,  e3d2, d1d2, c6e5, g1f3, g8h6, f1c4, e5g4, h1e1, g4f2, d2d8]
+  - - "[FEN \"4k3/4r3/8/4Pp2/8/8/8/R3K3 w - f6 0 1\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1"
+    - [Ra2,  Rd7,  Ra1,  Re7,  Ra2,  Rd7, Ra1]
+    - [a1a2, e7d7, a2a1, d7e7, a1a2, e7d7, a2a1]
+  - ["[FEN \"2nnk3/8/8/8/8/8/8/4K3 w - - 0 1\"]", [], []]
+  - ["[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 1\"] 1. Bf6", ["Bf6#"], [h4f6]]
+  - ["[FEN \"7k/8/7K/8/7B/8/8/8 w - - 0 1\"] 1. Bf6", [Bf6+], [h4f6]]
+  - ["[FEN \"rnbqkbnr/pp1ppppp/8/1PpP4/8/8/P1P1PPPP/RNBQKBNR w KQkq c6 0 1\"] bc6", [bxc6], [b5c6]]
+  - ["[FEN \"rnbqkbnr/pp1ppppp/8/1PpP4/8/8/P1P1PPPP/RNBQKBNR w KQkq c6 0 1\"] dc6", [dxc6], [d5c6]]
+
+repetition_tracker_fixtures:
+  - - "[FEN \"2nnk3/8/8/8/8/8/8/4K3 w - - 0 1\"]"
+    - - ["2nnk3/8/8/8/8/8/8/4K3 w - - 0 1", 1, 1]
+  - - ""
+    - - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 1, 1]
+  - - "[FEN \"4k3/4r3/8/4Pp2/8/8/8/R3K3 w - f6 0 1\"]Ra2 Rd7 Ra1 Re7 Ra2 Rd7 Ra1 Re7"
+    - - ["4k3/4r3/8/4Pp2/8/8/8/R3K3 w - - 0 1", 3, 2]
+      - ["4k3/4r3/8/4Pp2/8/8/R7/4K3 b - - 1 1", 2, 2]
+      - ["4k3/3r4/8/4Pp2/8/8/R7/4K3 w - - 2 2", 2, 2]
+      - ["4k3/3r4/8/4Pp2/8/8/8/R3K3 b - - 3 2", 2, 2]
+      - ["4k3/4r3/8/4Pp2/8/8/8/R3K3 w - - 4 3", 3, 2]
+      - ["4k3/4r3/8/4Pp2/8/8/R7/4K3 b - - 5 3", 2, 2]
+      - ["4k3/3r4/8/4Pp2/8/8/R7/4K3 w - - 6 4", 2, 2]
+      - ["4k3/3r4/8/4Pp2/8/8/8/R3K3 b - - 7 4", 2, 2]
+      - ["4k3/4r3/8/4Pp2/8/8/8/R3K3 w - - 8 5", 3, 2]
+  - - "[FEN \"4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1\"]Kf8 Kf1 Ke8 Ke1 Kf8 Kf1 Ke8 Ke1"
+    - - ["4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1", 1, 1]
+      - ["5k2/8/8/8/3Pp3/8/8/4K3 w - - 1 2", 2, 2]
+      - ["5k2/8/8/8/3Pp3/8/8/5K2 b - - 2 2", 2, 2]
+      - ["4k3/8/8/8/3Pp3/8/8/5K2 w - - 3 3", 2, 2]
+      - ["4k3/8/8/8/3Pp3/8/8/4K3 b - - 4 3", 2, 1]
+      - ["5k2/8/8/8/3Pp3/8/8/4K3 w - - 5 4", 2, 2]
+      - ["5k2/8/8/8/3Pp3/8/8/5K2 b - - 6 4", 2, 2]
+      - ["4k3/8/8/8/3Pp3/8/8/5K2 w - - 7 5", 2, 2]
+      - ["4k3/8/8/8/3Pp3/8/8/4K3 b - - 8 5", 2, 1]
+  - - "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1\"] Rg1 Nf6 Rh1 Ng8 Rg1 Nf6 Rh1 Ng8"
+    - - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1", 1, 1]
+      - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK1R1 b Qkq - 1 1", 2, 2]
+      - ["rnbqkb1r/pppppppp/5n2/8/8/8/PPPPPPPP/RNBQK1R1 w Qkq - 2 2", 2, 2]
+      - ["rnbqkb1r/pppppppp/5n2/8/8/8/PPPPPPPP/RNBQK2R b Qkq - 3 2", 2, 2]
+      - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w Qkq - 4 3", 2, 1]
+      - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK1R1 b Qkq - 5 3", 2, 2]
+      - ["rnbqkb1r/pppppppp/5n2/8/8/8/PPPPPPPP/RNBQK1R1 w Qkq - 6 4", 2, 2]
+      - ["rnbqkb1r/pppppppp/5n2/8/8/8/PPPPPPPP/RNBQK2R b Qkq - 7 4", 2, 2]
+      - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w Qkq - 8 5", 2, 1]
+  - - "[FEN \"8/pP6/8/8/8/2k5/8/2K5 w - - 0 1\"] Kd1 Kc4 Ke1 Kb3 Kd1 Kc3 Kc1 Kd4 Kd1 Kc3 Kc1 Kb4 Kb1 Kc3 Kc1"
+    - - ["8/pP6/8/8/8/2k5/8/2K5 w - - 0 1", 1, 1]
+      - ["8/pP6/8/8/8/2k5/8/3K4 b - - 1 1", 1, 1]
+      - ["8/pP6/8/8/2k5/8/8/3K4 w - - 2 2", 1, 1]
+      - ["8/pP6/8/8/2k5/8/8/4K3 b - - 3 2", 1, 1]
+      - ["8/pP6/8/8/8/1k6/8/4K3 w - - 4 3", 1, 1]
+      - ["8/pP6/8/8/8/1k6/8/3K4 b - - 5 3", 1, 1]
+      - ["8/pP6/8/8/8/2k5/8/3K4 w - - 6 4", 2, 2]
+      - ["8/pP6/8/8/8/2k5/8/2K5 b - - 7 4", 3, 2]
+      - ["8/pP6/8/8/3k4/8/8/2K5 w - - 8 5", 1, 1]
+      - ["8/pP6/8/8/3k4/8/8/3K4 b - - 9 5", 1, 1]
+      - ["8/pP6/8/8/8/2k5/8/3K4 w - - 10 6", 2, 2]
+      - ["8/pP6/8/8/8/2k5/8/2K5 b - - 11 6", 3, 2]
+      - ["8/pP6/8/8/1k6/8/8/2K5 w - - 12 7", 1, 1]
+      - ["8/pP6/8/8/1k6/8/8/1K6 b - - 13 7", 1, 1]
+      - ["8/pP6/8/8/8/2k5/8/1K6 w - - 14 8", 1, 1]
+      - ["8/pP6/8/8/8/2k5/8/2K5 b - - 15 8", 3, 2]
+  - - "1. d3 d6 2. e3 e6 3. Nc3 Nc6 4. Nf3 Nf6 5. Ne2 Ne7 6. Nd2 Nd7 7. Ng1 Ng8 8. Nb1 Nb8 9. Nf3 Nf6 10. Ng1 Ng8 11. Ne2 Nf6 12. Ng1 Ng8"
+    - - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 1, 1]
+      - ["rnbqkbnr/pppppppp/8/8/8/3P4/PPP1PPPP/RNBQKBNR b KQkq - 0 1", 1, 1]
+      - ["rnbqkbnr/ppp1pppp/3p4/8/8/3P4/PPP1PPPP/RNBQKBNR w KQkq - 0 2", 1, 1]
+      - ["rnbqkbnr/ppp1pppp/3p4/8/8/3PP3/PPP2PPP/RNBQKBNR b KQkq - 0 2", 1, 1]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PP3/PPP2PPP/RNBQKBNR w KQkq - 0 3", 4, 3]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/2NPP3/PPP2PPP/R1BQKBNR b KQkq - 1 3", 1, 1]
+      - ["r1bqkbnr/ppp2ppp/2npp3/8/8/2NPP3/PPP2PPP/R1BQKBNR w KQkq - 2 4", 1, 1]
+      - ["r1bqkbnr/ppp2ppp/2npp3/8/8/2NPPN2/PPP2PPP/R1BQKB1R b KQkq - 3 4", 1, 1]
+      - ["r1bqkb1r/ppp2ppp/2nppn2/8/8/2NPPN2/PPP2PPP/R1BQKB1R w KQkq - 4 5", 1, 1]
+      - ["r1bqkb1r/ppp2ppp/2nppn2/8/8/3PPN2/PPP1NPPP/R1BQKB1R b KQkq - 5 5", 1, 1]
+      - ["r1bqkb1r/ppp1nppp/3ppn2/8/8/3PPN2/PPP1NPPP/R1BQKB1R w KQkq - 6 6", 1, 1]
+      - ["r1bqkb1r/ppp1nppp/3ppn2/8/8/3PP3/PPPNNPPP/R1BQKB1R b KQkq - 7 6", 1, 1]
+      - ["r1bqkb1r/pppnnppp/3pp3/8/8/3PP3/PPPNNPPP/R1BQKB1R w KQkq - 8 7", 1, 1]
+      - ["r1bqkb1r/pppnnppp/3pp3/8/8/3PP3/PPPN1PPP/R1BQKBNR b KQkq - 9 7", 1, 1]
+      - ["r1bqkbnr/pppn1ppp/3pp3/8/8/3PP3/PPPN1PPP/R1BQKBNR w KQkq - 10 8", 1, 1]
+      - ["r1bqkbnr/pppn1ppp/3pp3/8/8/3PP3/PPP2PPP/RNBQKBNR b KQkq - 11 8", 1, 1]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PP3/PPP2PPP/RNBQKBNR w KQkq - 12 9", 4, 3]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PPN2/PPP2PPP/RNBQKB1R b KQkq - 13 9", 1, 1]
+      - ["rnbqkb1r/ppp2ppp/3ppn2/8/8/3PPN2/PPP2PPP/RNBQKB1R w KQkq - 14 10", 1, 1]
+      - ["rnbqkb1r/ppp2ppp/3ppn2/8/8/3PP3/PPP2PPP/RNBQKBNR b KQkq - 15 10", 2, 2]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PP3/PPP2PPP/RNBQKBNR w KQkq - 16 11", 4, 3]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PP3/PPP1NPPP/RNBQKB1R b KQkq - 17 11", 1, 1]
+      - ["rnbqkb1r/ppp2ppp/3ppn2/8/8/3PP3/PPP1NPPP/RNBQKB1R w KQkq - 18 12", 1, 1]
+      - ["rnbqkb1r/ppp2ppp/3ppn2/8/8/3PP3/PPP2PPP/RNBQKBNR b KQkq - 19 12", 2, 2]
+      - ["rnbqkbnr/ppp2ppp/3pp3/8/8/3PP3/PPP2PPP/RNBQKBNR w KQkq - 20 13", 4, 3]
+  - - "[FEN \"8/P7/7k/8/8/7K/p7/8 w - - 0 1\"] a8=Q"
+    - - ["8/P7/7k/8/8/7K/p7/8 w - - 0 1", 1, 1]
+      - ["Q7/8/7k/8/8/7K/p7/8 b - - 0 1", 1, 0]
+
+san_move_error_fixtures:
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w Qkq - 0 1", O-O, kKingOrRookMoved]
+  - ["1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 b Qk - 0 1", O-O-O, kKingOrRookMoved]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rbb1KBNR w KQkq - 0 1", O-O-O, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNB1KBNR w KQkq - 0 1", O-O-O, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rb1bKBNR w KQkq - 0 1", O-O-O, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RN1QKBNR w KQkq - 0 1", O-O-O, kKingPathBlocked]
+  - ["rnbqk1Br/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O, kKingPathBlocked]
+  - ["rnbqk1nr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O, kKingPathBlocked]
+  - ["rnbqkB1r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O, kKingPathBlocked]
+  - ["rnbqkb1r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O, kKingPathBlocked]
+  - ["rB2kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O-O, kRookPathBlocked]
+  - ["rn2kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", O-O-O, kRookPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rb2KBNR w Qkq - 0 1", O-O-O, kRookPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RN2KBNR w Qkq - 0 1", O-O-O, kRookPathBlocked]
+  - ["r3k2r/8/8/8/8/8/3p4/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/4p3/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/5p2/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/6p1/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/7p/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/4r3/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/5r2/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/6r1/R3K2R w KQkq - 0 1", O-O, kKingPathUnderAttack]
+  - ["r3k2r/1P6/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/2P5/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/3P4/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/4P3/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/5P2/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/2R5/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/3R4/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["r3k2r/4R3/8/8/8/8/8/R3K2R b KQkq - 0 1", O-O-O, kKingPathUnderAttack]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 w - - 0 1", Ke2, kMoveLeavesOwnKingInCheck]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 w - - 0 1", Rb2, kMoveLeavesOwnKingInCheck]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 b - - 0 1", Kxd7, kMoveLeavesOwnKingInCheck]
+  - ["4k3/8/2Q5/8/8/8/r7/rR2K3 b - - 0 1", Rb1, kMoveLeavesOwnKingInCheck]
+  - ["4k3/8/8/8/8/8/P7/4K3 w - - 0 1", a3=Q, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/8/P7/4K3 w - - 0 1", a4=Q, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/p7/8/4K3 b - - 0 1", a2=N, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/8/R7/4K3 w - - 0 1", Ra8=Q, kNonPawnPromotionAttempt]
+  - ["4k3/8/8/8/8/r7/8/4K3 b - - 0 1", Ra1=N, kNonPawnPromotionAttempt]
+  - ["4k3/8/8/8/8/8/p7/4K3 b - - 0 1", a1, kMissingPromotionPiece]
+  - ["4k3/P7/8/8/8/8/8/4K3 w - - 0 1", a8, kMissingPromotionPiece]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQkq - 0 1", a3, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e5, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e2e5, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e1e4, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", de4, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", '1e4', kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Ra3, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Ra2, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Ra1a2, kNoValidOrigin]
+  - ["r6r/4k3/8/8/8/8/4K3/R6R w - - 0 1", Rb1, kAmbiguousOrigin]
+  - ["r6r/4k3/8/8/8/8/4K3/R6R w - - 0 1", R1b1, kAmbiguousOrigin]
+  - ["r6R/4k3/8/8/8/8/4K3/r6R b - - 0 1", Ra7, kAmbiguousOrigin]
+  - ["r6R/4k3/8/8/8/8/4K3/r6R b - - 0 1", Raa7, kAmbiguousOrigin]
+  - ["8/4k3/1p6/P1P5/8/8/4K3/8 w - - 0 1", b6, kAmbiguousOrigin]
+  - ["8/4k3/1p6/P1P5/8/8/4K3/8 w - - 0 1", xb6, kAmbiguousOrigin]
+  - ["8/4k3/1p6/P1P5/8/8/4K3/8 w - - 0 1", 5xb6, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", Nc5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", Nac5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", Nbc5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", Ndc5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", Nec5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", N7c5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", N6c5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", N4c5, kAmbiguousOrigin]
+  - ["7k/1N1N4/N3N3/8/N3N3/1N1N4/8/7K w - - 0 1", N3c5, kAmbiguousOrigin]
+  - ["rnbqkbnr/pp1ppppp/8/1PpP4/8/8/P1P1PPPP/RNBQKBNR w KQkq c6 0 1", c6, kAmbiguousOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 w - - 0 1", e8e7, kNoValidOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 b - - 0 1", e1e2, kNoValidOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 b - - 0 1", h8e2, kNoValidOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 w - - 0 1", h8e2, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQkq - 0 1", a1a3, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e2e5, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e1e4, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d2e4, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d1e4, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d1d2, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a3, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a2, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967295 4294967295", Nb1c3, kHalfmoveClockOverflow]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 4294967295 4294967295", e7e5, kFullmoveNumberOverflow]
+  - ["r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 4294967295 4294967295", O-O-O, kHalfmoveClockOverflow]
+  - ["r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 4294967294 4294967295", O-O-O, kFullmoveNumberOverflow]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Ra1a2, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Ra1a1, kNoValidOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a2a2, kNoValidOrigin]
+
+uci_move_error_fixtures:
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w Qkq - 0 1", e1g1, kKingOrRookMoved]
+  - ["1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 b Qk - 0 1", e8c8, kKingOrRookMoved]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rbb1KBNR w KQkq - 0 1", e1c1, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNB1KBNR w KQkq - 0 1", e1c1, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rb1bKBNR w KQkq - 0 1", e1c1, kKingPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RN1QKBNR w KQkq - 0 1", e1c1, kKingPathBlocked]
+  - ["rnbqk1Br/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8g8, kKingPathBlocked]
+  - ["rnbqk1nr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8g8, kKingPathBlocked]
+  - ["rnbqkB1r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8g8, kKingPathBlocked]
+  - ["rnbqkb1r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8g8, kKingPathBlocked]
+  - ["rB2kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8c8, kRookPathBlocked]
+  - ["rn2kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1", e8c8, kRookPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/Rb2KBNR w Qkq - 0 1", e1c1, kRookPathBlocked]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RN2KBNR w Qkq - 0 1", e1c1, kRookPathBlocked]
+  - ["r3k2r/8/8/8/8/8/3p4/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/4p3/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/5p2/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/6p1/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/7p/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/4r3/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/5r2/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/8/8/8/8/8/6r1/R3K2R w KQkq - 0 1", e1g1, kKingPathUnderAttack]
+  - ["r3k2r/1P6/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/2P5/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/3P4/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/4P3/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/5P2/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/2R5/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/3R4/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["r3k2r/4R3/8/8/8/8/8/R3K2R b KQkq - 0 1", e8c8, kKingPathUnderAttack]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 w - - 0 1", e1e2, kMoveLeavesOwnKingInCheck]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 w - - 0 1", b1b2, kMoveLeavesOwnKingInCheck]
+  - ["4k3/3N4/2Q5/8/8/8/r7/rR2K3 b - - 0 1", e8d7, kMoveLeavesOwnKingInCheck]
+  - ["4k3/8/2Q5/8/8/8/r7/rR2K3 b - - 0 1", a1b1, kMoveLeavesOwnKingInCheck]
+  - ["4k3/8/8/8/8/8/P7/4K3 w - - 0 1", a2a3q, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/8/P7/4K3 w - - 0 1", a2a4q, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/p7/8/4K3 b - - 0 1", a3a2n, kPromotionOnInvalidRank]
+  - ["4k3/8/8/8/8/8/R7/4K3 w - - 0 1", a2a8q, kNonPawnPromotionAttempt]
+  - ["4k3/8/8/8/8/r7/8/4K3 b - - 0 1", a3a1n, kNonPawnPromotionAttempt]
+  - ["4k3/8/8/8/8/8/p7/4K3 b - - 0 1", a2a1, kMissingPromotionPiece]
+  - ["4k3/P7/8/8/8/8/8/4K3 w - - 0 1", a7a8, kMissingPromotionPiece]
+  - ["4k3/8/8/8/8/8/8/4K3 w - - 0 1", e8e7, kWrongPieceColorAtOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 b - - 0 1", e1e2, kWrongPieceColorAtOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 b - - 0 1", h8e2, kNoPieceAtOrigin]
+  - ["4k3/8/8/8/8/8/8/4K3 w - - 0 1", h8e2, kNoPieceAtOrigin]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e2e5, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e1e4, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d2e4, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d1e4, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", d1d2, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a3, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a2, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967295 4294967295", b1c3, kHalfmoveClockOverflow]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 4294967295 4294967295", e7e5, kFullmoveNumberOverflow]
+  - ["r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 4294967295 4294967295", e1c1, kHalfmoveClockOverflow]
+  - ["r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 4294967294 4294967295", e8c8, kFullmoveNumberOverflow]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a2, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a1a1, kIllegalMove]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", a2a2, kIllegalMove]
+
+valid_move_fixtures:
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", e4, e2e4, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQkq - 0 1", Ra3, a1a3, "rnbqkbnr/pppppppp/8/8/8/R7/1PPPPPPP/1NBQKBNR b Kkq - 1 1"]
+  - ["rnbqkbnr/pppppppp/8/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", d5, d7d5, "rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2"]
+  - ["rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2",  d6, e5d6, "rnbqkbnr/ppp1pppp/3P4/8/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1", O-O-O, e1c1, "r3k2r/8/8/8/8/8/8/2KR3R b kq - 1 1"]
+  - ["r3k2r/8/8/8/8/8/8/2KR3R b kq - 0 1", O-O, e8g8, "r4rk1/8/8/8/8/8/8/2KR3R w - - 1 2"]
+  - ["8/P7/7k/8/8/7K/p7/8 w - - 0 1", a8=Q, a7a8q, "Q7/8/7k/8/8/7K/p7/8 b - - 0 1"]
+  - ["Q7/8/7k/8/8/7K/p7/8 b - - 0 1", a1=Q, a2a1q, "Q7/8/7k/8/8/7K/8/q7 w - - 0 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1", Ra8, a1a8, "R3k2r/8/8/8/8/8/8/4K2R b Kk - 0 1"]
+  - ["r3k2r/1P6/8/8/8/8/8/R3K2R w KQkq - 0 1", a8=Q, b7a8q, "Q3k2r/8/8/8/8/8/8/R3K2R b KQk - 0 1"]
+  - ["r3k2r/8/8/8/8/8/6p1/R3K2R b KQkq - 0 1", h1=N, g2h1n, "r3k2r/8/8/8/8/8/8/R3K2n w Qkq - 0 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", Rh1, h8h1, "r3k3/8/8/8/8/8/8/R3K2r w Qq - 0 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", Rg8, h8g8, "r3k1r1/8/8/8/8/8/8/R3K2R w KQq - 1 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", Rb8, a8b8, "1r2k2r/8/8/8/8/8/8/R3K2R w KQk - 1 2"]
+  - ["r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", Ke7, e8e7, "r6r/4k3/8/8/8/8/8/R3K2R w KQ - 1 2"]
+  - - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967295 4294967295"
+    - e4
+    - e2e4
+    - "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 4294967295"
+  - - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967294 4294967295"
+    - Nb1c3
+    - b1c3
+    - "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 4294967295 4294967295"
+  - ["r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 4294967294 4294967295", O-O-O, e1c1, "r3k2r/8/8/8/8/8/8/2KR3R b kq - 4294967295 4294967295"]
+  - ["rnbqkbnr/pp1ppppp/8/1PpP4/8/8/P1P1PPPP/RNBQKBNR w KQkq c6 0 1", bc6, b5c6, "rnbqkbnr/pp1ppppp/2P5/3P4/8/8/P1P1PPPP/RNBQKBNR b KQkq - 0 1"]
+  - ["rnbqkbnr/pp1ppppp/8/1PpP4/8/8/P1P1PPPP/RNBQKBNR w KQkq c6 0 1", dc6, d5c6, "rnbqkbnr/pp1ppppp/2P5/1P6/8/8/P1P1PPPP/RNBQKBNR b KQkq - 0 1"]
+
+invalid_fen_inputs:
+  - ["kK6/8/8/8/8/8/8/8 w - - 0 1", kInvalidPosition]
+  - ["kK6/8/8/8/8/8/8/8 b - - 0 1", kInvalidPosition]
+  - ["4k3/8/8/8/8/8/5p2/4K3 b - - 0 1", kInvalidPosition]
+  - ["4k3/8/8/8/B7/8/8/4K3 w - - 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0", kInvalidPosition]
+  - ["1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1", kInvalidPosition]
+  - ["rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Q - 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w K - 0 1", kInvalidPosition]
+  - ["rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1", kInvalidPosition]
+  - ["rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1", kInvalidPosition]
+  - ["rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w Q - 0 1", kInvalidPosition]
+  - ["rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w K - 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/4P3/4B3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/4P3/4b3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppp1ppp/4P3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppp1ppp/4p3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/4b3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/4B3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e6 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e3 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e6 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e5 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e5 0 1", kInvalidPosition]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1 ", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.0", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNRw - - 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w- - 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w -- 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - -0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 01", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0.0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 x", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 -1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - -1 1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - x 1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 4294967296", kNumberOutOfRange]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 4294967296 1", kNumberOutOfRange]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - x 0 1", kInvalidDashSymbol]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - ", kInvalidDashSymbol]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w x - 0 1", kInvalidCastlingAvailability]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x - - 0 1", kInvalidColor]
+  - ["8/8/8/8/8/8/8/8 w - - 0 1", kInvalidPiecePlacement]
+  - ["8/8/8/8/8/8/8/7k w - - 0 1", kInvalidPiecePlacement]
+  - ["8/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7K/8/8/8/8/8/8/6kk w - - 0 1", kInvalidPiecePlacement]
+  - ["6KK/8/8/8/8/8/8/7k w - - 0 1", kInvalidPiecePlacement]
+  - ["6KK/8/8/8/8/8/8/6kk w - - 0 1", kInvalidPiecePlacement]
+  - ["6Pk/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7k/8/8/8/8/8/8/6pK w - - 0 1", kInvalidPiecePlacement]
+  - ["6Pk/8/8/8/8/8/8/6pK w - - 0 1", kInvalidPiecePlacement]
+  - ["6pk/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7k/8/8/8/8/8/8/6PK w - - 0 1", kInvalidPiecePlacement]
+  - ["6pk/8/8/8/8/8/8/6PK w - - 0 1", kInvalidPiecePlacement]
+  - ["N7x w - - 0 1", kInvalidSlashSymbol]
+  - ["8x8/8/8/8/8/8/6kK w - - 0 1", kInvalidSlashSymbol]
+  - ["8/8/8/8/8/8/6kK w - - 0 1", kInvalidSlashSymbol]
+  - ["8/8/8/8/8/8/8 w - - 0 1", kInvalidSlashSymbol]
+  - ["3B5/8/8/8/8/8/8/6kK w - - 0 1", kInvalidPiece]
+  - ["9/8/8/8/8/8/8/6kK w - - 0 1", kInvalidPiece]
+  - ["/8/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]
+  - ["7/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]
+  - ["6N/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]
+
+invalid_pgn_inputs:
+  - ["[FEN \"kK6/8/8/8/8/8/8/8 w - - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"kK6/8/8/8/8/8/8/8 b - - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"4k3/8/8/8/8/8/5p2/4K3 b - - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"4k3/8/8/8/B7/8/8/4K3 w - - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0\"]", kInvalidPosition]
+  - ["[FEN \"1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Q - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w K - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w Q - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w K - 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/4B3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4P3/4b3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppp1ppp/4P3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppp1ppp/4p3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4b3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/4B3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e6 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e3 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e6 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e5 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e5 0 1\"]", kInvalidPosition]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.\"]", kInvalidQuote]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1 \"]", kInvalidQuote]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.0\"]", kInvalidQuote]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNRw - - 0 1\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w- - 0 1\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w -- 0 1\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - -0 1\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 01\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0.0 1\"]", kInvalidWhiteSpace]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 x\"]", kInvalidNumber]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 -1\"]", kInvalidNumber]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - -1 1\"]", kInvalidNumber]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - x 1\"]", kInvalidNumber]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 4294967296\"]", kNumberOutOfRange]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 4294967296 1\"]", kNumberOutOfRange]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - x 0 1\"]", kInvalidDashSymbol]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - \"]", kInvalidDashSymbol]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w x - 0 1\"]", kInvalidCastlingAvailability]
+  - ["[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x - - 0 1\"]", kInvalidColor]
+  - ["[FEN \"8/8/8/8/8/8/8/8 w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"8/8/8/8/8/8/8/7k w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"8/8/8/8/8/8/8/7K w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"7K/8/8/8/8/8/8/6kk w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6KK/8/8/8/8/8/8/7k w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6KK/8/8/8/8/8/8/6kk w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6Pk/8/8/8/8/8/8/7K w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"7k/8/8/8/8/8/8/6pK w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6Pk/8/8/8/8/8/8/6pK w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6pk/8/8/8/8/8/8/7K w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"7k/8/8/8/8/8/8/6PK w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"6pk/8/8/8/8/8/8/6PK w - - 0 1\"]", kInvalidPiecePlacement]
+  - ["[FEN \"N7x w - - 0 1\"]", kInvalidSlashSymbol]
+  - ["[FEN \"8x8/8/8/8/8/8/6kK w - - 0 1\"]", kInvalidSlashSymbol]
+  - ["[FEN \"8/8/8/8/8/8/6kK w - - 0 1\"]", kInvalidSlashSymbol]
+  - ["[FEN \"8/8/8/8/8/8/8 w - - 0 1\"]", kInvalidSlashSymbol]
+  - ["[FEN \"3B5/8/8/8/8/8/8/6kK w - - 0 1\"]", kInvalidPiece]
+  - ["[FEN \"9/8/8/8/8/8/8/6kK w - - 0 1\"]", kInvalidPiece]
+  - ["[FEN \"/8/8/8/8/8/8/8/6kK w - - 0 1\"]", kMissingRankInfo]
+  - ["[FEN \"7/8/8/8/8/8/8/6kK w - - 0 1\"]", kMissingRankInfo]
+  - ["[FEN \"6N/8/8/8/8/8/8/6kK w - - 0 1\"]", kMissingRankInfo]
+  - ["[FEN rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1\"]", kInvalidQuote]
+  - ["[TAG]", kInvalidQuote]
+  - ["[TAG", kInvalidQuote]
+  - ["[TAG \"", kInvalidQuote]
+  - ["[]", kInvalidTag]
+  - ["[TAG \"\"", kInvalidRightBracket]
+  - ["[TAG \"\"][Tag \"\"", kInvalidRightBracket]
+  - ["[TAG \"\"][Tag \"\"]1-1", kInvalidFile]
+  - ["[TAG \"\"][Tag \"\"]f3 e5 g4 Qh4 X", kInvalidFile]
+  - ["[TAG \"\"][Tag \"\"]f3 e5 g4 X", kInvalidFile]
+  - ["[FEN \"\"][FEN \"\"]", kInvalidPiece]
+  - ["[FEN \"7K/8/8/8/8/8/8/7k w - - 0 1\"][FEN \"\"]", kInvalidPiece]
+  - ["[FEN \"7K/8/8/8/8/8/8/7k w - - 0 1\"][FEN \"7k/8/8/8/8/8/8/7K w - - 0 1\"]", kDuplicatedFenTag]
+  - ["a6", kInvalidMove]

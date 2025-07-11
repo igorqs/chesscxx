@@ -1,0 +1,27 @@
+#ifndef CHESSKIT_INCLUDE_CHESSKIT_PARSER_INTERNAL_ENUM_PARSER_H_
+#define CHESSKIT_INCLUDE_CHESSKIT_PARSER_INTERNAL_ENUM_PARSER_H_
+
+#include <expected>
+#include <string_view>
+
+#include "../../parse_error.h"
+#include "../parse_result.h"
+
+namespace chesskit::internal {
+
+template <typename Enum>
+inline constexpr std::expected<ParseResult<Enum, const char*>, ParseError>
+parseEnum(const char* begin, const char* end, std::string_view allowed,
+          ParseError error) {
+  if (begin == end) return std::unexpected(error);
+
+  auto index = allowed.find(*begin);
+
+  if (index == std::string_view::npos) return std::unexpected(error);
+
+  return ParseResult{static_cast<Enum>(index), begin + 1};
+}
+
+}  // namespace chesskit::internal
+
+#endif  // CHESSKIT_INCLUDE_CHESSKIT_PARSER_INTERNAL_ENUM_PARSER_H_

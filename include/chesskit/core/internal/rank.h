@@ -1,0 +1,52 @@
+#ifndef CHESSKIT_INCLUDE_CHESSKIT_CORE_INTERNAL_RANK_H_
+#define CHESSKIT_INCLUDE_CHESSKIT_CORE_INTERNAL_RANK_H_
+
+#include <cstdint>
+#include <optional>
+
+#include "../../color.h"
+#include "../../rank.h"
+
+namespace chesskit::internal {
+inline constexpr uint8_t index(const Rank& rank) {
+  return static_cast<uint8_t>(rank);
+}
+
+inline constexpr std::optional<Rank> toRank(const uint8_t& index) {
+  if (index >= kNumRanks) return std::nullopt;
+
+  return static_cast<Rank>(index);
+}
+
+inline constexpr bool isDoublePawnPushTargetRank(const Rank& rank,
+                                                 const Color& color) {
+  static constexpr Rank kWhiteDoublePushTargetRank = Rank::k4;
+  static constexpr Rank kBlackDoublePushTargetRank = Rank::k5;
+
+  return rank == ((color == Color::kWhite) ? kWhiteDoublePushTargetRank
+                                           : kBlackDoublePushTargetRank);
+}
+
+inline constexpr bool isPawnStartingRank(const Rank& rank, const Color& color) {
+  static constexpr Rank kWhiteInitialRank = Rank::k2;
+  static constexpr Rank kBlackInitialRank = Rank::k7;
+
+  return rank ==
+         ((color == Color::kWhite) ? kWhiteInitialRank : kBlackInitialRank);
+}
+
+inline constexpr Rank backRank(const Color& color) {
+  return color == Color::kWhite ? Rank::k1 : Rank::k8;
+}
+
+inline Rank promotionRank(const Color& color) {
+  return color == Color::kWhite ? Rank::k8 : Rank::k1;
+}
+
+inline Rank enPassantRank(const Color& color) {
+  return color == Color::kWhite ? Rank::k6 : Rank::k3;
+}
+
+}  // namespace chesskit::internal
+
+#endif  // CHESSKIT_INCLUDE_CHESSKIT_CORE_INTERNAL_RANK_H_

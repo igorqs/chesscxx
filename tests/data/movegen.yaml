@@ -1,0 +1,126 @@
+fixtures:
+  - - ""
+    - [h3, h4, g3, g4, f3, f4, e3, e4, d3, d4, c3, c4, b3, b4, a3, a4, Na3, Nc3, Nf3, Nh3]
+    - [h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, e2e3, e2e4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4, b1a3, b1c3, g1f3, g1h3]
+  - - "e4"
+    - [h6, h5, g6, g5, f6, f5, e6, e5, d6, d5, c6, c5, b6, b5, a6, a5, Nh6, Nf6, Nc6, Na6]
+    - [h7h6, h7h5, g7g6, g7g5, f7f6, f7f5, e7e6, e7e5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, g8h6, g8f6, b8c6, b8a6]
+  - - "e4 e5"
+    - [Ke2, Qe2, Qf3, Qg4, Qh5, Be2, Bd3, Bc4, Bb5, Ba6, Nh3, Nf3, Ne2, Nc3, Na3, h3, h4, g3, g4, f3, f4, d3, d4, c3, c4, b3, b4, a3, a4]
+    - [e1e2, d1e2, d1f3, d1g4, d1h5, f1e2, f1d3, f1c4, f1b5, f1a6, g1h3, g1f3, g1e2, b1c3, b1a3, h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5"
+    - [h6, g6, g5, d6, d5, c6, c5, b6, b5, a6, a5, Ke7, Qe7, Qf6, Qg5, Qh4, Be7, Bd6, Bc5, Bb4, Ba3, Nh6, Nf6, Ne7, Nc6, Na6]
+    - [h7h6, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, e8e7, d8e7, d8f6, d8g5, d8h4, f8e7, f8d6, f8c5, f8b4, f8a3, g8h6, g8f6, g8e7, b8c6, b8a6]
+  - - "e4 e5 Qh5 Nc6"
+    - [Ke2, Kd1, Qh4, Qh3, Qh6, Qxh7, Qg5, Qf5, Qxe5+, Qg6, Qxf7+, Qg4, Qf3, Qe2, Qd1, Be2, Bd3, Bc4, Bb5, Ba6, Nh3, Nf3, Ne2, Nc3, Na3, h3, h4, g3, g4, f3, f4, d3, d4, c3, c4, b3, b4, a3, a4]
+    - [e1e2, e1d1, h5h4, h5h3, h5h6, h5h7, h5g5, h5f5, h5e5, h5g6, h5f7, h5g4, h5f3, h5e2, h5d1, f1e2, f1d3, f1c4, f1b5, f1a6, g1h3, g1f3, g1e2, b1c3, b1a3, h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4"
+    - [h6, g6, g5, d6, d5, b6, b5, a6, a5, Ke7, Qe7, Qf6, Qg5, Qh4, Be7, Bd6, Bc5, Bb4, Ba3, Nce7, Nd4, Nb4, Nb8, Na5, Nh6, Nf6, Nge7, Rb8]
+    - [h7h6, g7g6, g7g5, d7d6, d7d5, b7b6, b7b5, a7a6, a7a5, e8e7, d8e7, d8f6, d8g5, d8h4, f8e7, f8d6, f8c5, f8b4, f8a3, c6e7, c6d4, c6b4, c6b8, c6a5, g8h6, g8f6, g8e7, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6"
+    - [Kf1, Ke2, Kd1, Qh4, Qh3, Qh6, Qxh7, Qg5, Qf5, Qxe5+, Qg6, "Qxf7#", Qg4, Qf3, Qe2, Qd1, Bb5, Ba6, Bd5, Be6, Bxf7+, Bb3, Bd3, Be2, Bf1, Nh3, Nf3, Ne2, Nc3, Na3, h3, h4, g3, g4, f3, f4, d3, d4, c3, b3, b4, a3, a4]
+    - [e1f1, e1e2, e1d1, h5h4, h5h3, h5h6, h5h7, h5g5, h5f5, h5e5, h5g6, h5f7, h5g4, h5f3, h5e2, h5d1, c4b5, c4a6, c4d5, c4e6, c4f7, c4b3, c4d3, c4e2, c4f1, g1h3, g1f3, g1e2, b1c3, b1a3, h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bf7+"
+    - [Ke7]
+    - [e8e7]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bf7+ Ke7"
+    - [Kf1, Ke2, Kd1, Qh4, Qh3, Qh6, Qxh7, Qg5, Qf5, Qxe5+, Qg6, Qg4, Qf3, Qe2, Qd1, Be8, Bg8, Be6, Bd5, Bc4, Bb3, Bg6, Nh3, Nf3, Ne2, Nc3, Na3, h3, h4, g3, g4, f3, f4, d3, d4, c3, c4, b3, b4, a3, a4]
+    - [e1f1, e1e2, e1d1, h5h4, h5h3, h5h6, h5h7, h5g5, h5f5, h5e5, h5g6, h5g4, h5f3, h5e2, h5d1, f7e8, f7g8, f7e6, f7d5, f7c4, f7b3, f7g6, g1h3, g1f3, g1e2, b1c3, b1a3, h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5"
+    - [Kxf7, Nxe5]
+    - [e7f7, c6e5]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5"
+    - [Kf1, Ke2, Kd1, Be8, Bg8, Be6, Bd5, Bc4, Bb3, Bg6, Bh5, Nh3, Nf3, Ne2, Nc3, Na3, h3, h4, g3, g4, f3, f4, d3, d4, c3, c4, b3, b4, a3, a4]
+    - [e1f1, e1e2, e1d1, f7e8, f7g8, f7e6, f7d5, f7c4, f7b3, f7g6, f7h5, g1h3, g1f3, g1e2, b1c3, b1a3, h2h3, h2h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3"
+    - [h6, h5, g6, g5, d6, d5, c6, c5, b6, b5, a6, a5, Kxf7, Kd6, Qe8, Neg4, Ng6, Nf3+, Nxf7, Nd3+, Nc4, Nc6, Nh5, Nfg4, Ng8, Nxe4, Ne8, Nd5, Rg8, Rb8]
+    - [h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, e7f7, e7d6, d8e8, e5g4, e5g6, e5f3, e5f7, e5d3, e5c4, e5c6, f6h5, f6g4, f6g8, f6e4, f6e8, f6d5, h8g8, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7"
+    - [Kf1, Ke2, Kd1, Nf3, Ne2, Nc3, Na3, Rh2, h4, g3, g4, f3, f4, d3, d4, c3, c4, b3, b4, a3, a4]
+    - [e1f1, e1e2, e1d1, g1f3, g1e2, b1c3, b1a3, h1h2, h3h4, g2g3, g2g4, f2f3, f2f4, d2d3, d2d4, c2c3, c2c4, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3"
+    - [h6, h5, g6, g5, d6, d5, c6, c5, b6, b5, a6, a5, Kg6, Kg8, Ke6, Ke7, Ke8, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Neg4, Ng6, Nf3+, Nd3+, Nc4, Nc6, Nh5, Nfg4, Ng8, Nxe4, Ne8, Nd5, Rg8, Rb8]
+    - [h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, f7g6, f7g8, f7e6, f7e7, f7e8, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, e5g4, e5g6, e5f3, e5d3, e5c4, e5c6, f6h5, f6g4, f6g8, f6e4, f6e8, f6d5, h8g8, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+"
+    - [Kf1, Ke2, Kd1, Nxf3, gxf3]
+    - [e1f1, e1e2, e1d1, g1f3, g2f3]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3"
+    - [h6, h5, g6, g5, d6, d5, c6, c5, b6, b5, a6, a5, Kg6, Kg8, Ke6, Ke7, Ke8, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Ng8, Nxe4, Ne8, Nd5, Rg8, Rb8]
+    - [h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, f7g6, f7g8, f7e6, f7e7, f7e8, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6g8, f6e4, f6e8, f6d5, h8g8, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8"
+    - [Kf1, Ke2, Kd1, Nce2, Nd1, Nd5, Nb1, Nb5, Na4, Nge2, Rh2, Rb1, f4, h4, d3, d4, e5, b3, b4, a3, a4]
+    - [e1f1, e1e2, e1d1, c3e2, c3d1, c3d5, c3b1, c3b5, c3a4, g1e2, h1h2, a1b1, f3f4, h3h4, d2d3, d2d4, e4e5, b2b3, b2b4, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4"
+    - [h6, h5, g6, g5, d6, d5, c6, c5, b6, b5, a6, a5, Kf7, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Ne8, Nd5, Rb8]
+    - [h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, a7a6, a7a5, g8f7, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6e8, f6d5, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5"
+    - [Kf1, Ke2, Kd1, Kd2, Bd2, Be3, Bf4, Bg5, Bh6, Nce2, Nd1, Nd5, Nb1, Nb5, Na4, Nge2, Rh2, Rb1, f4, h4, e5, b3, b4, d5, a3, a4]
+    - [e1f1, e1e2, e1d1, e1d2, c1d2, c1e3, c1f4, c1g5, c1h6, c3e2, c3d1, c3d5, c3b1, c3b5, c3a4, g1e2, h1h2, a1b1, f3f4, h3h4, e4e5, b2b3, b2b4, d4d5, a2a3, a2a4]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5"
+    - [h6, h5, g6, a4, d6, d5, c6, c5, b6, b5, Kf7, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Ne8, Nd5, Ra7, Ra6, Rb8]
+    - [h7h6, h7h5, g7g6, a5a4, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, g8f7, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6e8, f6d5, a8a7, a8a6, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4"
+    - [O-O-O, Kf1, Ke2, Kd1, Kd2, Bxf6, Bh6, Bf4, Be3, Bd2, Bc1, Bh4, Nce2, Nd1, Nd5, Nb1, Nb5, Nxa4, Nge2, Rh2, Rb1, Rc1, Rd1, f4, h4, e5, b3, b4, d5, a3]
+    - [e1c1, e1f1, e1e2, e1d1, e1d2, g5f6, g5h6, g5f4, g5e3, g5d2, g5c1, g5h4, c3e2, c3d1, c3d5, c3b1, c3b5, c3a4, g1e2, h1h2, a1b1, a1c1, a1d1, f3f4, h3h4, e4e5, b2b3, b2b4, d4d5, a2a3]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4"
+    - [a3, axb3, h6, h5, g6, d6, d5, c6, c5, b6, b5, Kf7, Qe8, Qe7, Be7, Bd6, Bc5, Bxb4, Nh5, Ng4, Nxe4, Ne8, Nd5, Ra7, Ra6, Ra5, Rb8]
+    - [a4a3, a4b3, h7h6, h7h5, g7g6, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, g8f7, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f6h5, f6g4, f6e4, f6e8, f6d5, a8a7, a8a6, a8a5, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3"
+    - [O-O-O, Kf1, Ke2, Kd1, Kd2, Bxf6, Bh6, Bf4, Be3, Bd2, Bc1, Bh4, Nce2, Nd1, Nd5, Nb1, Nb5, Na4, Nge2, Rh2, Rb1, Rc1, Rd1, f4, h4, cxb3, e5, d5, a3, a4, axb3]
+    - [e1c1, e1f1, e1e2, e1d1, e1d2, g5f6, g5h6, g5f4, g5e3, g5d2, g5c1, g5h4, c3e2, c3d1, c3d5, c3b1, c3b5, c3a4, g1e2, h1h2, a1b1, a1c1, a1d1, f3f4, h3h4, c2b3, e4e5, d4d5, a2a3, a2a4, a2b3]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1"
+    - [b2, bxc2, bxa2, h6, h5, g6, d6, d5, c6, c5, b6, b5, Kf7, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Ne8, Nd5, Ra7, Ra6, Ra5, Ra4, Ra3, Rxa2, Rb8]
+    - [b3b2, b3c2, b3a2, h7h6, h7h5, g7g6, d7d6, d7d5, c7c6, c7c5, b7b6, b7b5, g8f7, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6e8, f6d5, a8a7, a8a6, a8a5, a8a4, a8a3, a8a2, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2"
+    - [Kf1, Ke2, Kd1, Kd2, Bxf6, Bh6, Bf4, Be3, Bd2, Bc1, Bh4, Nce2, Nd1, Nd5, Nb5, Nxa2, Na4, Nge2, Rb2, Rb3, Rb4, Rb5, Rb6, Rxb7, Ra1, Rc1, Rd1, Rh2, f4, h4, e5, d5]
+    - [e1f1, e1e2, e1d1, e1d2, g5f6, g5h6, g5f4, g5e3, g5d2, g5c1, g5h4, c3e2, c3d1, c3d5, c3b5, c3a2, c3a4, g1e2, b1b2, b1b3, b1b4, b1b5, b1b6, b1b7, b1a1, b1c1, b1d1, h1h2, f3f4, h3h4, e4e5, d4d5]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2"
+    - [h6, h5, g6, d6, d5, c6, c5, a1=N, a1=B, a1=R, a1=Q, axb1=N, axb1=B, axb1=R+, axb1=Q+, b6, b5, Kf7, Qe8, Qe7, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Ne8, Nd5, Ra7, Ra6, Ra5, Ra4, Ra3, Rb8]
+    - [h7h6, h7h5, g7g6, d7d6, d7d5, c7c6, c7c5, a2a1n, a2a1b, a2a1r, a2a1q, a2b1n, a2b1b, a2b1r, a2b1q, b7b6, b7b5, g8f7, d8e8, d8e7, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6e8, f6d5, a8a7, a8a6, a8a5, a8a4, a8a3, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8"
+    - [O-O, Kf1, Kd1, Kd2, Bxf6, Bh6, Bf4, Be3, Bd2, Bc1, Bh4, Ng1, Ng3, Nf4, Nc1, Nd1, Nd5, Nb5, Nxa2, Na4, Rb2, Rb3, Rb4, Rb5, Rb6, Rxb7, Ra1, Rc1, Rd1, Rh2, Rg1, Rf1, f4, h4, e5, d5]
+    - [e1g1, e1f1, e1d1, e1d2, g5f6, g5h6, g5f4, g5e3, g5d2, g5c1, g5h4, e2g1, e2g3, e2f4, e2c1, c3d1, c3d5, c3b5, c3a2, c3a4, b1b2, b1b3, b1b4, b1b5, b1b6, b1b7, b1a1, b1c1, b1d1, h1h2, h1g1, h1f1, f3f4, h3h4, e4e5, d4d5]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O"
+    - [h6, h5, g6, d6, d5, c6, c5, a1=N, a1=B, a1=R, a1=Q, axb1=N, axb1=B, axb1=R, axb1=Q, b6, b5, Kf7, Qe7, Qe6, Qe5, Qxe4, Qd8, Qf7, Qg6, Qh5, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Nd5, Ra7, Ra6, Ra5, Ra4, Ra3, Rb8]
+    - [h7h6, h7h5, g7g6, d7d6, d7d5, c7c6, c7c5, a2a1n, a2a1b, a2a1r, a2a1q, a2b1n, a2b1b, a2b1r, a2b1q, b7b6, b7b5, g8f7, e8e7, e8e6, e8e5, e8e4, e8d8, e8f7, e8g6, e8h5, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6d5, a8a7, a8a6, a8a5, a8a4, a8a3, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O axb1=Q"
+    - [Kh1, Kh2, Kg2, Bxf6, Bh6, Bf4, Be3, Bd2, Bc1, Bh4, Ng3, Nf4, Nc1, Nd1, Nd5, Nxb1, Nb5, Na2, Na4, Re1, Rd1, Rc1, Rxb1, f4, h4, e5, d5]
+    - [g1h1, g1h2, g1g2, g5f6, g5h6, g5f4, g5e3, g5d2, g5c1, g5h4, e2g3, e2f4, e2c1, c3d1, c3d5, c3b1, c3b5, c3a2, c3a4, f1e1, f1d1, f1c1, f1b1, f3f4, h3h4, e4e5, d4d5]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O axb1=Q Bf4"
+    - [b6, b5, h6, h5, g6, g5, d6, d5, c6, c5, Kf7, Qb2, Qb3, Qb4, Qb5, Qb6, Qa1, Qc1, Qd1, Qe1, Qxf1+, Qa2, Qxc2, Qe7, Qe6, Qe5, Qxe4, Qd8, Qf7, Qg6+, Qh5, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Nd5, Ra7, Ra6, Ra5, Ra4, Ra3, Ra2, Ra1, Rb8]
+    - [b7b6, b7b5, h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, g8f7, b1b2, b1b3, b1b4, b1b5, b1b6, b1a1, b1c1, b1d1, b1e1, b1f1, b1a2, b1c2, e8e7, e8e6, e8e5, e8e4, e8d8, e8f7, e8g6, e8h5, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6d5, a8a7, a8a6, a8a5, a8a4, a8a3, a8a2, a8a1, a8b8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O axb1=Q Bf4 Ra1"
+    - [Kh1, Kh2, Kg2, Be5, Bd6, Bxc7, Bg5, Bh6, Be3, Bd2, Bc1, Bg3, Bh2, Ng3, Nc1, Nd1, Nd5, Nxb1, Nb5, Na2, Na4, Re1, Rd1, Rc1, Rxb1, h4, e5, d5]
+    - [g1h1, g1h2, g1g2, f4e5, f4d6, f4c7, f4g5, f4h6, f4e3, f4d2, f4c1, f4g3, f4h2, e2g3, e2c1, c3d1, c3d5, c3b1, c3b5, c3a2, c3a4, f1e1, f1d1, f1c1, f1b1, h3h4, e4e5, d4d5]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O axb1=Q Bf4 Ra1 Bh2"
+    - [b6, b5, h6, h5, g6, g5, d6, d5, c6, c5, Kf7, Qb2, Qb3, Qb4, Qb5, Qb6, Qc1, Qd1, Qe1, "Qxf1#", Qa2, Qxc2, Qe7, Qe6, Qe5, Qxe4, Qd8, Qf7, Qg6+, Qh5, Be7, Bd6, Bc5, Bb4, Ba3, Nh5, Ng4, Nxe4, Nd5, Ra2, Ra3, Ra4, Ra5, Ra6, Ra7, Ra8]
+    - [b7b6, b7b5, h7h6, h7h5, g7g6, g7g5, d7d6, d7d5, c7c6, c7c5, g8f7, b1b2, b1b3, b1b4, b1b5, b1b6, b1c1, b1d1, b1e1, b1f1, b1a2, b1c2, e8e7, e8e6, e8e5, e8e4, e8d8, e8f7, e8g6, e8h5, f8e7, f8d6, f8c5, f8b4, f8a3, f6h5, f6g4, f6e4, f6d5, a1a2, a1a3, a1a4, a1a5, a1a6, a1a7, a1a8]
+  - - "e4 e5 Qh5 Nc6 Bc4 Nf6 Bxf7+ Ke7 Qxe5 Nxe5 h3 Kxf7 Nc3 Nf3+ gxf3 Kg8 d4 a5 Bg5 a4 b4 axb3 Rb1 bxa2 Nge2 Qe8 O-O axb1=Q Bf4 Ra1 Bh2 Qxf1#"
+    - []
+    - []
+  - - "[FEN\"r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1\"]"
+    - [O-O, O-O-O, Kd1, Kd2, Ke2, Kf2, Kf1, Rb1, Rc1, Rd1, Ra2, Ra3, Ra4, Ra5, Ra6, Ra7, Rxa8+, Rg1, Rf1, Rh2, Rh3, Rh4, Rh5, Rh6, Rh7, Rxh8+]
+    - [e1g1, e1c1, e1d1, e1d2, e1e2, e1f2, e1f1, a1b1, a1c1, a1d1, a1a2, a1a3, a1a4, a1a5, a1a6, a1a7, a1a8, h1g1, h1f1, h1h2, h1h3, h1h4, h1h5, h1h6, h1h7, h1h8]
+  - - "[FEN\"r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1\"] O-O-O"
+    - [O-O, Ke7, Kf8, Kf7, Ra7, Ra6, Ra5, Ra4, Ra3, Ra2, Ra1+, Rb8, Rc8+, Rd8, Rh7, Rh6, Rh5, Rh4, Rh3, Rh2, Rxh1, Rg8, Rf8]
+    - [e8g8, e8e7, e8f8, e8f7, a8a7, a8a6, a8a5, a8a4, a8a3, a8a2, a8a1, a8b8, a8c8, a8d8, h8h7, h8h6, h8h5, h8h4, h8h3, h8h2, h8h1, h8g8, h8f8]
+  - - "[FEN\"4k3/8/8/8/8/8/8/4K3 w - - 0 1\"]"
+    - [Kd1, Kf1, Kd2, Ke2, Kf2]
+    - [e1d1, e1f1, e1d2, e1e2, e1f2]
+  - - "[FEN\"4k3/4r3/8/4Pp2/8/8/8/4K3 w - f6 0 2\"]"
+    - [e6, Kd1, Kf1, Kd2, Ke2, Kf2]
+    - [e5e6, e1d1, e1f1, e1d2, e1e2, e1f2]
+  - - "[FEN\"4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 2\"]"
+    - [e6, exf6, Kd1, Kf1, Kd2, Ke2, Kf2]
+    - [e5e6, e5f6, e1d1, e1f1, e1d2, e1e2, e1f2]
+
+overflow_fixtures:
+  - - "[FEN \"K7/8/8/8/8/8/8/k7 w - - 4294967295 1\"]"
+    - [Ka7, Kb7, Kb8]
+    - [a8a7, a8b7, a8b8]
+  - - "[FEN \"K7/8/8/8/8/8/8/k7 b - - 0 4294967295\"]"
+    - [Ka2, Kb2, Kb1]
+    - [a1a2, a1b2, a1b1]
+  - - "[FEN \"K7/8/8/8/8/8/8/k7 b - - 4294967295 4294967295\"]"
+    - [Ka2, Kb2, Kb1]
+    - [a1a2, a1b2, a1b1]

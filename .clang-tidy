@@ -1,0 +1,8 @@
+Checks: >
+  misc-include-cleaner,
+  clang-diagnostic-*,
+  bugprone-*
+WarningsAsErrors: ''
+HeaderFilterRegex: '/home/igorqs/code/chess_projects/chesskit/include/.*'
+CheckOptions:
+  misc-include-cleaner.IgnoreHeaders: 'yaml-cpp/.*'

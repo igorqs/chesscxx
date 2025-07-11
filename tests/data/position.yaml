@@ -1,0 +1,125 @@
+default: &default "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+complex_input: &complex_input "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR b Kq d3 4294967295 4294967295"
+valid_inputs:
+  - *default
+  - *complex_input
+  - "k1K5/8/8/8/8/8/8/8 w - - 0 1"
+  - "4k3/8/8/8/8/8/5p2/4K3 w - - 0 1"
+  - "4k3/8/8/8/B7/8/8/4K3 b - - 0 1"
+  - "1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQk - 0 1"
+  - "rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Kkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w Qkq - 0 1"
+  - "rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ - 0 1"
+  - "rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w kq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 1 1"
+  - "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
+  - "rnbqkbnr/pppp1ppp/8/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 4294967295 4294967295"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 4294967295 4294967295"
+
+repetition_inputs:
+  - "4k3/8/8/8/2pP4/8/8/4K3 b - d3 0 1"
+  - "4k3/8/8/8/2pPp3/8/8/4K3 b - d3 0 1"
+  - "4k3/8/8/8/2pPp3/8/4R3/4K3 b - d3 0 1"
+  - "4k3/8/8/2Pp4/8/8/8/4K3 w - d6 0 1"
+  - "4k3/8/8/2PpP3/8/8/8/4K3 w - d6 0 1"
+  - "4k3/4r3/8/2PpP3/8/8/8/4K3 w - d6 0 1"
+  - "4k3/8/8/8/2pP4/8/8/4K3 b - - 0 1"
+  - "4k3/8/8/8/2pPp3/8/8/4K3 b - - 0 1"
+  - "4k3/8/8/8/2pPp3/8/4R3/4K3 b - - 0 1"
+  - "4k3/8/8/2Pp4/8/8/8/4K3 w - - 0 1"
+  - "4k3/8/8/2PpP3/8/8/8/4K3 w - - 0 1"
+  - "4k3/4r3/8/2PpP3/8/8/8/4K3 w - - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b Kkq - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b k - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b q - 0 1"
+  - "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - - 0 1"
+
+no_legal_en_passant_inputs:
+  - "4k3/8/8/8/3P4/8/8/4K3 b - d3 0 1"
+  - "4k3/8/8/8/3Pp3/8/4R3/4K3 b - d3 0 1"
+  - "8/8/4k3/8/2pPp3/8/Q3R3/4K3 b - d3 0 1"
+  - "4k3/8/8/3p4/8/8/8/4K3 w - d6 0 1"
+  - "4k3/4r3/8/3pP3/8/8/8/4K3 w - d6 0 1"
+  - "4k3/b3r3/8/2PpP3/8/4K3/8/8 w - d6 0 1"
+
+legal_en_passant_inputs:
+  - "4k3/8/8/8/2pP4/8/8/4K3 b - d3 0 1"
+  - "4k3/8/8/8/2pPp3/8/8/4K3 b - d3 0 1"
+  - "4k3/8/8/8/2pPp3/8/4R3/4K3 b - d3 0 1"
+  - "4k3/8/8/2Pp4/8/8/8/4K3 w - d6 0 1"
+  - "4k3/8/8/2PpP3/8/8/8/4K3 w - d6 0 1"
+  - "4k3/4r3/8/2PpP3/8/8/8/4K3 w - d6 0 1"
+
+invalid_params_inputs:
+  - ["kK6/8/8/8/8/8/8/8 w - - 0 1", kSideNotToMoveIsUnderAttack]
+  - ["kK6/8/8/8/8/8/8/8 b - - 0 1", kSideNotToMoveIsUnderAttack]
+  - ["4k3/8/8/8/8/8/5p2/4K3 b - - 0 1", kSideNotToMoveIsUnderAttack]
+  - ["4k3/8/8/8/B7/8/8/4K3 w - - 0 1", kSideNotToMoveIsUnderAttack]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0", kFullmoveNumberOutOfRange]
+  - ["1nbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Q - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN1 w K - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w q - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbkbbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w k - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w Q - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbbkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w K - 0 1", kInvalidCastlingRightsForPiecePositions]
+  - ["rnbqkbnr/pppppppp/8/8/4P3/4B3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kEnPassantTargetSquareOccupied]
+  - ["rnbqkbnr/pppppppp/8/8/4P3/4b3/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kEnPassantTargetSquareOccupied]
+  - ["rnbqkbnr/pppp1ppp/4P3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1", kEnPassantTargetSquareOccupied]
+  - ["rnbqkbnr/pppp1ppp/4p3/4p3/8/8/PP1PPPPP/RNBQKBNR w KQkq e6 0 1", kEnPassantTargetSquareOccupied]
+  - ["rnbqkbnr/pppppppp/8/8/4b3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kEnPassantNoCapturablePawn]
+  - ["rnbqkbnr/pppppppp/8/8/4B3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", kEnPassantNoCapturablePawn]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1", kEnPassantNoCapturablePawn]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e6 0 1", kEnPassantNoCapturablePawn]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e3 0 1", kEnPassantTargetSquareInvalidRank]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e6 0 1", kEnPassantTargetSquareInvalidRank]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e5 0 1", kEnPassantTargetSquareInvalidRank]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e5 0 1", kEnPassantTargetSquareInvalidRank]
+
+invalid_inputs:
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1 ", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1.0", kExpectingEndOfString]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNRw - - 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w- - 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w -- 0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - -0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 01", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0.0 1", kInvalidWhiteSpace]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 x", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 -1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - -1 1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - x 1", kInvalidNumber]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 4294967296", kNumberOutOfRange]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 4294967296 1", kNumberOutOfRange]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - x 0 1", kInvalidDashSymbol]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - ", kInvalidDashSymbol]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w x - 0 1", kInvalidCastlingAvailability]
+  - ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x - - 0 1", kInvalidColor]
+  - ["8/8/8/8/8/8/8/8 w - - 0 1", kInvalidPiecePlacement]
+  - ["8/8/8/8/8/8/8/7k w - - 0 1", kInvalidPiecePlacement]
+  - ["8/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7K/8/8/8/8/8/8/6kk w - - 0 1", kInvalidPiecePlacement]
+  - ["6KK/8/8/8/8/8/8/7k w - - 0 1", kInvalidPiecePlacement]
+  - ["6KK/8/8/8/8/8/8/6kk w - - 0 1", kInvalidPiecePlacement]
+  - ["6Pk/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7k/8/8/8/8/8/8/6pK w - - 0 1", kInvalidPiecePlacement]
+  - ["6Pk/8/8/8/8/8/8/6pK w - - 0 1", kInvalidPiecePlacement]
+  - ["6pk/8/8/8/8/8/8/7K w - - 0 1", kInvalidPiecePlacement]
+  - ["7k/8/8/8/8/8/8/6PK w - - 0 1", kInvalidPiecePlacement]
+  - ["6pk/8/8/8/8/8/8/6PK w - - 0 1", kInvalidPiecePlacement]
+  - ["N7x w - - 0 1", kInvalidSlashSymbol]
+  - ["8x8/8/8/8/8/8/6kK w - - 0 1", kInvalidSlashSymbol]
+  - ["8/8/8/8/8/8/6kK w - - 0 1", kInvalidSlashSymbol]
+  - ["8/8/8/8/8/8/8 w - - 0 1", kInvalidSlashSymbol]
+  - ["3B5/8/8/8/8/8/8/6kK w - - 0 1", kInvalidPiece]
+  - ["9/8/8/8/8/8/8/6kK w - - 0 1", kInvalidPiece]
+  - ["/8/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]
+  - ["7/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]
+  - ["6N/8/8/8/8/8/8/6kK w - - 0 1", kMissingRankInfo]

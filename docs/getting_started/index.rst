@@ -1,0 +1,59 @@
+Getting Started
+===============
+
+Installation
+------------
+
+Add installation instruction here
+
+Examples
+--------
+
+Full Game
+~~~~~~~~~
+
+.. literalinclude:: ../../examples/basic_full_game_usage.cpp
+   :language: cpp
+
+Output:
+
+.. literalinclude:: ../../build/examples/basic_full_game_usage.out
+   :language: none
+
+Using the Move Generator
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../examples/movegen_promotion_usage.cpp
+   :language: cpp
+
+Output:
+
+.. literalinclude:: ../../build/examples/movegen_promotion_usage.out
+   :language: none
+
+Parsing PGN
+~~~~~~~~~~~
+
+.. literalinclude:: ../../examples/basic_pgn_usage.cpp
+   :language: cpp
+
+Output:
+
+.. literalinclude:: ../../build/examples/basic_pgn_usage.out
+   :language: none
+
+Parsing games from a file
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../examples/parse_from_usage.cpp
+   :language: cpp
+
+.. tab:: Output:
+
+    .. literalinclude:: ../../build/examples/parse_from_usage.out
+       :language: none
+
+.. tab:: Input file:
+
+    .. literalinclude:: ../../build/examples/data/games.pgn
+       :language: none

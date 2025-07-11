@@ -1,0 +1,37 @@
+default: &default "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+complex_input: &complex_input "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR"
+valid_inputs:
+  - *default
+  - *complex_input
+  - "rnbqkbnr/pppppppp/rnbqPbnr/rnbqPbnr/RNBQpBNR/RNBQpBNR/PPPPPPPP/RNBQKBNR"
+  - "kK6/8/8/8/8/8/8/8"
+  - "Kk6/8/8/8/8/8/8/8"
+  - "KNkq4/8/8/8/8/8/8/8"
+  - "KqkN4/8/8/8/8/8/8/8"
+
+invalid_piece_array_inputs:
+  - ["8/8/8/8/8/8/8/7k", kMissingKing]
+  - ["8/8/8/8/8/8/8/7K", kMissingKing]
+  - ["8/8/8/8/8/8/8/8", kMissingKing]
+  - ["6kk/8/8/8/8/8/8/7K", kMultipleKingsOfSameColor]
+  - ["7k/8/8/8/8/8/8/6KK", kMultipleKingsOfSameColor]
+  - ["6kk/8/8/8/8/8/8/6KK", kMultipleKingsOfSameColor]
+  - ["6Pk/8/8/8/8/8/8/7K", kPawnOnPromotionRank]
+  - ["7k/8/8/8/8/8/8/6pK", kPawnOnPromotionRank]
+  - ["6Pk/8/8/8/8/8/8/6pK", kPawnOnPromotionRank]
+  - ["6pk/8/8/8/8/8/8/7K", kPawnOnBackRank]
+  - ["7k/8/8/8/8/8/8/6PK", kPawnOnBackRank]
+  - ["6pk/8/8/8/8/8/8/6PK", kPawnOnBackRank]
+
+invalid_inputs:
+  - ["N7x", kInvalidSlashSymbol]
+  - ["8x8/8/8/8/8/8/6kK", kInvalidSlashSymbol]
+  - ["3B5/8/8/8/8/8/8/6kK", kInvalidPiece]
+  - ["9/8/8/8/8/8/8/6kK", kInvalidPiece]
+  - ["/8/8/8/8/8/8/8/6kK", kMissingRankInfo]
+  - ["7/8/8/8/8/8/8/6kK", kMissingRankInfo]
+  - ["6N/8/8/8/8/8/8/6kK", kMissingRankInfo]
+  - ["8/8/8/8/8/8/6kK", kMissingPiecePlacementInfo]
+  - ["8/8/8/8/8/8/8", kMissingPiecePlacementInfo]
+  - ["8/8/8/8/8/8/8/6kK/", kExpectingEndOfString]
+  - ["8/8/8/8/8/8/8/6kK ", kExpectingEndOfString]

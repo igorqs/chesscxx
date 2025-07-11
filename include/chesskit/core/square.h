@@ -1,0 +1,51 @@
+#ifndef CHESSKIT_INCLUDE_CHESSKIT_CORE_SQUARE_H_
+#define CHESSKIT_INCLUDE_CHESSKIT_CORE_SQUARE_H_
+
+// IWYU pragma: private, include "../square.h"
+
+#include <cstddef>
+#include <cstdint>
+
+#include "../file.h"
+#include "../rank.h"
+#include "internal/file.h"
+#include "internal/rank.h"
+
+namespace chesskit {
+/// @brief Represents a square on a chessboard.
+struct Square {
+  /// @name Comparison Operators
+  /// @{
+
+  /// @brief Equality comparison operator.
+  constexpr bool operator==(const Square&) const = default;
+
+  /// @}
+
+  /// @brief The file of the square.
+  File file{};
+  /// @brief The rank of the square.
+  Rank rank{};
+};
+
+/// @defgroup SquareNonMemberFunctions Square non-member functions
+/// @{
+
+/// @brief Computes the linear index of a square on the chessboard.
+inline constexpr std::size_t index(const Square& sq) {
+  return internal::index(sq.rank) * kNumFiles + internal::index(sq.file);
+}
+
+/// @}
+
+/// @defgroup SquareNonMemberConstants Square non-member constants
+/// @{
+
+/// @brief The total number of squares on a chessboard.
+inline constexpr uint8_t kNumSquares = kNumRanks * kNumFiles;
+
+/// @}
+
+}  // namespace chesskit
+
+#endif  // CHESSKIT_INCLUDE_CHESSKIT_CORE_SQUARE_H_
