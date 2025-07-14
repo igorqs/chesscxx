@@ -113,7 +113,7 @@ inline std::generator<CastlingSide> legalCastlings(const Position position) {
   const auto& color = position.activeColor();
 
   for (const auto& side : sides) {
-    bool can_castle = position.castlingRights().canCastle(side, color);
+    bool const can_castle = position.castlingRights().canCastle(side, color);
     if (!can_castle) continue;
 
     if (!castlingError(position.piecePlacement(), side, color)) co_yield side;
@@ -149,10 +149,10 @@ inline std::generator<UciMove> legalMoves(const Position position) {
       std::views::transform(
           [&position](const auto& raw_move) -> std::generator<UciMove> {
             auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
-            bool isPawn = piece && piece->type == PieceType::kPawn;
-            bool isPromotionRank = raw_move.destination.rank ==
-                                   promotionRank(position.activeColor());
-            bool isPromotion = isPawn && isPromotionRank;
+            bool const isPawn = piece && piece->type == PieceType::kPawn;
+            bool const isPromotionRank = raw_move.destination.rank ==
+                                         promotionRank(position.activeColor());
+            bool const isPromotion = isPawn && isPromotionRank;
 
             if (isPromotion) {
               co_yield elements_of(uciPromotions(raw_move));
@@ -174,8 +174,9 @@ inline bool hasLegalMove(const Position position) {
 
 inline std::generator<Square> pawnsCapturing(Position position, Square square,
                                              Color color) {
-  bool hasOpponent = hasPieceAt(position.piecePlacement(), square, !color);
-  bool isEnPassantTarget = (square == position.enPassantTargetSquare());
+  bool const hasOpponent =
+      hasPieceAt(position.piecePlacement(), square, !color);
+  bool const isEnPassantTarget = (square == position.enPassantTargetSquare());
 
   if (!hasOpponent && !isEnPassantTarget) co_return;
 

@@ -4,17 +4,19 @@
 #include <cassert>
 #include <string_view>
 
+namespace {
 chesskit::Position parsePosition(std::string_view sv) {
   auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
   assert(parsedPosition);
   return parsedPosition.value();
 }
+}  // namespace
 
 int main() {
-  chesskit::Position p1 =
+  chesskit::Position const p1 =
       parsePosition("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-  chesskit::Position p2 = parsePosition(
+  chesskit::Position const p2 = parsePosition(
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 10 10");
 
   assert(p1 != p2);

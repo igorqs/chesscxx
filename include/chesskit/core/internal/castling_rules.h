@@ -49,19 +49,19 @@ inline constexpr Square queensideCastlingRookDestination(const Color& color) {
 }
 
 inline constexpr CastlingMoves kingsideCastlingMoves(const Color& color) {
-  RawMove kingMove =
+  RawMove const kingMove =
       RawMove(initialKingSquare(color), kingsideCastlingKingDestination(color));
-  RawMove rookMove = RawMove(initialKingsideRookSquare(color),
-                             kingsideCastlingRookDestination(color));
+  RawMove const rookMove = RawMove(initialKingsideRookSquare(color),
+                                   kingsideCastlingRookDestination(color));
 
   return CastlingMoves(kingMove, rookMove);
 }
 
 inline constexpr CastlingMoves queensideCastlingMoves(const Color& color) {
-  RawMove kingMove = RawMove(initialKingSquare(color),
-                             queensideCastlingKingDestination(color));
-  RawMove rookMove = RawMove(initialQueensideRookSquare(color),
-                             queensideCastlingRookDestination(color));
+  RawMove const kingMove = RawMove(initialKingSquare(color),
+                                   queensideCastlingKingDestination(color));
+  RawMove const rookMove = RawMove(initialQueensideRookSquare(color),
+                                   queensideCastlingRookDestination(color));
 
   return CastlingMoves(kingMove, rookMove);
 }

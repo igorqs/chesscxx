@@ -37,7 +37,7 @@ constexpr auto kUciMoves =
     });
 
 TEST(UciMoveTest, DefaultConstructionMembersAreDefaultInitialized) {
-  chesskit::UciMove uci;
+  chesskit::UciMove const uci;
   EXPECT_EQ(chesskit::index(uci.origin), 0);
   EXPECT_EQ(chesskit::index(uci.destination), 0);
   EXPECT_EQ(uci.promotion, std::nullopt);

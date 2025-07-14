@@ -7,6 +7,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 chesskit::SanMove parseSanMove(std::string_view sv) {
   auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsedSanMove);
@@ -18,6 +19,7 @@ chesskit::UciMove parseUciMove(std::string_view sv) {
   assert(parsedUciMove);
   return parsedUciMove.value();
 }
+}  // namespace
 
 int main() {
   chesskit::Game game;

@@ -9,8 +9,8 @@
 namespace chesskit::internal {
 
 inline bool matches(const PartialSquare& partial, const Square& square) {
-  bool validFile = (!partial.file) || (*(partial.file) == square.file);
-  bool validRank = (!partial.rank) || (*(partial.rank) == square.rank);
+  bool const validFile = (!partial.file) || (*(partial.file) == square.file);
+  bool const validRank = (!partial.rank) || (*(partial.rank) == square.rank);
 
   return (validFile && validRank);
 }

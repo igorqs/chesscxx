@@ -4,6 +4,7 @@
 
 #include <print>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -11,6 +12,7 @@ void printErrorOrValue(auto parsedValue) {
     std::println("{}", parsedValue.error());
   }
 }
+}  // namespace
 
 int main() {
   auto parsedPieceType = chesskit::parse<chesskit::PieceType>(

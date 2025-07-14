@@ -47,10 +47,10 @@ inline constexpr bool isKingAndKnightVsKing(const PiecePlacement& pp) {
 inline constexpr bool isBishopsOnSameColorDraw(const PiecePlacement& pp) {
   if (!hasBishops(pp)) return false;
 
-  bool validWhite = hasOnlyKing(pp, Color::kWhite) ||
-                    hasOnlyKingAndBishops(pp, Color::kWhite);
-  bool validBlack = hasOnlyKing(pp, Color::kBlack) ||
-                    hasOnlyKingAndBishops(pp, Color::kBlack);
+  bool const validWhite = hasOnlyKing(pp, Color::kWhite) ||
+                          hasOnlyKingAndBishops(pp, Color::kWhite);
+  bool const validBlack = hasOnlyKing(pp, Color::kBlack) ||
+                          hasOnlyKingAndBishops(pp, Color::kBlack);
 
   if (!validWhite || !validBlack) return false;
 

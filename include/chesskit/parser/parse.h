@@ -33,7 +33,7 @@ namespace chesskit {
 /// will not compile.
 template <typename T, typename InputIt, typename Tag = parse_as::Default>
 inline constexpr std::expected<ParseResult<T, InputIt>, ParseError> parseFrom(
-    InputIt begin, InputIt end, Tag tag = parse_as::Default{}) {
+    InputIt begin, InputIt end, Tag /*tag*/ = parse_as::Default{}) {
   return Parser<T, InputIt, Tag>{}.parse(begin, end);
 };
 

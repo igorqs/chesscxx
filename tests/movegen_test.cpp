@@ -85,6 +85,7 @@ struct YAML::convert<MovegenFixture> {
   }
 };
 
+namespace {
 auto GetConfig() { return YAML::LoadFile("data/movegen.yaml"); }
 
 auto GetMovegenFixtures() {
@@ -94,6 +95,7 @@ auto GetMovegenFixtures() {
 auto GetOverflowMovegenFixtures() {
   return GetConfig()["overflow_fixtures"].as<std::vector<MovegenFixture>>();
 }
+}  // namespace
 
 class MovegenSuite : public ::testing::TestWithParam<MovegenFixture> {};
 INSTANTIATE_TEST_SUITE_P(MovegenTest, MovegenSuite,

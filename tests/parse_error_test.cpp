@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 TEST(ParseErrorTest, DefaultConstructionResultsInValidParseError) {
-  chesskit::ParseError parse_error{};
+  chesskit::ParseError const parse_error{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::ParseError>(parse_error));
 }
 

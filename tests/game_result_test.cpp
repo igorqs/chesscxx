@@ -11,7 +11,7 @@
 #include <tuple>
 
 TEST(GameResultTest, DefaultConstructionResultsInValidGameResult) {
-  chesskit::GameResult game_result{};
+  chesskit::GameResult const game_result{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::GameResult>(game_result));
 }
 

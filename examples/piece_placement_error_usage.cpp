@@ -9,6 +9,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 auto parseSquare(std::string_view sv) {
   auto parsedSquare = chesskit::parse<chesskit::Square>(sv);
   assert(parsedSquare);
@@ -41,6 +42,7 @@ void createPiecePlacementAndPrint(const auto& piece_array) {
   auto piece_placement = chesskit::PiecePlacement::fromPieceArray(piece_array);
   printErrorOrValue(piece_placement);
 }
+}  // namespace
 
 int main() {
   std::println("{}", chesskit::PiecePlacementError::kMissingKing);

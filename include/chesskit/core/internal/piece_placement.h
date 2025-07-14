@@ -82,8 +82,7 @@ inline std::optional<CastlingSide> castlingSideFromUci(const PiecePlacement& pp,
   return std::nullopt;
 }
 
-inline std::optional<MoveError> promotionError(const PiecePlacement& pp,
-                                               const Piece& piece,
+inline std::optional<MoveError> promotionError(const Piece& piece,
                                                const Rank& destinationRank) {
   if (piece.type != PieceType::kPawn) {
     return MoveError::kNonPawnPromotionAttempt;
@@ -97,7 +96,7 @@ inline std::optional<MoveError> promotionError(const PiecePlacement& pp,
 }
 
 inline std::optional<MoveError> missingPromotionError(
-    const PiecePlacement& pp, const Piece& piece, const Rank& destinationRank) {
+    const Piece& piece, const Rank& destinationRank) {
   if (piece.type == PieceType::kPawn &&
       destinationRank == promotionRank(piece.color)) {
     return MoveError::kMissingPromotionPiece;
@@ -115,10 +114,10 @@ inline std::optional<MoveError> normalMoveError(const PiecePlacement& pp,
   if (!piece) return MoveError::kNoPieceAtOrigin;
 
   if (uci.promotion.has_value()) {
-    auto error = promotionError(pp, *piece, destination.rank);
+    auto error = promotionError(*piece, destination.rank);
     if (error) return error;
   } else {
-    auto error = missingPromotionError(pp, *piece, destination.rank);
+    auto error = missingPromotionError(*piece, destination.rank);
     if (error) return error;
   }
 

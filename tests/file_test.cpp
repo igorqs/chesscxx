@@ -12,7 +12,7 @@
 #include <tuple>
 
 TEST(FileTest, DefaultConstructionResultsInValidFile) {
-  chesskit::File file{};
+  chesskit::File const file{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::File>(file));
 }
 

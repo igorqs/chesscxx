@@ -4,6 +4,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -16,6 +17,7 @@ void parseAndPrint(std::string_view sv) {
   auto parsedCheckIndicator = chesskit::parse<chesskit::CheckIndicator>(sv);
   printErrorOrValue(parsedCheckIndicator);
 }
+}  // namespace
 
 int main() {
   chesskit::CheckIndicator check = chesskit::CheckIndicator::kCheck;

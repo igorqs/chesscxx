@@ -97,7 +97,8 @@ class PiecePlacement {
   friend class internal::PiecePlacementModifier;
 
   constexpr explicit PiecePlacement(const PieceArray& pieceArray) {
-    for (uint8_t i : std::views::iota(0, static_cast<int8_t>(kNumSquares))) {
+    for (uint8_t const i :
+         std::views::iota(0, static_cast<int8_t>(kNumSquares))) {
       auto sq = internal::createSquareFromIndex(i);
       assert(sq.has_value());
       updatePieceAt(*sq, pieceArray[i]);

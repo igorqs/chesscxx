@@ -25,7 +25,7 @@ constexpr auto kAllPieces = std::views::cartesian_product(
                             });
 
 TEST(PieceTest, DefaultConstructionResultsInValidPiece) {
-  chesskit::Piece piece;
+  chesskit::Piece const piece;
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::PieceType>(piece.type));
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::Color>(piece.color));
 }
@@ -38,8 +38,8 @@ TEST(PieceTest, ComparesEqualValuesSuccessfully) {
 TEST(PieceTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllPieces.size());
 
-  for (int i : std::views::iota(0, kSize)) {
-    for (int j : std::views::iota(0, kSize)) {
+  for (int const i : std::views::iota(0, kSize)) {
+    for (int const j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllPieces[i], kAllPieces[j]);
     }
   }

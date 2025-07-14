@@ -2,7 +2,8 @@ Checks: >
   misc-include-cleaner,
   clang-diagnostic-*,
   bugprone-*,
-  google-*
+  google-*,
+  misc-*
 WarningsAsErrors: ''
 HeaderFilterRegex: '/home/igorqs/code/chess_projects/chesskit/include/.*'
 CheckOptions:

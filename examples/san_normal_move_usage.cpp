@@ -11,6 +11,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -23,6 +24,7 @@ void parseAndPrint(std::string_view sv) {
   auto parsedSanMove = chesskit::parse<chesskit::SanNormalMove>(sv);
   printErrorOrValue(parsedSanMove);
 }
+}  // namespace
 
 int main() {
   chesskit::SanNormalMove normal_move = {

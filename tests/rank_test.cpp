@@ -12,7 +12,7 @@
 #include <tuple>
 
 TEST(RankTest, DefaultConstructionResultsInValidRank) {
-  chesskit::Rank rank{};
+  chesskit::Rank const rank{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::Rank>(rank));
 }
 

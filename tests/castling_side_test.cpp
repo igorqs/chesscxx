@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 TEST(CastlingSideTest, DefaultConstructionResultsInValidCastlingSide) {
-  chesskit::CastlingSide side{};
+  chesskit::CastlingSide const side{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::CastlingSide>(side));
 }
 

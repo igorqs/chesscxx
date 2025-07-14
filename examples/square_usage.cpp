@@ -6,6 +6,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -18,6 +19,7 @@ void parseAndPrint(std::string_view sv) {
   auto parsedSquare = chesskit::parse<chesskit::Square>(sv);
   printErrorOrValue(parsedSquare);
 }
+}  // namespace
 
 int main() {
   chesskit::Square a8{chesskit::File::kA, chesskit::Rank::k8};

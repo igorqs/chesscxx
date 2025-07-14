@@ -102,7 +102,7 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
 
     CastlingSide side;
     auto ptr = begin;
-    std::string_view input{begin, end};
+    std::string_view const input{begin, end};
 
     if (input.starts_with(queenside)) {
       ptr += queenside.size();

@@ -105,8 +105,8 @@ class CastlingRights {
   static constexpr uint8_t kInitialValue = (1 << kNumCastlingRights) - 1;
 
   static constexpr uint8_t index(const CastlingSide& side, const Color& color) {
-    uint8_t sideIndex = (side == CastlingSide::kKingside) ? 0 : 1;
-    uint8_t colorIndex = (color == Color::kWhite) ? 0 : 1;
+    uint8_t const sideIndex = (side == CastlingSide::kKingside) ? 0 : 1;
+    uint8_t const colorIndex = (color == Color::kWhite) ? 0 : 1;
 
     return (colorIndex << 1) | sideIndex;
   }

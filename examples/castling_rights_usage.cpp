@@ -6,6 +6,7 @@
 #include <cassert>
 #include <print>
 
+namespace {
 void printCastlingRights(const auto& rights) {
   bool whiteKingside = rights.canCastle(chesskit::CastlingSide::kKingside,
                                         chesskit::Color::kWhite);
@@ -24,6 +25,7 @@ void printCastlingRights(const auto& rights) {
                blackKingside, blackQueenside, rights.all(), rights.any(),
                rights.none());
 }
+}  // namespace
 
 int main() {
   chesskit::CastlingRights rights;

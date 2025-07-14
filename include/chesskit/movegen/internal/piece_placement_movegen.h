@@ -44,7 +44,7 @@ inline auto squaresWithout(PiecePlacement pp, const T& condition) {
 
 inline bool canSlideInDirection(const PieceType& type,
                                 const SlidingDirection& direction) {
-  bool isDiagonal = (direction == SlidingDirection::kDiagonal);
+  bool const isDiagonal = (direction == SlidingDirection::kDiagonal);
   return type == PieceType::kQueen ||
          type == (isDiagonal ? PieceType::kBishop : PieceType::kRook);
 }

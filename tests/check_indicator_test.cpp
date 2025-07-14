@@ -11,7 +11,7 @@
 #include <tuple>
 
 TEST(CheckIndicatorTest, DefaultConstructionResultsInValidCheckIndicator) {
-  chesskit::CheckIndicator check_indicator{};
+  chesskit::CheckIndicator const check_indicator{};
   EXPECT_TRUE(
       magic_enum::enum_contains<chesskit::CheckIndicator>(check_indicator));
 }

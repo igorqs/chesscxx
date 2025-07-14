@@ -8,6 +8,7 @@
 #include <cassert>
 #include <print>
 
+namespace {
 void printErrorOrValue(auto created_object) {
   if (created_object) {
     std::println("{}", created_object.value());
@@ -20,6 +21,7 @@ void createPositionAndPrint(const auto& params) {
   auto position = chesskit::Position::fromParams(params);
   printErrorOrValue(position);
 }
+}  // namespace
 
 int main() {
   std::println("{}", chesskit::PositionError::kEnPassantTargetSquareOccupied);

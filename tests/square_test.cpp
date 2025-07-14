@@ -24,7 +24,7 @@ constexpr auto kAllSquares =
     });
 
 TEST(SquareTest, DefaultConstructionIndexIsEqualZero) {
-  chesskit::Square square;
+  chesskit::Square const square;
   EXPECT_EQ(chesskit::index(square), 0);
 }
 
@@ -44,8 +44,8 @@ TEST(SquareTest, ComparesEqualValuesSuccessfully) {
 TEST(SquareTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllSquares.size());
 
-  for (int i : std::views::iota(0, kSize)) {
-    for (int j : std::views::iota(0, kSize)) {
+  for (int const i : std::views::iota(0, kSize)) {
+    for (int const j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllSquares[i], kAllSquares[j]);
     }
   }

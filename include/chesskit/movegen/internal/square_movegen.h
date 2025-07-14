@@ -33,9 +33,9 @@ inline auto validMoves(Square sq) {
 
 inline Square diagonalProjection(const Square& sq, const Square& corner) {
   SquareOffset offset = calculateOffset(corner, sq);
-  bool sameSign =
+  bool const sameSign =
       std::signbit(offset.fileOffset) == std::signbit(offset.rankOffset);
-  int8_t multiplier = sameSign ? 1 : -1;
+  int8_t const multiplier = sameSign ? 1 : -1;
 
   if (std::abs(offset.fileOffset) < std::abs(offset.rankOffset)) {
     offset.rankOffset = offset.fileOffset * multiplier;

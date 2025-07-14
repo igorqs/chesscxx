@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 TEST(DrawReasonTest, DefaultConstructionResultsInValidDrawReason) {
-  chesskit::DrawReason draw_reason{};
+  chesskit::DrawReason const draw_reason{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::DrawReason>(draw_reason));
 }
 

@@ -28,7 +28,7 @@ class Parser<GameResult, const char*, parse_as::Default> {
                          {"0-1", GameResult::kBlackWins},
                          {"1/2-1/2", GameResult::kDraw}}};
 
-    std::string_view sv(begin, end);
+    std::string_view const sv(begin, end);
 
     for (const auto& [pattern, result] : kGameResults) {
       if (sv.starts_with(pattern)) {

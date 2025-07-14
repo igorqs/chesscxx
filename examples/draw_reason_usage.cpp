@@ -7,6 +7,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printDrawReason(std::optional<chesskit::DrawReason> draw_reason) {
   assert(draw_reason);
   std::println("{}", draw_reason.value());
@@ -18,6 +19,7 @@ void parseFenAndPrintDrawReason(std::string_view sv) {
   assert(parsedGame);
   printDrawReason(parsedGame.value().drawReason());
 }
+}  // namespace
 
 int main() {
   std::println("{}", chesskit::DrawReason::kStalemate);

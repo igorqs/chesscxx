@@ -24,7 +24,7 @@ int main() {
       std::find_if_not(buffer.rbegin(), buffer.rend(),
                        [](unsigned char ch) { return std::isspace(ch); });
 
-  std::string_view sv(buffer.begin(), rit.base());
+  std::string_view const sv(buffer.begin(), rit.base());
 
   for (auto it = sv.begin(); it != sv.end();) {
     auto result = chesskit::parseFrom<chesskit::Game>(it, sv.end());

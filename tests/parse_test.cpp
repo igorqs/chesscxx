@@ -101,7 +101,7 @@ TEST(ParseTest, ParseFromFailsIfParserFails) {
   using chesskit::parseFrom;
   using chesskit::PieceType;
 
-  std::string_view input = "x";
+  std::string_view const input = "x";
   auto result =
       parseFrom<PieceType>(input.begin(), input.end(), PortugueseLowercase{});
   EXPECT_EQ(result.error(), ParseError::kInvalidPieceType);
@@ -145,7 +145,7 @@ TEST(ParseTest, ParseFailsIfParserFails) {
   using chesskit::ParseError;
   using chesskit::PieceType;
 
-  std::string_view input = "x";
+  std::string_view const input = "x";
   auto result = parse<PieceType>(input, PortugueseLowercase{});
   EXPECT_EQ(result.error(), ParseError::kInvalidPieceType);
 

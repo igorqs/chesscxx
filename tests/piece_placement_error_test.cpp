@@ -8,7 +8,7 @@
 
 TEST(PiecePlacementErrorTest,
      DefaultConstructionResultsInValidPiecePlacementError) {
-  chesskit::PiecePlacementError error{};
+  chesskit::PiecePlacementError const error{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::PiecePlacementError>(error));
 }
 

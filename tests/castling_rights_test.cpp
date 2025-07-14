@@ -26,7 +26,7 @@ constexpr static auto kAllCastlingRights =
     });
 
 TEST(CastlingRightsTest, DefaultConstructionInitializeWithAllCastlingEnabled) {
-  chesskit::CastlingRights rights;
+  chesskit::CastlingRights const rights;
   EXPECT_TRUE(rights.all());
 }
 
@@ -43,8 +43,8 @@ TEST(CastlingRightsTest, ComparesEqualValuesSuccessfully) {
 
 TEST(CastlingRightsTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllCastlingRights.size());
-  for (int i : std::views::iota(0, kSize)) {
-    for (int j : std::views::iota(0, kSize)) {
+  for (int const i : std::views::iota(0, kSize)) {
+    for (int const j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllCastlingRights[i], kAllCastlingRights[j]);
     }
   }
@@ -95,7 +95,7 @@ TEST(CastlingRightsTest, EnableHandlesBySideAndColorCorrectly) {
 
       enum_for_each<chesskit::Color>([&](chesskit::Color c) {
         enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-          bool expected = (c == color && s == side);
+          bool const expected = (c == color && s == side);
           EXPECT_EQ(rights.canCastle(s, c), expected);
         });
       });
@@ -112,7 +112,7 @@ TEST(CastlingRightsTest, EnableHandlesByColorCorrectly) {
 
     enum_for_each<chesskit::Color>([&](chesskit::Color c) {
       enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-        bool expected = (c == color);
+        bool const expected = (c == color);
         EXPECT_EQ(rights.canCastle(s, c), expected);
       });
     });
@@ -135,7 +135,7 @@ TEST(CastlingRightsTest, DisableHandlesBySideAndColorCorrectly) {
 
       enum_for_each<chesskit::Color>([&](chesskit::Color c) {
         enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-          bool expected = (c != color || s != side);
+          bool const expected = (c != color || s != side);
           EXPECT_EQ(rights.canCastle(s, c), expected);
         });
       });
@@ -152,7 +152,7 @@ TEST(CastlingRightsTest, DisableHandlesByColorCorrectly) {
 
     enum_for_each<chesskit::Color>([&](chesskit::Color c) {
       enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-        bool expected = (c != color);
+        bool const expected = (c != color);
         EXPECT_EQ(rights.canCastle(s, c), expected);
       });
     });

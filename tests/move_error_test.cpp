@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 TEST(MoveErrorTest, DefaultConstructionResultsInValidMoveError) {
-  chesskit::MoveError move_error{};
+  chesskit::MoveError const move_error{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::MoveError>(move_error));
 }
 

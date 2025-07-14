@@ -48,12 +48,14 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
   }
 };
 
+namespace {
 void parsePortugueseAndPrint(std::string_view sv, auto tag) {
   auto piece_type = chesskit::parse<chesskit::PieceType>(sv, tag);
   assert(piece_type);
 
   std::println("{}", piece_type.value());
 }
+}  // namespace
 
 int main() {
   parsePortugueseAndPrint("C", PortugueseUppercase{});

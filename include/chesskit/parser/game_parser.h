@@ -101,7 +101,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
     }
 
     auto sv = std::string_view(ptr, end);
-    bool isFen =
+    bool const isFen =
         sv.starts_with("FEN") && (ptr + 3 == end || !isSymbolToken(*(ptr + 3)));
 
     ptr = trimSymbolToken(ptr, end);
@@ -226,7 +226,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
       if (isDigit(*ptr)) {
         auto skipped = std::find_if_not(ptr + 1, end, isDigit);
 
-        bool wasNumber = (skipped == end) || isSkippable(*skipped);
+        bool const wasNumber = (skipped == end) || isSkippable(*skipped);
 
         if (!wasNumber) break;
         ptr = skipped;

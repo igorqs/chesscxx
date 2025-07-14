@@ -5,6 +5,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{:fen}", parsedValue.value());
@@ -23,6 +24,7 @@ void parseAsFenAndPrint(std::string_view sv) {
       chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
   printErrorOrValue(parsedGame);
 }
+}  // namespace
 
 int main() {
   std::println("{}", chesskit::ParseError::kInvalidRank);

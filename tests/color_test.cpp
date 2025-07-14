@@ -11,7 +11,7 @@
 #include <tuple>
 
 TEST(ColorTest, DefaultConstructionResultsInValidColor) {
-  chesskit::Color color{};
+  chesskit::Color const color{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::Color>(color));
 }
 

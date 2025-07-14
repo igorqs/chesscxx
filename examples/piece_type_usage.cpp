@@ -4,6 +4,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -35,6 +36,7 @@ void parseAsLowercaseAndPrint(std::string_view sv) {
   printErrorOrValue(parsedPieceType);
   printErrorOrValue(parsedPromotablePieceType);
 }
+}  // namespace
 
 int main() {
   chesskit::PieceType piece_type = chesskit::PieceType::kQueen;

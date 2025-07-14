@@ -10,6 +10,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -22,6 +23,7 @@ void parseAndPrint(std::string_view sv) {
   auto parsedPiecePlacement = chesskit::parse<chesskit::PiecePlacement>(sv);
   printErrorOrValue(parsedPiecePlacement);
 }
+}  // namespace
 
 int main() {
   chesskit::PiecePlacement pp;
@@ -35,7 +37,7 @@ int main() {
   for (const auto& [color, locationsByPieceType] : pp.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
       for (const chesskit::Square& location : locations) {
-        chesskit::Piece piece = {type, color};
+        chesskit::Piece const piece = {type, color};
         auto location_index = chesskit::index(location);
         seen.set(location_index);
         assert(pp.pieceArray().at(location_index) == piece);

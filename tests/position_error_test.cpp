@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 TEST(PositionErrorTest, DefaultConstructionResultsInValidPositionError) {
-  chesskit::PositionError error{};
+  chesskit::PositionError const error{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::PositionError>(error));
 }
 

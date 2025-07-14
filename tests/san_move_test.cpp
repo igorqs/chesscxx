@@ -92,7 +92,7 @@ const static auto kTestSanMoves = [] {
 // SanCastlingMove
 
 TEST(SanCastlingMoveTest, DefaultConstructionResultsInValidSanCastlingMove) {
-  chesskit::SanCastlingMove san_castling;
+  chesskit::SanCastlingMove const san_castling;
   EXPECT_TRUE(
       magic_enum::enum_contains<chesskit::CastlingSide>(san_castling.side));
   EXPECT_EQ(san_castling.check_indicator, std::nullopt);
@@ -144,7 +144,7 @@ TEST(SanCastlingMoveTest, ParseHandlesInvalidInputCorrectly) {
 // SanNormalMove
 
 TEST(SanNormalMoveTest, DefaultConstructionResultsInValidSanNormalMove) {
-  chesskit::SanNormalMove san_normal;
+  chesskit::SanNormalMove const san_normal;
   EXPECT_TRUE(
       magic_enum::enum_contains<chesskit::PieceType>(san_normal.pieceType));
   EXPECT_EQ(san_normal.origin.file, std::nullopt);

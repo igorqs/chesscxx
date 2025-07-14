@@ -7,8 +7,7 @@
 #include <print>
 #include <string_view>
 
-void printGameOrMoveError() {}
-
+namespace {
 auto parseSan(std::string_view sv) {
   auto parsed_move = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsed_move);
@@ -23,6 +22,7 @@ void moveAndPrint(auto& game, const auto& move) {
     std::println("{} -> {}", move, move_result.error());
   }
 }
+}  // namespace
 
 int main() {
   std::println("{}", chesskit::MoveError::kMissingPromotionPiece);

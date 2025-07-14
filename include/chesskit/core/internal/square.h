@@ -18,8 +18,8 @@ struct SquareOffset {
 
 inline constexpr std::optional<Square> createSquareFromIndex(
     const uint8_t& index) {
-  uint8_t rankIndex = index / kNumFiles;
-  uint8_t fileIndex = index % kNumFiles;
+  uint8_t const rankIndex = index / kNumFiles;
+  uint8_t const fileIndex = index % kNumFiles;
   auto file = toFile(fileIndex);
   auto rank = toRank(rankIndex);
 

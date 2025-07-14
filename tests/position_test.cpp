@@ -123,6 +123,7 @@ struct YAML::convert<InvalidFixture> {
   }
 };
 
+namespace {
 auto GetConfig() { return YAML::LoadFile("data/position.yaml"); }
 
 auto GetDefault() { return GetConfig()["default"].as<ValidFixture>(); }
@@ -164,6 +165,7 @@ auto GetInvalidParamsInputs() {
 auto GetInvalidInputs() {
   return GetConfig()["invalid_inputs"].as<std::vector<InvalidFixture>>();
 }
+}  // namespace
 
 class ValidInputSuite : public ::testing::TestWithParam<ValidFixture> {};
 INSTANTIATE_TEST_SUITE_P(PositionTest, ValidInputSuite,
@@ -333,7 +335,7 @@ TEST_P(InvalidInputSuite, ParseHandlesInvalidInputCorrectly) {
 }
 
 TEST(PositionParamsTest, DefaultConstructionCreatesDefaultStartingPosition) {
-  chesskit::Position::Params params;
+  chesskit::Position::Params const params;
   auto expected = GetDefault().params();
 
   EXPECT_EQ(params.piecePlacement, expected.piecePlacement);
@@ -345,7 +347,7 @@ TEST(PositionParamsTest, DefaultConstructionCreatesDefaultStartingPosition) {
 }
 
 TEST(PositionTest, DefaultConstructionCreatesDefaultStartingPosition) {
-  chesskit::Position position;
+  chesskit::Position const position;
   auto expected = GetDefault().params();
 
   EXPECT_EQ(position.piecePlacement(), expected.piecePlacement);

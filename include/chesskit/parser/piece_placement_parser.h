@@ -29,7 +29,7 @@ parsePieceArray(const char* begin, const char* end) {
 
   PiecePlacement::PieceArray pieceArray;
   uint8_t pieceCounter = 0;
-  std::string_view sv = std::string_view(begin, end);
+  std::string_view const sv = std::string_view(begin, end);
 
   for (const auto& rank : sv | std::views::split('/')) {
     uint8_t missingPieces = kNumFiles;

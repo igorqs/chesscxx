@@ -7,6 +7,7 @@
 #include <functional>
 #include <string_view>
 
+namespace {
 chesskit::SanMove parseSanMove(std::string_view sv) {
   auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsedSanMove);
@@ -29,15 +30,16 @@ void assertNotEqual(const auto& lhs, const auto& rhs) {
   // These hashes may collide but are likely different
   assert(std::hash<chesskit::Game>{}(lhs) != std::hash<chesskit::Game>{}(rhs));
 }
+}  // namespace
 
 int main() {
   chesskit::Game uninitialized;
 
-  chesskit::Game standard = chesskit::Game(parsePosition(
+  chesskit::Game const standard = chesskit::Game(parsePosition(
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
   assertEqual(uninitialized, standard);
 
-  chesskit::Game custom = chesskit::Game(parsePosition(
+  chesskit::Game const custom = chesskit::Game(parsePosition(
       "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"));
   assertNotEqual(uninitialized, custom);
 

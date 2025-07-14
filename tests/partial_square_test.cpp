@@ -26,7 +26,7 @@ constexpr static auto kAllPartialSquares =
     });
 
 TEST(PartialSquareTest, DefaultConstructionResultInEmptyMembers) {
-  chesskit::PartialSquare partial;
+  chesskit::PartialSquare const partial;
   EXPECT_EQ(partial.file, std::nullopt);
   EXPECT_EQ(partial.rank, std::nullopt);
 }

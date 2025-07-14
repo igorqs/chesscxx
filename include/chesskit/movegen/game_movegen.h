@@ -19,7 +19,7 @@ namespace chesskit {
 /// @param game The game whose current position is used to generate moves.
 /// @return A generator yielding legal moves in UCI format.
 /// @note The moves are not guaranteed to be generated in any specific order.
-std::generator<UciMove> legalUciMoves(const Game& game) {
+inline std::generator<UciMove> legalUciMoves(const Game& game) {
   return internal::legalMoves<UciMove>(game.currentPosition());
 }
 
@@ -28,7 +28,7 @@ std::generator<UciMove> legalUciMoves(const Game& game) {
 /// @param game The game whose current position is used to generate moves.
 /// @return A generator yielding legal moves in SAN format.
 /// @note The moves are not guaranteed to be generated in any specific order.
-std::generator<SanMove> legalSanMoves(const Game& game) {
+inline std::generator<SanMove> legalSanMoves(const Game& game) {
   return internal::legalMoves<SanMove>(game.currentPosition());
 }
 

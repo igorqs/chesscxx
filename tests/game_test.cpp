@@ -499,6 +499,7 @@ struct YAML::convert<InvalidFixture> {
   }
 };
 
+namespace {
 auto GetConfig() { return YAML::LoadFile("data/game.yaml"); }
 
 auto GetPositionFixtures() {
@@ -566,6 +567,7 @@ auto GetInvalidFenInputs() {
 auto GetInvalidPgnInputs() {
   return GetConfig()["invalid_pgn_inputs"].as<std::vector<InvalidFixture>>();
 }
+}  // namespace
 
 class PositionSuite : public ::testing::TestWithParam<PositionFixture> {};
 INSTANTIATE_TEST_SUITE_P(PositionTest, PositionSuite,
@@ -945,8 +947,8 @@ TEST(GameTest, ResetCorrectlyForDefaultGame) {
 }
 
 TEST(GameTest, DefaultConstructionResultsInDefaultsGame) {
-  chesskit::Game game;
-  chesskit::Position default_position;
+  chesskit::Game const game;
+  chesskit::Position const default_position;
 
   EXPECT_EQ(game.initialPosition(), game.currentPosition());
   EXPECT_EQ(game.initialPosition(), default_position);
@@ -970,8 +972,8 @@ TEST(GameTest, DefaultConstructionResultsInDefaultsGame) {
 }
 
 TEST(GameTest, ConstructFromInitialPositionCorrectly) {
-  chesskit::Position default_position;
-  chesskit::Game game(default_position);
+  chesskit::Position const default_position;
+  chesskit::Game const game(default_position);
 
   EXPECT_EQ(game.initialPosition(), game.currentPosition());
   EXPECT_EQ(game.initialPosition(), default_position);

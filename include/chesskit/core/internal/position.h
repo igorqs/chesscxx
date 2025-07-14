@@ -86,7 +86,8 @@ inline std::expected<PartialSquare, MoveError> partialOriginFromMove(
 
   if (piece->type == PieceType::kPawn) {
     auto capturedPiece = pieceAt(position.piecePlacement(), destination);
-    bool isEnPassantCapture = position.enPassantTargetSquare() == destination;
+    bool const isEnPassantCapture =
+        position.enPassantTargetSquare() == destination;
     if (!capturedPiece && !isEnPassantCapture) return PartialSquare{};
     return PartialSquare(origin.file, std::nullopt);
   }
@@ -144,8 +145,8 @@ inline std::optional<MoveError> overflowError(const Position& position,
   auto destinationPiece = pieceAt(position.piecePlacement(), move.destination);
   auto originPiece = pieceAt(position.piecePlacement(), move.origin);
   if (!originPiece) return MoveError::kNoPieceAtOrigin;
-  bool isPawnMove = originPiece->type == PieceType::kPawn;
-  bool isNormalCapture = destinationPiece.has_value();
+  bool const isPawnMove = originPiece->type == PieceType::kPawn;
+  bool const isNormalCapture = destinationPiece.has_value();
 
   if (!isPawnMove && !isNormalCapture &&
       position.halfmoveClock() == Position::kMaxHalfmoveClock) {

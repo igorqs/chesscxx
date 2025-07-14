@@ -111,8 +111,8 @@ class PositionModifier {
       return std::unexpected(MoveError::kWrongPieceColorAtOrigin);
     }
 
-    bool isPawnMove = originPiece->type == PieceType::kPawn;
-    bool isNormalCapture = destinationPiece.has_value();
+    bool const isPawnMove = originPiece->type == PieceType::kPawn;
+    bool const isNormalCapture = destinationPiece.has_value();
     auto partialOrigin = partialOriginFromMove(position, rawMoveFromUci(uci));
 
     auto result =
@@ -134,7 +134,7 @@ class PositionModifier {
       }
 
       // Handle en passant capture
-      bool isEnPassantCapture =
+      bool const isEnPassantCapture =
           isPawnMove && position.enPassantTargetSquare() == uci.destination;
       if (isEnPassantCapture) {
         if (auto capturedPawnSquare =
@@ -193,9 +193,10 @@ class PositionModifier {
     const auto& origin = move.origin;
     const auto& dest = move.destination;
 
-    bool isDoublePush = isPawnStartingRank(origin.rank, activeColor) &&
-                        isDoublePawnPushTargetRank(dest.rank, activeColor) &&
-                        origin.file == dest.file;
+    bool const isDoublePush =
+        isPawnStartingRank(origin.rank, activeColor) &&
+        isDoublePawnPushTargetRank(dest.rank, activeColor) &&
+        origin.file == dest.file;
 
     if (!isDoublePush) return;
 
@@ -271,8 +272,8 @@ class PositionModifier {
     const auto opponent_color = !mover_color;
     auto& pp = position.piecePlacement_;
 
-    bool wasPromotion = move.pieceType == PieceType::kPawn &&
-                        destination.rank == promotionRank(mover_color);
+    bool const wasPromotion = move.pieceType == PieceType::kPawn &&
+                              destination.rank == promotionRank(mover_color);
 
     if (wasPromotion) {
       auto piece = Piece(PieceType::kPawn, mover_color);

@@ -128,6 +128,7 @@ struct YAML::convert<InvalidFixture> {
   }
 };
 
+namespace {
 auto GetConfig() { return YAML::LoadFile("data/piece_placement.yaml"); }
 
 auto GetDefault() { return GetConfig()["default"].as<ValidFixture>(); }
@@ -152,6 +153,7 @@ auto GetInvalidPieceArrayInputs() {
 auto GetInvalidInputs() {
   return GetConfig()["invalid_inputs"].as<std::vector<InvalidFixture>>();
 }
+}  // namespace
 
 class ValidInputSuite : public ::testing::TestWithParam<ValidFixture> {};
 INSTANTIATE_TEST_SUITE_P(PiecePlacementTest, ValidInputSuite,
@@ -199,7 +201,7 @@ TEST_P(ValidInputSuite, PieceArrayAndPieceLocationsAreConsistent) {
   for (const auto& [color, locationsByPieceType] : pp.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
       for (const chesskit::Square& location : locations) {
-        chesskit::Piece piece = {type, color};
+        chesskit::Piece const piece = {type, color};
         auto location_index = chesskit::index(location);
         seen.set(location_index);
         EXPECT_EQ(pp.pieceArray().at(location_index), piece);
@@ -251,7 +253,7 @@ TEST_P(InvalidInputSuite, ParseHandlesInvalidInputCorrectly) {
 }
 
 TEST(PiecePlacementTest, DefaultConstructionCreatesDefaultPieceArray) {
-  chesskit::PiecePlacement piece_placement;
+  chesskit::PiecePlacement const piece_placement;
   EXPECT_EQ(GetDefault().piece_array(), piece_placement.pieceArray());
 }
 

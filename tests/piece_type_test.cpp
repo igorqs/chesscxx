@@ -38,7 +38,7 @@ TEST(PieceTypeCastingTest, LowerRoundTripConversionIsSuccessful) {
 // PieceType
 
 TEST(PieceTypeTest, DefaultConstructionResultsInValidPieceType) {
-  chesskit::PieceType piece_type{};
+  chesskit::PieceType const piece_type{};
   EXPECT_TRUE(magic_enum::enum_contains<chesskit::PieceType>(piece_type));
 }
 
@@ -112,7 +112,7 @@ TEST(PieceTypeTest, ParseLowerHandlesInvalidInputCorrectly) {
 
 TEST(PromotablePieceTypeTest,
      DefaultConstructionResultsInValidPromotablePieceType) {
-  chesskit::PromotablePieceType promotion{};
+  chesskit::PromotablePieceType const promotion{};
   EXPECT_TRUE(
       magic_enum::enum_contains<chesskit::PromotablePieceType>(promotion));
 }

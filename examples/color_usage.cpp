@@ -4,6 +4,7 @@
 #include <print>
 #include <string_view>
 
+namespace {
 void printErrorOrValue(auto parsedValue) {
   if (parsedValue) {
     std::println("{}", parsedValue.value());
@@ -16,6 +17,7 @@ void parseAndPrint(std::string_view sv) {
   auto parsedColor = chesskit::parse<chesskit::Color>(sv);
   printErrorOrValue(parsedColor);
 }
+}  // namespace
 
 int main() {
   chesskit::Color white = chesskit::Color::kWhite;

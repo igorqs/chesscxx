@@ -24,8 +24,8 @@ namespace chesskit {
 
 namespace internal {
 
-std::expected<ParseResult<uint32_t, const char*>, ParseError> parseNumber(
-    const char* begin, const char* end) {
+inline std::expected<ParseResult<uint32_t, const char*>, ParseError>
+parseNumber(const char* begin, const char* end) {
   uint32_t value{};
   auto [ptr, ec] = std::from_chars(begin, end, value);
 
@@ -38,7 +38,7 @@ std::expected<ParseResult<uint32_t, const char*>, ParseError> parseNumber(
   return std::unexpected(ParseError::kInvalidNumber);
 }
 
-std::expected<ParseResult<Position::Params, const char*>, ParseError>
+inline std::expected<ParseResult<Position::Params, const char*>, ParseError>
 parsePositionParams(const char* begin, const char* end) {
   auto isSpace = [&end](const auto& it) { return it != end && *it == ' '; };
   auto isDash = [&end](const auto& it) { return it != end && *it == '-'; };
