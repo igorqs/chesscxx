@@ -26,8 +26,9 @@ class Parser<CastlingRights, const char*, parse_as::Default> {
     constexpr static std::string_view kCastlingSymbols = "KQkq";
     constexpr static auto kSize = static_cast<int>(kCastlingSymbols.size());
 
-    if (begin == end)
+    if (begin == end) {
       return std::unexpected(ParseError::kInvalidCastlingAvailability);
+    }
 
     std::bitset<CastlingRights::kNumCastlingRights> bits;
     static_assert(kSize == bits.size());
@@ -41,8 +42,9 @@ class Parser<CastlingRights, const char*, parse_as::Default> {
       }
     }
 
-    if (bits.none())
+    if (bits.none()) {
       return std::unexpected(ParseError::kInvalidCastlingAvailability);
+    }
 
     return ParseResult{CastlingRights(bits), begin};
   }

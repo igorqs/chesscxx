@@ -23,8 +23,9 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
 
     auto index = allowed.find(*begin);
 
-    if (index == std::string_view::npos)
+    if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
+    }
 
     return ParseResult{static_cast<chesskit::PieceType>(index), begin + 1};
   }
@@ -41,8 +42,9 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
 
     auto index = allowed.find(*begin);
 
-    if (index == std::string_view::npos)
+    if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
+    }
 
     return ParseResult{static_cast<chesskit::PieceType>(index), begin + 1};
   }

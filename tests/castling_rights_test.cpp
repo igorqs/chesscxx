@@ -43,9 +43,11 @@ TEST(CastlingRightsTest, ComparesEqualValuesSuccessfully) {
 
 TEST(CastlingRightsTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllCastlingRights.size());
-  for (int i : std::views::iota(0, kSize))
-    for (int j : std::views::iota(0, kSize))
+  for (int i : std::views::iota(0, kSize)) {
+    for (int j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllCastlingRights[i], kAllCastlingRights[j]);
+    }
+  }
 }
 
 TEST(CastlingRightsTest, CanCastleMatchesBitset) {
@@ -164,11 +166,11 @@ TEST(CastlingRightsTest, DisableHandlesAllCorrectly) {
 }
 
 TEST(CastlingRightsTest, HashProducesUniqueValues) {
-  std::unordered_set<size_t> hashs;
+  std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kAllCastlingRights, [&](const auto& rights) {
     EXPECT_TRUE(
-        hashs.insert(std::hash<chesskit::CastlingRights>{}(rights)).second);
+        hashes.insert(std::hash<chesskit::CastlingRights>{}(rights)).second);
   });
 }
 

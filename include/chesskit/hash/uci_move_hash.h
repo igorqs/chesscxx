@@ -10,8 +10,8 @@
 #include <optional>
 
 #include "../core/uci_move.h"
-#include "../square.h"
 #include "../piece_type.h"
+#include "../square.h"
 
 /// @ingroup UciMoveHelpers
 /// @brief hash support for chesskit::UciMove

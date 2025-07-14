@@ -106,11 +106,13 @@ inline std::expected<PartialSquare, MoveError> partialOriginFromMove(
   if (total == 0) return std::unexpected(MoveError::kNoValidOrigin);
   if (total == 1) return PartialSquare{};
 
-  if (fileCounter[origin.file] == 1)
+  if (fileCounter[origin.file] == 1) {
     return PartialSquare(origin.file, std::nullopt);
+  }
 
-  if (rankCounter[origin.rank] == 1)
+  if (rankCounter[origin.rank] == 1) {
     return PartialSquare(std::nullopt, origin.rank);
+  }
 
   return PartialSquare(origin.file, origin.rank);
 }
@@ -125,8 +127,9 @@ inline std::optional<MoveError> uciMoveError(const Position& position,
 
   auto possibleOrigins = piecesReaching(position, destination, *piece);
 
-  if (std::ranges::find(possibleOrigins, origin) == possibleOrigins.end())
+  if (std::ranges::find(possibleOrigins, origin) == possibleOrigins.end()) {
     return MoveError::kIllegalMove;
+  }
 
   return std::nullopt;
 }
@@ -134,28 +137,33 @@ inline std::optional<MoveError> uciMoveError(const Position& position,
 inline std::optional<MoveError> overflowError(const Position& position,
                                               const RawMove& move) {
   if (position.activeColor() == Color::kBlack &&
-      position.fullmoveNumber() == Position::kMaxFullmoveNumber)
+      position.fullmoveNumber() == Position::kMaxFullmoveNumber) {
     return MoveError::kFullmoveNumberOverflow;
+  }
 
   auto destinationPiece = pieceAt(position.piecePlacement(), move.destination);
   auto originPiece = pieceAt(position.piecePlacement(), move.origin);
+  if (!originPiece) return MoveError::kNoPieceAtOrigin;
   bool isPawnMove = originPiece->type == PieceType::kPawn;
   bool isNormalCapture = destinationPiece.has_value();
 
   if (!isPawnMove && !isNormalCapture &&
-      position.halfmoveClock() == Position::kMaxHalfmoveClock)
+      position.halfmoveClock() == Position::kMaxHalfmoveClock) {
     return MoveError::kHalfmoveClockOverflow;
+  }
 
   return std::nullopt;
 }
 
 inline std::optional<MoveError> overflowError(const Position& position) {
   if (position.activeColor() == Color::kBlack &&
-      position.fullmoveNumber() == Position::kMaxFullmoveNumber)
+      position.fullmoveNumber() == Position::kMaxFullmoveNumber) {
     return MoveError::kFullmoveNumberOverflow;
+  }
 
-  if (position.halfmoveClock() == Position::kMaxHalfmoveClock)
+  if (position.halfmoveClock() == Position::kMaxHalfmoveClock) {
     return MoveError::kHalfmoveClockOverflow;
+  }
 
   return std::nullopt;
 }

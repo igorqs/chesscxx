@@ -44,9 +44,11 @@ TEST(SquareTest, ComparesEqualValuesSuccessfully) {
 TEST(SquareTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllSquares.size());
 
-  for (int i : std::views::iota(0, kSize))
-    for (int j : std::views::iota(0, kSize))
+  for (int i : std::views::iota(0, kSize)) {
+    for (int j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllSquares[i], kAllSquares[j]);
+    }
+  }
 }
 
 TEST(SquareTest, IndexOrderIsRowMajor) {
@@ -58,10 +60,10 @@ TEST(SquareTest, IndexOrderIsRowMajor) {
 }
 
 TEST(SquareTest, HashProducesUniqueValues) {
-  std::unordered_set<size_t> hashs;
+  std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kAllSquares, [&](const auto& sq) {
-    EXPECT_TRUE(hashs.insert(std::hash<chesskit::Square>{}(sq)).second);
+    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Square>{}(sq)).second);
   });
 }
 

@@ -4,6 +4,7 @@
 // IWYU pragma: private, include "../piece_placement.h"
 
 #include <array>
+#include <cstddef>
 #include <format>
 #include <ranges>
 #include <string_view>
@@ -47,7 +48,7 @@ struct std::formatter<chesskit::PiecePlacement>
                   chesskit::internal::FenSpec) const {
     auto out = ctx.out();
 
-    for (int rank = 0; rank < chesskit::kNumRanks; ++rank) {
+    for (std::size_t rank = 0; rank < chesskit::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '/';
       auto begin = pp.pieceArray().begin() + rank * chesskit::kNumFiles;
       auto end = begin + chesskit::kNumFiles;
@@ -61,7 +62,7 @@ struct std::formatter<chesskit::PiecePlacement>
                   chesskit::internal::AsciiSpec) const {
     auto out = ctx.out();
 
-    for (int rank = 0; rank < chesskit::kNumRanks; ++rank) {
+    for (std::size_t rank = 0; rank < chesskit::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '\n';
       auto begin = pp.pieceArray().begin() + rank * chesskit::kNumFiles;
       auto end = begin + chesskit::kNumFiles;

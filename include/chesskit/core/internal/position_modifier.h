@@ -85,8 +85,9 @@ class PositionModifier {
 
     if (castlingSide) return executeCastling(position, *castlingSide);
 
-    if (auto err = uciMoveError(position, rawMoveFromUci(move)))
+    if (auto err = uciMoveError(position, rawMoveFromUci(move))) {
       return std::unexpected(*err);
+    }
 
     return executeNormalMove(position, move);
   }
@@ -98,15 +99,17 @@ class PositionModifier {
     const auto& enPassantFile = position.enPassantFile_;
     const auto& halfmoveClock = position.halfmoveClock();
 
-    if (auto error = overflowError(position, rawMoveFromUci(uci)))
+    if (auto error = overflowError(position, rawMoveFromUci(uci))) {
       return std::unexpected(error.value());
+    }
 
     auto destinationPiece = pieceAt(position.piecePlacement_, uci.destination);
 
     auto originPiece = pieceAt(position.piecePlacement_, uci.origin);
     if (!originPiece) return std::unexpected(MoveError::kNoPieceAtOrigin);
-    if (originPiece->color != activeColor)
+    if (originPiece->color != activeColor) {
       return std::unexpected(MoveError::kWrongPieceColorAtOrigin);
+    }
 
     bool isPawnMove = originPiece->type == PieceType::kPawn;
     bool isNormalCapture = destinationPiece.has_value();
@@ -126,18 +129,20 @@ class PositionModifier {
           .previousHalfmoveClock = halfmoveClock,
       };
 
-      if (isNormalCapture)
+      if (isNormalCapture) {
         moveRecord.capturedPieceType = destinationPiece->type;
+      }
 
       // Handle en passant capture
       bool isEnPassantCapture =
           isPawnMove && position.enPassantTargetSquare() == uci.destination;
       if (isEnPassantCapture) {
-        moveRecord.isEnPassantCapture = true;
-        const auto& capturedPawnSquare =
-            enPassantCapturedPawnSquare(uci.destination, activeColor);
-        PiecePlacementModifier::setPieceAt(position.piecePlacement_,
-                                           *capturedPawnSquare, std::nullopt);
+        if (auto capturedPawnSquare =
+                enPassantCapturedPawnSquare(uci.destination, activeColor)) {
+          moveRecord.isEnPassantCapture = true;
+          PiecePlacementModifier::setPieceAt(position.piecePlacement_,
+                                             *capturedPawnSquare, std::nullopt);
+        }
       }
 
       // Update castling rights
@@ -158,8 +163,9 @@ class PositionModifier {
         position.incrementHalfmoveClock();
       }
 
-      if (previousCastlingRights != castlingRights)
+      if (previousCastlingRights != castlingRights) {
         moveRecord.previousCastlingRights = previousCastlingRights;
+      }
 
       return moveRecord;
     }
@@ -169,10 +175,12 @@ class PositionModifier {
 
   static void updateCastlingRights(Position& position, const RawMove& move) {
     for (auto color : {Color::kBlack, Color::kWhite}) {
-      if (affectsKingsideCastling(move, color))
+      if (affectsKingsideCastling(move, color)) {
         position.castlingRights_.disable(CastlingSide::kKingside, color);
-      if (affectsQueensideCastling(move, color))
+      }
+      if (affectsQueensideCastling(move, color)) {
         position.castlingRights_.disable(CastlingSide::kQueenside, color);
+      }
     }
   }
 
@@ -200,11 +208,13 @@ class PositionModifier {
     const auto& activeColor = position.activeColor();
     const auto& enPassantFile = position.enPassantFile_;
 
-    if (auto error = overflowError(position))
+    if (auto error = overflowError(position)) {
       return std::unexpected(error.value());
+    }
 
-    if (!castlingRights.canCastle(side, activeColor))
+    if (!castlingRights.canCastle(side, activeColor)) {
       return std::unexpected(MoveError::kKingOrRookMoved);
+    }
 
     auto result = PiecePlacementModifier::doCastling(position.piecePlacement_,
                                                      side, activeColor);
@@ -238,8 +248,9 @@ class PositionModifier {
   static void undoMove(Position& position, const NormalMoveRecord& move) {
     undoNormalMove(position, move);
     position.halfmoveClock_ = move.previousHalfmoveClock;
-    if (move.previousCastlingRights)
+    if (move.previousCastlingRights) {
       position.castlingRights_ = *move.previousCastlingRights;
+    }
 
     undoCommonMoveEffects(position, move);
   }
@@ -276,11 +287,12 @@ class PositionModifier {
     }
 
     if (move.isEnPassantCapture) {
-      auto capturedPiece = Piece(PieceType::kPawn, opponent_color);
-      const auto& capturedPawnSquare =
-          enPassantCapturedPawnSquare(destination, mover_color);
-      PiecePlacementModifier::setPieceAt(pp, *capturedPawnSquare,
-                                         capturedPiece);
+      if (auto capturedPawnSquare =
+              enPassantCapturedPawnSquare(destination, mover_color)) {
+        auto capturedPiece = Piece(PieceType::kPawn, opponent_color);
+        PiecePlacementModifier::setPieceAt(pp, *capturedPawnSquare,
+                                           capturedPiece);
+      }
     }
   }
 

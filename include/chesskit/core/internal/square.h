@@ -12,11 +12,11 @@
 
 namespace chesskit::internal {
 struct SquareOffset {
-  int8_t fileOffset;
-  int8_t rankOffset;
+  int fileOffset;
+  int rankOffset;
 };
 
-inline constexpr std::optional<Square> createSquarefromIndex(
+inline constexpr std::optional<Square> createSquareFromIndex(
     const uint8_t& index) {
   uint8_t rankIndex = index / kNumFiles;
   uint8_t fileIndex = index % kNumFiles;
@@ -29,8 +29,7 @@ inline constexpr std::optional<Square> createSquarefromIndex(
 
 inline constexpr SquareOffset calculateOffset(const Square& lhs,
                                               const Square& rhs) {
-  return {static_cast<int8_t>(index(lhs.file) - index(rhs.file)),
-          static_cast<int8_t>(index(lhs.rank) - index(rhs.rank))};
+  return {index(lhs.file) - index(rhs.file), index(lhs.rank) - index(rhs.rank)};
 }
 
 inline constexpr std::optional<Square> shiftSquare(const Square& sq,
@@ -43,22 +42,19 @@ inline constexpr std::optional<Square> shiftSquare(const Square& sq,
   return Square(*newFile, *newRank);
 }
 
-inline constexpr std::optional<Square> advanceRanks(const Square& sq,
-                                                    int8_t ranks,
+inline constexpr std::optional<Square> advanceRanks(const Square& sq, int ranks,
                                                     const Color& color) {
   if (color == Color::kWhite) ranks = -ranks;
 
   return shiftSquare(sq, SquareOffset{0, ranks});
 }
 
-inline constexpr std::optional<Square> squareBehind(const Square& sq,
-                                                    int8_t ranks,
+inline constexpr std::optional<Square> squareBehind(const Square& sq, int ranks,
                                                     const Color& color) {
   return advanceRanks(sq, -ranks, color);
 }
 
-inline constexpr std::optional<Square> squareAhead(const Square& sq,
-                                                   int8_t ranks,
+inline constexpr std::optional<Square> squareAhead(const Square& sq, int ranks,
                                                    const Color& color) {
   return advanceRanks(sq, ranks, color);
 }

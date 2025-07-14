@@ -28,8 +28,9 @@ class Parser<Game, const char*, parse_as::Fen> {
   std::expected<ParseResult<Game, const char*>, ParseError> parse(
       const char* begin, const char* end) {
     auto position = parseFrom<Position>(begin, end);
-    if (position)
+    if (position) {
       return ParseResult{Game(position->parsedValue), position->ptr};
+    }
 
     return std::unexpected(position.error());
   }
@@ -72,14 +73,16 @@ class Parser<Game, const char*, parse_as::Pgn> {
       auto parsedTag = parseTag(ptr, end);
       if (!parsedTag) return std::unexpected(parsedTag.error());
       if (parsedTag->parsedValue.has_value()) {
-        if (position.has_value())
+        if (position.has_value()) {
           return std::unexpected(ParseError::kDuplicatedFenTag);
+        }
         position = parsedTag->parsedValue;
       }
       ptr = parsedTag->ptr;
 
-      if (ptr == end || !isRightBracket(*ptr))
+      if (ptr == end || !isRightBracket(*ptr)) {
         return std::unexpected(ParseError::kInvalidRightBracket);
+      }
       ++ptr;
     }
 
@@ -93,8 +96,9 @@ class Parser<Game, const char*, parse_as::Pgn> {
 
     ptr = trimWhiteSpaces(ptr, end);
 
-    if (ptr == end || !isSymbolToken(*ptr))
+    if (ptr == end || !isSymbolToken(*ptr)) {
       return std::unexpected(ParseError::kInvalidTag);
+    }
 
     auto sv = std::string_view(ptr, end);
     bool isFen =
@@ -104,8 +108,9 @@ class Parser<Game, const char*, parse_as::Pgn> {
 
     ptr = trimWhiteSpaces(ptr, end);
 
-    if (ptr == end || !isQuote(*ptr))
+    if (ptr == end || !isQuote(*ptr)) {
       return std::unexpected(ParseError::kInvalidQuote);
+    }
     ptr++;
 
     if (isFen) {
@@ -117,8 +122,9 @@ class Parser<Game, const char*, parse_as::Pgn> {
       ptr = trimStringToken(ptr, end);
     }
 
-    if (ptr == end || !isQuote(*ptr))
+    if (ptr == end || !isQuote(*ptr)) {
       return std::unexpected(ParseError::kInvalidQuote);
+    }
     ptr++;
 
     ptr = trimWhiteSpaces(ptr, end);

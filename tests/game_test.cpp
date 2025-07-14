@@ -35,14 +35,8 @@ class GameEqualityFixture {
 
 template <>
 struct YAML::convert<GameEqualityFixture> {
-  static void wtf(std::string_view sv) {
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(sv)) << std::format(
-        "{} -> {}", sv, chesskit::parse<chesskit::Game>(sv).error());
-  }
-
   static bool decode(const Node& node, GameEqualityFixture& rhs) {
     for (const auto& game : node) {
-      wtf(game.as<std::string>());
       rhs.add_game(
           chesskit::parse<chesskit::Game>(game.as<std::string>()).value());
     }
@@ -109,15 +103,13 @@ struct YAML::convert<OutcomeFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     if (!node[1].IsNull()) {
-      rhs.set_result(
-          magic_enum::enum_cast<chesskit::GameResult>(node[1].as<std::string>())
-              .value());
+      rhs.set_result(magic_enum::enum_cast<chesskit::GameResult>(
+          node[1].as<std::string>()));
     }
 
     if (!node[2].IsNull()) {
-      rhs.set_draw_reason(
-          magic_enum::enum_cast<chesskit::DrawReason>(node[2].as<std::string>())
-              .value());
+      rhs.set_draw_reason(magic_enum::enum_cast<chesskit::DrawReason>(
+          node[2].as<std::string>()));
     }
 
     return true;
@@ -250,9 +242,10 @@ struct YAML::convert<SanMoveErrorFixture> {
     rhs.set_move(
         chesskit::parse<chesskit::SanMove>(node[1].as<std::string>()).value());
 
-    rhs.set_error(
-        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>())
-            .value());
+    auto error =
+        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>());
+    if (!error.has_value()) return false;
+    rhs.set_error(*error);
 
     return true;
   }
@@ -293,9 +286,10 @@ struct YAML::convert<UciMoveErrorFixture> {
     rhs.set_move(
         chesskit::parse<chesskit::UciMove>(node[1].as<std::string>()).value());
 
-    rhs.set_error(
-        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>())
-            .value());
+    auto error =
+        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>());
+    if (!error.has_value()) return false;
+    rhs.set_error(*error);
 
     return true;
   }
@@ -495,9 +489,11 @@ template <>
 struct YAML::convert<InvalidFixture> {
   static bool decode(const Node& node, InvalidFixture& rhs) {
     rhs.set_input(node[0].as<std::string>());
-    rhs.set_error(
-        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>())
-            .value());
+
+    auto error =
+        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>());
+    if (!error.has_value()) return false;
+    rhs.set_error(*error);
 
     return true;
   }
@@ -644,8 +640,9 @@ TEST_P(GameEqualitySuite, ComparesEqual) {
 TEST_P(GameEqualityPairSuite, ComparesUnequal) {
   const auto& [lhs_fixture, rhs_fixture] = GetParam();
 
-  for (const auto& lhs : lhs_fixture.games())
+  for (const auto& lhs : lhs_fixture.games()) {
     for (const auto& rhs : rhs_fixture.games()) EXPECT_NE(lhs, rhs);
+  }
 }
 
 TEST_P(OutcomeSuite, ReturnsResultAndDrawReasonCorrectly) {

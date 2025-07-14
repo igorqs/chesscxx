@@ -121,8 +121,9 @@ TEST(SanCastlingMoveTest, FormatProducesExpectedOutput) {
           {SanCastlingMove(kKingside, kCheckmate), "O-O#"},
       }};
 
-  for (const auto& [rank, sv] : kFixtures)
+  for (const auto& [rank, sv] : kFixtures) {
     EXPECT_EQ(std::format("{}", rank), sv);
+  }
 }
 
 TEST(SanCastlingMoveTest, ParseHandlesInvalidInputCorrectly) {

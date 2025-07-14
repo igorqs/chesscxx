@@ -31,8 +31,9 @@ std::expected<ParseResult<uint32_t, const char*>, ParseError> parseNumber(
 
   if (ec == std::errc()) return ParseResult{value, ptr};
 
-  if (ec == std::errc::result_out_of_range)
+  if (ec == std::errc::result_out_of_range) {
     return std::unexpected(ParseError::kNumberOutOfRange);
+  }
 
   return std::unexpected(ParseError::kInvalidNumber);
 }

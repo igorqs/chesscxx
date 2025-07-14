@@ -131,14 +131,16 @@ class Parser<SanMove, const char*, parse_as::Default> {
   std::expected<ParseResult<SanMove, const char*>, ParseError> parse(
       const char* begin, const char* end) {
     auto castling = parseFrom<SanCastlingMove>(begin, end);
-    if (castling)
+    if (castling) {
       return ParseResult<SanMove, const char*>{castling->parsedValue,
                                                castling->ptr};
+    }
 
     auto normal = parseFrom<SanNormalMove>(begin, end);
-    if (normal)
+    if (normal) {
       return ParseResult<SanMove, const char*>{normal->parsedValue,
                                                normal->ptr};
+    }
 
     return std::unexpected(normal.error());
   }

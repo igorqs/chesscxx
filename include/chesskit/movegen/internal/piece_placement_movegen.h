@@ -136,9 +136,10 @@ inline std::generator<Square> pseudoLegalRookMoves(const PiecePlacement pp,
                                                    Square square, Color color) {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
-      std::views::transform([pp, square, color](auto&& sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
-      }) |
+      std::views::transform(
+          [pp, square, color](std::generator<Square>&& sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
+          }) |
       std::views::join);
   /*
   co_yield std::ranges::elements_of(
@@ -151,9 +152,10 @@ inline std::generator<Square> pseudoLegalBishopMoves(const PiecePlacement pp,
                                                      Color color) {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
-      std::views::transform([pp, square, color](auto&& sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
-      }) |
+      std::views::transform(
+          [pp, square, color](std::generator<Square>&& sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
+          }) |
       std::views::join);
   /*
   co_yield std::ranges::elements_of(
@@ -166,9 +168,10 @@ inline std::generator<Square> pseudoLegalQueenMoves(const PiecePlacement pp,
                                                     Color color) {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |
-      std::views::transform([pp, square, color](auto&& sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
-      }) |
+      std::views::transform(
+          [pp, square, color](std::generator<Square>&& sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move), pp, color);
+          }) |
       std::views::join);
   /*
   co_yield std::ranges::elements_of(

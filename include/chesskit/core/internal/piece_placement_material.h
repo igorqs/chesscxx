@@ -62,8 +62,9 @@ inline constexpr bool isBishopsOnSameColorDraw(const PiecePlacement& pp) {
     for (const auto& square :
          pp.pieceLocations().at(color).at(PieceType::kBishop)) {
       if (squareColor.has_value() &&
-          squareColor.value() != square_color(square))
+          squareColor.value() != square_color(square)) {
         return false;
+      }
 
       squareColor = square_color(square);
     }

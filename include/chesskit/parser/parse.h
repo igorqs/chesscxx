@@ -63,8 +63,9 @@ inline constexpr std::expected<T, ParseError> parse(
 
   if (!parseResult) return std::unexpected(parseResult.error());
 
-  if (parseResult->ptr != sv.end())
+  if (parseResult->ptr != sv.end()) {
     return std::unexpected(ParseError::kExpectingEndOfString);
+  }
 
   return parseResult->parsedValue;
 }

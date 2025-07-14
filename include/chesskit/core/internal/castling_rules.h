@@ -105,8 +105,9 @@ inline constexpr bool isValidCastlingRights(const PiecePlacement& pp,
   for (const auto& side : {CastlingSide::kKingside, CastlingSide::kQueenside}) {
     for (const auto& color : {Color::kWhite, Color::kBlack}) {
       if (rights.canCastle(side, color) &&
-          !areCastlingPiecesInInitialLocation(pp, side, color))
+          !areCastlingPiecesInInitialLocation(pp, side, color)) {
         return false;
+      }
     }
   }
 

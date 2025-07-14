@@ -65,8 +65,8 @@ inline std::optional<SquareOffset> slidingIncrement(
     const SquareOffset& offset) {
   if (!isStraightLine(offset)) return std::nullopt;
 
-  static constexpr int8_t lo = -1;
-  static constexpr int8_t hi = 1;
+  static constexpr int lo = -1;
+  static constexpr int hi = 1;
 
   return SquareOffset{std::clamp(offset.fileOffset, lo, hi),
                       std::clamp(offset.rankOffset, lo, hi)};
@@ -78,8 +78,9 @@ inline std::generator<Square> traversedSquares(
 
   auto increment = calculateOffset(destination, origin);
 
-  if (const auto& slidingInc = slidingIncrement(increment))
+  if (const auto& slidingInc = slidingIncrement(increment)) {
     increment = *slidingInc;
+  }
 
   std::optional<Square> square = origin;
   if (originPolicy == Origin::kSkip) square = shiftSquare(*square, increment);

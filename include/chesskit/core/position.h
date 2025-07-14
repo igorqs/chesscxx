@@ -85,8 +85,9 @@ class Position {
   static std::expected<Position, PositionError> fromParams(
       const Params& params) {
     if (!internal::isValidEnPassantTargetSquare(params.enPassantTargetSquare,
-                                                params.activeColor))
+                                                params.activeColor)) {
       return std::unexpected(PositionError::kEnPassantTargetSquareInvalidRank);
+    }
 
     Position position(params);
 
@@ -141,19 +142,22 @@ class Position {
         fullmoveNumber_{params.fullmoveNumber} {}
 
   std::optional<PositionError> validationError() const {
-    if (isFullmoveNumberOutOfRange())
+    if (isFullmoveNumberOutOfRange()) {
       return PositionError::kFullmoveNumberOutOfRange;
-    if (isHalfmoveClockOutOfRange())
+    }
+    if (isHalfmoveClockOutOfRange()) {
       return PositionError::kHalfmoveClockOutOfRange;
+    }
 
     if (!internal::isValidCastlingRights(piecePlacement_, castlingRights_)) {
       return PositionError::kInvalidCastlingRightsForPiecePositions;
     }
 
-    if (auto error = enPassantError()) return *error;
+    if (auto error = enPassantError()) return error;
 
-    if (internal::isKingAttacked(piecePlacement_, !activeColor_))
+    if (internal::isKingAttacked(piecePlacement_, !activeColor_)) {
       return PositionError::kSideNotToMoveIsUnderAttack;
+    }
 
     return std::nullopt;
   }
@@ -172,14 +176,19 @@ class Position {
     auto targetSquare = enPassantTargetSquare();
     if (!targetSquare) return std::nullopt;
 
-    auto capturedPawnSquare = *enPassantCapturedPawnSquare();
-    auto oppPawn = Piece(PieceType::kPawn, !activeColor_);
+    auto capturedPawnSquare = enPassantCapturedPawnSquare();
+    if (!capturedPawnSquare) return std::nullopt;
 
-    if (internal::hasPieceAt(piecePlacement_, *targetSquare))
+    auto enemyPawn = Piece(PieceType::kPawn, !activeColor_);
+
+    if (internal::hasPieceAt(piecePlacement_, *targetSquare)) {
       return PositionError::kEnPassantTargetSquareOccupied;
+    }
 
-    if (!internal::hasPieceAt(piecePlacement_, capturedPawnSquare, oppPawn))
+    if (!internal::hasPieceAt(piecePlacement_, *capturedPawnSquare,
+                              enemyPawn)) {
       return PositionError::kEnPassantNoCapturablePawn;
+    }
 
     return std::nullopt;
   }
@@ -188,7 +197,7 @@ class Position {
     auto square = enPassantTargetSquare();
     if (!square) return std::nullopt;
 
-    return *internal::enPassantCapturedPawnSquare(*square, activeColor_);
+    return internal::enPassantCapturedPawnSquare(*square, activeColor_);
   }
 
   Rank enPassantRank() const { return internal::enPassantRank(activeColor_); }

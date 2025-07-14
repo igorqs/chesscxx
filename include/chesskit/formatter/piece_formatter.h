@@ -22,8 +22,9 @@ struct std::formatter<chesskit::Piece>
 
   auto handleSpec(const chesskit::Piece& piece, auto& ctx,
                   chesskit::internal::CompactSpec) const {
-    if (piece.color == chesskit::Color::kBlack)
+    if (piece.color == chesskit::Color::kBlack) {
       return std::format_to(ctx.out(), "{:l}", piece.type);
+    }
 
     return std::format_to(ctx.out(), "{:u}", piece.type);
   }

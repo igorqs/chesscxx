@@ -93,9 +93,11 @@ template <>
 struct YAML::convert<InvalidPieceArrayFixture> {
   static bool decode(const Node& node, InvalidPieceArrayFixture& rhs) {
     rhs.set_input(node[0].as<std::string>());
-    rhs.set_error(magic_enum::enum_cast<chesskit::PiecePlacementError>(
-                      node[1].as<std::string>())
-                      .value());
+
+    auto error = magic_enum::enum_cast<chesskit::PiecePlacementError>(
+        node[1].as<std::string>());
+    if (!error.has_value()) return false;
+    rhs.set_error(*error);
 
     return true;
   }
@@ -117,9 +119,10 @@ template <>
 struct YAML::convert<InvalidFixture> {
   static bool decode(const Node& node, InvalidFixture& rhs) {
     rhs.set_input(node[0].as<std::string>());
-    rhs.set_error(
-        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>())
-            .value());
+    auto error =
+        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>());
+    if (!error.has_value()) return false;
+    rhs.set_error(*error);
 
     return true;
   }

@@ -20,8 +20,9 @@ struct std::formatter<Point> : chesskit::internal::BaseFormatter {
       compact = true;
       ++it;
     }
-    if (it != ctx.end() && *it != '}')
+    if (it != ctx.end() && *it != '}') {
       throw std::format_error("Invalid format args for Point.");
+    }
 
     return it;
   }

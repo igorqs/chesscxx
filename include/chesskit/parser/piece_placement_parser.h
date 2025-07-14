@@ -24,7 +24,7 @@ namespace internal {
 constexpr std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
                         ParseError>
 parsePieceArray(const char* begin, const char* end) {
-  auto toChar = [](uint8_t i) -> char { return i + '0'; };
+  auto toChar = [](uint8_t i) -> unsigned char { return i + '0'; };
   auto fromChar = [](char c) -> uint8_t { return c - '0'; };
 
   PiecePlacement::PieceArray pieceArray;
@@ -35,8 +35,9 @@ parsePieceArray(const char* begin, const char* end) {
     uint8_t missingPieces = kNumFiles;
 
     for (auto it = rank.begin(); it < rank.end();) {
-      if (missingPieces == 0)
+      if (missingPieces == 0) {
         return std::unexpected(ParseError::kInvalidSlashSymbol);
+      }
 
       if (*it >= '1' && *it <= toChar(missingPieces)) {
         missingPieces -= fromChar(*it);

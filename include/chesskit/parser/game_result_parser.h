@@ -31,8 +31,9 @@ class Parser<GameResult, const char*, parse_as::Default> {
     std::string_view sv(begin, end);
 
     for (const auto& [pattern, result] : kGameResults) {
-      if (sv.starts_with(pattern))
+      if (sv.starts_with(pattern)) {
         return ParseResult{result, begin + pattern.size()};
+      }
     }
 
     return std::unexpected(ParseError::kInvalidGameResult);

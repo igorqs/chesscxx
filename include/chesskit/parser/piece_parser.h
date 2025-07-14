@@ -24,14 +24,16 @@ class Parser<Piece, const char*, parse_as::Default> {
   constexpr std::expected<ParseResult<Piece, const char*>, ParseError> parse(
       const char* begin, const char* end) {
     auto whitePiece = parseFrom<PieceType>(begin, end, parse_as::Uppercase{});
-    if (whitePiece)
+    if (whitePiece) {
       return ParseResult{Piece{whitePiece->parsedValue, Color::kWhite},
                          whitePiece->ptr};
+    }
 
     auto blackPiece = parseFrom<PieceType>(begin, end, parse_as::Lowercase{});
-    if (blackPiece)
+    if (blackPiece) {
       return ParseResult{Piece{blackPiece->parsedValue, Color::kBlack},
                          blackPiece->ptr};
+    }
 
     return std::unexpected(ParseError::kInvalidPiece);
   }

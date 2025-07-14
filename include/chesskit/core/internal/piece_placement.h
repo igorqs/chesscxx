@@ -65,16 +65,19 @@ inline std::optional<CastlingSide> castlingSideFromUci(const PiecePlacement& pp,
                                                        const Color& color) {
   if (uci.promotion) return std::nullopt;
 
-  if (!hasPieceAt(pp, uci.origin, {PieceType::kKing, color}))
+  if (!hasPieceAt(pp, uci.origin, {PieceType::kKing, color})) {
     return std::nullopt;
+  }
 
   if (uci.origin != initialKingSquare(color)) return std::nullopt;
 
-  if (uci.destination == kingsideCastlingKingDestination(color))
+  if (uci.destination == kingsideCastlingKingDestination(color)) {
     return CastlingSide::kKingside;
+  }
 
-  if (uci.destination == queensideCastlingKingDestination(color))
+  if (uci.destination == queensideCastlingKingDestination(color)) {
     return CastlingSide::kQueenside;
+  }
 
   return std::nullopt;
 }
@@ -82,11 +85,13 @@ inline std::optional<CastlingSide> castlingSideFromUci(const PiecePlacement& pp,
 inline std::optional<MoveError> promotionError(const PiecePlacement& pp,
                                                const Piece& piece,
                                                const Rank& destinationRank) {
-  if (piece.type != PieceType::kPawn)
+  if (piece.type != PieceType::kPawn) {
     return MoveError::kNonPawnPromotionAttempt;
+  }
 
-  if (destinationRank != promotionRank(piece.color))
+  if (destinationRank != promotionRank(piece.color)) {
     return MoveError::kPromotionOnInvalidRank;
+  }
 
   return std::nullopt;
 }
@@ -94,8 +99,9 @@ inline std::optional<MoveError> promotionError(const PiecePlacement& pp,
 inline std::optional<MoveError> missingPromotionError(
     const PiecePlacement& pp, const Piece& piece, const Rank& destinationRank) {
   if (piece.type == PieceType::kPawn &&
-      destinationRank == promotionRank(piece.color))
+      destinationRank == promotionRank(piece.color)) {
     return MoveError::kMissingPromotionPiece;
+  }
 
   return std::nullopt;
 }
@@ -116,8 +122,9 @@ inline std::optional<MoveError> normalMoveError(const PiecePlacement& pp,
     if (error) return error;
   }
 
-  if (moveResultsInSelfCheck(pp, rawMoveFromUci(uci), piece->color))
+  if (moveResultsInSelfCheck(pp, rawMoveFromUci(uci), piece->color)) {
     return MoveError::kMoveLeavesOwnKingInCheck;
+  }
 
   return std::nullopt;
 }
@@ -135,9 +142,10 @@ class PiecePlacementModifier {
 
     relocatePiece(pp, uci.origin, uci.destination);
 
-    if (uci.promotion)
+    if (uci.promotion) {
       pp.updatePieceAt(uci.destination,
                        Piece(toPieceType(*uci.promotion), color));
+    }
 
     return {};
   }

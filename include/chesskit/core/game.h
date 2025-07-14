@@ -42,7 +42,7 @@ class Game {
   constexpr Game() { updateRepetitionTracker(); }
 
   /// @brief Constructs a new game with a specified initial position.
-  constexpr Game(const Position& initialPosition)
+  constexpr explicit Game(const Position& initialPosition)
       : initialPosition_(initialPosition),
         currentPosition_(initialPosition),
         isDefaultStart_(initialPosition == Position{}) {
@@ -228,8 +228,9 @@ class Game {
   void clearRepetitionTracker() { repetitionTracker_.clear(); }
   void removePositionOccurrence() {
     repetitionTracker_[currentPosition_]--;
-    if (repetitionTracker_[currentPosition_] == 0)
+    if (repetitionTracker_[currentPosition_] == 0) {
       repetitionTracker_.erase(currentPosition_);
+    }
   }
   void updateRepetitionTracker() { repetitionTracker_[currentPosition_]++; }
 

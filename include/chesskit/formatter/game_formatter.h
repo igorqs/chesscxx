@@ -34,8 +34,9 @@ struct std::formatter<chesskit::Game>
     auto moveNumber = game.initialPosition().fullmoveNumber();
 
     for (const auto& move : moves) {
-      if (color == chesskit::Color::kWhite)
+      if (color == chesskit::Color::kWhite) {
         out = std::format_to(out, "{}. ", moveNumber);
+      }
 
       out = std::format_to(out, "{} ", move);
 

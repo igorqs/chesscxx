@@ -49,15 +49,16 @@ TEST(UciMoveTest, ComparesEqualValuesSuccessfully) {
 }
 
 TEST(UciMoveTest, ComparesDifferentValuesSuccessfully) {
-  for (const auto& other : kUciMoves | std::views::drop(1))
+  for (const auto& other : kUciMoves | std::views::drop(1)) {
     EXPECT_NE(kUciMoves.front(), other);
+  }
 }
 
 TEST(UciMoveTest, HashProducesUniqueValues) {
-  std::unordered_set<size_t> hashs;
+  std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kUciMoves, [&](const auto& uci) {
-    auto insertion = hashs.insert(std::hash<chesskit::UciMove>{}(uci));
+    auto insertion = hashes.insert(std::hash<chesskit::UciMove>{}(uci));
     EXPECT_TRUE(insertion.second);
   });
 }

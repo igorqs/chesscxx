@@ -125,8 +125,9 @@ inline std::generator<UciMove> uciPromotions(const RawMove& raw_move) {
       PromotablePieceType::kKnight, PromotablePieceType::kBishop,
       PromotablePieceType::kRook, PromotablePieceType::kQueen};
 
-  for (const auto& promotion : promotions)
+  for (const auto& promotion : promotions) {
     co_yield UciMove(raw_move.origin, raw_move.destination, promotion);
+  }
 }
 
 template <typename T = UciMove>
@@ -194,8 +195,9 @@ inline std::generator<Square> piecesReaching(Position position, Square square,
   const auto& pp = position.piecePlacement();
 
   auto pieceAtTargetSquare = pieceAt(pp, square);
-  if (pieceAtTargetSquare && pieceAtTargetSquare->color == piece.color)
+  if (pieceAtTargetSquare && pieceAtTargetSquare->color == piece.color) {
     co_return;
+  }
 
   using std::ranges::elements_of;
 

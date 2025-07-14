@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cassert>
 #include <cstdint>
 #include <expected>
 #include <optional>
@@ -60,8 +61,9 @@ class PiecePlacement {
   fromPieceArray(const PieceArray& pieceArray) {
     PiecePlacement piece_placement(pieceArray);
 
-    if (auto error = piece_placement.validationError())
+    if (auto error = piece_placement.validationError()) {
       return std::unexpected(*error);
+    }
 
     return piece_placement;
   }
@@ -94,9 +96,10 @@ class PiecePlacement {
  private:
   friend class internal::PiecePlacementModifier;
 
-  constexpr PiecePlacement(const PieceArray& pieceArray) {
+  constexpr explicit PiecePlacement(const PieceArray& pieceArray) {
     for (uint8_t i : std::views::iota(0, static_cast<int8_t>(kNumSquares))) {
-      auto sq = internal::createSquarefromIndex(i);
+      auto sq = internal::createSquareFromIndex(i);
+      assert(sq.has_value());
       updatePieceAt(*sq, pieceArray[i]);
     }
   }
@@ -105,29 +108,35 @@ class PiecePlacement {
                                const std::optional<Piece>& newPiece) {
     if (auto previous = pieceAt(square)) {
       pieceLocations_[previous->color][previous->type].erase(square);
-      if (pieceLocations_[previous->color][previous->type].empty())
+      if (pieceLocations_[previous->color][previous->type].empty()) {
         pieceLocations_[previous->color].erase(previous->type);
+      }
     }
 
-    if (newPiece)
+    if (newPiece) {
       pieceLocations_[newPiece->color][newPiece->type].insert(square);
+    }
 
     pieceAt(square) = newPiece;
   }
 
   constexpr std::optional<PiecePlacementError> validationError() const {
-    if (isMissingKing(Color::kWhite) || isMissingKing(Color::kBlack))
+    if (isMissingKing(Color::kWhite) || isMissingKing(Color::kBlack)) {
       return PiecePlacementError::kMissingKing;
+    }
 
-    if (hasMultipleKings(Color::kWhite) || hasMultipleKings(Color::kBlack))
+    if (hasMultipleKings(Color::kWhite) || hasMultipleKings(Color::kBlack)) {
       return PiecePlacementError::kMultipleKingsOfSameColor;
+    }
 
-    if (hasPawnOnBackRank(Color::kWhite) || hasPawnOnBackRank(Color::kBlack))
+    if (hasPawnOnBackRank(Color::kWhite) || hasPawnOnBackRank(Color::kBlack)) {
       return PiecePlacementError::kPawnOnBackRank;
+    }
 
     if (hasPawnOnPromotionRank(Color::kWhite) ||
-        hasPawnOnPromotionRank(Color::kBlack))
+        hasPawnOnPromotionRank(Color::kBlack)) {
       return PiecePlacementError::kPawnOnPromotionRank;
+    }
 
     return std::nullopt;
   }

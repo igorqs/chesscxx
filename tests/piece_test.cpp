@@ -38,16 +38,18 @@ TEST(PieceTest, ComparesEqualValuesSuccessfully) {
 TEST(PieceTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllPieces.size());
 
-  for (int i : std::views::iota(0, kSize))
-    for (int j : std::views::iota(0, kSize))
+  for (int i : std::views::iota(0, kSize)) {
+    for (int j : std::views::iota(0, kSize)) {
       if (i != j) EXPECT_NE(kAllPieces[i], kAllPieces[j]);
+    }
+  }
 }
 
 TEST(PieceTest, HashProducesUniqueValues) {
-  std::unordered_set<size_t> hashs;
+  std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kAllPieces, [&](const auto& piece) {
-    EXPECT_TRUE(hashs.insert(std::hash<chesskit::Piece>{}(piece)).second);
+    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Piece>{}(piece)).second);
   });
 }
 
