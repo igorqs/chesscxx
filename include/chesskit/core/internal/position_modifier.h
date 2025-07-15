@@ -33,8 +33,8 @@ class PositionModifier {
   }
 
   template <typename MoveNotation>
-  static std::expected<MoveRecord, MoveError> move(Position& position,
-                                                   const MoveNotation& move) {
+  static auto move(Position& position, const MoveNotation& move)
+      -> std::expected<MoveRecord, MoveError> {
     auto result = executeMove(position, move);
 
     if (result) {
@@ -58,14 +58,14 @@ class PositionModifier {
   }
 
  private:
-  static std::expected<MoveRecord, MoveError> executeMove(Position& position,
-                                                          const SanMove& move) {
+  static auto executeMove(Position& position, const SanMove& move)
+      -> std::expected<MoveRecord, MoveError> {
     return std::visit(
         [&](const auto& arg) { return executeMove(position, arg); }, move);
   }
 
-  static std::expected<MoveRecord, MoveError> executeMove(
-      Position& position, const SanNormalMove& move) {
+  static auto executeMove(Position& position, const SanNormalMove& move)
+      -> std::expected<MoveRecord, MoveError> {
     auto uci = uciFromSan(position, move, position.activeColor());
 
     if (!uci) return std::unexpected(uci.error());
@@ -73,13 +73,13 @@ class PositionModifier {
     return executeNormalMove(position, *uci);
   }
 
-  static std::expected<MoveRecord, MoveError> executeMove(
-      Position& position, const SanCastlingMove& move) {
+  static auto executeMove(Position& position, const SanCastlingMove& move)
+      -> std::expected<MoveRecord, MoveError> {
     return executeCastling(position, move.side);
   }
 
-  static std::expected<MoveRecord, MoveError> executeMove(Position& position,
-                                                          const UciMove& move) {
+  static auto executeMove(Position& position, const UciMove& move)
+      -> std::expected<MoveRecord, MoveError> {
     auto castlingSide = castlingSideFromUci(position.piecePlacement(), move,
                                             position.activeColor());
 
@@ -92,8 +92,8 @@ class PositionModifier {
     return executeNormalMove(position, move);
   }
 
-  static std::expected<MoveRecord, MoveError> executeNormalMove(
-      Position& position, const UciMove& uci) {
+  static auto executeNormalMove(Position& position, const UciMove& uci)
+      -> std::expected<MoveRecord, MoveError> {
     const auto& castlingRights = position.castlingRights();
     const auto& activeColor = position.activeColor();
     const auto& enPassantFile = position.enPassantFile_;
@@ -203,8 +203,8 @@ class PositionModifier {
     position.enPassantFile_ = dest.file;
   }
 
-  static std::expected<MoveRecord, MoveError> executeCastling(
-      Position& position, const CastlingSide& side) {
+  static auto executeCastling(Position& position, const CastlingSide& side)
+      -> std::expected<MoveRecord, MoveError> {
     const auto& castlingRights = position.castlingRights();
     const auto& activeColor = position.activeColor();
     const auto& enPassantFile = position.enPassantFile_;

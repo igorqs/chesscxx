@@ -24,12 +24,12 @@ namespace chesskit {
 
 namespace internal {
 
-inline std::expected<ParseResult<uint32_t, const char*>, ParseError>
-parseNumber(const char* begin, const char* end) {
+inline auto parseNumber(const char* begin, const char* end)
+    -> std::expected<ParseResult<uint32_t, const char*>, ParseError> {
   uint32_t value{};
   auto [ptr, ec] = std::from_chars(begin, end, value);
 
-  if (ec == std::errc()) return ParseResult{value, ptr};
+  if (ec == std::errc()) return ParseResult{.parsedValue = value, .ptr = ptr};
 
   if (ec == std::errc::result_out_of_range) {
     return std::unexpected(ParseError::kNumberOutOfRange);
@@ -38,8 +38,8 @@ parseNumber(const char* begin, const char* end) {
   return std::unexpected(ParseError::kInvalidNumber);
 }
 
-inline std::expected<ParseResult<Position::Params, const char*>, ParseError>
-parsePositionParams(const char* begin, const char* end) {
+inline auto parsePositionParams(const char* begin, const char* end)
+    -> std::expected<ParseResult<Position::Params, const char*>, ParseError> {
   auto isSpace = [&end](const auto& it) { return it != end && *it == ' '; };
   auto isDash = [&end](const auto& it) { return it != end && *it == '-'; };
 
@@ -100,8 +100,8 @@ parsePositionParams(const char* begin, const char* end) {
 template <>
 class Parser<Position, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<Position, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Position, const char*>, ParseError> {
     auto params = internal::parsePositionParams(begin, end);
     if (!params) return std::unexpected(params.error());
 

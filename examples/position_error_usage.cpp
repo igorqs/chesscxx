@@ -23,7 +23,7 @@ void createPositionAndPrint(const auto& params) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   std::println("{}", chesskit::PositionError::kEnPassantTargetSquareOccupied);
   std::println("{}\n", chesskit::PositionError::kSideNotToMoveIsUnderAttack);
 

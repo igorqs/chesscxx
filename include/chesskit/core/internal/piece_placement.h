@@ -24,48 +24,48 @@
 
 namespace chesskit::internal {
 
-inline bool moveResultsInSelfCheck(PiecePlacement, const RawMove&,
-                                   const Color&);
+inline auto moveResultsInSelfCheck(PiecePlacement, const RawMove&, const Color&)
+    -> bool;
 
-inline std::optional<MoveError> castlingError(PiecePlacement,
-                                              const CastlingSide&,
-                                              const Color&);
+inline auto castlingError(PiecePlacement, const CastlingSide&, const Color&)
+    -> std::optional<MoveError>;
 
-inline bool isAttacked(const PiecePlacement& pp, const Square& square,
-                       const Color& attackerColor) {
+inline auto isAttacked(const PiecePlacement& pp, const Square& square,
+                       const Color& attackerColor) -> bool {
   auto pieces = piecesAttacking(pp, square, attackerColor);
   return pieces.begin() != pieces.end();
 }
 
-inline const Square& kingLocation(const PiecePlacement& pp,
-                                  const Color& color) {
+inline auto kingLocation(const PiecePlacement& pp, const Color& color)
+    -> const Square& {
   return *pp.pieceLocations().at(color).at(PieceType::kKing).begin();
 }
 
-inline bool isKingAttacked(const PiecePlacement& pp, const Color& color) {
+inline auto isKingAttacked(const PiecePlacement& pp, const Color& color)
+    -> bool {
   return isAttacked(pp, kingLocation(pp, color), !color);
 }
 
-inline bool isMoveClear(const PiecePlacement& pp, const RawMove& move) {
+inline auto isMoveClear(const PiecePlacement& pp, const RawMove& move) -> bool {
   return std::ranges::none_of(
       traversedSquares(move.origin, move.destination),
       [pp](const auto& square) { return hasPieceAt(pp, square); });
 }
 
-inline bool isMoveUnderAttack(const PiecePlacement& pp, const RawMove& move,
-                              const Color& attackerColor) {
+inline auto isMoveUnderAttack(const PiecePlacement& pp, const RawMove& move,
+                              const Color& attackerColor) -> bool {
   return std::ranges::any_of(traversedSquares(move.origin, move.destination),
                              [pp, attackerColor](const auto& square) {
                                return isAttacked(pp, square, attackerColor);
                              });
 }
 
-inline std::optional<CastlingSide> castlingSideFromUci(const PiecePlacement& pp,
-                                                       const UciMove& uci,
-                                                       const Color& color) {
+inline auto castlingSideFromUci(const PiecePlacement& pp, const UciMove& uci,
+                                const Color& color)
+    -> std::optional<CastlingSide> {
   if (uci.promotion) return std::nullopt;
 
-  if (!hasPieceAt(pp, uci.origin, {PieceType::kKing, color})) {
+  if (!hasPieceAt(pp, uci.origin, {.type = PieceType::kKing, .color = color})) {
     return std::nullopt;
   }
 
@@ -82,8 +82,8 @@ inline std::optional<CastlingSide> castlingSideFromUci(const PiecePlacement& pp,
   return std::nullopt;
 }
 
-inline std::optional<MoveError> promotionError(const Piece& piece,
-                                               const Rank& destinationRank) {
+inline auto promotionError(const Piece& piece, const Rank& destinationRank)
+    -> std::optional<MoveError> {
   if (piece.type != PieceType::kPawn) {
     return MoveError::kNonPawnPromotionAttempt;
   }
@@ -95,8 +95,9 @@ inline std::optional<MoveError> promotionError(const Piece& piece,
   return std::nullopt;
 }
 
-inline std::optional<MoveError> missingPromotionError(
-    const Piece& piece, const Rank& destinationRank) {
+inline auto missingPromotionError(const Piece& piece,
+                                  const Rank& destinationRank)
+    -> std::optional<MoveError> {
   if (piece.type == PieceType::kPawn &&
       destinationRank == promotionRank(piece.color)) {
     return MoveError::kMissingPromotionPiece;
@@ -105,8 +106,8 @@ inline std::optional<MoveError> missingPromotionError(
   return std::nullopt;
 }
 
-inline std::optional<MoveError> normalMoveError(const PiecePlacement& pp,
-                                                const UciMove& uci) {
+inline auto normalMoveError(const PiecePlacement& pp, const UciMove& uci)
+    -> std::optional<MoveError> {
   const auto& origin = uci.origin;
   const auto& destination = uci.destination;
 
@@ -130,8 +131,8 @@ inline std::optional<MoveError> normalMoveError(const PiecePlacement& pp,
 
 class PiecePlacementModifier {
  public:
-  static std::expected<void, MoveError> doNormalMove(PiecePlacement& pp,
-                                                     const UciMove& uci) {
+  static auto doNormalMove(PiecePlacement& pp, const UciMove& uci)
+      -> std::expected<void, MoveError> {
     auto originPiece = pieceAt(pp, uci.origin);
     if (!originPiece) return std::unexpected(MoveError::kNoPieceAtOrigin);
     const auto color = originPiece->color;
@@ -149,9 +150,8 @@ class PiecePlacementModifier {
     return {};
   }
 
-  static std::expected<void, MoveError> doCastling(PiecePlacement& pp,
-                                                   const CastlingSide& side,
-                                                   const Color& color) {
+  static auto doCastling(PiecePlacement& pp, const CastlingSide& side,
+                         const Color& color) -> std::expected<void, MoveError> {
     auto error = castlingError(pp, side, color);
     if (error.has_value()) return std::unexpected(error.value());
 
@@ -175,15 +175,14 @@ class PiecePlacementModifier {
   }
 };
 
-inline bool moveResultsInSelfCheck(PiecePlacement pp, const RawMove& move,
-                                   const Color& color) {
+inline auto moveResultsInSelfCheck(PiecePlacement pp, const RawMove& move,
+                                   const Color& color) -> bool {
   PiecePlacementModifier::relocatePiece(pp, move.origin, move.destination);
   return isKingAttacked(pp, color);
 }
 
-inline std::optional<MoveError> castlingError(PiecePlacement pp,
-                                              const CastlingSide& side,
-                                              const Color& color) {
+inline auto castlingError(PiecePlacement pp, const CastlingSide& side,
+                          const Color& color) -> std::optional<MoveError> {
   auto moves = castlingMoves(side, color);
 
   PiecePlacementModifier::setPieceAt(pp, moves.kingMove.origin, std::nullopt);

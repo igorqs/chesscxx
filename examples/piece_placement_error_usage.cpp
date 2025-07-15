@@ -44,7 +44,7 @@ void createPiecePlacementAndPrint(const auto& piece_array) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   std::println("{}", chesskit::PiecePlacementError::kMissingKing);
   std::println("{}\n", chesskit::PiecePlacementError::kPawnOnBackRank);
 

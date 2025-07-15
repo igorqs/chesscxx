@@ -26,7 +26,7 @@ void parseAsFenAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   std::println("{}", chesskit::ParseError::kInvalidRank);
   std::println("{}\n", chesskit::ParseError::kExpectingEndOfString);
 

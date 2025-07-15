@@ -31,8 +31,8 @@ namespace chesskit {
 template <>
 class Parser<Position::Params, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<Position::Params, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Position::Params, const char*>, ParseError> {
     return internal::parsePositionParams(begin, end);
   }
 };
@@ -46,9 +46,9 @@ class ValidFixture {
     position_ = chesskit::parse<chesskit::Position>(raw).value();
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Position::Params& params() const { return params_; }
-  const chesskit::Position& position() const { return position_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto params() const -> const chesskit::Position::Params& { return params_; }
+  auto position() const -> const chesskit::Position& { return position_; }
 
  private:
   std::string raw_;
@@ -58,7 +58,7 @@ class ValidFixture {
 
 template <>
 struct YAML::convert<ValidFixture> {
-  static bool decode(const Node& node, ValidFixture& rhs) {
+  static auto decode(const Node& node, ValidFixture& rhs) -> bool {
     rhs.set_input(node.as<std::string>());
     return true;
   }
@@ -72,9 +72,9 @@ class InvalidParamsFixture {
   }
   void set_error(chesskit::PositionError error) { error_ = error; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Position::Params& params() const { return params_; }
-  const chesskit::PositionError& error() const { return error_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto params() const -> const chesskit::Position::Params& { return params_; }
+  auto error() const -> const chesskit::PositionError& { return error_; }
 
  private:
   std::string raw_;
@@ -84,7 +84,7 @@ class InvalidParamsFixture {
 
 template <>
 struct YAML::convert<InvalidParamsFixture> {
-  static bool decode(const Node& node, InvalidParamsFixture& rhs) {
+  static auto decode(const Node& node, InvalidParamsFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     auto error = magic_enum::enum_cast<chesskit::PositionError>(
@@ -101,8 +101,10 @@ class InvalidFixture {
   void set_input(std::string_view raw) { raw_ = raw; }
   void set_error(chesskit::ParseError error) { error_ = error; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::ParseError& error() const { return error_; }
+  [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
+  [[nodiscard]] auto error() const -> const chesskit::ParseError& {
+    return error_;
+  }
 
  private:
   std::string raw_;
@@ -111,7 +113,7 @@ class InvalidFixture {
 
 template <>
 struct YAML::convert<InvalidFixture> {
-  static bool decode(const Node& node, InvalidFixture& rhs) {
+  static auto decode(const Node& node, InvalidFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     auto error =

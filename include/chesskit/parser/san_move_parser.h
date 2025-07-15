@@ -28,8 +28,8 @@ namespace chesskit {
 template <>
 class Parser<SanNormalMove, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<SanNormalMove, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<SanNormalMove, const char*>, ParseError> {
     auto ptr = begin;
     SanNormalMove move;
 
@@ -84,7 +84,7 @@ class Parser<SanNormalMove, const char*, parse_as::Default> {
     move.check_indicator = check_indicator.parsedValue;
     ptr = check_indicator.ptr;
 
-    return ParseResult{move, ptr};
+    return ParseResult{.parsedValue = move, .ptr = ptr};
   }
 };
 
@@ -95,8 +95,8 @@ class Parser<SanNormalMove, const char*, parse_as::Default> {
 template <>
 class Parser<SanCastlingMove, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<SanCastlingMove, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<SanCastlingMove, const char*>, ParseError> {
     static constexpr std::string_view queenside = "O-O-O";
     static constexpr std::string_view kingside = "O-O";
 
@@ -117,7 +117,11 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
     auto check_indicator = internal::tryParseFrom<CheckIndicator>(ptr, end);
     ptr = check_indicator.ptr;
 
-    return ParseResult{SanCastlingMove{side, check_indicator.parsedValue}, ptr};
+    return ParseResult{
+        .parsedValue =
+            SanCastlingMove{.side = side,
+                            .check_indicator = check_indicator.parsedValue},
+        .ptr = ptr};
   }
 };
 
@@ -128,18 +132,18 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
 template <>
 class Parser<SanMove, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<SanMove, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<SanMove, const char*>, ParseError> {
     auto castling = parseFrom<SanCastlingMove>(begin, end);
     if (castling) {
-      return ParseResult<SanMove, const char*>{castling->parsedValue,
-                                               castling->ptr};
+      return ParseResult<SanMove, const char*>{
+          .parsedValue = castling->parsedValue, .ptr = castling->ptr};
     }
 
     auto normal = parseFrom<SanNormalMove>(begin, end);
     if (normal) {
-      return ParseResult<SanMove, const char*>{normal->parsedValue,
-                                               normal->ptr};
+      return ParseResult<SanMove, const char*>{
+          .parsedValue = normal->parsedValue, .ptr = normal->ptr};
     }
 
     return std::unexpected(normal.error());

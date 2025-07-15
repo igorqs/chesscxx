@@ -20,7 +20,8 @@ struct std::formatter<chesskit::MoveError> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr std::string_view toString(const auto& error) const {
+  [[nodiscard]] constexpr auto toString(const auto& error) const
+      -> std::string_view {
     switch (error) {
       case chesskit::MoveError::kKingOrRookMoved:
         return "King or rook moved";

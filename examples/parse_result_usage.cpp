@@ -6,7 +6,7 @@
 #include <print>
 #include <string_view>
 
-int main() {
+auto main() -> int {
   std::string_view const sv = "e4 extra input";
 
   auto result = chesskit::parseFrom<chesskit::Square>(sv.begin(), sv.end());

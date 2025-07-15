@@ -11,29 +11,29 @@
 
 namespace chesskit::internal {
 
-inline const std::optional<Piece>& pieceAt(const PiecePlacement& pp,
-                                           const Square& square) {
+inline auto pieceAt(const PiecePlacement& pp, const Square& square)
+    -> const std::optional<Piece>& {
   return pp.pieceArray()[index(square)];
 }
 
-inline bool hasPieceAt(const PiecePlacement& pp, const Square& square) {
+inline auto hasPieceAt(const PiecePlacement& pp, const Square& square) -> bool {
   return pieceAt(pp, square).has_value();
 }
 
-inline bool hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const PieceType& type) {
+inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
+                       const PieceType& type) -> bool {
   const auto& piece = pieceAt(pp, square);
   return piece && piece->type == type;
 }
 
-inline bool hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const Color& color) {
+inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
+                       const Color& color) -> bool {
   const auto& piece = pieceAt(pp, square);
   return piece && piece->color == color;
 }
 
-inline bool hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const Piece& piece) {
+inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
+                       const Piece& piece) -> bool {
   const auto& squarePiece = pieceAt(pp, square);
   return squarePiece && *squarePiece == piece;
 }

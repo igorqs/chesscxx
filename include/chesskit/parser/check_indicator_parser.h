@@ -20,8 +20,8 @@ namespace chesskit {
 template <>
 class Parser<CheckIndicator, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<CheckIndicator, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<CheckIndicator, const char*>, ParseError> {
     static constexpr std::string_view allowed = "+#";
 
     return internal::parseEnum<CheckIndicator>(

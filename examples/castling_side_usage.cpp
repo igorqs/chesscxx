@@ -2,7 +2,7 @@
 
 #include <print>
 
-int main() {
+auto main() -> int {
   chesskit::CastlingSide kingside = chesskit::CastlingSide::kKingside;
   chesskit::CastlingSide queenside = chesskit::CastlingSide::kQueenside;
   std::println("{} {}", kingside, queenside);

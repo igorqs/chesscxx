@@ -16,7 +16,7 @@ namespace chesskit {
 /// @ingroup PositionHelpers
 /// @brief Equality predicate for Position used for repetition detection.
 struct RepetitionEqual {
-  bool operator()(const Position& lhs, const Position& rhs) const {
+  auto operator()(const Position& lhs, const Position& rhs) const -> bool {
     const auto lhs_en_passant =
         internal::toOptionalFile(lhs.legalEnPassantTargetSquare());
     const auto rhs_en_passant =
@@ -32,7 +32,7 @@ struct RepetitionEqual {
 /// @ingroup PositionHelpers
 /// @brief Hash support for Position used for repetition detection.
 struct RepetitionHash {
-  size_t operator()(const Position& position) const {
+  auto operator()(const Position& position) const -> size_t {
     const auto en_passant =
         internal::toOptionalFile(position.legalEnPassantTargetSquare());
 
@@ -47,7 +47,7 @@ struct RepetitionHash {
 /// @brief default hash support for chesskit::Position
 template <>
 struct std::hash<chesskit::Position> {
-  size_t operator()(const chesskit::Position& position) const {
+  auto operator()(const chesskit::Position& position) const -> size_t {
     return chesskit::internal::hashCombine(
         position.piecePlacement(), position.activeColor(),
         chesskit::internal::toOptionalFile(position.enPassantTargetSquare()),

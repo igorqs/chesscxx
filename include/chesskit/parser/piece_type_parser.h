@@ -20,8 +20,8 @@ namespace chesskit {
 template <>
 class Parser<PieceType, const char*, parse_as::Uppercase> {
  public:
-  constexpr std::expected<ParseResult<PieceType, const char*>, ParseError>
-  parse(const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PieceType, const char*>, ParseError> {
     static constexpr std::string_view allowed = "PNBRQK";
 
     return internal::parseEnum<PieceType>(begin, end, allowed,
@@ -34,8 +34,8 @@ class Parser<PieceType, const char*, parse_as::Uppercase> {
 template <>
 class Parser<PieceType, const char*, parse_as::Lowercase> {
  public:
-  constexpr std::expected<ParseResult<PieceType, const char*>, ParseError>
-  parse(const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PieceType, const char*>, ParseError> {
     static constexpr std::string_view allowed = "pnbrqk";
 
     return internal::parseEnum<PieceType>(begin, end, allowed,
@@ -48,9 +48,9 @@ class Parser<PieceType, const char*, parse_as::Lowercase> {
 template <>
 class Parser<PromotablePieceType, const char*, parse_as::Uppercase> {
  public:
-  constexpr std::expected<ParseResult<PromotablePieceType, const char*>,
-                          ParseError>
-  parse(const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PromotablePieceType, const char*>,
+                       ParseError> {
     static constexpr std::string_view allowed = "NBRQ";
 
     return internal::parseEnum<PromotablePieceType>(
@@ -63,9 +63,9 @@ class Parser<PromotablePieceType, const char*, parse_as::Uppercase> {
 template <>
 class Parser<PromotablePieceType, const char*, parse_as::Lowercase> {
  public:
-  constexpr std::expected<ParseResult<PromotablePieceType, const char*>,
-                          ParseError>
-  parse(const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PromotablePieceType, const char*>,
+                       ParseError> {
     static constexpr std::string_view allowed = "nbrq";
 
     return internal::parseEnum<PromotablePieceType>(

@@ -32,8 +32,9 @@ namespace chesskit {
 /// be defined. If no such specialization exists, the function is ill-formed and
 /// will not compile.
 template <typename T, typename InputIt, typename Tag = parse_as::Default>
-inline constexpr std::expected<ParseResult<T, InputIt>, ParseError> parseFrom(
-    InputIt begin, InputIt end, Tag /*tag*/ = parse_as::Default{}) {
+inline constexpr auto parseFrom(InputIt begin, InputIt end,
+                                Tag /*tag*/ = parse_as::Default{})
+    -> std::expected<ParseResult<T, InputIt>, ParseError> {
   return Parser<T, InputIt, Tag>{}.parse(begin, end);
 };
 
@@ -55,8 +56,8 @@ inline constexpr std::expected<ParseResult<T, InputIt>, ParseError> parseFrom(
 /// to be defined. If no such specialization exists, the function is ill-formed
 /// and will not compile.
 template <typename T, typename Tag = parse_as::Default>
-inline constexpr std::expected<T, ParseError> parse(
-    std::string_view sv, Tag tag = parse_as::Default{}) {
+inline constexpr auto parse(std::string_view sv, Tag tag = parse_as::Default{})
+    -> std::expected<T, ParseError> {
   using InputIt = std::string_view::const_pointer;
 
   auto parseResult = parseFrom<T, InputIt, Tag>(sv.begin(), sv.end(), tag);

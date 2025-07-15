@@ -16,7 +16,7 @@ struct UciMove {
   ///@{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const UciMove&) const = default;
+  constexpr auto operator==(const UciMove&) const -> bool = default;
 
   /// @}
 

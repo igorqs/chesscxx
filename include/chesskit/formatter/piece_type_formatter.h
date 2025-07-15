@@ -35,8 +35,8 @@ struct std::formatter<chesskit::PieceType>
   }
 
  private:
-  static constexpr std::string_view description(
-      const chesskit::PieceType& type) {
+  static constexpr auto description(const chesskit::PieceType& type)
+      -> std::string_view {
     switch (type) {
       case chesskit::PieceType::kPawn:
         return "pawn";
@@ -55,7 +55,7 @@ struct std::formatter<chesskit::PieceType>
     }
   }
 
-  static constexpr char compact(const chesskit::PieceType& type) {
+  static constexpr auto compact(const chesskit::PieceType& type) -> char {
     switch (type) {
       case chesskit::PieceType::kPawn:
         return 'p';

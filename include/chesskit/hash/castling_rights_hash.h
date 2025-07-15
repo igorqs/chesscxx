@@ -13,7 +13,7 @@
 /// @brief hash support for chesskit::CastlingRights
 template <>
 struct std::hash<chesskit::CastlingRights> {
-  size_t operator()(const chesskit::CastlingRights& rights) const {
+  auto operator()(const chesskit::CastlingRights& rights) const -> size_t {
     using T = std::bitset<chesskit::CastlingRights::kNumCastlingRights>;
     return std::hash<T>{}(rights.toBitset());
   };

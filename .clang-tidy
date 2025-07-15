@@ -1,9 +1,10 @@
 Checks: >
-  misc-include-cleaner,
-  clang-diagnostic-*,
   bugprone-*,
   google-*,
-  misc-*
+  misc-*,
+  modernize-*,
+  -misc-non-private-member-variables-in-classes,
+  -modernize-use-constraints
 WarningsAsErrors: ''
 HeaderFilterRegex: '/home/igorqs/code/chess_projects/chesskit/include/.*'
 CheckOptions:

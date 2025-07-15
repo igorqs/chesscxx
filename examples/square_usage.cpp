@@ -21,12 +21,12 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
-  chesskit::Square a8{chesskit::File::kA, chesskit::Rank::k8};
-  std::println("\"{}\" \"{}\"", a8, chesskit::index(a8));
+auto main() -> int {
+  chesskit::Square a8{.file = chesskit::File::kA, .rank = chesskit::Rank::k8};
+  std::println(R"("{}" "{}")", a8, chesskit::index(a8));
 
-  chesskit::Square h1{chesskit::File::kH, chesskit::Rank::k1};
-  std::println("\"{}\" \"{}\"", h1, chesskit::index(h1));
+  chesskit::Square h1{.file = chesskit::File::kH, .rank = chesskit::Rank::k1};
+  std::println(R"("{}" "{}")", h1, chesskit::index(h1));
 
   parseAndPrint("e4");
   parseAndPrint("ax");

@@ -22,8 +22,8 @@ namespace chesskit {
 template <>
 class Parser<UciMove, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<UciMove, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<UciMove, const char*>, ParseError> {
     auto origin = parseFrom<Square>(begin, end);
     if (!origin) return std::unexpected(origin.error());
 
@@ -36,7 +36,7 @@ class Parser<UciMove, const char*, parse_as::Default> {
     auto uci = UciMove(origin->parsedValue, destination->parsedValue,
                        promotion.parsedValue);
 
-    return ParseResult{uci, promotion.ptr};
+    return ParseResult{.parsedValue = uci, .ptr = promotion.ptr};
   }
 };
 

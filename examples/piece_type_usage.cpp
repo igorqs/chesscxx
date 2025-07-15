@@ -38,7 +38,7 @@ void parseAsLowercaseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::PieceType piece_type = chesskit::PieceType::kQueen;
 
   chesskit::PromotablePieceType promotable_piece_type =

@@ -13,7 +13,7 @@
 namespace chesskit::internal {
 
 template <>
-inline std::generator<SanMove> legalMoves(Position position) {
+inline auto legalMoves(Position position) -> std::generator<SanMove> {
   using std::ranges::elements_of;
 
   PositionModifier::resetMoveCounters(position);

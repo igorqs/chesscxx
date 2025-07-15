@@ -55,7 +55,7 @@ class Game {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const Game& other) const {
+  constexpr auto operator==(const Game& other) const -> bool {
     return initialPosition_ == other.initialPosition_ &&
            uciMoveHistory_ == other.uciMoveHistory_;
   };
@@ -66,56 +66,62 @@ class Game {
   /// @{
 
   /// @brief Returns the initial game position.
-  const Position& initialPosition() const { return initialPosition_; }
+  auto initialPosition() const -> const Position& { return initialPosition_; }
   /// @brief Indicates whether the game started from the default position.
-  bool startsFromDefaultPosition() const { return isDefaultStart_; }
+  auto startsFromDefaultPosition() const -> bool { return isDefaultStart_; }
 
   /// @brief Returns the current game position.
-  const Position& currentPosition() const { return currentPosition_; }
+  auto currentPosition() const -> const Position& { return currentPosition_; }
 
   /// @brief Returns the piece placement of the current position.
-  const PiecePlacement& piecePlacement() const {
+  auto piecePlacement() const -> const PiecePlacement& {
     return currentPosition_.piecePlacement();
   }
   /// @brief Returns the active color (the side to move).
-  const Color& activeColor() const { return currentPosition_.activeColor(); }
+  auto activeColor() const -> const Color& {
+    return currentPosition_.activeColor();
+  }
   /// @brief Returns the en passant target square, if any.
-  std::optional<Square> enPassantTargetSquare() const {
+  auto enPassantTargetSquare() const -> std::optional<Square> {
     return currentPosition_.enPassantTargetSquare();
   }
   /// @brief Returns the en passant target square if it's legally capturable.
-  std::optional<Square> legalEnPassantTargetSquare() const {
+  auto legalEnPassantTargetSquare() const -> std::optional<Square> {
     return currentPosition_.legalEnPassantTargetSquare();
   }
   /// @brief Returns the number of halfmoves since the last capture or pawn
   /// move.
-  const uint32_t& halfmoveClock() const {
+  auto halfmoveClock() const -> const uint32_t& {
     return currentPosition_.halfmoveClock();
   }
   /// @brief Returns the current fullmove number.
-  const uint32_t& fullmoveNumber() const {
+  auto fullmoveNumber() const -> const uint32_t& {
     return currentPosition_.fullmoveNumber();
   }
   /// @brief Returns the current castling rights.
-  const CastlingRights& castlingRights() const {
+  auto castlingRights() const -> const CastlingRights& {
     return currentPosition_.castlingRights();
   }
 
   /// @brief Returns the list of moves in UCI notation played since the initial
   /// position.
-  const std::vector<UciMove>& uciMoves() const { return uciMoveHistory_; }
+  auto uciMoves() const -> const std::vector<UciMove>& {
+    return uciMoveHistory_;
+  }
 
   /// @brief Returns the list of moves in SAN notation played since the initial
   /// position.
-  const std::vector<SanMove>& sanMoves() const { return sanMoveHistory_; }
+  auto sanMoves() const -> const std::vector<SanMove>& {
+    return sanMoveHistory_;
+  }
 
   /// @brief Returns the repetition tracker.
-  const RepetitionTracker& repetitionTracker() const {
+  auto repetitionTracker() const -> const RepetitionTracker& {
     return repetitionTracker_;
   }
 
   ///  @brief Returns the result of the game if it is over.
-  std::optional<GameResult> result() const {
+  auto result() const -> std::optional<GameResult> {
     if (isDraw()) return GameResult::kDraw;
     if (isCheckmate()) {
       if (activeColor() == Color::kWhite) return GameResult::kBlackWins;
@@ -126,7 +132,7 @@ class Game {
   }
 
   /// @brief Returns the draw reason if the game ended in a draw.
-  std::optional<DrawReason> drawReason() const {
+  auto drawReason() const -> std::optional<DrawReason> {
     if (isFiftyMoveRuleDraw()) return DrawReason::kFiftyMoveRule;
     if (isInsufficientMaterialDraw()) return DrawReason::kInsufficientMaterial;
     if (isThreefoldRepetition()) return DrawReason::kThreefoldRepetition;
@@ -143,13 +149,13 @@ class Game {
   /// @brief Applies a move specified in UCI (Universal Chess Interface) format
   /// to the current game state, or returns an error if the move is illegal for
   /// the current position.
-  std::expected<void, MoveError> move(const UciMove& move) {
+  auto move(const UciMove& move) -> std::expected<void, MoveError> {
     return executeMove(move);
   }
   /// @brief Applies a move specified in SAN (Standard Algebraic Notation)
   /// format to the current game state, or returns an error if the move is
   /// illegal for the current position.
-  std::expected<void, MoveError> move(const SanMove& move) {
+  auto move(const SanMove& move) -> std::expected<void, MoveError> {
     return executeMove(move);
   }
 
@@ -179,7 +185,7 @@ class Game {
 
  private:
   template <typename MoveInput>
-  std::expected<void, MoveError> executeMove(const MoveInput& move) {
+  auto executeMove(const MoveInput& move) -> std::expected<void, MoveError> {
     auto result = internal::PositionModifier::move(currentPosition_, move);
 
     if (result) {
@@ -191,23 +197,27 @@ class Game {
     return std::unexpected(result.error());
   }
 
-  bool isGameOver() const { return isCheckmate() || isDraw(); }
-  bool isCheckmate() const { return internal::isCheckmate(currentPosition_); }
-  bool isDraw() const {
+  auto isGameOver() const -> bool { return isCheckmate() || isDraw(); }
+  auto isCheckmate() const -> bool {
+    return internal::isCheckmate(currentPosition_);
+  }
+  auto isDraw() const -> bool {
     return internal::isDraw(currentPosition_) || isThreefoldRepetition();
   }
-  bool isStalemate() const { return internal::isStalemate(currentPosition_); }
-  bool isFiftyMoveRuleDraw() const {
+  auto isStalemate() const -> bool {
+    return internal::isStalemate(currentPosition_);
+  }
+  auto isFiftyMoveRuleDraw() const -> bool {
     return internal::isFiftyMoveRuleDraw(currentPosition_);
   }
-  bool isInsufficientMaterialDraw() const {
+  auto isInsufficientMaterialDraw() const -> bool {
     return internal::isInsufficientMaterialDraw(currentPosition_);
   }
-  bool isThreefoldRepetition() const {
+  auto isThreefoldRepetition() const -> bool {
     return repetitionTracker_.at(currentPosition_) >= 3;
   }
 
-  bool historyIsEmpty() { return moveHistory_.empty(); }
+  auto historyIsEmpty() -> bool { return moveHistory_.empty(); }
   void clearHistory() {
     moveHistory_.clear();
     uciMoveHistory_.clear();
@@ -223,7 +233,9 @@ class Game {
     uciMoveHistory_.pop_back();
     sanMoveHistory_.pop_back();
   }
-  const internal::MoveRecord& lastMove() { return moveHistory_.back(); };
+  auto lastMove() -> const internal::MoveRecord& {
+    return moveHistory_.back();
+  };
 
   void clearRepetitionTracker() { repetitionTracker_.clear(); }
   void removePositionOccurrence() {

@@ -11,7 +11,8 @@
 
 namespace chesskit {
 
-inline std::optional<Square> Position::legalEnPassantTargetSquare() const {
+inline auto Position::legalEnPassantTargetSquare() const
+    -> std::optional<Square> {
   if (internal::hasLegalEnPassantCapture(*this)) return enPassantTargetSquare();
 
   return std::nullopt;

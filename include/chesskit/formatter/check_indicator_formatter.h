@@ -26,12 +26,14 @@ struct std::formatter<chesskit::CheckIndicator>
   }
 
  private:
-  constexpr std::string_view description(const auto& check_indicator) const {
+  [[nodiscard]] constexpr auto description(const auto& check_indicator) const
+      -> std::string_view {
     return check_indicator == chesskit::CheckIndicator::kCheck ? "check"
                                                                : "checkmate";
   }
 
-  constexpr char compact(const auto& check_indicator) const {
+  [[nodiscard]] constexpr auto compact(const auto& check_indicator) const
+      -> char {
     return check_indicator == chesskit::CheckIndicator::kCheck ? '+' : '#';
   }
 };

@@ -19,7 +19,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Color white = chesskit::Color::kWhite;
   chesskit::Color black = chesskit::Color::kBlack;
   std::println("{} {}", white, black);

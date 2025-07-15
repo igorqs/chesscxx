@@ -15,8 +15,9 @@ struct PortugueseLowercase {};
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
  public:
-  std::expected<ParseResult<chesskit::PieceType, const char*>, ParseError>
-  parse(const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+                       ParseError> {
     static constexpr std::string_view allowed = "PCBTDR";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
@@ -27,15 +28,17 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{static_cast<chesskit::PieceType>(index), begin + 1};
+    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+                       .ptr = begin + 1};
   }
 };
 
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
  public:
-  std::expected<ParseResult<chesskit::PieceType, const char*>, ParseError>
-  parse(const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+                       ParseError> {
     static constexpr std::string_view allowed = "pcbtdr";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
@@ -46,7 +49,8 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{static_cast<chesskit::PieceType>(index), begin + 1};
+    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+                       .ptr = begin + 1};
   }
 };
 

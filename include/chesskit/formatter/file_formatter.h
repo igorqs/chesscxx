@@ -19,7 +19,7 @@ struct std::formatter<chesskit::File> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr char compact(const auto& file) const {
+  [[nodiscard]] constexpr auto compact(const auto& file) const -> char {
     return static_cast<char>('a' + static_cast<uint8_t>(file));
   }
 };

@@ -26,7 +26,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::SanNormalMove normal_move = {
       .pieceType = chesskit::PieceType::kPawn,
       .origin = chesskit::PartialSquare(chesskit::File::kE, chesskit::Rank::k7),

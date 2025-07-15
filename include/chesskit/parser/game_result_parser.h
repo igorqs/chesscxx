@@ -21,8 +21,8 @@ namespace chesskit {
 template <>
 class Parser<GameResult, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<GameResult, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<GameResult, const char*>, ParseError> {
     constexpr static std::array<std::pair<std::string_view, GameResult>, 3>
         kGameResults = {{{"1-0", GameResult::kWhiteWins},
                          {"0-1", GameResult::kBlackWins},
@@ -32,7 +32,8 @@ class Parser<GameResult, const char*, parse_as::Default> {
 
     for (const auto& [pattern, result] : kGameResults) {
       if (sv.starts_with(pattern)) {
-        return ParseResult{result, begin + pattern.size()};
+        return ParseResult{.parsedValue = result,
+                           .ptr = begin + pattern.size()};
       }
     }
 

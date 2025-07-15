@@ -19,7 +19,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::CheckIndicator check = chesskit::CheckIndicator::kCheck;
   chesskit::CheckIndicator checkmate = chesskit::CheckIndicator::kCheckmate;
   std::println("{} {}", check, checkmate);

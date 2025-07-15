@@ -14,7 +14,7 @@ void printErrorOrValue(auto parsedValue) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   auto parsedPieceType = chesskit::parse<chesskit::PieceType>(
       "r", chesskit::parse_as::Uppercase{});
   printErrorOrValue(parsedPieceType);

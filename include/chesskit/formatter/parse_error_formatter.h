@@ -20,7 +20,8 @@ struct std::formatter<chesskit::ParseError> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr std::string_view toString(const auto& error) const {
+  [[nodiscard]] constexpr auto toString(const auto& error) const
+      -> std::string_view {
     switch (error) {
       case chesskit::ParseError::kInvalidRank:
         return "Invalid rank";

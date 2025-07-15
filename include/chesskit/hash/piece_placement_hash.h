@@ -13,7 +13,8 @@
 /// @brief hash support for chesskit::PiecePlacement
 template <>
 struct std::hash<chesskit::PiecePlacement> {
-  size_t operator()(const chesskit::PiecePlacement& piecePlacement) const {
+  auto operator()(const chesskit::PiecePlacement& piecePlacement) const
+      -> size_t {
     return chesskit::internal::hashCombineRange(piecePlacement.pieceArray());
   };
 };

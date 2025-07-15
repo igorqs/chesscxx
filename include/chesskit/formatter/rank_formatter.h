@@ -19,7 +19,7 @@ struct std::formatter<chesskit::Rank> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr char compact(const auto& rank) const {
+  [[nodiscard]] constexpr auto compact(const auto& rank) const -> char {
     return static_cast<char>('8' - static_cast<uint8_t>(rank));
   }
 };

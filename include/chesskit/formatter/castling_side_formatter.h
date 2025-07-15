@@ -19,7 +19,7 @@ struct std::formatter<chesskit::CastlingSide> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr std::string_view toString(auto side) const {
+  [[nodiscard]] constexpr auto toString(auto side) const -> std::string_view {
     return side == chesskit::CastlingSide::kKingside ? "kingside" : "queenside";
   }
 };

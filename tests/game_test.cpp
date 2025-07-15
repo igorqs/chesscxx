@@ -27,7 +27,9 @@
 class GameEqualityFixture {
  public:
   void add_game(chesskit::Game game) { games_.push_back(game); }
-  const std::vector<chesskit::Game>& games() const { return games_; }
+  [[nodiscard]] auto games() const -> const std::vector<chesskit::Game>& {
+    return games_;
+  }
 
  private:
   std::vector<chesskit::Game> games_;
@@ -35,7 +37,7 @@ class GameEqualityFixture {
 
 template <>
 struct YAML::convert<GameEqualityFixture> {
-  static bool decode(const Node& node, GameEqualityFixture& rhs) {
+  static auto decode(const Node& node, GameEqualityFixture& rhs) -> bool {
     for (const auto& game : node) {
       rhs.add_game(
           chesskit::parse<chesskit::Game>(game.as<std::string>()).value());
@@ -52,8 +54,8 @@ class PositionFixture {
     position_ = chesskit::parse<chesskit::Position>(raw).value();
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Position& position() const { return position_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto position() const -> const chesskit::Position& { return position_; }
 
  private:
   std::string raw_;
@@ -63,7 +65,7 @@ class PositionFixture {
 
 template <>
 struct YAML::convert<PositionFixture> {
-  static bool decode(const Node& node, PositionFixture& rhs) {
+  static auto decode(const Node& node, PositionFixture& rhs) -> bool {
     rhs.set_input(node.as<std::string>());
     return true;
   }
@@ -83,10 +85,12 @@ class OutcomeFixture {
     draw_reason_ = draw_reason;
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::optional<chesskit::GameResult>& result() const { return result_; }
-  const std::optional<chesskit::DrawReason>& draw_reason() const {
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto result() const -> const std::optional<chesskit::GameResult>& {
+    return result_;
+  }
+  auto draw_reason() const -> const std::optional<chesskit::DrawReason>& {
     return draw_reason_;
   }
 
@@ -99,7 +103,7 @@ class OutcomeFixture {
 
 template <>
 struct YAML::convert<OutcomeFixture> {
-  static bool decode(const Node& node, OutcomeFixture& rhs) {
+  static auto decode(const Node& node, OutcomeFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     if (!node[1].IsNull()) {
@@ -131,10 +135,14 @@ class MoveFixture {
     uci_moves_.push_back(uci_move);
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::vector<chesskit::SanMove>& san_moves() const { return san_moves_; }
-  const std::vector<chesskit::UciMove>& uci_moves() const { return uci_moves_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto san_moves() const -> const std::vector<chesskit::SanMove>& {
+    return san_moves_;
+  }
+  auto uci_moves() const -> const std::vector<chesskit::UciMove>& {
+    return uci_moves_;
+  }
 
  private:
   std::string raw_;
@@ -145,7 +153,7 @@ class MoveFixture {
 
 template <>
 struct YAML::convert<MoveFixture> {
-  static bool decode(const Node& node, MoveFixture& rhs) {
+  static auto decode(const Node& node, MoveFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     for (const auto& san_node : node[1]) {
@@ -177,9 +185,10 @@ class RepetitionTrackerFixture {
     repetitions_.emplace_back(position, counter, undo_counter);
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::vector<std::tuple<chesskit::Position, int, int>>& repetitions() {
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto repetitions()
+      -> const std::vector<std::tuple<chesskit::Position, int, int>>& {
     return repetitions_;
   };
 
@@ -191,7 +200,7 @@ class RepetitionTrackerFixture {
 
 template <>
 struct YAML::convert<RepetitionTrackerFixture> {
-  static bool decode(const Node& node, RepetitionTrackerFixture& rhs) {
+  static auto decode(const Node& node, RepetitionTrackerFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     for (const auto& repetition : node[1]) {
@@ -222,10 +231,10 @@ class SanMoveErrorFixture {
   void set_move(chesskit::SanMove move) { move_ = move; }
   void set_error(chesskit::MoveError error) { error_ = error; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const chesskit::SanMove& move() const { return move_; }
-  const chesskit::MoveError& error() const { return error_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto move() const -> const chesskit::SanMove& { return move_; }
+  auto error() const -> const chesskit::MoveError& { return error_; }
 
  private:
   std::string raw_;
@@ -236,7 +245,7 @@ class SanMoveErrorFixture {
 
 template <>
 struct YAML::convert<SanMoveErrorFixture> {
-  static bool decode(const Node& node, SanMoveErrorFixture& rhs) {
+  static auto decode(const Node& node, SanMoveErrorFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_move(
@@ -266,10 +275,10 @@ class UciMoveErrorFixture {
   void set_move(chesskit::UciMove move) { move_ = move; }
   void set_error(chesskit::MoveError error) { error_ = error; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const chesskit::UciMove& move() const { return move_; }
-  const chesskit::MoveError& error() const { return error_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto move() const -> const chesskit::UciMove& { return move_; }
+  auto error() const -> const chesskit::MoveError& { return error_; }
 
  private:
   std::string raw_;
@@ -280,7 +289,7 @@ class UciMoveErrorFixture {
 
 template <>
 struct YAML::convert<UciMoveErrorFixture> {
-  static bool decode(const Node& node, UciMoveErrorFixture& rhs) {
+  static auto decode(const Node& node, UciMoveErrorFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_move(
@@ -313,11 +322,13 @@ class ValidMoveFixture {
     final_position_ = position;
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const chesskit::SanMove& san_move() const { return san_move_; }
-  const chesskit::UciMove& uci_move() const { return uci_move_; }
-  const chesskit::Position& final_position() const { return final_position_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto san_move() const -> const chesskit::SanMove& { return san_move_; }
+  auto uci_move() const -> const chesskit::UciMove& { return uci_move_; }
+  auto final_position() const -> const chesskit::Position& {
+    return final_position_;
+  }
 
  private:
   std::string raw_;
@@ -329,7 +340,7 @@ class ValidMoveFixture {
 
 template <>
 struct YAML::convert<ValidMoveFixture> {
-  static bool decode(const Node& node, ValidMoveFixture& rhs) {
+  static auto decode(const Node& node, ValidMoveFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_san_move(
@@ -354,8 +365,8 @@ class GameFixture {
     game_ = chesskit::parse<chesskit::Game>(raw).value();
   }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
 
  private:
   std::string raw_;
@@ -364,7 +375,7 @@ class GameFixture {
 
 template <>
 struct YAML::convert<GameFixture> {
-  static bool decode(const Node& node, GameFixture& rhs) {
+  static auto decode(const Node& node, GameFixture& rhs) -> bool {
     rhs.set_input(node.as<std::string>());
     return true;
   }
@@ -385,14 +396,14 @@ class FormatFixture {
   void set_lists(std::string_view lists) { lists_ = lists; }
   void set_rep(std::string_view rep) { rep_ = rep; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::string& default_fmt() { return default_fmt_; }
-  const std::string& pgn() { return pgn_; }
-  const std::string& fen() { return fen_; }
-  const std::string& ascii() { return ascii_; }
-  const std::string& lists() { return lists_; }
-  const std::string& rep() { return rep_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto default_fmt() -> const std::string& { return default_fmt_; }
+  auto pgn() -> const std::string& { return pgn_; }
+  auto fen() -> const std::string& { return fen_; }
+  auto ascii() -> const std::string& { return ascii_; }
+  auto lists() -> const std::string& { return lists_; }
+  auto rep() -> const std::string& { return rep_; }
 
  private:
   std::string raw_;
@@ -407,7 +418,7 @@ class FormatFixture {
 
 template <>
 struct YAML::convert<FormatFixture> {
-  static bool decode(const Node& node, FormatFixture& rhs) {
+  static auto decode(const Node& node, FormatFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
     rhs.set_default(node[1].as<std::string>());
     rhs.set_pgn(node[2].as<std::string>());
@@ -438,14 +449,14 @@ class FenFormatFixture {
   void set_lists(std::string_view lists) { lists_ = lists; }
   void set_rep(std::string_view rep) { rep_ = rep; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::string& default_fmt() { return default_fmt_; }
-  const std::string& pgn() { return pgn_; }
-  const std::string& fen() { return fen_; }
-  const std::string& ascii() { return ascii_; }
-  const std::string& lists() { return lists_; }
-  const std::string& rep() { return rep_; }
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto default_fmt() -> const std::string& { return default_fmt_; }
+  auto pgn() -> const std::string& { return pgn_; }
+  auto fen() -> const std::string& { return fen_; }
+  auto ascii() -> const std::string& { return ascii_; }
+  auto lists() -> const std::string& { return lists_; }
+  auto rep() -> const std::string& { return rep_; }
 
  private:
   std::string raw_;
@@ -460,7 +471,7 @@ class FenFormatFixture {
 
 template <>
 struct YAML::convert<FenFormatFixture> {
-  static bool decode(const Node& node, FenFormatFixture& rhs) {
+  static auto decode(const Node& node, FenFormatFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
     rhs.set_default(node[1].as<std::string>());
     rhs.set_pgn(node[2].as<std::string>());
@@ -477,8 +488,10 @@ class InvalidFixture {
   void set_input(std::string_view raw) { raw_ = raw; }
   void set_error(chesskit::ParseError error) { error_ = error; }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::ParseError& error() const { return error_; }
+  [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
+  [[nodiscard]] auto error() const -> const chesskit::ParseError& {
+    return error_;
+  }
 
  private:
   std::string raw_;
@@ -487,7 +500,7 @@ class InvalidFixture {
 
 template <>
 struct YAML::convert<InvalidFixture> {
-  static bool decode(const Node& node, InvalidFixture& rhs) {
+  static auto decode(const Node& node, InvalidFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     auto error =

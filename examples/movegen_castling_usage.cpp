@@ -8,13 +8,13 @@
 #include <string_view>
 
 namespace {
-chesskit::SanMove parseSanMove(std::string_view sv) {
+auto parseSanMove(std::string_view sv) -> chesskit::SanMove {
   auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsedSanMove);
   return parsedSanMove.value();
 }
 
-chesskit::Game parseFen(std::string_view sv) {
+auto parseFen(std::string_view sv) -> chesskit::Game {
   auto parsedGame =
       chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
   assert(parsedGame);
@@ -29,7 +29,7 @@ void printGame(const auto& game) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Game game = parseFen("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
   printGame(game);
 

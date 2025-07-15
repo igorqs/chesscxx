@@ -5,14 +5,14 @@
 #include <string_view>
 
 namespace {
-chesskit::Position parsePosition(std::string_view sv) {
+auto parsePosition(std::string_view sv) -> chesskit::Position {
   auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
   assert(parsedPosition);
   return parsedPosition.value();
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Position const p1 =
       parsePosition("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 

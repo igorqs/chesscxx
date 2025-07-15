@@ -21,18 +21,20 @@ namespace chesskit {
 template <>
 class Parser<Piece, const char*, parse_as::Default> {
  public:
-  constexpr std::expected<ParseResult<Piece, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Piece, const char*>, ParseError> {
     auto whitePiece = parseFrom<PieceType>(begin, end, parse_as::Uppercase{});
     if (whitePiece) {
-      return ParseResult{Piece{whitePiece->parsedValue, Color::kWhite},
-                         whitePiece->ptr};
+      return ParseResult{.parsedValue = Piece{.type = whitePiece->parsedValue,
+                                              .color = Color::kWhite},
+                         .ptr = whitePiece->ptr};
     }
 
     auto blackPiece = parseFrom<PieceType>(begin, end, parse_as::Lowercase{});
     if (blackPiece) {
-      return ParseResult{Piece{blackPiece->parsedValue, Color::kBlack},
-                         blackPiece->ptr};
+      return ParseResult{.parsedValue = Piece{.type = blackPiece->parsedValue,
+                                              .color = Color::kBlack},
+                         .ptr = blackPiece->ptr};
     }
 
     return std::unexpected(ParseError::kInvalidPiece);

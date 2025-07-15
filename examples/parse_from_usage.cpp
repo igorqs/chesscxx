@@ -8,10 +8,11 @@
 #include <iostream>
 #include <iterator>
 #include <print>
+#include <ranges>
 #include <string_view>
 #include <vector>
 
-int main() {
+auto main() -> int {
   std::ifstream file("data/games.pgn", std::ios::binary);
   assert(file);
 
@@ -20,9 +21,9 @@ int main() {
 
   // trim trailing spaces; otherwise, these spaces might be parsed as a valid
   // empty game
-  auto rit =
-      std::find_if_not(buffer.rbegin(), buffer.rend(),
-                       [](unsigned char ch) { return std::isspace(ch); });
+  auto rit = std::ranges::find_if_not(
+      std::ranges::reverse_view(buffer),
+      [](unsigned char ch) { return std::isspace(ch); });
 
   std::string_view const sv(buffer.begin(), rit.base());
 

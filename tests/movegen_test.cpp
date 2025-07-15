@@ -48,12 +48,12 @@ class MovegenFixture {
   void add_san_move(chesskit::SanMove san_move) { san_moves_.insert(san_move); }
   void add_uci_move(chesskit::UciMove uci_move) { uci_moves_.insert(uci_move); }
 
-  const std::string& raw() const { return raw_; }
-  const chesskit::Game& game() const { return game_; }
-  const std::unordered_set<chesskit::SanMove>& san_moves() const {
+  auto raw() const -> const std::string& { return raw_; }
+  auto game() const -> const chesskit::Game& { return game_; }
+  auto san_moves() const -> const std::unordered_set<chesskit::SanMove>& {
     return san_moves_;
   }
-  const std::unordered_set<chesskit::UciMove>& uci_moves() const {
+  auto uci_moves() const -> const std::unordered_set<chesskit::UciMove>& {
     return uci_moves_;
   }
 
@@ -66,7 +66,7 @@ class MovegenFixture {
 
 template <>
 struct YAML::convert<MovegenFixture> {
-  static bool decode(const Node& node, MovegenFixture& rhs) {
+  static auto decode(const Node& node, MovegenFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
     for (const auto& san_node : node[1]) {

@@ -23,14 +23,14 @@ namespace chesskit {
 template <>
 class Parser<PartialSquare, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<PartialSquare, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PartialSquare, const char*>, ParseError> {
     auto file = internal::tryParseFrom<File>(begin, end);
     auto rank = internal::tryParseFrom<Rank>(file.ptr, end);
 
     auto square = PartialSquare(file.parsedValue, rank.parsedValue);
 
-    return ParseResult{square, rank.ptr};
+    return ParseResult{.parsedValue = square, .ptr = rank.ptr};
   }
 };
 

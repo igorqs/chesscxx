@@ -8,14 +8,15 @@
 
 namespace chesskit::internal {
 
-inline bool matches(const PartialSquare& partial, const Square& square) {
+inline auto matches(const PartialSquare& partial, const Square& square)
+    -> bool {
   bool const validFile = (!partial.file) || (*(partial.file) == square.file);
   bool const validRank = (!partial.rank) || (*(partial.rank) == square.rank);
 
   return (validFile && validRank);
 }
 
-inline std::optional<Square> toSquare(const PartialSquare& partial) {
+inline auto toSquare(const PartialSquare& partial) -> std::optional<Square> {
   return (partial.file && partial.rank)
              ? std::optional(Square(*partial.file, *partial.rank))
              : std::nullopt;

@@ -29,7 +29,7 @@ class CastlingRights {
   /// @{
 
   /// @brief Default constructor. Initializes all castling rights to true.
-  constexpr CastlingRights() {}
+  constexpr CastlingRights() = default;
 
   /// @brief Constructor from a specific bitset value.
   explicit constexpr CastlingRights(std::bitset<kNumCastlingRights> bits)
@@ -41,7 +41,7 @@ class CastlingRights {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const CastlingRights&) const = default;
+  constexpr auto operator==(const CastlingRights&) const -> bool = default;
 
   /// @}
 
@@ -49,16 +49,17 @@ class CastlingRights {
   /// @{
 
   /// @brief Check if castling is allowed for a given side and color.
-  bool canCastle(const CastlingSide& side, const Color& color) const {
+  [[nodiscard]] auto canCastle(const CastlingSide& side,
+                               const Color& color) const -> bool {
     return castlingRights_.test(index(side, color));
   }
 
   /// @brief Checks if all castling rights are allowed.
-  bool all() const { return castlingRights_.all(); }
+  [[nodiscard]] auto all() const -> bool { return castlingRights_.all(); }
   /// @brief Checks if any castling rights are allowed.
-  bool any() const { return castlingRights_.any(); }
+  [[nodiscard]] auto any() const -> bool { return castlingRights_.any(); }
   /// @brief Checks if no castling rights are allowed.
-  bool none() const { return castlingRights_.none(); }
+  [[nodiscard]] auto none() const -> bool { return castlingRights_.none(); }
 
   /// @}
 
@@ -95,7 +96,8 @@ class CastlingRights {
   /// @{
 
   /// @brief Returns a bitset representation of the data
-  const std::bitset<kNumCastlingRights>& toBitset() const {
+  [[nodiscard]] auto toBitset() const
+      -> const std::bitset<kNumCastlingRights>& {
     return castlingRights_;
   };
 
@@ -104,7 +106,8 @@ class CastlingRights {
  private:
   static constexpr uint8_t kInitialValue = (1 << kNumCastlingRights) - 1;
 
-  static constexpr uint8_t index(const CastlingSide& side, const Color& color) {
+  static constexpr auto index(const CastlingSide& side, const Color& color)
+      -> uint8_t {
     uint8_t const sideIndex = (side == CastlingSide::kKingside) ? 0 : 1;
     uint8_t const colorIndex = (color == Color::kWhite) ? 0 : 1;
 

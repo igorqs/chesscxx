@@ -33,13 +33,13 @@ void parseFenAndPrintGameResult(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::GameResult blackWins = chesskit::GameResult::kBlackWins;
   chesskit::GameResult whiteWins = chesskit::GameResult::kWhiteWins;
   chesskit::GameResult draw = chesskit::GameResult::kDraw;
-  std::println("\"{}\" \"{}\" \"{}\"", blackWins, whiteWins, draw);
-  std::println("\"{:v}\" \"{:v}\" \"{:v}\"", blackWins, whiteWins, draw);
-  std::println("\"{:c}\" \"{:c}\" \"{:c}\"", blackWins, whiteWins, draw);
+  std::println(R"("{}" "{}" "{}")", blackWins, whiteWins, draw);
+  std::println(R"("{:v}" "{:v}" "{:v}")", blackWins, whiteWins, draw);
+  std::println(R"("{:c}" "{:c}" "{:c}")", blackWins, whiteWins, draw);
 
   parseAndPrint("1-0");
   parseAndPrint("0-1");

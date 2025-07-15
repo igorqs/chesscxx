@@ -57,8 +57,8 @@ class PiecePlacement {
 
   /// @brief Creates a PiecePlacement object from a PieceArray, or returns an
   /// error if validation fails.
-  constexpr static std::expected<PiecePlacement, PiecePlacementError>
-  fromPieceArray(const PieceArray& pieceArray) {
+  constexpr static auto fromPieceArray(const PieceArray& pieceArray)
+      -> std::expected<PiecePlacement, PiecePlacementError> {
     PiecePlacement piece_placement(pieceArray);
 
     if (auto error = piece_placement.validationError()) {
@@ -74,7 +74,7 @@ class PiecePlacement {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const PiecePlacement& other) const {
+  constexpr auto operator==(const PiecePlacement& other) const -> bool {
     return pieceArray_ == other.pieceArray_;
   }
 
@@ -84,10 +84,10 @@ class PiecePlacement {
   /// @{
 
   /// @brief Returns the piece array representing the board.
-  const PieceArray& pieceArray() const { return pieceArray_; }
+  auto pieceArray() const -> const PieceArray& { return pieceArray_; }
 
   /// @brief Returns the locations of pieces categorized by type and color.
-  const PieceLocationsByTypeAndColor& pieceLocations() const {
+  auto pieceLocations() const -> const PieceLocationsByTypeAndColor& {
     return pieceLocations_;
   }
 
@@ -121,7 +121,7 @@ class PiecePlacement {
     pieceAt(square) = newPiece;
   }
 
-  constexpr std::optional<PiecePlacementError> validationError() const {
+  constexpr auto validationError() const -> std::optional<PiecePlacementError> {
     if (isMissingKing(Color::kWhite) || isMissingKing(Color::kBlack)) {
       return PiecePlacementError::kMissingKing;
     }
@@ -142,26 +142,27 @@ class PiecePlacement {
     return std::nullopt;
   }
 
-  constexpr bool isMissingKing(const Color& color) const {
+  constexpr auto isMissingKing(const Color& color) const -> bool {
     if (!pieceLocations_.contains(color)) return true;
     if (!pieceLocations_.at(color).contains(PieceType::kKing)) return true;
 
     return false;
   }
 
-  constexpr bool hasMultipleKings(const Color& color) const {
+  constexpr auto hasMultipleKings(const Color& color) const -> bool {
     return pieceLocations_.at(color).at(PieceType::kKing).size() != 1;
   }
 
-  constexpr bool hasPawnOnBackRank(const Color& color) const {
+  constexpr auto hasPawnOnBackRank(const Color& color) const -> bool {
     return hasPawnOnRank(color, internal::backRank(color));
   }
 
-  constexpr bool hasPawnOnPromotionRank(const Color& color) const {
+  constexpr auto hasPawnOnPromotionRank(const Color& color) const -> bool {
     return hasPawnOnRank(color, internal::promotionRank(color));
   }
 
-  constexpr bool hasPawnOnRank(const Color& color, const Rank& rank) const {
+  constexpr auto hasPawnOnRank(const Color& color, const Rank& rank) const
+      -> bool {
     if (!pieceLocations_.at(color).contains(PieceType::kPawn)) return false;
 
     return std::ranges::any_of(
@@ -169,7 +170,7 @@ class PiecePlacement {
         [rank](const Square& square) { return square.rank == rank; });
   }
 
-  constexpr std::optional<Piece>& pieceAt(const Square& square) {
+  constexpr auto pieceAt(const Square& square) -> std::optional<Piece>& {
     return pieceArray_[index(square)];
   }
 

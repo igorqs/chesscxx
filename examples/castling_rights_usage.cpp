@@ -27,7 +27,7 @@ void printCastlingRights(const auto& rights) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::CastlingRights rights;
   printCastlingRights(rights);
 

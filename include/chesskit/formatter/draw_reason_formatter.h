@@ -20,7 +20,8 @@ struct std::formatter<chesskit::DrawReason> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr std::string_view toString(const auto& result) const {
+  [[nodiscard]] constexpr auto toString(const auto& result) const
+      -> std::string_view {
     switch (result) {
       case chesskit::DrawReason::kStalemate:
         return "stalemate";

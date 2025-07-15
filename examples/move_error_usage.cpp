@@ -24,7 +24,7 @@ void moveAndPrint(auto& game, const auto& move) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   std::println("{}", chesskit::MoveError::kMissingPromotionPiece);
   std::println("{}\n", chesskit::MoveError::kKingOrRookMoved);
 

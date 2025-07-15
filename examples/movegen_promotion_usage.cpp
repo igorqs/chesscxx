@@ -7,7 +7,7 @@
 #include <string_view>
 
 namespace {
-chesskit::Game parseFen(std::string_view sv) {
+auto parseFen(std::string_view sv) -> chesskit::Game {
   auto parsedGame =
       chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
   assert(parsedGame);
@@ -22,7 +22,7 @@ void printGame(const auto& game) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Game const game =
       parseFen("3r1bnr/kPpppppp/2R5/8/8/8/1PPPPPPP/1NBQKBNR w K - 1 9");
 

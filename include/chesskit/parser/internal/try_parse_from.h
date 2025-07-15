@@ -10,8 +10,9 @@
 namespace chesskit::internal {
 
 template <typename T, typename InputIt, typename Tag = parse_as::Default>
-inline constexpr ParseResult<std::optional<T>, InputIt> tryParseFrom(
-    InputIt begin, InputIt end, Tag tag = parse_as::Default{}) {
+inline constexpr auto tryParseFrom(InputIt begin, InputIt end,
+                                   Tag tag = parse_as::Default{})
+    -> ParseResult<std::optional<T>, InputIt> {
   auto result = parseFrom<T, InputIt, Tag>(begin, end, tag);
   if (result) {
     return ParseResult<std::optional<T>, InputIt>{result->parsedValue,

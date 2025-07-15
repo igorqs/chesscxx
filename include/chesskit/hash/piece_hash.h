@@ -13,7 +13,7 @@
 /// @brief hash support for chesskit::Piece
 template <>
 struct std::hash<chesskit::Piece> {
-  size_t operator()(const chesskit::Piece& piece) const {
+  auto operator()(const chesskit::Piece& piece) const -> size_t {
     return chesskit::internal::hashCombine(piece.type, piece.color);
   };
 };

@@ -6,7 +6,7 @@
 
 namespace chesskit::internal {
 
-inline constexpr RawMove rawMoveFromUci(const UciMove& uci) {
+inline constexpr auto rawMoveFromUci(const UciMove& uci) -> RawMove {
   return RawMove(uci.origin, uci.destination);
 }
 

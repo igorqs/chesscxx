@@ -21,9 +21,9 @@
 namespace chesskit {
 
 namespace internal {
-constexpr std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
-                        ParseError>
-parsePieceArray(const char* begin, const char* end) {
+constexpr auto parsePieceArray(const char* begin, const char* end)
+    -> std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
+                     ParseError> {
   auto toChar = [](uint8_t i) -> unsigned char { return i + '0'; };
   auto fromChar = [](char c) -> uint8_t { return c - '0'; };
 
@@ -43,7 +43,9 @@ parsePieceArray(const char* begin, const char* end) {
         missingPieces -= fromChar(*it);
         pieceCounter += fromChar(*it);
         ++it;
-        if (pieceCounter == kNumSquares) return ParseResult{pieceArray, it};
+        if (pieceCounter == kNumSquares) {
+          return ParseResult{.parsedValue = pieceArray, .ptr = it};
+        }
         continue;
       }
 
@@ -53,7 +55,9 @@ parsePieceArray(const char* begin, const char* end) {
       it = piece->ptr;
       missingPieces--;
 
-      if (pieceCounter == kNumSquares) return ParseResult{pieceArray, it};
+      if (pieceCounter == kNumSquares) {
+        return ParseResult{.parsedValue = pieceArray, .ptr = it};
+      }
     }
 
     if (missingPieces > 0) return std::unexpected(ParseError::kMissingRankInfo);
@@ -68,15 +72,15 @@ parsePieceArray(const char* begin, const char* end) {
 template <>
 class Parser<PiecePlacement, const char*, parse_as::Default> {
  public:
-  constexpr std::expected<ParseResult<PiecePlacement, const char*>, ParseError>
-  parse(const char* begin, const char* end) {
+  constexpr auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<PiecePlacement, const char*>, ParseError> {
     auto array = internal::parsePieceArray(begin, end);
     if (!array) return std::unexpected(array.error());
 
     auto pp = PiecePlacement::fromPieceArray(array->parsedValue);
     if (!pp) return std::unexpected(ParseError::kInvalidPiecePlacement);
 
-    return ParseResult{pp.value(), array->ptr};
+    return ParseResult{.parsedValue = pp.value(), .ptr = array->ptr};
   }
 };
 

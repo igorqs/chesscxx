@@ -19,7 +19,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::File file = chesskit::File::kE;
   std::println("{}", file);
 

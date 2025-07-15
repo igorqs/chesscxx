@@ -21,7 +21,7 @@ void parseFenAndPrintDrawReason(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   std::println("{}", chesskit::DrawReason::kStalemate);
   std::println("{}", chesskit::DrawReason::kThreefoldRepetition);
 

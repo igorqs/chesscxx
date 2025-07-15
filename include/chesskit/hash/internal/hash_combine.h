@@ -9,7 +9,7 @@
 namespace chesskit::internal {
 
 template <typename... T>
-size_t hashCombine(const T&... v) {
+auto hashCombine(const T&... v) -> size_t {
   size_t seed = 0;
 
   ((seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2)), ...);
@@ -17,7 +17,7 @@ size_t hashCombine(const T&... v) {
   return seed;
 }
 
-size_t hashCombineRange(std::ranges::input_range auto&& range) {
+auto hashCombineRange(std::ranges::input_range auto&& range) -> size_t {
   size_t seed = 0;
 
   for (auto&& v : range) {

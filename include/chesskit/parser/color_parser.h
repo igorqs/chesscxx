@@ -20,8 +20,8 @@ namespace chesskit {
 template <>
 class Parser<Color, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<Color, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Color, const char*>, ParseError> {
     static constexpr std::string_view allowed = "wb";
 
     return internal::parseEnum<Color>(begin, end, allowed,

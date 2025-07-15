@@ -22,17 +22,20 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
-  chesskit::PartialSquare both{chesskit::File::kA, chesskit::Rank::k8};
+auto main() -> int {
+  chesskit::PartialSquare both{.file = chesskit::File::kA,
+                               .rank = chesskit::Rank::k8};
   std::println("\"{}\"", both);
 
-  chesskit::PartialSquare file_only{chesskit::File::kA, std::nullopt};
+  chesskit::PartialSquare file_only{.file = chesskit::File::kA,
+                                    .rank = std::nullopt};
   std::println("\"{}\"", file_only);
 
-  chesskit::PartialSquare rank_only{std::nullopt, chesskit::Rank::k8};
+  chesskit::PartialSquare rank_only{.file = std::nullopt,
+                                    .rank = chesskit::Rank::k8};
   std::println("\"{}\"", rank_only);
 
-  chesskit::PartialSquare neither{std::nullopt, std::nullopt};
+  chesskit::PartialSquare neither{.file = std::nullopt, .rank = std::nullopt};
   std::println("\"{}\"", neither);
 
   parseAndPrint("e4");

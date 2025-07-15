@@ -26,11 +26,12 @@ struct std::formatter<chesskit::Color>
   }
 
  private:
-  constexpr std::string_view description(const auto& color) const {
+  [[nodiscard]] constexpr auto description(const auto& color) const
+      -> std::string_view {
     return color == chesskit::Color::kWhite ? "white" : "black";
   }
 
-  constexpr char compact(const auto& color) const {
+  [[nodiscard]] constexpr auto compact(const auto& color) const -> char {
     return color == chesskit::Color::kWhite ? 'w' : 'b';
   }
 };

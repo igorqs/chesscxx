@@ -8,18 +8,18 @@
 #include "../../rank.h"
 
 namespace chesskit::internal {
-inline constexpr uint8_t index(const Rank& rank) {
+inline constexpr auto index(const Rank& rank) -> uint8_t {
   return static_cast<uint8_t>(rank);
 }
 
-inline constexpr std::optional<Rank> toRank(const uint8_t& index) {
+inline constexpr auto toRank(const uint8_t& index) -> std::optional<Rank> {
   if (index >= kNumRanks) return std::nullopt;
 
   return static_cast<Rank>(index);
 }
 
-inline constexpr bool isDoublePawnPushTargetRank(const Rank& rank,
-                                                 const Color& color) {
+inline constexpr auto isDoublePawnPushTargetRank(const Rank& rank,
+                                                 const Color& color) -> bool {
   static constexpr Rank kWhiteDoublePushTargetRank = Rank::k4;
   static constexpr Rank kBlackDoublePushTargetRank = Rank::k5;
 
@@ -27,7 +27,8 @@ inline constexpr bool isDoublePawnPushTargetRank(const Rank& rank,
                                            : kBlackDoublePushTargetRank);
 }
 
-inline constexpr bool isPawnStartingRank(const Rank& rank, const Color& color) {
+inline constexpr auto isPawnStartingRank(const Rank& rank, const Color& color)
+    -> bool {
   static constexpr Rank kWhiteInitialRank = Rank::k2;
   static constexpr Rank kBlackInitialRank = Rank::k7;
 
@@ -35,15 +36,15 @@ inline constexpr bool isPawnStartingRank(const Rank& rank, const Color& color) {
          ((color == Color::kWhite) ? kWhiteInitialRank : kBlackInitialRank);
 }
 
-inline constexpr Rank backRank(const Color& color) {
+inline constexpr auto backRank(const Color& color) -> Rank {
   return color == Color::kWhite ? Rank::k1 : Rank::k8;
 }
 
-inline Rank promotionRank(const Color& color) {
+inline auto promotionRank(const Color& color) -> Rank {
   return color == Color::kWhite ? Rank::k8 : Rank::k1;
 }
 
-inline Rank enPassantRank(const Color& color) {
+inline auto enPassantRank(const Color& color) -> Rank {
   return color == Color::kWhite ? Rank::k6 : Rank::k3;
 }
 

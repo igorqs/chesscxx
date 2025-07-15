@@ -42,18 +42,19 @@ inline auto squaresWithout(PiecePlacement pp, const T& condition) {
   });
 }
 
-inline bool canSlideInDirection(const PieceType& type,
-                                const SlidingDirection& direction) {
+inline auto canSlideInDirection(const PieceType& type,
+                                const SlidingDirection& direction) -> bool {
   bool const isDiagonal = (direction == SlidingDirection::kDiagonal);
   return type == PieceType::kQueen ||
          type == (isDiagonal ? PieceType::kBishop : PieceType::kRook);
 }
-inline bool matches(const Piece& piece,
-                    const PieceSpecification<PieceType>& pieceSpec) {
+inline auto matches(const Piece& piece,
+                    const PieceSpecification<PieceType>& pieceSpec) -> bool {
   return piece.type == pieceSpec.spec && piece.color == pieceSpec.color;
 }
-inline bool matches(const Piece& piece,
-                    const PieceSpecification<SlidingDirection>& pieceSpec) {
+inline auto matches(const Piece& piece,
+                    const PieceSpecification<SlidingDirection>& pieceSpec)
+    -> bool {
   return canSlideInDirection(piece.type, pieceSpec.spec) &&
          piece.color == pieceSpec.color;
 }
@@ -98,29 +99,29 @@ inline auto takeWhileEmptyOrCaptureInEachRange(const PiecePlacement pp,
 }
 */
 
-inline std::generator<Square> pseudoLegalKnightMoves(const PiecePlacement pp,
-                                                     Square square,
-                                                     Color color) {
+inline auto pseudoLegalKnightMoves(const PiecePlacement pp, Square square,
+                                   Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(knightMoves(square) |
                                     squaresWithout(pp, color));
 }
 
-inline std::generator<Square> pseudoLegalKingMoves(const PiecePlacement pp,
-                                                   Square square, Color color) {
+inline auto pseudoLegalKingMoves(const PiecePlacement pp, Square square,
+                                 Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(kingMoves(square) |
                                     squaresWithout(pp, color));
 }
 
-inline std::generator<Square> pseudoLegalPawnPushs(const PiecePlacement pp,
-                                                   Square square, Color color) {
+inline auto pseudoLegalPawnPushs(const PiecePlacement pp, Square square,
+                                 Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnSlidingMove(square, color) |
       std::views::take_while(
           [pp](const Square& sq) { return !hasPieceAt(pp, sq); }));
 }
 
-inline std::generator<Square> takeWhileEmptyOrCapture(
-    std::generator<Square>&& gen, const PiecePlacement pp, Color color) {
+inline auto takeWhileEmptyOrCapture(std::generator<Square>&& gen,
+                                    const PiecePlacement pp, Color color)
+    -> std::generator<Square> {
   for (auto square : gen) {
     auto piece = pieceAt(pp, square);
     if (piece) {
@@ -132,8 +133,8 @@ inline std::generator<Square> takeWhileEmptyOrCapture(
   }
 }
 
-inline std::generator<Square> pseudoLegalRookMoves(const PiecePlacement pp,
-                                                   Square square, Color color) {
+inline auto pseudoLegalRookMoves(const PiecePlacement pp, Square square,
+                                 Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
       std::views::transform(
@@ -147,9 +148,8 @@ inline std::generator<Square> pseudoLegalRookMoves(const PiecePlacement pp,
       std::views::join);*/
 }
 
-inline std::generator<Square> pseudoLegalBishopMoves(const PiecePlacement pp,
-                                                     Square square,
-                                                     Color color) {
+inline auto pseudoLegalBishopMoves(const PiecePlacement pp, Square square,
+                                   Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
       std::views::transform(
@@ -163,9 +163,8 @@ inline std::generator<Square> pseudoLegalBishopMoves(const PiecePlacement pp,
       takeWhileEmptyOrCaptureInEachRange(pp, color) | std::views::join);*/
 }
 
-inline std::generator<Square> pseudoLegalQueenMoves(const PiecePlacement pp,
-                                                    Square square,
-                                                    Color color) {
+inline auto pseudoLegalQueenMoves(const PiecePlacement pp, Square square,
+                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |
       std::views::transform(
@@ -179,81 +178,85 @@ inline std::generator<Square> pseudoLegalQueenMoves(const PiecePlacement pp,
       takeWhileEmptyOrCaptureInEachRange(pp, color) | std::views::join);*/
 }
 
-inline std::generator<Square> pawnsAttacking(PiecePlacement pp, Square square,
-                                             Color color) {
+inline auto pawnsAttacking(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnCaptures(square, !color) |
-      squaresWith(pp, Piece{PieceType::kPawn, color}));
+      squaresWith(pp, Piece{.type = PieceType::kPawn, .color = color}));
 }
 
-inline std::generator<Square> pawnMovingTo(PiecePlacement pp, Square square,
-                                           Color color) {
+inline auto pawnMovingTo(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   if (hasPieceAt(pp, square)) co_return;
 
   co_yield std::ranges::elements_of(
       pawnReverseSlidingMove(square, color) |
       firstMatchingPiece<PieceType>(
-          pp, PieceSpecification<PieceType>{PieceType::kPawn, color}));
+          pp, PieceSpecification<PieceType>{.spec = PieceType::kPawn,
+                                            .color = color}));
 }
 
-inline std::generator<Square> knightsReaching(PiecePlacement pp, Square square,
-                                              Color color) {
+inline auto knightsReaching(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
-      knightMoves(square) | squaresWith(pp, Piece{PieceType::kKnight, color}));
+      knightMoves(square) |
+      squaresWith(pp, Piece{.type = PieceType::kKnight, .color = color}));
 }
 
-inline std::generator<Square> kingsReaching(PiecePlacement pp, Square square,
-                                            Color color) {
+inline auto kingsReaching(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
-      kingMoves(square) | squaresWith(pp, Piece{PieceType::kKing, color}));
+      kingMoves(square) |
+      squaresWith(pp, Piece{.type = PieceType::kKing, .color = color}));
 }
 
-inline std::generator<Square> orthogonalSlidersReaching(PiecePlacement pp,
-                                                        Square square,
-                                                        Color color) {
+inline auto orthogonalSlidersReaching(PiecePlacement pp, Square square,
+                                      Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
       firstMatchingPieceInEachRange<SlidingDirection>(
-          pp, {SlidingDirection::kOrthogonal, color}) |
+          pp, {.spec = SlidingDirection::kOrthogonal, .color = color}) |
       std::views::join);
 }
 
-inline std::generator<Square> rooksReaching(PiecePlacement pp, Square square,
-                                            Color color) {
+inline auto rooksReaching(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
-      firstMatchingPieceInEachRange<PieceType>(pp, {PieceType::kRook, color}) |
+      firstMatchingPieceInEachRange<PieceType>(
+          pp, {.spec = PieceType::kRook, .color = color}) |
       std::views::join);
 }
 
-inline std::generator<Square> diagonalSlidersReaching(PiecePlacement pp,
-                                                      Square square,
-                                                      Color color) {
+inline auto diagonalSlidersReaching(PiecePlacement pp, Square square,
+                                    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
       firstMatchingPieceInEachRange<SlidingDirection>(
-          pp, {SlidingDirection::kDiagonal, color}) |
+          pp, {.spec = SlidingDirection::kDiagonal, .color = color}) |
       std::views::join);
 }
 
-inline std::generator<Square> bishopsReaching(PiecePlacement pp, Square square,
-                                              Color color) {
-  co_yield std::ranges::elements_of(bishopSlidingMoves(square) |
-                                    firstMatchingPieceInEachRange<PieceType>(
-                                        pp, {PieceType::kBishop, color}) |
-                                    std::views::join);
+inline auto bishopsReaching(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
+  co_yield std::ranges::elements_of(
+      bishopSlidingMoves(square) |
+      firstMatchingPieceInEachRange<PieceType>(
+          pp, {.spec = PieceType::kBishop, .color = color}) |
+      std::views::join);
 }
 
-inline std::generator<Square> queensReaching(PiecePlacement pp, Square square,
-                                             Color color) {
+inline auto queensReaching(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |
-      firstMatchingPieceInEachRange<PieceType>(pp, {PieceType::kQueen, color}) |
+      firstMatchingPieceInEachRange<PieceType>(
+          pp, {.spec = PieceType::kQueen, .color = color}) |
       std::views::join);
 }
 
-inline std::generator<Square> piecesAttacking(PiecePlacement pp, Square square,
-                                              Color color) {
+inline auto piecesAttacking(PiecePlacement pp, Square square, Color color)
+    -> std::generator<Square> {
   using std::ranges::elements_of;
 
   co_yield elements_of(pawnsAttacking(pp, square, color));

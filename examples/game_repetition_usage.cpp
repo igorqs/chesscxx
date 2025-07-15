@@ -9,7 +9,7 @@
 #include <string_view>
 
 namespace {
-chesskit::SanMove parseSanMove(std::string_view sv) {
+auto parseSanMove(std::string_view sv) -> chesskit::SanMove {
   auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsedSanMove);
   return parsedSanMove.value();
@@ -23,7 +23,7 @@ void move(auto& game, std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Game game;
   printRepetition(game);
 

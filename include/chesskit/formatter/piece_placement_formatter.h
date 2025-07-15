@@ -16,7 +16,7 @@
 
 namespace internal {
 template <typename RankRange, typename OutputIt>
-inline constexpr OutputIt formatRank(OutputIt out, RankRange&& rank) {
+inline constexpr auto formatRank(OutputIt out, RankRange&& rank) -> OutputIt {
   int emptyCounter = 0;
 
   for (const auto& piece : rank) {

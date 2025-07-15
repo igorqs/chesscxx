@@ -17,7 +17,7 @@
 /// @brief hash support for chesskit::UciMove
 template <>
 struct std::hash<chesskit::UciMove> {
-  size_t operator()(const chesskit::UciMove& uci) const {
+  auto operator()(const chesskit::UciMove& uci) const -> size_t {
     constexpr uint8_t max_square_value = chesskit::kNumSquares - 1;
 
     constexpr int width = std::bit_width(max_square_value);

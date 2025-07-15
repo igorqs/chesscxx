@@ -13,7 +13,7 @@
 /// @brief hash support for chesskit::Game
 template <>
 struct std::hash<chesskit::Game> {
-  size_t operator()(const chesskit::Game& game) const {
+  auto operator()(const chesskit::Game& game) const -> size_t {
     return chesskit::internal::hashCombine(
         game.initialPosition(),
         chesskit::internal::hashCombineRange(game.uciMoves()));

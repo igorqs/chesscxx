@@ -25,11 +25,12 @@ namespace chesskit {
 template <>
 class Parser<Game, const char*, parse_as::Fen> {
  public:
-  std::expected<ParseResult<Game, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Game, const char*>, ParseError> {
     auto position = parseFrom<Position>(begin, end);
     if (position) {
-      return ParseResult{Game(position->parsedValue), position->ptr};
+      return ParseResult{.parsedValue = Game(position->parsedValue),
+                         .ptr = position->ptr};
     }
 
     return std::unexpected(position.error());
@@ -41,8 +42,8 @@ class Parser<Game, const char*, parse_as::Fen> {
 template <>
 class Parser<Game, const char*, parse_as::Pgn> {
  public:
-  std::expected<ParseResult<Game, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<Game, const char*>, ParseError> {
     auto ptr = begin;
 
     auto position = parseTags(ptr, end);
@@ -53,12 +54,13 @@ class Parser<Game, const char*, parse_as::Pgn> {
     if (!game) return std::unexpected(game.error());
     ptr = game->ptr;
 
-    return ParseResult{game->parsedValue, ptr};
+    return ParseResult{.parsedValue = game->parsedValue, .ptr = ptr};
   }
 
  private:
-  std::expected<ParseResult<std::optional<Position>, const char*>, ParseError>
-  parseTags(const char* begin, const char* end) {
+  auto parseTags(const char* begin, const char* end)
+      -> std::expected<ParseResult<std::optional<Position>, const char*>,
+                       ParseError> {
     auto isRightBracket = [](const char& c) { return c == ']'; };
 
     auto ptr = begin;
@@ -67,7 +69,9 @@ class Parser<Game, const char*, parse_as::Pgn> {
     while (ptr < end) {
       ptr = trimAnySpaces(ptr, end);
 
-      if (ptr == end || !isLeftBracket(*ptr)) return ParseResult{position, ptr};
+      if (ptr == end || !isLeftBracket(*ptr)) {
+        return ParseResult{.parsedValue = position, .ptr = ptr};
+      }
       ++ptr;
 
       auto parsedTag = parseTag(ptr, end);
@@ -86,11 +90,12 @@ class Parser<Game, const char*, parse_as::Pgn> {
       ++ptr;
     }
 
-    return ParseResult{position, ptr};
+    return ParseResult{.parsedValue = position, .ptr = ptr};
   }
 
-  std::expected<ParseResult<std::optional<Position>, const char*>, ParseError>
-  parseTag(const char* begin, const char* end) {
+  auto parseTag(const char* begin, const char* end)
+      -> std::expected<ParseResult<std::optional<Position>, const char*>,
+                       ParseError> {
     auto ptr = begin;
     std::optional<Position> position;
 
@@ -129,12 +134,12 @@ class Parser<Game, const char*, parse_as::Pgn> {
 
     ptr = trimWhiteSpaces(ptr, end);
 
-    return ParseResult{position, ptr};
+    return ParseResult{.parsedValue = position, .ptr = ptr};
   }
 
-  std::expected<ParseResult<Game, const char*>, ParseError> parseMoveList(
-      const char* begin, const char* end,
-      const std::optional<Position>& position) {
+  auto parseMoveList(const char* begin, const char* end,
+                     const std::optional<Position>& position)
+      -> std::expected<ParseResult<Game, const char*>, ParseError> {
     auto isAsterisk = [](const char& c) { return c == '*'; };
 
     Game game = position.has_value() ? Game(*position) : Game();
@@ -166,10 +171,11 @@ class Parser<Game, const char*, parse_as::Pgn> {
       if (!game.move(move)) return std::unexpected(ParseError::kInvalidMove);
     }
 
-    return ParseResult{game, ptr};
+    return ParseResult{.parsedValue = game, .ptr = ptr};
   }
 
-  const char* trimAnySkippableToken(const char* begin, const char* end) {
+  auto trimAnySkippableToken(const char* begin, const char* end) -> const
+      char* {
     auto isLeftBrace = [](const char& c) { return c == '{'; };
     auto isLeftParenthesis = [](const char& c) { return c == '('; };
     auto isSemicolon = [](const char& c) { return c == ';'; };
@@ -239,21 +245,21 @@ class Parser<Game, const char*, parse_as::Pgn> {
     return ptr;
   }
 
-  const char* trimWhiteSpaces(const char* begin, const char* end) {
+  auto trimWhiteSpaces(const char* begin, const char* end) -> const char* {
     auto isWhiteSpace = [](const char& c) { return c == ' '; };
 
     return std::find_if_not(begin, end, isWhiteSpace);
   }
 
-  const char* trimAnySpaces(const char* begin, const char* end) {
+  auto trimAnySpaces(const char* begin, const char* end) -> const char* {
     return std::find_if_not(begin, end, isAnySpace);
   }
 
-  const char* trimSymbolToken(const char* begin, const char* end) {
+  auto trimSymbolToken(const char* begin, const char* end) -> const char* {
     return std::find_if_not(begin, end, isSymbolToken);
   }
 
-  const char* trimStringToken(const char* begin, const char* end) {
+  auto trimStringToken(const char* begin, const char* end) -> const char* {
     auto isStringEscape = [](const char& c) { return c == '\\'; };
 
     auto ptr = begin;
@@ -274,13 +280,13 @@ class Parser<Game, const char*, parse_as::Pgn> {
     return ptr;
   }
 
-  static bool isAnySpace(const char& c) { return std::isspace(c); };
+  static auto isAnySpace(const char& c) -> bool { return std::isspace(c); };
 
-  static bool isLeftBracket(const char& c) { return c == '['; };
+  static auto isLeftBracket(const char& c) -> bool { return c == '['; };
 
-  static bool isQuote(const char& c) { return c == '\"'; };
+  static auto isQuote(const char& c) -> bool { return c == '\"'; };
 
-  static bool isSymbolToken(const char& c) {
+  static auto isSymbolToken(const char& c) -> bool {
     constexpr static std::string_view valid = "_+#=:-";
     return (valid.contains(c) || std::isalpha(c) || std::isdigit(c));
   };

@@ -21,8 +21,8 @@ namespace chesskit {
 template <>
 class Parser<CastlingRights, const char*, parse_as::Default> {
  public:
-  std::expected<ParseResult<CastlingRights, const char*>, ParseError> parse(
-      const char* begin, const char* end) {
+  auto parse(const char* begin, const char* end)
+      -> std::expected<ParseResult<CastlingRights, const char*>, ParseError> {
     constexpr static std::string_view kCastlingSymbols = "KQkq";
     constexpr static auto kSize = static_cast<int>(kCastlingSymbols.size());
 
@@ -33,7 +33,9 @@ class Parser<CastlingRights, const char*, parse_as::Default> {
     std::bitset<CastlingRights::kNumCastlingRights> bits;
     static_assert(kSize == bits.size());
 
-    if (*begin == '-') return ParseResult{CastlingRights(bits), begin + 1};
+    if (*begin == '-') {
+      return ParseResult{.parsedValue = CastlingRights(bits), .ptr = begin + 1};
+    }
 
     for (auto i : std::views::iota(0, kSize)) {
       if (*begin == kCastlingSymbols[i]) {
@@ -46,7 +48,7 @@ class Parser<CastlingRights, const char*, parse_as::Default> {
       return std::unexpected(ParseError::kInvalidCastlingAvailability);
     }
 
-    return ParseResult{CastlingRights(bits), begin};
+    return ParseResult{.parsedValue = CastlingRights(bits), .ptr = begin};
   }
 };
 

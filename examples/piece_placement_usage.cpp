@@ -25,7 +25,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::PiecePlacement pp;
   std::println("{}\n", pp);
   std::println("{:fen}\n", pp);
@@ -37,7 +37,7 @@ int main() {
   for (const auto& [color, locationsByPieceType] : pp.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
       for (const chesskit::Square& location : locations) {
-        chesskit::Piece const piece = {type, color};
+        chesskit::Piece const piece = {.type = type, .color = color};
         auto location_index = chesskit::index(location);
         seen.set(location_index);
         assert(pp.pieceArray().at(location_index) == piece);

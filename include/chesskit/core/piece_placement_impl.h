@@ -10,7 +10,7 @@
 namespace chesskit {
 
 namespace internal {
-inline constexpr PiecePlacement standardStartPosition() {
+inline constexpr auto standardStartPosition() -> PiecePlacement {
   return *parse<PiecePlacement>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 }
 }  // namespace internal

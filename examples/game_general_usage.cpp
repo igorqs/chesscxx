@@ -8,20 +8,20 @@
 #include <string_view>
 
 namespace {
-chesskit::SanMove parseSanMove(std::string_view sv) {
+auto parseSanMove(std::string_view sv) -> chesskit::SanMove {
   auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
   assert(parsedSanMove);
   return parsedSanMove.value();
 }
 
-chesskit::Position parsePosition(std::string_view sv) {
+auto parsePosition(std::string_view sv) -> chesskit::Position {
   auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
   assert(parsedPosition);
   return parsedPosition.value();
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::Game game;
   assert(game.startsFromDefaultPosition());
   assert(game.initialPosition() == game.currentPosition());

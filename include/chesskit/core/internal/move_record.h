@@ -45,8 +45,10 @@ struct Converter;
 
 template <>
 struct Converter<UciMove> {
-  UciMove operator()(const NormalMoveRecord& move) { return move.uciMove; };
-  UciMove operator()(const CastlingMoveRecord& move) {
+  auto operator()(const NormalMoveRecord& move) -> UciMove {
+    return move.uciMove;
+  };
+  auto operator()(const CastlingMoveRecord& move) -> UciMove {
     auto rawMove = castlingMoves(move.side, move.color).kingMove;
     return UciMove(rawMove.origin, rawMove.destination, std::nullopt);
   };
@@ -54,7 +56,7 @@ struct Converter<UciMove> {
 
 template <>
 struct Converter<SanMove> {
-  SanMove operator()(const NormalMoveRecord& move) {
+  auto operator()(const NormalMoveRecord& move) -> SanMove {
     return SanNormalMove{.pieceType = move.pieceType,
                          .origin = move.partialOrigin,
                          .isCapture = move.capturedPieceType.has_value() ||
@@ -63,13 +65,13 @@ struct Converter<SanMove> {
                          .promotion = move.uciMove.promotion,
                          .check_indicator = move.check_indicator};
   };
-  SanMove operator()(const CastlingMoveRecord& move) {
+  auto operator()(const CastlingMoveRecord& move) -> SanMove {
     return SanCastlingMove(move.side);
   };
 };
 
 template <typename MovedOutput>
-inline constexpr MovedOutput convertTo(const MoveRecord& moveRecord) {
+inline constexpr auto convertTo(const MoveRecord& moveRecord) -> MovedOutput {
   return std::visit(Converter<MovedOutput>{}, moveRecord);
 }
 

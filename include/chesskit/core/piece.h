@@ -14,7 +14,7 @@ struct Piece {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const Piece&) const = default;
+  constexpr auto operator==(const Piece&) const -> bool = default;
 
   /// @}
 

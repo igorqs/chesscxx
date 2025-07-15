@@ -21,15 +21,15 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
-  chesskit::Piece white_queen{chesskit::PieceType::kQueen,
-                              chesskit::Color::kWhite};
+auto main() -> int {
+  chesskit::Piece white_queen{.type = chesskit::PieceType::kQueen,
+                              .color = chesskit::Color::kWhite};
   std::println("{}", white_queen);
   std::println("{:v}", white_queen);
   std::println("{:c}", white_queen);
 
-  chesskit::Piece black_queen{chesskit::PieceType::kQueen,
-                              chesskit::Color::kBlack};
+  chesskit::Piece black_queen{.type = chesskit::PieceType::kQueen,
+                              .color = chesskit::Color::kBlack};
   std::println("{}", black_queen);
   std::println("{:v}", black_queen);
   std::println("{:c}", black_queen);

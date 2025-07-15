@@ -25,39 +25,40 @@
 
 namespace chesskit::internal {
 
-inline constexpr bool isCheck(const Position& position) {
+inline constexpr auto isCheck(const Position& position) -> bool {
   return isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr bool isCheckmate(const Position& position) {
+inline constexpr auto isCheckmate(const Position& position) -> bool {
   return !hasLegalMove(position) &&
          isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr bool isStalemate(const Position& position) {
+inline constexpr auto isStalemate(const Position& position) -> bool {
   return !hasLegalMove(position) &&
          !isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr bool isFiftyMoveRuleDraw(const Position& position) {
+inline constexpr auto isFiftyMoveRuleDraw(const Position& position) -> bool {
   return position.halfmoveClock() >= 100 && hasLegalMove(position);
 }
-inline constexpr bool isInsufficientMaterialDraw(const Position& position) {
+inline constexpr auto isInsufficientMaterialDraw(const Position& position)
+    -> bool {
   return isInsufficientMaterialDraw(position.piecePlacement());
 }
-inline constexpr bool isDraw(const Position& position) {
+inline constexpr auto isDraw(const Position& position) -> bool {
   return isStalemate(position) || isFiftyMoveRuleDraw(position) ||
          isInsufficientMaterialDraw(position);
 }
-inline constexpr bool isGameOver(const Position& position) {
+inline constexpr auto isGameOver(const Position& position) -> bool {
   return isCheckmate(position) || isDraw(position);
 }
 
-inline std::expected<UciMove, MoveError> uciFromSan(
-    const Position& position, const SanNormalMove& sanMove,
-    const Color& color) {
+inline auto uciFromSan(const Position& position, const SanNormalMove& sanMove,
+                       const Color& color)
+    -> std::expected<UciMove, MoveError> {
   auto pieceType = sanMove.pieceType;
   auto destination = sanMove.destination;
 
-  auto possibleOrigins =
-      piecesReaching(position, destination, {pieceType, color});
+  auto possibleOrigins = piecesReaching(position, destination,
+                                        {.type = pieceType, .color = color});
   auto partialOrigin = sanMove.origin;
   std::optional<Square> origin;
 
@@ -76,8 +77,8 @@ inline std::expected<UciMove, MoveError> uciFromSan(
   return UciMove(*origin, destination, sanMove.promotion);
 }
 
-inline std::expected<PartialSquare, MoveError> partialOriginFromMove(
-    const Position& position, const RawMove& move) {
+inline auto partialOriginFromMove(const Position& position, const RawMove& move)
+    -> std::expected<PartialSquare, MoveError> {
   const auto& origin = move.origin;
   const auto& destination = move.destination;
 
@@ -118,8 +119,8 @@ inline std::expected<PartialSquare, MoveError> partialOriginFromMove(
   return PartialSquare(origin.file, origin.rank);
 }
 
-inline std::optional<MoveError> uciMoveError(const Position& position,
-                                             const RawMove& move) {
+inline auto uciMoveError(const Position& position, const RawMove& move)
+    -> std::optional<MoveError> {
   const auto& origin = move.origin;
   const auto& destination = move.destination;
 
@@ -135,8 +136,8 @@ inline std::optional<MoveError> uciMoveError(const Position& position,
   return std::nullopt;
 }
 
-inline std::optional<MoveError> overflowError(const Position& position,
-                                              const RawMove& move) {
+inline auto overflowError(const Position& position, const RawMove& move)
+    -> std::optional<MoveError> {
   if (position.activeColor() == Color::kBlack &&
       position.fullmoveNumber() == Position::kMaxFullmoveNumber) {
     return MoveError::kFullmoveNumberOverflow;
@@ -156,7 +157,8 @@ inline std::optional<MoveError> overflowError(const Position& position,
   return std::nullopt;
 }
 
-inline std::optional<MoveError> overflowError(const Position& position) {
+inline auto overflowError(const Position& position)
+    -> std::optional<MoveError> {
   if (position.activeColor() == Color::kBlack &&
       position.fullmoveNumber() == Position::kMaxFullmoveNumber) {
     return MoveError::kFullmoveNumberOverflow;

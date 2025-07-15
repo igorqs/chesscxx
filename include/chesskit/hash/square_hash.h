@@ -12,7 +12,7 @@
 /// @brief hash support for chesskit::Square
 template <>
 struct std::hash<chesskit::Square> {
-  size_t operator()(const chesskit::Square& square) const {
+  auto operator()(const chesskit::Square& square) const -> size_t {
     return chesskit::index(square);
   };
 };

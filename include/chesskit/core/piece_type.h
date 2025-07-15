@@ -35,7 +35,8 @@ enum class PromotablePieceType : uint8_t {
 /// @{
 
 /// @brief Converts a PromotablePieceType to its corresponding PieceType.
-inline constexpr PieceType toPieceType(const PromotablePieceType& promotion) {
+inline constexpr auto toPieceType(const PromotablePieceType& promotion)
+    -> PieceType {
   switch (promotion) {
     case PromotablePieceType::kKnight:
       return PieceType::kKnight;

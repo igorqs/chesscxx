@@ -23,7 +23,7 @@ void parseAndPrint(std::string_view sv) {
 }
 }  // namespace
 
-int main() {
+auto main() -> int {
   chesskit::UciMove uci = {
       .origin = chesskit::Square(chesskit::File::kE, chesskit::Rank::k2),
       .destination = chesskit::Square(chesskit::File::kE, chesskit::Rank::k4),

@@ -20,7 +20,8 @@ struct std::formatter<chesskit::PositionError> : chesskit::internal::NoSpec {
   }
 
  private:
-  constexpr std::string_view toString(const auto& error) const {
+  [[nodiscard]] constexpr auto toString(const auto& error) const
+      -> std::string_view {
     switch (error) {
       case chesskit::PositionError::kSideNotToMoveIsUnderAttack:
         return "Side not to move is under attack";

@@ -7,7 +7,7 @@
 #include <cassert>
 #include <optional>
 
-int main() {
+auto main() -> int {
   constexpr auto kE3 = chesskit::Square(chesskit::File::kE, chesskit::Rank::k3);
 
   auto parsed_position = chesskit::parse<chesskit::Position>(

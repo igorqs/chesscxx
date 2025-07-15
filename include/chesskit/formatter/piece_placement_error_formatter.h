@@ -21,7 +21,8 @@ struct std::formatter<chesskit::PiecePlacementError>
   }
 
  private:
-  constexpr std::string_view toString(const auto& error) const {
+  [[nodiscard]] constexpr auto toString(const auto& error) const
+      -> std::string_view {
     switch (error) {
       case chesskit::PiecePlacementError::kMissingKing:
         return "Missing king";

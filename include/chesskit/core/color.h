@@ -16,7 +16,7 @@ enum class Color : uint8_t {
 /// @{
 
 /// @brief Returns the opposite color.
-inline Color operator!(const Color& color) {
+inline auto operator!(const Color& color) -> Color {
   return (color == Color::kWhite) ? Color::kBlack : Color::kWhite;
 }
 

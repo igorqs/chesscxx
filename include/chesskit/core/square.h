@@ -18,7 +18,7 @@ struct Square {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const Square&) const = default;
+  constexpr auto operator==(const Square&) const -> bool = default;
 
   /// @}
 
@@ -32,7 +32,7 @@ struct Square {
 /// @{
 
 /// @brief Computes the linear index of a square on the chessboard.
-inline constexpr std::size_t index(const Square& sq) {
+inline constexpr auto index(const Square& sq) -> std::size_t {
   return internal::index(sq.rank) * kNumFiles + internal::index(sq.file);
 }
 

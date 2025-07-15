@@ -27,7 +27,8 @@ struct std::formatter<chesskit::GameResult>
   }
 
  private:
-  constexpr std::string_view description(const auto& result) const {
+  [[nodiscard]] constexpr auto description(const auto& result) const
+      -> std::string_view {
     switch (result) {
       case chesskit::GameResult::kWhiteWins:
         return "white wins";
@@ -40,7 +41,8 @@ struct std::formatter<chesskit::GameResult>
     }
   }
 
-  constexpr std::string_view compact(const auto& result) const {
+  [[nodiscard]] constexpr auto compact(const auto& result) const
+      -> std::string_view {
     switch (result) {
       case chesskit::GameResult::kWhiteWins:
         return "1-0";

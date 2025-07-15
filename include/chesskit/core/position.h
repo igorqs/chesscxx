@@ -82,8 +82,8 @@ class Position {
 
   /// @brief Creates a Position from the given parameters, or returns an error
   /// if validation fails.
-  static std::expected<Position, PositionError> fromParams(
-      const Params& params) {
+  static auto fromParams(const Params& params)
+      -> std::expected<Position, PositionError> {
     if (!internal::isValidEnPassantTargetSquare(params.enPassantTargetSquare,
                                                 params.activeColor)) {
       return std::unexpected(PositionError::kEnPassantTargetSquareInvalidRank);
@@ -102,7 +102,7 @@ class Position {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr bool operator==(const Position&) const = default;
+  constexpr auto operator==(const Position&) const -> bool = default;
 
   /// @}
 
@@ -110,23 +110,27 @@ class Position {
   /// @{
 
   /// @brief Returns the piece placement of the position.
-  const PiecePlacement& piecePlacement() const { return piecePlacement_; }
+  auto piecePlacement() const -> const PiecePlacement& {
+    return piecePlacement_;
+  }
   /// @brief Returns the active color (the side to move).
-  const Color& activeColor() const { return activeColor_; }
+  auto activeColor() const -> const Color& { return activeColor_; }
   /// @brief Returns the castling rights.
-  const CastlingRights& castlingRights() const { return castlingRights_; }
+  auto castlingRights() const -> const CastlingRights& {
+    return castlingRights_;
+  }
   /// @brief Returns the en passant target square, if any.
-  std::optional<Square> enPassantTargetSquare() const {
+  auto enPassantTargetSquare() const -> std::optional<Square> {
     return enPassantFile_
                ? std::optional(Square(*enPassantFile_, enPassantRank()))
                : std::nullopt;
   }
   /// @brief Returns the en passant target square if it's legally capturable.
-  std::optional<Square> legalEnPassantTargetSquare() const;
+  auto legalEnPassantTargetSquare() const -> std::optional<Square>;
   /// @brief Returns the halfmove clock.
-  const uint32_t& halfmoveClock() const { return halfmoveClock_; }
+  auto halfmoveClock() const -> const uint32_t& { return halfmoveClock_; }
   /// @brief Returns the fullmove number.
-  const uint32_t& fullmoveNumber() const { return fullmoveNumber_; }
+  auto fullmoveNumber() const -> const uint32_t& { return fullmoveNumber_; }
 
   /// @}
 
@@ -141,7 +145,7 @@ class Position {
         halfmoveClock_{params.halfmoveClock},
         fullmoveNumber_{params.fullmoveNumber} {}
 
-  std::optional<PositionError> validationError() const {
+  auto validationError() const -> std::optional<PositionError> {
     if (isFullmoveNumberOutOfRange()) {
       return PositionError::kFullmoveNumberOutOfRange;
     }
@@ -162,17 +166,17 @@ class Position {
     return std::nullopt;
   }
 
-  bool isFullmoveNumberOutOfRange() const {
+  auto isFullmoveNumberOutOfRange() const -> bool {
     return fullmoveNumber_ < kMinFullmoveNumber ||
            fullmoveNumber_ > kMaxFullmoveNumber;
   }
 
-  bool isHalfmoveClockOutOfRange() const {
+  auto isHalfmoveClockOutOfRange() const -> bool {
     return halfmoveClock_ < kMinHalfmoveClock ||
            halfmoveClock_ > kMaxHalfmoveClock;
   }
 
-  std::optional<PositionError> enPassantError() const {
+  auto enPassantError() const -> std::optional<PositionError> {
     auto targetSquare = enPassantTargetSquare();
     if (!targetSquare) return std::nullopt;
 
@@ -193,14 +197,16 @@ class Position {
     return std::nullopt;
   }
 
-  std::optional<Square> enPassantCapturedPawnSquare() const {
+  auto enPassantCapturedPawnSquare() const -> std::optional<Square> {
     auto square = enPassantTargetSquare();
     if (!square) return std::nullopt;
 
     return internal::enPassantCapturedPawnSquare(*square, activeColor_);
   }
 
-  Rank enPassantRank() const { return internal::enPassantRank(activeColor_); }
+  auto enPassantRank() const -> Rank {
+    return internal::enPassantRank(activeColor_);
+  }
 
   void toggleActiveColor() { activeColor_ = !activeColor_; }
   void incrementMoveCounters() {
