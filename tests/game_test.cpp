@@ -20,13 +20,14 @@
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "test_helper.h"  // IWYU pragma: keep
 
 class GameEqualityFixture {
  public:
-  void add_game(chesskit::Game game) { games_.push_back(game); }
+  void add_game(const chesskit::Game& game) { games_.push_back(game); }
   [[nodiscard]] auto games() const -> const std::vector<chesskit::Game>& {
     return games_;
   }
@@ -180,7 +181,7 @@ class RepetitionTrackerFixture {
         "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
     game_ = chesskit::parse<chesskit::Game>(raw).value();
   }
-  void add_repetition(chesskit::Position position, int counter,
+  void add_repetition(const chesskit::Position& position, int counter,
                       int undo_counter) {
     repetitions_.emplace_back(position, counter, undo_counter);
   }
@@ -319,7 +320,7 @@ class ValidMoveFixture {
   void set_uci_move(chesskit::UciMove move) { uci_move_ = move; }
   void set_san_move(chesskit::SanMove move) { san_move_ = move; }
   void set_final_position(chesskit::Position position) {
-    final_position_ = position;
+    final_position_ = std::move(position);
   }
 
   auto raw() const -> const std::string& { return raw_; }
@@ -643,8 +644,8 @@ INSTANTIATE_TEST_SUITE_P(GameTest, InvalidPgnInputSuite,
 TEST_P(GameEqualitySuite, ComparesEqual) {
   auto games = GetParam().games();
 
-  for (auto lhs : games) {
-    for (auto rhs : games) {
+  for (const auto& lhs : games) {
+    for (const auto& rhs : games) {
       EXPECT_EQ(lhs, rhs);
       EXPECT_EQ(std::hash<chesskit::Game>{}(lhs),
                 std::hash<chesskit::Game>{}(rhs));
@@ -661,14 +662,14 @@ TEST_P(GameEqualityPairSuite, ComparesUnequal) {
 }
 
 TEST_P(OutcomeSuite, ReturnsResultAndDrawReasonCorrectly) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   const auto& game = fixture.game();
   EXPECT_EQ(game.result(), fixture.result());
   EXPECT_EQ(game.drawReason(), fixture.draw_reason());
 }
 
 TEST_P(MoveSuite, ReturnsMovesCorrectly) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   const auto& game = fixture.game();
   EXPECT_EQ(game.sanMoves(), fixture.san_moves());
   EXPECT_EQ(game.uciMoves(), fixture.uci_moves());
@@ -759,7 +760,7 @@ TEST_P(PositionSuite, ConstructFromInitialPositionCorrectly) {
 }
 
 TEST_P(SanMoveErrorSuite, ReturnsCorrectMoveError) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   auto game = fixture.game();
 
   auto move = game.move(fixture.move());
@@ -767,7 +768,7 @@ TEST_P(SanMoveErrorSuite, ReturnsCorrectMoveError) {
 }
 
 TEST_P(UciMoveErrorSuite, ReturnsCorrectMoveError) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   auto game = fixture.game();
 
   auto move = game.move(fixture.move());
@@ -775,7 +776,7 @@ TEST_P(UciMoveErrorSuite, ReturnsCorrectMoveError) {
 }
 
 TEST_P(ValidMoveSuite, UpdatePositionCorrectly) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   auto game = fixture.game();
 
   auto move = game.move(fixture.san_move());
@@ -789,7 +790,7 @@ TEST_P(ValidMoveSuite, UpdatePositionCorrectly) {
 }
 
 TEST_P(ValidMoveSuite, UndoMoveCorrectly) {
-  auto fixture = GetParam();
+  const auto& fixture = GetParam();
   auto game = fixture.game();
   auto initial_position = game.currentPosition();
 

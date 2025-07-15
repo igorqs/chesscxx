@@ -3,9 +3,10 @@ Checks: >
   google-*,
   misc-*,
   modernize-*,
+  performance-*,
   -misc-non-private-member-variables-in-classes,
   -modernize-use-constraints
-WarningsAsErrors: ''
+WarningsAsErrors: '*,-bugprone-exception-escape'
 HeaderFilterRegex: '/home/igorqs/code/chess_projects/chesskit/include/.*'
 CheckOptions:
   misc-include-cleaner.IgnoreHeaders: 'yaml-cpp/.*'

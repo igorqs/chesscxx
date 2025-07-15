@@ -23,7 +23,7 @@
 
 namespace chesskit::internal {
 
-inline auto pseudoLegalPawnCaptures(const Position position, Square square,
+inline auto pseudoLegalPawnCaptures(const Position& position, Square square,
                                     Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnCaptures(square, color) |
@@ -33,7 +33,7 @@ inline auto pseudoLegalPawnCaptures(const Position position, Square square,
       }));
 }
 
-inline auto pseudoLegalPawnMoves(const Position position, Square square,
+inline auto pseudoLegalPawnMoves(const Position& position, Square square,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pseudoLegalPawnPushs(position.piecePlacement(), square, color));
@@ -41,7 +41,7 @@ inline auto pseudoLegalPawnMoves(const Position position, Square square,
       pseudoLegalPawnCaptures(position, square, color));
 }
 
-inline auto pseudoLegalMoves(const Position position, Square square)
+inline auto pseudoLegalMoves(const Position& position, Square square)
     -> std::generator<Square> {
   const auto& pp = position.piecePlacement();
 
@@ -95,7 +95,7 @@ inline auto pseudoLegalMoves(const Position position)
       std::views::transform(locationToPseudoLegalMoves) | std::views::join);
 }
 
-inline auto legalRawMoves(const Position position) -> std::generator<RawMove> {
+inline auto legalRawMoves(const Position& position) -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
   co_yield elements_of(pseudoLegalMoves(position) |
@@ -106,7 +106,7 @@ inline auto legalRawMoves(const Position position) -> std::generator<RawMove> {
                        }));
 }
 
-inline auto legalCastlings(const Position position)
+inline auto legalCastlings(const Position& position)
     -> std::generator<CastlingSide> {
   constexpr static std::array<CastlingSide, 2> sides = {
       CastlingSide::kKingside, CastlingSide::kQueenside};
@@ -168,7 +168,7 @@ inline auto legalMoves(const Position position) -> std::generator<UciMove> {
   co_return;
 }
 
-inline auto hasLegalMove(const Position position) -> bool {
+inline auto hasLegalMove(const Position& position) -> bool {
   auto moves = legalMoves(position);
   return moves.begin() != moves.end();
 }

@@ -60,7 +60,7 @@ inline auto matches(const Piece& piece,
 }
 template <typename SearchType>
 inline auto firstMatchingPiece(
-    PiecePlacement pp, const PieceSpecification<SearchType>& pieceSpec) {
+    const PiecePlacement& pp, const PieceSpecification<SearchType>& pieceSpec) {
   return std::views::drop_while(
              [pp](const Square& sq) { return !hasPieceAt(pp, sq); }) |
          std::views::take(1) |
@@ -70,7 +70,7 @@ inline auto firstMatchingPiece(
 }
 template <typename SearchType>
 inline auto firstMatchingPieceInEachRange(
-    PiecePlacement pp, const PieceSpecification<SearchType>& pieceSpec) {
+    const PiecePlacement& pp, const PieceSpecification<SearchType>& pieceSpec) {
   return std::views::transform([pp, pieceSpec](auto&& range) {
     return std::forward<decltype(range)>(range) |
            firstMatchingPiece<SearchType>(pp, pieceSpec);
@@ -99,19 +99,19 @@ inline auto takeWhileEmptyOrCaptureInEachRange(const PiecePlacement pp,
 }
 */
 
-inline auto pseudoLegalKnightMoves(const PiecePlacement pp, Square square,
+inline auto pseudoLegalKnightMoves(const PiecePlacement& pp, Square square,
                                    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(knightMoves(square) |
                                     squaresWithout(pp, color));
 }
 
-inline auto pseudoLegalKingMoves(const PiecePlacement pp, Square square,
+inline auto pseudoLegalKingMoves(const PiecePlacement& pp, Square square,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(kingMoves(square) |
                                     squaresWithout(pp, color));
 }
 
-inline auto pseudoLegalPawnPushs(const PiecePlacement pp, Square square,
+inline auto pseudoLegalPawnPushs(const PiecePlacement& pp, Square square,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnSlidingMove(square, color) |
@@ -120,7 +120,7 @@ inline auto pseudoLegalPawnPushs(const PiecePlacement pp, Square square,
 }
 
 inline auto takeWhileEmptyOrCapture(std::generator<Square>&& gen,
-                                    const PiecePlacement pp, Color color)
+                                    const PiecePlacement& pp, Color color)
     -> std::generator<Square> {
   for (auto square : gen) {
     auto piece = pieceAt(pp, square);
@@ -133,7 +133,7 @@ inline auto takeWhileEmptyOrCapture(std::generator<Square>&& gen,
   }
 }
 
-inline auto pseudoLegalRookMoves(const PiecePlacement pp, Square square,
+inline auto pseudoLegalRookMoves(const PiecePlacement& pp, Square square,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
@@ -148,7 +148,7 @@ inline auto pseudoLegalRookMoves(const PiecePlacement pp, Square square,
       std::views::join);*/
 }
 
-inline auto pseudoLegalBishopMoves(const PiecePlacement pp, Square square,
+inline auto pseudoLegalBishopMoves(const PiecePlacement& pp, Square square,
                                    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
@@ -163,7 +163,7 @@ inline auto pseudoLegalBishopMoves(const PiecePlacement pp, Square square,
       takeWhileEmptyOrCaptureInEachRange(pp, color) | std::views::join);*/
 }
 
-inline auto pseudoLegalQueenMoves(const PiecePlacement pp, Square square,
+inline auto pseudoLegalQueenMoves(const PiecePlacement& pp, Square square,
                                   Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |

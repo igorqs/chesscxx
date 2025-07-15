@@ -18,7 +18,7 @@
 
 namespace chesskit::internal {
 
-enum class Origin {
+enum class Origin : uint8_t {
   kKeep,
   kSkip,
 };
