@@ -38,9 +38,9 @@ TEST(PieceTest, ComparesEqualValuesSuccessfully) {
 TEST(PieceTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllPieces.size());
 
-  for (int const i : std::views::iota(0, kSize)) {
-    for (int const j : std::views::iota(0, kSize)) {
-      if (i != j) EXPECT_NE(kAllPieces[i], kAllPieces[j]);
+  for (int const lhs : std::views::iota(0, kSize)) {
+    for (int const rhs : std::views::iota(0, kSize)) {
+      if (lhs != rhs) EXPECT_NE(kAllPieces[lhs], kAllPieces[rhs]);
     }
   }
 }

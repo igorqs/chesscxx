@@ -35,55 +35,55 @@ template <typename T>
 struct std::formatter<std::optional<T>> {
   template <typename ParseContext>
   constexpr auto parse(ParseContext& ctx) {
-    auto it = ctx.begin();
+    auto ptr = ctx.begin();
     const auto end = ctx.end();
 
-    auto isEnd = [&end](const auto& it) { return it == end || *it == '}'; };
+    auto is_end = [&end](const auto& ptr) { return ptr == end || *ptr == '}'; };
 
-    if (isEnd(it)) return it;
+    if (is_end(ptr)) return ptr;
 
-    if (*it == '?') {
-      for (++it; !isEnd(it); ++it) defaultValue.push_back(*it);
-      return it;
+    if (*ptr == '?') {
+      for (++ptr; !is_end(ptr); ++ptr) default_value.push_back(*ptr);
+      return ptr;
     }
 
-    for (; !isEnd(it) && *it != '['; ++it) prefix.push_back(*it);
-    if (isEnd(it)) return ctx.begin();
-    ++it;
+    for (; !is_end(ptr) && *ptr != '['; ++ptr) prefix.push_back(*ptr);
+    if (is_end(ptr)) return ctx.begin();
+    ++ptr;
 
-    std::string underlyingSpecs;
-    for (; !isEnd(it) && *it != ']'; ++it) underlyingSpecs.push_back(*it);
-    if (isEnd(it)) return ctx.begin();
-    ++it;
-    ParseContext underlyingCtx(underlyingSpecs.data(), underlyingSpecs.size());
-    underlyingFormatter.parse(underlyingCtx);
+    std::string underlying_specs;
+    for (; !is_end(ptr) && *ptr != ']'; ++ptr) underlying_specs.push_back(*ptr);
+    if (is_end(ptr)) return ctx.begin();
+    ++ptr;
+    ParseContext underlying_ctx(underlying_specs, underlying_specs.size());
+    underlying_formatter.parse(underlying_ctx);
 
-    for (; !isEnd(it) && *it != '?'; ++it) suffix.push_back(*it);
-    if (isEnd(it)) return it;
-    ++it;
+    for (; !is_end(ptr) && *ptr != '?'; ++ptr) suffix.push_back(*ptr);
+    if (is_end(ptr)) return ptr;
+    ++ptr;
 
-    for (; !isEnd(it); ++it) defaultValue.push_back(*it);
+    for (; !is_end(ptr); ++ptr) default_value.push_back(*ptr);
 
-    return it;
+    return ptr;
   }
 
   template <typename FmtContext>
   auto format(const auto& opt, FmtContext& ctx) const {
-    if (!opt.has_value()) return std::format_to(ctx.out(), "{}", defaultValue);
+    if (!opt.has_value()) return std::format_to(ctx.out(), "{}", default_value);
 
     auto out = ctx.out();
     out = std::format_to(out, "{}", prefix);
     ctx.advance_to(out);
-    out = underlyingFormatter.format(*opt, ctx);
+    out = underlying_formatter.format(*opt, ctx);
     out = std::format_to(out, "{}", suffix);
 
     return out;
   }
 
-  std::string defaultValue;
+  std::string default_value;
   std::string prefix;
   std::string suffix;
-  std::formatter<T> underlyingFormatter;
+  std::formatter<T> underlying_formatter;
 };
 
 /// @}

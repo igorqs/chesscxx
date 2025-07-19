@@ -8,13 +8,13 @@
 #include <string_view>
 
 namespace {
-auto parseSan(std::string_view sv) {
-  auto parsed_move = chesskit::parse<chesskit::SanMove>(sv);
+auto parseSan(std::string_view str) {
+  auto parsed_move = chesskit::parse<chesskit::SanMove>(str);
   assert(parsed_move);
   return parsed_move.value();
 }
 
-void moveAndPrint(auto& game, const auto& move) {
+void moveAndPrint(chesskit::Game& game, const auto& move) {
   auto move_result = game.move(move);
   if (move_result) {
     std::println("{} -> {:fen}", move, game);

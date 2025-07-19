@@ -21,7 +21,7 @@ namespace chesskit {
 template <>
 class Parser<Square, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<Square, const char*>, ParseError> {
     auto file = parseFrom<File>(begin, end);
     if (!file) return std::unexpected(file.error());
@@ -29,9 +29,9 @@ class Parser<Square, const char*, parse_as::Default> {
     auto rank = parseFrom<Rank>(file->ptr, end);
     if (!rank) return std::unexpected(rank.error());
 
-    auto square = Square(file->parsedValue, rank->parsedValue);
+    auto square = Square(file->parsed_value, rank->parsed_value);
 
-    return ParseResult{.parsedValue = square, .ptr = rank->ptr};
+    return ParseResult{.parsed_value = square, .ptr = rank->ptr};
   }
 };
 

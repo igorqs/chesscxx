@@ -38,15 +38,16 @@ TEST(SquareTest, KNumSquaresIsInBounds) {
 }
 
 TEST(SquareTest, ComparesEqualValuesSuccessfully) {
-  std::ranges::for_each(kAllSquares, [](const auto& sq) { EXPECT_EQ(sq, sq); });
+  std::ranges::for_each(kAllSquares,
+                        [](const auto& square) { EXPECT_EQ(square, square); });
 }
 
 TEST(SquareTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllSquares.size());
 
-  for (int const i : std::views::iota(0, kSize)) {
-    for (int const j : std::views::iota(0, kSize)) {
-      if (i != j) EXPECT_NE(kAllSquares[i], kAllSquares[j]);
+  for (int const lhs : std::views::iota(0, kSize)) {
+    for (int const rhs : std::views::iota(0, kSize)) {
+      if (lhs != rhs) EXPECT_NE(kAllSquares[lhs], kAllSquares[rhs]);
     }
   }
 }
@@ -54,16 +55,16 @@ TEST(SquareTest, ComparesDifferentValuesSuccessfully) {
 TEST(SquareTest, IndexOrderIsRowMajor) {
   size_t expected_index = 0;
 
-  std::ranges::for_each(kAllSquares, [&](const auto& sq) {
-    EXPECT_EQ(chesskit::index(sq), expected_index++);
+  std::ranges::for_each(kAllSquares, [&](const auto& square) {
+    EXPECT_EQ(chesskit::index(square), expected_index++);
   });
 }
 
 TEST(SquareTest, HashProducesUniqueValues) {
   std::unordered_set<size_t> hashes;
 
-  std::ranges::for_each(kAllSquares, [&](const auto& sq) {
-    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Square>{}(sq)).second);
+  std::ranges::for_each(kAllSquares, [&](const auto& square) {
+    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Square>{}(square)).second);
   });
 }
 

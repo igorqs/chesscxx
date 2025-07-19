@@ -12,25 +12,25 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedSanMove = chesskit::parse<chesskit::SanNormalMove>(sv);
-  printErrorOrValue(parsedSanMove);
+void parseAndPrint(std::string_view str) {
+  auto parsed_san_move = chesskit::parse<chesskit::SanNormalMove>(str);
+  printErrorOrValue(parsed_san_move);
 }
 }  // namespace
 
 auto main() -> int {
   chesskit::SanNormalMove normal_move = {
-      .pieceType = chesskit::PieceType::kPawn,
+      .piece_type = chesskit::PieceType::kPawn,
       .origin = chesskit::PartialSquare(chesskit::File::kE, chesskit::Rank::k7),
-      .isCapture = true,
+      .is_capture = true,
       .destination = chesskit::Square(chesskit::File::kF, chesskit::Rank::k8),
       .promotion = chesskit::PromotablePieceType::kQueen,
       .check_indicator = chesskit::CheckIndicator::kCheckmate,
@@ -38,7 +38,7 @@ auto main() -> int {
   std::println("{}", normal_move);
 
   normal_move = {
-      .pieceType = chesskit::PieceType::kKing,
+      .piece_type = chesskit::PieceType::kKing,
       .origin = chesskit::PartialSquare(chesskit::File::kE, std::nullopt),
       .destination = chesskit::Square(chesskit::File::kF, chesskit::Rank::k8),
   };

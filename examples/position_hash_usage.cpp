@@ -5,29 +5,29 @@
 #include <string_view>
 
 namespace {
-auto parsePosition(std::string_view sv) -> chesskit::Position {
-  auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
-  assert(parsedPosition);
-  return parsedPosition.value();
+auto parsePosition(std::string_view str) -> chesskit::Position {
+  auto parsed_position = chesskit::parse<chesskit::Position>(str);
+  assert(parsed_position);
+  return parsed_position.value();
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Position const p1 =
+  chesskit::Position const position1 =
       parsePosition("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-  chesskit::Position const p2 = parsePosition(
+  chesskit::Position const position2 = parsePosition(
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 10 10");
 
-  assert(p1 != p2);
-  assert(chesskit::RepetitionEqual{}(p1, p2));
+  assert(position1 != position2);
+  assert(chesskit::RepetitionEqual{}(position1, position2));
 
-  auto p1_repetition_hash = chesskit::RepetitionHash{}(p1);
-  auto p2_repetition_hash = chesskit::RepetitionHash{}(p2);
+  auto position1_repetition_hash = chesskit::RepetitionHash{}(position1);
+  auto position2_repetition_hash = chesskit::RepetitionHash{}(position2);
 
-  assert(p1_repetition_hash == p2_repetition_hash);
+  assert(position1_repetition_hash == position2_repetition_hash);
 
   // These hashes may collide but are likely different
-  assert(std::hash<chesskit::Position>{}(p1) !=
-         std::hash<chesskit::Position>{}(p2));
+  assert(std::hash<chesskit::Position>{}(position1) !=
+         std::hash<chesskit::Position>{}(position2));
 }

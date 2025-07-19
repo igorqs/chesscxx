@@ -31,7 +31,7 @@ namespace chesskit {
 template <>
 class Parser<Position::Params, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<Position::Params, const char*>, ParseError> {
     return internal::parsePositionParams(begin, end);
   }
@@ -210,12 +210,12 @@ TEST_P(ValidInputSuite, ConstructsFromParamsSuccessfully) {
   const auto& params = GetParam().params();
   auto position = chesskit::Position::fromParams(params);
   ASSERT_TRUE(position);
-  EXPECT_EQ(position->piecePlacement(), params.piecePlacement);
-  EXPECT_EQ(position->activeColor(), params.activeColor);
-  EXPECT_EQ(position->enPassantTargetSquare(), params.enPassantTargetSquare);
-  EXPECT_EQ(position->halfmoveClock(), params.halfmoveClock);
-  EXPECT_EQ(position->fullmoveNumber(), params.fullmoveNumber);
-  EXPECT_EQ(position->castlingRights(), params.castlingRights);
+  EXPECT_EQ(position->piecePlacement(), params.piece_placement);
+  EXPECT_EQ(position->activeColor(), params.active_color);
+  EXPECT_EQ(position->enPassantTargetSquare(), params.en_passant_target_square);
+  EXPECT_EQ(position->halfmoveClock(), params.halfmove_clock);
+  EXPECT_EQ(position->fullmoveNumber(), params.fullmove_number);
+  EXPECT_EQ(position->castlingRights(), params.castling_rights);
 }
 
 TEST_P(ValidInputSuite, ComparesEqual) {
@@ -266,7 +266,7 @@ TEST_P(NoLegalEnPassantInputSuite, IsEquivalentWhenEnPassantIsCleared) {
 
   auto with_en_passant = chesskit::Position::fromParams(params);
   auto new_params = params;
-  new_params.enPassantTargetSquare = std::nullopt;
+  new_params.en_passant_target_square = std::nullopt;
   auto without_en_passant = chesskit::Position::fromParams(new_params);
 
   ASSERT_TRUE(with_en_passant);
@@ -289,7 +289,7 @@ TEST_P(LegalEnPassantInputSuite, IsDifferentWhenEnPassantIsCleared) {
 
   auto with_en_passant = chesskit::Position::fromParams(params);
   auto new_params = params;
-  new_params.enPassantTargetSquare = std::nullopt;
+  new_params.en_passant_target_square = std::nullopt;
   auto without_en_passant = chesskit::Position::fromParams(new_params);
 
   ASSERT_TRUE(with_en_passant);
@@ -340,53 +340,54 @@ TEST(PositionParamsTest, DefaultConstructionCreatesDefaultStartingPosition) {
   chesskit::Position::Params const params;
   auto expected = GetDefault().params();
 
-  EXPECT_EQ(params.piecePlacement, expected.piecePlacement);
-  EXPECT_EQ(params.activeColor, expected.activeColor);
-  EXPECT_EQ(params.enPassantTargetSquare, expected.enPassantTargetSquare);
-  EXPECT_EQ(params.halfmoveClock, expected.halfmoveClock);
-  EXPECT_EQ(params.fullmoveNumber, expected.fullmoveNumber);
-  EXPECT_EQ(params.castlingRights, expected.castlingRights);
+  EXPECT_EQ(params.piece_placement, expected.piece_placement);
+  EXPECT_EQ(params.active_color, expected.active_color);
+  EXPECT_EQ(params.en_passant_target_square, expected.en_passant_target_square);
+  EXPECT_EQ(params.halfmove_clock, expected.halfmove_clock);
+  EXPECT_EQ(params.fullmove_number, expected.fullmove_number);
+  EXPECT_EQ(params.castling_rights, expected.castling_rights);
 }
 
 TEST(PositionTest, DefaultConstructionCreatesDefaultStartingPosition) {
   chesskit::Position const position;
   auto expected = GetDefault().params();
 
-  EXPECT_EQ(position.piecePlacement(), expected.piecePlacement);
-  EXPECT_EQ(position.activeColor(), expected.activeColor);
-  EXPECT_EQ(position.enPassantTargetSquare(), expected.enPassantTargetSquare);
+  EXPECT_EQ(position.piecePlacement(), expected.piece_placement);
+  EXPECT_EQ(position.activeColor(), expected.active_color);
+  EXPECT_EQ(position.enPassantTargetSquare(),
+            expected.en_passant_target_square);
   EXPECT_EQ(position.legalEnPassantTargetSquare(), std::nullopt);
-  EXPECT_EQ(position.halfmoveClock(), expected.halfmoveClock);
-  EXPECT_EQ(position.fullmoveNumber(), expected.fullmoveNumber);
-  EXPECT_EQ(position.castlingRights(), expected.castlingRights);
+  EXPECT_EQ(position.halfmoveClock(), expected.halfmove_clock);
+  EXPECT_EQ(position.fullmoveNumber(), expected.fullmove_number);
+  EXPECT_EQ(position.castlingRights(), expected.castling_rights);
 }
 
 TEST(PositionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
-  constexpr int max_collisions = 1;
-  std::unordered_map<size_t, std::vector<chesskit::Position>> hash_counter;
+  constexpr int kMaxCollisions = 1;
+  std::unordered_map<std::size_t, std::vector<chesskit::Position>> hash_counter;
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();
     auto hash = std::hash<chesskit::Position>{}(position);
     hash_counter[hash].push_back(position);
     auto collisions = hash_counter[hash].size();
-    EXPECT_LE(collisions, max_collisions)
+    EXPECT_LE(collisions, kMaxCollisions)
         << std::format("position={}, hash_counter={}", position, hash_counter);
   });
 }
 
 TEST(PositionRepetitionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
-  constexpr int max_collisions = 1;
-  std::unordered_map<size_t, std::vector<chesskit::Position>> hash_counter;
+  constexpr int kMaxCollisions = 1;
+  std::unordered_map<std::size_t, std::vector<chesskit::Position>> hash_counter;
 
   std::ranges::for_each(GetRepetitionInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();
     auto hash = chesskit::RepetitionHash{}(position);
     hash_counter[hash].push_back(position);
     auto collisions = hash_counter[hash].size();
-    EXPECT_LE(collisions, max_collisions)
+    EXPECT_LE(collisions, kMaxCollisions)
         << std::format("position={}, hash_counter={}", position, hash_counter);
   });
 }
@@ -499,7 +500,7 @@ TEST(PositionRepetitionTest, ConsiderPiecePlacement) {
 
   chesskit::Position default_position;
   auto diff_piece_placement = chesskit::Position::fromParams({
-      .piecePlacement = new_pp.value(),
+      .piece_placement = new_pp.value(),
   });
 
   ASSERT_TRUE(diff_piece_placement);
@@ -515,7 +516,7 @@ TEST(PositionRepetitionTest, ConsiderPiecePlacement) {
 TEST(PositionRepetitionTest, ConsiderColor) {
   chesskit::Position default_position;
   auto diff_active_color = chesskit::Position::fromParams({
-      .activeColor = chesskit::Color::kBlack,
+      .active_color = chesskit::Color::kBlack,
   });
 
   ASSERT_TRUE(diff_active_color);
@@ -531,7 +532,7 @@ TEST(PositionRepetitionTest, ConsiderColor) {
 TEST(PositionRepetitionTest, ConsiderCastlingRights) {
   chesskit::Position default_position;
   auto diff_castling_rights = chesskit::Position::fromParams({
-      .castlingRights = chesskit::CastlingRights(0),
+      .castling_rights = chesskit::CastlingRights(0),
   });
 
   ASSERT_TRUE(diff_castling_rights);
@@ -547,8 +548,8 @@ TEST(PositionRepetitionTest, ConsiderCastlingRights) {
 TEST(PositionRepetitionTest, IgnoresMoveCounters) {
   chesskit::Position default_position;
   auto diff_move_counters = chesskit::Position::fromParams({
-      .halfmoveClock = 10,
-      .fullmoveNumber = 10,
+      .halfmove_clock = 2,
+      .fullmove_number = 2,
   });
 
   ASSERT_TRUE(diff_move_counters);

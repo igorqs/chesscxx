@@ -28,63 +28,63 @@ namespace chesskit {
 template <>
 class Parser<SanNormalMove, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<SanNormalMove, const char*>, ParseError> {
-    auto ptr = begin;
+    const auto* ptr = begin;
     SanNormalMove move;
 
     auto piece =
         internal::tryParseFrom<PieceType>(ptr, end, parse_as::Uppercase{});
-    move.pieceType = piece.parsedValue.value_or(PieceType::kPawn);
+    move.piece_type = piece.parsed_value.value_or(PieceType::kPawn);
     ptr = piece.ptr;
 
     auto origin = parseFrom<PartialSquare>(ptr, end);
     if (!origin) return std::unexpected(origin.error());
-    move.origin = origin->parsedValue;
+    move.origin = origin->parsed_value;
     ptr = origin->ptr;
 
-    move.isCapture = false;
+    move.is_capture = false;
     if (ptr != end && *ptr == 'x') {
-      move.isCapture = true;
+      move.is_capture = true;
       ptr++;
     }
 
     auto destination = parseFrom<Square>(ptr, end);
     if (destination) {
-      move.destination = destination->parsedValue;
+      move.destination = destination->parsed_value;
       ptr = destination->ptr;
-    } else if (move.isCapture) {
+    } else if (move.is_capture) {
       return std::unexpected(destination.error());
     } else {
-      auto squareFromOrigin = internal::toSquare(move.origin);
-      if (squareFromOrigin) {
+      auto square_from_origin = internal::toSquare(move.origin);
+      if (square_from_origin) {
         move.origin = PartialSquare();
-        move.destination = *squareFromOrigin;
+        move.destination = *square_from_origin;
       } else {
         return std::unexpected(destination.error());
       }
     }
 
-    bool hasPromotionSymbol = false;
+    bool has_promotion_symbol = false;
     if (ptr != end && *ptr == '=') {
-      hasPromotionSymbol = true;
+      has_promotion_symbol = true;
       ptr++;
     }
 
     auto promotion =
         parseFrom<PromotablePieceType>(ptr, end, parse_as::Uppercase{});
     if (promotion) {
-      move.promotion = promotion->parsedValue;
+      move.promotion = promotion->parsed_value;
       ptr = promotion->ptr;
-    } else if (hasPromotionSymbol) {
+    } else if (has_promotion_symbol) {
       return std::unexpected(promotion.error());
     }
 
     auto check_indicator = internal::tryParseFrom<CheckIndicator>(ptr, end);
-    move.check_indicator = check_indicator.parsedValue;
+    move.check_indicator = check_indicator.parsed_value;
     ptr = check_indicator.ptr;
 
-    return ParseResult{.parsedValue = move, .ptr = ptr};
+    return ParseResult{.parsed_value = move, .ptr = ptr};
   }
 };
 
@@ -95,20 +95,20 @@ class Parser<SanNormalMove, const char*, parse_as::Default> {
 template <>
 class Parser<SanCastlingMove, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<SanCastlingMove, const char*>, ParseError> {
-    static constexpr std::string_view queenside = "O-O-O";
-    static constexpr std::string_view kingside = "O-O";
+    static constexpr std::string_view kQueenside = "O-O-O";
+    static constexpr std::string_view kKingside = "O-O";
 
     CastlingSide side;
-    auto ptr = begin;
+    const auto* ptr = begin;
     std::string_view const input{begin, end};
 
-    if (input.starts_with(queenside)) {
-      ptr += queenside.size();
+    if (input.starts_with(kQueenside)) {
+      ptr += kQueenside.size();
       side = CastlingSide::kQueenside;
-    } else if (input.starts_with(kingside)) {
-      ptr += kingside.size();
+    } else if (input.starts_with(kKingside)) {
+      ptr += kKingside.size();
       side = CastlingSide::kKingside;
     } else {
       return std::unexpected(ParseError::kInvalidSanCastling);
@@ -118,9 +118,9 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
     ptr = check_indicator.ptr;
 
     return ParseResult{
-        .parsedValue =
+        .parsed_value =
             SanCastlingMove{.side = side,
-                            .check_indicator = check_indicator.parsedValue},
+                            .check_indicator = check_indicator.parsed_value},
         .ptr = ptr};
   }
 };
@@ -132,18 +132,18 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
 template <>
 class Parser<SanMove, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<SanMove, const char*>, ParseError> {
     auto castling = parseFrom<SanCastlingMove>(begin, end);
     if (castling) {
       return ParseResult<SanMove, const char*>{
-          .parsedValue = castling->parsedValue, .ptr = castling->ptr};
+          .parsed_value = castling->parsed_value, .ptr = castling->ptr};
     }
 
     auto normal = parseFrom<SanNormalMove>(begin, end);
     if (normal) {
       return ParseResult<SanMove, const char*>{
-          .parsedValue = normal->parsedValue, .ptr = normal->ptr};
+          .parsed_value = normal->parsed_value, .ptr = normal->ptr};
     }
 
     return std::unexpected(normal.error());

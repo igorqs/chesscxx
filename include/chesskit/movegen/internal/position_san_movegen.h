@@ -7,18 +7,16 @@
 #include "../../core/internal/position_modifier.h"
 #include "../../position.h"
 #include "../../san_move.h"
-#include "../../uci_move.h"
 #include "position_movegen.h"
 
 namespace chesskit::internal {
 
-template <>
-inline auto legalMoves(Position position) -> std::generator<SanMove> {
+inline auto legalSanMoves(Position position) -> std::generator<SanMove> {
   using std::ranges::elements_of;
 
   PositionModifier::resetMoveCounters(position);
 
-  co_yield elements_of(legalMoves<UciMove>(position) |
+  co_yield elements_of(legalMoves(position) |
                        std::views::transform([&position](const auto& uci) {
                          auto expected_record =
                              PositionModifier::move(position, uci);

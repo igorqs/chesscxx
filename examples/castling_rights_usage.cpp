@@ -8,21 +8,21 @@
 
 namespace {
 void printCastlingRights(const auto& rights) {
-  bool whiteKingside = rights.canCastle(chesskit::CastlingSide::kKingside,
-                                        chesskit::Color::kWhite);
-
-  bool whiteQueenside = rights.canCastle(chesskit::CastlingSide::kQueenside,
+  bool white_kingside = rights.canCastle(chesskit::CastlingSide::kKingside,
                                          chesskit::Color::kWhite);
 
-  bool blackKingside = rights.canCastle(chesskit::CastlingSide::kKingside,
-                                        chesskit::Color::kBlack);
+  bool white_queenside = rights.canCastle(chesskit::CastlingSide::kQueenside,
+                                          chesskit::Color::kWhite);
 
-  bool blackQueenside = rights.canCastle(chesskit::CastlingSide::kQueenside,
+  bool black_kingside = rights.canCastle(chesskit::CastlingSide::kKingside,
                                          chesskit::Color::kBlack);
 
+  bool black_queenside = rights.canCastle(chesskit::CastlingSide::kQueenside,
+                                          chesskit::Color::kBlack);
+
   std::println("\"{}\"", rights);
-  std::println("{} {} {} {} {} {} {}", whiteKingside, whiteQueenside,
-               blackKingside, blackQueenside, rights.all(), rights.any(),
+  std::println("{} {} {} {} {} {} {}", white_kingside, white_queenside,
+               black_kingside, black_queenside, rights.all(), rights.any(),
                rights.none());
 }
 }  // namespace

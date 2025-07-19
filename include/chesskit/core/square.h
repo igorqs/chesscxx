@@ -32,8 +32,9 @@ struct Square {
 /// @{
 
 /// @brief Computes the linear index of a square on the chessboard.
-inline constexpr auto index(const Square& sq) -> std::size_t {
-  return internal::index(sq.rank) * kNumFiles + internal::index(sq.file);
+constexpr auto index(const Square& square) -> std::size_t {
+  return ((internal::index(square.rank) * kNumFiles)) +
+         internal::index(square.file);
 }
 
 /// @}

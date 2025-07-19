@@ -12,23 +12,23 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
-  printErrorOrValue(parsedSanMove);
+void parseAndPrint(std::string_view str) {
+  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+  printErrorOrValue(parsed_san_move);
 }
 }  // namespace
 
 auto main() -> int {
   chesskit::SanMove san_move = chesskit::SanNormalMove{
-      .pieceType = chesskit::PieceType::kKing,
+      .piece_type = chesskit::PieceType::kKing,
       .origin = chesskit::PartialSquare(chesskit::File::kE, std::nullopt),
       .destination = chesskit::Square(chesskit::File::kF, chesskit::Rank::k8),
   };

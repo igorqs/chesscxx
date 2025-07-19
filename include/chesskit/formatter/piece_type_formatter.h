@@ -18,18 +18,18 @@ struct std::formatter<chesskit::PieceType>
                                          chesskit::internal::CompactUpperSpec,
                                          chesskit::internal::CompactLowerSpec> {
   auto handleSpec(const auto& value, auto& ctx,
-                  chesskit::internal::VerboseSpec) const {
+                  chesskit::internal::VerboseSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}", description(value));
   }
 
   auto handleSpec(const auto& value, auto& ctx,
-                  chesskit::internal::CompactUpperSpec) const {
+                  chesskit::internal::CompactUpperSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}",
                           static_cast<char>(std::toupper(compact(value))));
   }
 
   auto handleSpec(const auto& value, auto& ctx,
-                  chesskit::internal::CompactLowerSpec) const {
+                  chesskit::internal::CompactLowerSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}",
                           static_cast<char>(std::tolower(compact(value))));
   }

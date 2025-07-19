@@ -33,7 +33,7 @@ class CastlingRights {
 
   /// @brief Constructor from a specific bitset value.
   explicit constexpr CastlingRights(std::bitset<kNumCastlingRights> bits)
-      : castlingRights_{bits} {}
+      : castling_rights_{bits} {}
 
   /// @}
 
@@ -51,15 +51,15 @@ class CastlingRights {
   /// @brief Check if castling is allowed for a given side and color.
   [[nodiscard]] auto canCastle(const CastlingSide& side,
                                const Color& color) const -> bool {
-    return castlingRights_.test(index(side, color));
+    return castling_rights_.test(index(side, color));
   }
 
   /// @brief Checks if all castling rights are allowed.
-  [[nodiscard]] auto all() const -> bool { return castlingRights_.all(); }
+  [[nodiscard]] auto all() const -> bool { return castling_rights_.all(); }
   /// @brief Checks if any castling rights are allowed.
-  [[nodiscard]] auto any() const -> bool { return castlingRights_.any(); }
+  [[nodiscard]] auto any() const -> bool { return castling_rights_.any(); }
   /// @brief Checks if no castling rights are allowed.
-  [[nodiscard]] auto none() const -> bool { return castlingRights_.none(); }
+  [[nodiscard]] auto none() const -> bool { return castling_rights_.none(); }
 
   /// @}
 
@@ -68,27 +68,27 @@ class CastlingRights {
 
   /// @brief Enable the castling right for a specific side and color.
   void enable(const CastlingSide& side, const Color& color) {
-    castlingRights_.set(index(side, color));
+    castling_rights_.set(index(side, color));
   }
   /// @brief Enable all castling rights for a specific color.
   void enable(const Color& color) {
-    castlingRights_.set(index(chesskit::CastlingSide::kKingside, color));
-    castlingRights_.set(index(chesskit::CastlingSide::kQueenside, color));
+    castling_rights_.set(index(chesskit::CastlingSide::kKingside, color));
+    castling_rights_.set(index(chesskit::CastlingSide::kQueenside, color));
   }
   /// @brief Enable all castling rights.
-  void enable() { castlingRights_.set(); }
+  void enable() { castling_rights_.set(); }
 
   /// @brief Disable castling for a specific side and color.
   void disable(const CastlingSide& side, const Color& color) {
-    castlingRights_.reset(index(side, color));
+    castling_rights_.reset(index(side, color));
   }
   /// @brief Disable all castling rights for a specific color.
   void disable(const Color& color) {
-    castlingRights_.reset(index(chesskit::CastlingSide::kKingside, color));
-    castlingRights_.reset(index(chesskit::CastlingSide::kQueenside, color));
+    castling_rights_.reset(index(chesskit::CastlingSide::kKingside, color));
+    castling_rights_.reset(index(chesskit::CastlingSide::kQueenside, color));
   }
   /// @brief Disable all castling rights.
-  void disable() { castlingRights_.reset(); }
+  void disable() { castling_rights_.reset(); }
 
   /// @}
 
@@ -98,7 +98,7 @@ class CastlingRights {
   /// @brief Returns a bitset representation of the data
   [[nodiscard]] auto toBitset() const
       -> const std::bitset<kNumCastlingRights>& {
-    return castlingRights_;
+    return castling_rights_;
   };
 
   /// @}
@@ -108,13 +108,13 @@ class CastlingRights {
 
   static constexpr auto index(const CastlingSide& side, const Color& color)
       -> uint8_t {
-    uint8_t const sideIndex = (side == CastlingSide::kKingside) ? 0 : 1;
-    uint8_t const colorIndex = (color == Color::kWhite) ? 0 : 1;
+    uint8_t const side_index = (side == CastlingSide::kKingside) ? 0 : 1;
+    uint8_t const color_index = (color == Color::kWhite) ? 0 : 1;
 
-    return (colorIndex << 1) | sideIndex;
+    return (color_index << 1) | side_index;
   }
 
-  std::bitset<kNumCastlingRights> castlingRights_{kInitialValue};
+  std::bitset<kNumCastlingRights> castling_rights_{kInitialValue};
 };
 
 }  // namespace chesskit

@@ -7,12 +7,12 @@
 #include <string_view>
 
 namespace {
-auto parseFen(std::string_view sv) -> chesskit::Game {
-  auto parsedGame =
-      chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
-  assert(parsedGame);
+auto parseFen(std::string_view str) -> chesskit::Game {
+  auto parsed_game =
+      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+  assert(parsed_game);
 
-  return parsedGame.value();
+  return parsed_game.value();
 }
 
 void printGame(const auto& game) {

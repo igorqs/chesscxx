@@ -5,31 +5,31 @@
 #include <print>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 }  // namespace
 
 auto main() -> int {
-  auto parsedPieceType = chesskit::parse<chesskit::PieceType>(
+  auto parsed_piece_type = chesskit::parse<chesskit::PieceType>(
       "r", chesskit::parse_as::Uppercase{});
-  printErrorOrValue(parsedPieceType);
+  printErrorOrValue(parsed_piece_type);
 
-  parsedPieceType = chesskit::parse<chesskit::PieceType>(
+  parsed_piece_type = chesskit::parse<chesskit::PieceType>(
       "r", chesskit::parse_as::Lowercase{});
-  printErrorOrValue(parsedPieceType);
+  printErrorOrValue(parsed_piece_type);
 
-  auto parsedGame = chesskit::parse<chesskit::Game>(
+  auto parsed_game = chesskit::parse<chesskit::Game>(
       "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
       chesskit::parse_as::Fen{});
-  printErrorOrValue(parsedGame);
+  printErrorOrValue(parsed_game);
 
-  parsedGame = chesskit::parse<chesskit::Game>(
+  parsed_game = chesskit::parse<chesskit::Game>(
       "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
       chesskit::parse_as::Pgn{});
-  printErrorOrValue(parsedGame);
+  printErrorOrValue(parsed_game);
 }

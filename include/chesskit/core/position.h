@@ -53,17 +53,17 @@ class Position {
   /// @brief Encapsulates the parameters required to construct a Position.
   struct Params {
     /// The layout of pieces on the board.
-    PiecePlacement piecePlacement;
+    PiecePlacement piece_placement;
     /// The side to move next.
-    Color activeColor = Color::kWhite;
+    Color active_color = Color::kWhite;
     /// Castling rights available to both players.
-    CastlingRights castlingRights;
+    CastlingRights castling_rights;
     /// Target square for en passant, if applicable.
-    std::optional<Square> enPassantTargetSquare;
+    std::optional<Square> en_passant_target_square;
     /// Number of halfmoves since the last capture or pawn move.
-    uint32_t halfmoveClock = kMinHalfmoveClock;
+    uint32_t halfmove_clock = kMinHalfmoveClock;
     /// Number of full moves in the game.
-    uint32_t fullmoveNumber = kMinFullmoveNumber;
+    uint32_t fullmove_number = kMinFullmoveNumber;
   };
 
   /// @}
@@ -84,8 +84,8 @@ class Position {
   /// if validation fails.
   static auto fromParams(const Params& params)
       -> std::expected<Position, PositionError> {
-    if (!internal::isValidEnPassantTargetSquare(params.enPassantTargetSquare,
-                                                params.activeColor)) {
+    if (!internal::isValidEnPassantTargetSquare(params.en_passant_target_square,
+                                                params.active_color)) {
       return std::unexpected(PositionError::kEnPassantTargetSquareInvalidRank);
     }
 
@@ -111,26 +111,26 @@ class Position {
 
   /// @brief Returns the piece placement of the position.
   auto piecePlacement() const -> const PiecePlacement& {
-    return piecePlacement_;
+    return piece_placement_;
   }
   /// @brief Returns the active color (the side to move).
-  auto activeColor() const -> const Color& { return activeColor_; }
+  auto activeColor() const -> const Color& { return active_color_; }
   /// @brief Returns the castling rights.
   auto castlingRights() const -> const CastlingRights& {
-    return castlingRights_;
+    return castling_rights_;
   }
   /// @brief Returns the en passant target square, if any.
   auto enPassantTargetSquare() const -> std::optional<Square> {
-    return enPassantFile_
-               ? std::optional(Square(*enPassantFile_, enPassantRank()))
+    return en_passant_file_
+               ? std::optional(Square(*en_passant_file_, enPassantRank()))
                : std::nullopt;
   }
   /// @brief Returns the en passant target square if it's legally capturable.
   auto legalEnPassantTargetSquare() const -> std::optional<Square>;
   /// @brief Returns the halfmove clock.
-  auto halfmoveClock() const -> const uint32_t& { return halfmoveClock_; }
+  auto halfmoveClock() const -> const uint32_t& { return halfmove_clock_; }
   /// @brief Returns the fullmove number.
-  auto fullmoveNumber() const -> const uint32_t& { return fullmoveNumber_; }
+  auto fullmoveNumber() const -> const uint32_t& { return fullmove_number_; }
 
   /// @}
 
@@ -138,12 +138,13 @@ class Position {
   friend class internal::PositionModifier;
 
   explicit Position(const Params& params)
-      : piecePlacement_{params.piecePlacement},
-        activeColor_{params.activeColor},
-        castlingRights_{params.castlingRights},
-        enPassantFile_{internal::toOptionalFile(params.enPassantTargetSquare)},
-        halfmoveClock_{params.halfmoveClock},
-        fullmoveNumber_{params.fullmoveNumber} {}
+      : piece_placement_{params.piece_placement},
+        active_color_{params.active_color},
+        castling_rights_{params.castling_rights},
+        en_passant_file_{
+            internal::toOptionalFile(params.en_passant_target_square)},
+        halfmove_clock_{params.halfmove_clock},
+        fullmove_number_{params.fullmove_number} {}
 
   auto validationError() const -> std::optional<PositionError> {
     if (isFullmoveNumberOutOfRange()) {
@@ -153,13 +154,13 @@ class Position {
       return PositionError::kHalfmoveClockOutOfRange;
     }
 
-    if (!internal::isValidCastlingRights(piecePlacement_, castlingRights_)) {
+    if (!internal::isValidCastlingRights(piece_placement_, castling_rights_)) {
       return PositionError::kInvalidCastlingRightsForPiecePositions;
     }
 
     if (auto error = enPassantError()) return error;
 
-    if (internal::isKingAttacked(piecePlacement_, !activeColor_)) {
+    if (internal::isKingAttacked(piece_placement_, !active_color_)) {
       return PositionError::kSideNotToMoveIsUnderAttack;
     }
 
@@ -167,30 +168,30 @@ class Position {
   }
 
   auto isFullmoveNumberOutOfRange() const -> bool {
-    return fullmoveNumber_ < kMinFullmoveNumber ||
-           fullmoveNumber_ > kMaxFullmoveNumber;
+    return fullmove_number_ < kMinFullmoveNumber ||
+           fullmove_number_ > kMaxFullmoveNumber;
   }
 
   auto isHalfmoveClockOutOfRange() const -> bool {
-    return halfmoveClock_ < kMinHalfmoveClock ||
-           halfmoveClock_ > kMaxHalfmoveClock;
+    return halfmove_clock_ < kMinHalfmoveClock ||
+           halfmove_clock_ > kMaxHalfmoveClock;
   }
 
   auto enPassantError() const -> std::optional<PositionError> {
-    auto targetSquare = enPassantTargetSquare();
-    if (!targetSquare) return std::nullopt;
+    auto target_square = enPassantTargetSquare();
+    if (!target_square) return std::nullopt;
 
-    auto capturedPawnSquare = enPassantCapturedPawnSquare();
-    if (!capturedPawnSquare) return std::nullopt;
+    auto captured_pawn_square = enPassantCapturedPawnSquare();
+    if (!captured_pawn_square) return std::nullopt;
 
-    auto enemyPawn = Piece(PieceType::kPawn, !activeColor_);
+    auto enemy_pawn = Piece(PieceType::kPawn, !active_color_);
 
-    if (internal::hasPieceAt(piecePlacement_, *targetSquare)) {
+    if (internal::hasPieceAt(piece_placement_, *target_square)) {
       return PositionError::kEnPassantTargetSquareOccupied;
     }
 
-    if (!internal::hasPieceAt(piecePlacement_, *capturedPawnSquare,
-                              enemyPawn)) {
+    if (!internal::hasPieceAt(piece_placement_, *captured_pawn_square,
+                              enemy_pawn)) {
       return PositionError::kEnPassantNoCapturablePawn;
     }
 
@@ -201,31 +202,31 @@ class Position {
     auto square = enPassantTargetSquare();
     if (!square) return std::nullopt;
 
-    return internal::enPassantCapturedPawnSquare(*square, activeColor_);
+    return internal::enPassantCapturedPawnSquare(*square, active_color_);
   }
 
   auto enPassantRank() const -> Rank {
-    return internal::enPassantRank(activeColor_);
+    return internal::enPassantRank(active_color_);
   }
 
-  void toggleActiveColor() { activeColor_ = !activeColor_; }
+  void toggleActiveColor() { active_color_ = !active_color_; }
   void incrementMoveCounters() {
     incrementHalfmoveClock();
     incrementFullmoveNumber();
   }
-  void incrementHalfmoveClock() { halfmoveClock_++; }
+  void incrementHalfmoveClock() { halfmove_clock_++; }
   void incrementFullmoveNumber() {
-    if (activeColor_ == Color::kBlack) fullmoveNumber_++;
+    if (active_color_ == Color::kBlack) fullmove_number_++;
   }
-  void resetHalfmoveClock() { halfmoveClock_ = 0; }
-  void resetEnPassantFile() { enPassantFile_.reset(); }
+  void resetHalfmoveClock() { halfmove_clock_ = 0; }
+  void resetEnPassantFile() { en_passant_file_.reset(); }
 
-  PiecePlacement piecePlacement_;
-  Color activeColor_ = Color::kWhite;
-  CastlingRights castlingRights_;
-  std::optional<File> enPassantFile_;
-  uint32_t halfmoveClock_ = kMinHalfmoveClock;
-  uint32_t fullmoveNumber_ = kMinFullmoveNumber;
+  PiecePlacement piece_placement_;
+  Color active_color_ = Color::kWhite;
+  CastlingRights castling_rights_;
+  std::optional<File> en_passant_file_;
+  uint32_t halfmove_clock_ = kMinHalfmoveClock;
+  uint32_t fullmove_number_ = kMinFullmoveNumber;
 };
 
 }  // namespace chesskit

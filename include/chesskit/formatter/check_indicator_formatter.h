@@ -16,12 +16,12 @@ struct std::formatter<chesskit::CheckIndicator>
     : chesskit::internal::SpecDispatcher<chesskit::internal::VerboseSpec,
                                          chesskit::internal::CompactSpec> {
   auto handleSpec(const auto& check_indicator, auto& ctx,
-                  chesskit::internal::VerboseSpec) const {
+                  chesskit::internal::VerboseSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}", description(check_indicator));
   }
 
   auto handleSpec(const auto& check_indicator, auto& ctx,
-                  chesskit::internal::CompactSpec) const {
+                  chesskit::internal::CompactSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}", compact(check_indicator));
   }
 

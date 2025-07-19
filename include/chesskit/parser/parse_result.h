@@ -10,7 +10,7 @@ namespace chesskit {
 template <typename T, typename InputIt>
 struct ParseResult {
   /// The value obtained from parsing the input.
-  T parsedValue;
+  T parsed_value;
   /// Iterator pointing to the remaining unparsed input.
   InputIt ptr;
 };

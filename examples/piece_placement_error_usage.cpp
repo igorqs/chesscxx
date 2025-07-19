@@ -10,16 +10,16 @@
 #include <string_view>
 
 namespace {
-auto parseSquare(std::string_view sv) {
-  auto parsedSquare = chesskit::parse<chesskit::Square>(sv);
-  assert(parsedSquare);
-  return parsedSquare.value();
+auto parseSquare(std::string_view str) {
+  auto parsed_square = chesskit::parse<chesskit::Square>(str);
+  assert(parsed_square);
+  return parsed_square.value();
 }
 
-auto parsePiece(std::string_view sv) {
-  auto parsedPiece = chesskit::parse<chesskit::Piece>(sv);
-  assert(parsedPiece);
-  return parsedPiece.value();
+auto parsePiece(std::string_view str) {
+  auto parsed_piece = chesskit::parse<chesskit::Piece>(str);
+  assert(parsed_piece);
+  return parsed_piece.value();
 }
 
 void setPiece(auto& array, const auto& square, const auto& piece) {
@@ -30,11 +30,11 @@ void clearSquare(auto& array, const auto& square) {
   array[chesskit::index(square)] = std::nullopt;
 }
 
-void printErrorOrValue(auto created_object) {
-  if (created_object) {
-    std::println("{}", created_object.value());
+void printErrorOrValue(const auto& piece_placement) {
+  if (piece_placement) {
+    std::println("{}", piece_placement.value());
   } else {
-    std::println("{}", created_object.error());
+    std::println("{}", piece_placement.error());
   }
 }
 

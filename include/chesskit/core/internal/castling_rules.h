@@ -16,104 +16,99 @@
 namespace chesskit::internal {
 
 struct CastlingMoves {
-  RawMove kingMove;
-  RawMove rookMove;
+  RawMove king_move;
+  RawMove rook_move;
 };
 
-inline constexpr auto initialKingSquare(const Color& color) -> Square {
+constexpr auto initialKingSquare(const Color& color) -> Square {
   return backRankSquare(File::kE, color);
 }
 
-inline constexpr auto kingsideCastlingKingDestination(const Color& color)
-    -> Square {
+constexpr auto kingsideCastlingKingDestination(const Color& color) -> Square {
   return backRankSquare(File::kG, color);
 }
 
-inline constexpr auto initialKingsideRookSquare(const Color& color) -> Square {
+constexpr auto initialKingsideRookSquare(const Color& color) -> Square {
   return backRankSquare(File::kH, color);
 }
 
-inline constexpr auto kingsideCastlingRookDestination(const Color& color)
-    -> Square {
+constexpr auto kingsideCastlingRookDestination(const Color& color) -> Square {
   return backRankSquare(File::kF, color);
 }
 
-inline constexpr auto queensideCastlingKingDestination(const Color& color)
-    -> Square {
+constexpr auto queensideCastlingKingDestination(const Color& color) -> Square {
   return backRankSquare(File::kC, color);
 }
 
-inline constexpr auto initialQueensideRookSquare(const Color& color) -> Square {
+constexpr auto initialQueensideRookSquare(const Color& color) -> Square {
   return backRankSquare(File::kA, color);
 }
 
-inline constexpr auto queensideCastlingRookDestination(const Color& color)
-    -> Square {
+constexpr auto queensideCastlingRookDestination(const Color& color) -> Square {
   return backRankSquare(File::kD, color);
 }
 
-inline constexpr auto kingsideCastlingMoves(const Color& color)
-    -> CastlingMoves {
-  RawMove const kingMove =
+constexpr auto kingsideCastlingMoves(const Color& color) -> CastlingMoves {
+  RawMove const king_move =
       RawMove(initialKingSquare(color), kingsideCastlingKingDestination(color));
-  RawMove const rookMove = RawMove(initialKingsideRookSquare(color),
-                                   kingsideCastlingRookDestination(color));
+  RawMove const rook_move = RawMove(initialKingsideRookSquare(color),
+                                    kingsideCastlingRookDestination(color));
 
-  return CastlingMoves(kingMove, rookMove);
+  return CastlingMoves(king_move, rook_move);
 }
 
-inline constexpr auto queensideCastlingMoves(const Color& color)
+constexpr auto queensideCastlingMoves(const Color& color) -> CastlingMoves {
+  RawMove const king_move = RawMove(initialKingSquare(color),
+                                    queensideCastlingKingDestination(color));
+  RawMove const rook_move = RawMove(initialQueensideRookSquare(color),
+                                    queensideCastlingRookDestination(color));
+
+  return CastlingMoves(king_move, rook_move);
+}
+
+constexpr auto castlingMoves(const CastlingSide& side, const Color& color)
     -> CastlingMoves {
-  RawMove const kingMove = RawMove(initialKingSquare(color),
-                                   queensideCastlingKingDestination(color));
-  RawMove const rookMove = RawMove(initialQueensideRookSquare(color),
-                                   queensideCastlingRookDestination(color));
-
-  return CastlingMoves(kingMove, rookMove);
-}
-
-inline constexpr auto castlingMoves(const CastlingSide& side,
-                                    const Color& color) -> CastlingMoves {
   return side == CastlingSide::kKingside ? kingsideCastlingMoves(color)
                                          : queensideCastlingMoves(color);
 }
 
-inline constexpr auto affectsKingsideCastling(const RawMove& move,
-                                              const Color& color) -> bool {
+constexpr auto affectsKingsideCastling(const RawMove& move, const Color& color)
+    -> bool {
   return (move.origin == initialKingSquare(color)) ||
          (move.origin == initialKingsideRookSquare(color)) ||
          (move.destination == initialKingsideRookSquare(color));
 }
 
-inline constexpr auto affectsQueensideCastling(const RawMove& move,
-                                               const Color& color) -> bool {
+constexpr auto affectsQueensideCastling(const RawMove& move, const Color& color)
+    -> bool {
   return (move.origin == initialKingSquare(color)) ||
          (move.origin == initialQueensideRookSquare(color)) ||
          (move.destination == initialQueensideRookSquare(color));
 }
 
-inline constexpr auto areCastlingPiecesInInitialLocation(
-    const PiecePlacement& pp, const CastlingSide& side, const Color& color)
-    -> bool {
+constexpr auto areCastlingPiecesInInitialLocation(
+    const PiecePlacement& piece_placement, const CastlingSide& side,
+    const Color& color) -> bool {
   const auto king = Piece(PieceType::kKing, color);
   const auto rook = Piece(PieceType::kRook, color);
-  const auto rookSquare = (side == CastlingSide::kKingside)
-                              ? initialKingsideRookSquare(color)
-                              : initialQueensideRookSquare(color);
+  const auto rook_square = (side == CastlingSide::kKingside)
+                               ? initialKingsideRookSquare(color)
+                               : initialQueensideRookSquare(color);
 
-  if (!hasPieceAt(pp, initialKingSquare(color), king)) return false;
-  if (!hasPieceAt(pp, rookSquare, rook)) return false;
+  if (!hasPieceAt(piece_placement, initialKingSquare(color), king)) {
+    return false;
+  }
+  if (!hasPieceAt(piece_placement, rook_square, rook)) return false;
 
   return true;
 }
 
-inline constexpr auto isValidCastlingRights(const PiecePlacement& pp,
-                                            const CastlingRights& rights)
-    -> bool {
+constexpr auto isValidCastlingRights(const PiecePlacement& piece_placement,
+                                     const CastlingRights& rights) -> bool {
   for (const auto& side : {CastlingSide::kKingside, CastlingSide::kQueenside}) {
     for (const auto& color : {Color::kWhite, Color::kBlack}) {
       if (rights.canCastle(side, color) &&
-          !areCastlingPiecesInInitialLocation(pp, side, color)) {
+          !areCastlingPiecesInInitialLocation(piece_placement, side, color)) {
         return false;
       }
     }

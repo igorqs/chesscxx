@@ -18,7 +18,7 @@ struct std::formatter<chesskit::Game>
           chesskit::internal::AsciiSpec, chesskit::internal::PieceListSpec,
           chesskit::internal::RepetitionSpec> {
   auto handleSpec(const chesskit::Game& game, auto& ctx,
-                  chesskit::internal::PgnSpec) const {
+                  chesskit::internal::PgnSpec /*unused*/) const {
     auto out = ctx.out();
 
     if (!game.startsFromDefaultPosition()) {
@@ -31,16 +31,16 @@ struct std::formatter<chesskit::Game>
 
     const auto& moves = game.sanMoves();
     auto color = game.initialPosition().activeColor();
-    auto moveNumber = game.initialPosition().fullmoveNumber();
+    auto move_number = game.initialPosition().fullmoveNumber();
 
     for (const auto& move : moves) {
       if (color == chesskit::Color::kWhite) {
-        out = std::format_to(out, "{}. ", moveNumber);
+        out = std::format_to(out, "{}. ", move_number);
       }
 
       out = std::format_to(out, "{} ", move);
 
-      if (color == chesskit::Color::kWhite) moveNumber++;
+      if (color == chesskit::Color::kWhite) move_number++;
       color = !color;
     }
 
@@ -48,30 +48,30 @@ struct std::formatter<chesskit::Game>
   }
 
   auto handleSpec(const auto& game, auto& ctx,
-                  chesskit::internal::FenSpec) const {
+                  chesskit::internal::FenSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{:fen}", game.currentPosition());
   }
 
   auto handleSpec(const auto& game, auto& ctx,
-                  chesskit::internal::AsciiSpec) const {
+                  chesskit::internal::AsciiSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{:ascii}", game.currentPosition());
   }
 
   auto handleSpec(const auto& game, auto& ctx,
-                  chesskit::internal::PieceListSpec) const {
+                  chesskit::internal::PieceListSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{:lists}", game.currentPosition());
   }
 
   auto handleSpec(const auto& game, auto& ctx,
-                  chesskit::internal::RepetitionSpec) const {
+                  chesskit::internal::RepetitionSpec /*unused*/) const {
     auto out = ctx.out();
 
-    bool printComma = false;
+    bool print_comma = false;
     out = std::format_to(out, "{{ ");
     for (const auto& [position, counter] : game.repetitionTracker()) {
-      out = std::format_to(out, "{}\"{:rep}\": {}", printComma ? ", " : "",
+      out = std::format_to(out, "{}\"{:rep}\": {}", print_comma ? ", " : "",
                            position, counter);
-      printComma = true;
+      print_comma = true;
     }
     out = std::format_to(out, " }}");
 

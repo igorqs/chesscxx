@@ -10,17 +10,17 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
-  printErrorOrValue(parsedPosition);
+void parseAndPrint(std::string_view str) {
+  auto parsed_position = chesskit::parse<chesskit::Position>(str);
+  printErrorOrValue(parsed_position);
 }
 }  // namespace
 

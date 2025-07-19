@@ -11,42 +11,43 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedPiecePlacement = chesskit::parse<chesskit::PiecePlacement>(sv);
-  printErrorOrValue(parsedPiecePlacement);
+void parseAndPrint(std::string_view str) {
+  auto parsed_piece_placement = chesskit::parse<chesskit::PiecePlacement>(str);
+  printErrorOrValue(parsed_piece_placement);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::PiecePlacement pp;
-  std::println("{}\n", pp);
-  std::println("{:fen}\n", pp);
-  std::println("{:ascii}\n", pp);
-  std::println("{:lists}\n", pp);
+  chesskit::PiecePlacement piece_placement;
+  std::println("{}\n", piece_placement);
+  std::println("{:fen}\n", piece_placement);
+  std::println("{:ascii}\n", piece_placement);
+  std::println("{:lists}\n", piece_placement);
 
   std::bitset<chesskit::kNumSquares> seen;
 
-  for (const auto& [color, locationsByPieceType] : pp.pieceLocations()) {
+  for (const auto& [color, locationsByPieceType] :
+       piece_placement.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
       for (const chesskit::Square& location : locations) {
         chesskit::Piece const piece = {.type = type, .color = color};
         auto location_index = chesskit::index(location);
         seen.set(location_index);
-        assert(pp.pieceArray().at(location_index) == piece);
+        assert(piece_placement.pieceArray().at(location_index) == piece);
       }
     }
   }
 
   for (size_t i = 0; i < chesskit::kNumSquares; i++) {
-    if (!seen[i]) assert(pp.pieceArray().at(i) == std::nullopt);
+    if (!seen[i]) assert(piece_placement.pieceArray().at(i) == std::nullopt);
   }
 
   parseAndPrint("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");

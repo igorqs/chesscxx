@@ -20,16 +20,16 @@
 
 template <>
 struct std::hash<chesskit::SanCastlingMove> {
-  size_t operator()(const chesskit::SanCastlingMove& move) const {
+  auto operator()(const chesskit::SanCastlingMove& move) const -> size_t {
     return chesskit::internal::hashCombine(move.side, move.check_indicator);
   };
 };
 
 template <>
 struct std::hash<chesskit::SanNormalMove> {
-  size_t operator()(const chesskit::SanNormalMove& move) const {
+  auto operator()(const chesskit::SanNormalMove& move) const -> size_t {
     return chesskit::internal::hashCombine(
-        move.pieceType, move.origin.file, move.origin.rank, move.isCapture,
+        move.piece_type, move.origin.file, move.origin.rank, move.is_capture,
         move.destination, move.promotion, move.check_indicator);
   };
 };
@@ -38,25 +38,28 @@ namespace chesskit {
 template <typename T>
   requires std::is_base_of_v<chesskit::internal::BaseFormatter,
                              std::formatter<T>>
-inline void PrintTo(const T& obj, std::ostream* os) {
-  *os << std::format("{}", obj);
+inline void PrintTo(const T& obj, std::ostream* output_stream) {
+  *output_stream << std::format("{}", obj);
 }
 
-inline bool operator==(SanCastlingMove lhs, SanCastlingMove rhs) {
+inline auto operator==(SanCastlingMove lhs, SanCastlingMove rhs) -> bool {
   return lhs.side == rhs.side && lhs.check_indicator == rhs.check_indicator;
 }
 
-inline bool operator==(SanNormalMove lhs, SanNormalMove rhs) {
-  return lhs.pieceType == rhs.pieceType && lhs.origin.file == rhs.origin.file &&
-         lhs.origin.rank == rhs.origin.rank && lhs.isCapture == rhs.isCapture &&
+inline auto operator==(SanNormalMove lhs, SanNormalMove rhs) -> bool {
+  return lhs.piece_type == rhs.piece_type &&
+         lhs.origin.file == rhs.origin.file &&
+         lhs.origin.rank == rhs.origin.rank &&
+         lhs.is_capture == rhs.is_capture &&
          lhs.destination == rhs.destination && lhs.promotion == rhs.promotion &&
          lhs.check_indicator == rhs.check_indicator;
 }
 
-inline bool operator==(SanMove lhs, SanMove rhs) {
+inline auto operator==(SanMove lhs, SanMove rhs) -> bool {
   if (lhs.index() != rhs.index()) return false;
-  return std::visit([](const auto& a, const auto& b) { return a == b; }, lhs,
-                    rhs);
+  return std::visit([](const auto& lhs_move,
+                       const auto& rhs_move) { return lhs_move == rhs_move; },
+                    lhs, rhs);
 }
 
 namespace testing {
@@ -69,8 +72,8 @@ constexpr auto make_optional_array_from_range(const std::array<T, N>& range) {
 
 template <typename EnumType>
 constexpr auto make_optional_enum_array() {
-  constexpr auto values = magic_enum::enum_values<EnumType>();
-  return make_optional_array_from_range(values);
+  constexpr auto kValues = magic_enum::enum_values<EnumType>();
+  return make_optional_array_from_range(kValues);
 }
 
 template <typename Range>
@@ -81,9 +84,11 @@ constexpr auto make_distinct_pairs(Range&& range) {
   const auto begin = std::ranges::begin(range);
   const auto end = std::ranges::end(range);
 
-  for (auto it1 = begin; it1 != end; ++it1)
-    for (auto it2 = begin; it2 != end; ++it2)
+  for (auto it1 = begin; it1 != end; ++it1) {
+    for (auto it2 = begin; it2 != end; ++it2) {
       if (it1 != it2) pairs.emplace_back(*it1, *it2);
+    }
+  }
 
   return pairs;
 }

@@ -20,11 +20,11 @@ namespace chesskit {
 template <>
 class Parser<File, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<File, const char*>, ParseError> {
-    static constexpr std::string_view allowed = "abcdefgh";
+    static constexpr std::string_view kAllowed = "abcdefgh";
 
-    return internal::parseEnum<File>(begin, end, allowed,
+    return internal::parseEnum<File>(begin, end, kAllowed,
                                      ParseError::kInvalidFile);
   }
 };

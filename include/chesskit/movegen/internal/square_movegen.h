@@ -23,39 +23,39 @@ enum class Origin : uint8_t {
   kSkip,
 };
 
-inline auto validMoves(Square sq) {
+inline auto validMoves(Square square) {
   return std::views::transform(
-             [sq](auto offset) { return shiftSquare(sq, offset); }) |
+             [square](auto offset) { return shiftSquare(square, offset); }) |
          std::views::filter(
              [](auto optional) { return optional.has_value(); }) |
          std::views::transform([](auto optional) { return *optional; });
 }
 
-inline auto diagonalProjection(const Square& sq, const Square& corner)
+inline auto diagonalProjection(const Square& square, const Square& corner)
     -> Square {
-  SquareOffset offset = calculateOffset(corner, sq);
-  bool const sameSign =
-      std::signbit(offset.fileOffset) == std::signbit(offset.rankOffset);
-  int8_t const multiplier = sameSign ? 1 : -1;
+  SquareOffset offset = calculateOffset(corner, square);
+  bool const same_sign =
+      std::signbit(offset.file_offset) == std::signbit(offset.rank_offset);
+  int8_t const multiplier = same_sign ? 1 : -1;
 
-  if (std::abs(offset.fileOffset) < std::abs(offset.rankOffset)) {
-    offset.rankOffset = offset.fileOffset * multiplier;
+  if (std::abs(offset.file_offset) < std::abs(offset.rank_offset)) {
+    offset.rank_offset = offset.file_offset * multiplier;
   } else {
-    offset.fileOffset = offset.rankOffset * multiplier;
+    offset.file_offset = offset.rank_offset * multiplier;
   }
 
-  auto projection = shiftSquare(sq, offset);
+  auto projection = shiftSquare(square, offset);
   if (projection) return *projection;
 
   std::unreachable();
 }
 
 inline auto isOrthogonal(const SquareOffset& offset) -> bool {
-  return offset.fileOffset == 0 || offset.rankOffset == 0;
+  return offset.file_offset == 0 || offset.rank_offset == 0;
 }
 
 inline auto isDiagonal(const SquareOffset& offset) -> bool {
-  return std::abs(offset.fileOffset) == std::abs(offset.rankOffset);
+  return std::abs(offset.file_offset) == std::abs(offset.rank_offset);
 }
 
 inline auto isStraightLine(const SquareOffset& offset) -> bool {
@@ -66,26 +66,26 @@ inline auto slidingIncrement(const SquareOffset& offset)
     -> std::optional<SquareOffset> {
   if (!isStraightLine(offset)) return std::nullopt;
 
-  static constexpr int lo = -1;
-  static constexpr int hi = 1;
+  static constexpr int kLo = -1;
+  static constexpr int kHi = 1;
 
-  return SquareOffset{.fileOffset = std::clamp(offset.fileOffset, lo, hi),
-                      .rankOffset = std::clamp(offset.rankOffset, lo, hi)};
+  return SquareOffset{.file_offset = std::clamp(offset.file_offset, kLo, kHi),
+                      .rank_offset = std::clamp(offset.rank_offset, kLo, kHi)};
 }
 
 inline auto traversedSquares(Square origin, Square destination,
-                             Origin originPolicy = Origin::kKeep)
+                             Origin origin_policy = Origin::kKeep)
     -> std::generator<Square> {
-  if (originPolicy == Origin::kSkip && origin == destination) co_return;
+  if (origin_policy == Origin::kSkip && origin == destination) co_return;
 
   auto increment = calculateOffset(destination, origin);
 
-  if (const auto& slidingInc = slidingIncrement(increment)) {
-    increment = *slidingInc;
+  if (const auto& sliding_inc = slidingIncrement(increment)) {
+    increment = *sliding_inc;
   }
 
   std::optional<Square> square = origin;
-  if (originPolicy == Origin::kSkip) square = shiftSquare(*square, increment);
+  if (origin_policy == Origin::kSkip) square = shiftSquare(*square, increment);
 
   for (; square && *square != destination;
        square = shiftSquare(*square, increment)) {
@@ -95,100 +95,101 @@ inline auto traversedSquares(Square origin, Square destination,
   co_yield destination;
 }
 
-inline auto fileNeighbors(Square sq) -> std::generator<Square> {
+inline auto fileNeighbors(Square square) -> std::generator<Square> {
   static constexpr std::array<SquareOffset, 2> kOffsets = {
-      {{.fileOffset = 1, .rankOffset = 0},
-       {.fileOffset = -1, .rankOffset = 0}}};
+      {{.file_offset = 1, .rank_offset = 0},
+       {.file_offset = -1, .rank_offset = 0}}};
 
-  co_yield std::ranges::elements_of(kOffsets | validMoves(sq));
+  co_yield std::ranges::elements_of(kOffsets | validMoves(square));
 }
 
-inline auto knightMoves(Square sq) -> std::generator<Square> {
+inline auto knightMoves(Square square) -> std::generator<Square> {
   static constexpr std::array<SquareOffset, 8> kOffsets = {
-      {{.fileOffset = 2, .rankOffset = 1},
-       {.fileOffset = 2, .rankOffset = -1},
-       {.fileOffset = 1, .rankOffset = 2},
-       {.fileOffset = 1, .rankOffset = -2},
-       {.fileOffset = -1, .rankOffset = 2},
-       {.fileOffset = -1, .rankOffset = -2},
-       {.fileOffset = -2, .rankOffset = 1},
-       {.fileOffset = -2, .rankOffset = -1}}};
+      {{.file_offset = 2, .rank_offset = 1},
+       {.file_offset = 2, .rank_offset = -1},
+       {.file_offset = 1, .rank_offset = 2},
+       {.file_offset = 1, .rank_offset = -2},
+       {.file_offset = -1, .rank_offset = 2},
+       {.file_offset = -1, .rank_offset = -2},
+       {.file_offset = -2, .rank_offset = 1},
+       {.file_offset = -2, .rank_offset = -1}}};
 
-  co_yield std::ranges::elements_of(kOffsets | validMoves(sq));
+  co_yield std::ranges::elements_of(kOffsets | validMoves(square));
 }
 
-inline auto pawnCaptures(Square sq, Color color) -> std::generator<Square> {
+inline auto pawnCaptures(Square square, Color color) -> std::generator<Square> {
   static constexpr std::array<SquareOffset, 2> kWhiteOffsets = {
-      {{.fileOffset = 1, .rankOffset = -1},
-       {.fileOffset = -1, .rankOffset = -1}}};
+      {{.file_offset = 1, .rank_offset = -1},
+       {.file_offset = -1, .rank_offset = -1}}};
   static constexpr std::array<SquareOffset, 2> kBlackOffsets = {
-      {{.fileOffset = 1, .rankOffset = 1},
-       {.fileOffset = -1, .rankOffset = 1}}};
+      {{.file_offset = 1, .rank_offset = 1},
+       {.file_offset = -1, .rank_offset = 1}}};
 
   co_yield std::ranges::elements_of(
       ((color == Color::kWhite) ? kWhiteOffsets : kBlackOffsets) |
-      validMoves(sq));
+      validMoves(square));
 }
 
-inline auto pawnReverseSlidingMove(Square sq, Color color)
+inline auto pawnReverseSlidingMove(Square square, Color color)
     -> std::generator<Square> {
-  if (auto source = farthestPawnPushSource(sq, color)) {
+  if (auto source = farthestPawnPushSource(square, color)) {
     co_yield std::ranges::elements_of(
-        traversedSquares(sq, *source, Origin::kSkip));
+        traversedSquares(square, *source, Origin::kSkip));
   }
 }
 
-inline auto pawnSlidingMove(Square sq, Color color) -> std::generator<Square> {
-  if (auto destination = farthestPawnPush(sq, color)) {
+inline auto pawnSlidingMove(Square square, Color color)
+    -> std::generator<Square> {
+  if (auto destination = farthestPawnPush(square, color)) {
     co_yield std::ranges::elements_of(
-        traversedSquares(sq, *destination, Origin::kSkip));
+        traversedSquares(square, *destination, Origin::kSkip));
   }
 }
 
-inline auto kingMoves(Square sq) -> std::generator<Square> {
+inline auto kingMoves(Square square) -> std::generator<Square> {
   static constexpr std::array<SquareOffset, 8> kOffsets = {
-      {{.fileOffset = 1, .rankOffset = 1},
-       {.fileOffset = 1, .rankOffset = 0},
-       {.fileOffset = 1, .rankOffset = -1},
-       {.fileOffset = 0, .rankOffset = 1},
-       {.fileOffset = 0, .rankOffset = -1},
-       {.fileOffset = -1, .rankOffset = 1},
-       {.fileOffset = -1, .rankOffset = 0},
-       {.fileOffset = -1, .rankOffset = -1}}};
+      {{.file_offset = 1, .rank_offset = 1},
+       {.file_offset = 1, .rank_offset = 0},
+       {.file_offset = 1, .rank_offset = -1},
+       {.file_offset = 0, .rank_offset = 1},
+       {.file_offset = 0, .rank_offset = -1},
+       {.file_offset = -1, .rank_offset = 1},
+       {.file_offset = -1, .rank_offset = 0},
+       {.file_offset = -1, .rank_offset = -1}}};
 
-  co_yield std::ranges::elements_of(kOffsets | validMoves(sq));
+  co_yield std::ranges::elements_of(kOffsets | validMoves(square));
 }
 
-inline auto rookSlidingMoves(Square sq)
+inline auto rookSlidingMoves(Square square)
     -> std::generator<std::generator<Square>> {
-  co_yield (
-      traversedSquares(sq, {.file = sq.file, .rank = Rank::k1}, Origin::kSkip));
-  co_yield (
-      traversedSquares(sq, {.file = sq.file, .rank = Rank::k8}, Origin::kSkip));
-  co_yield (
-      traversedSquares(sq, {.file = File::kA, .rank = sq.rank}, Origin::kSkip));
-  co_yield (
-      traversedSquares(sq, {.file = File::kH, .rank = sq.rank}, Origin::kSkip));
+  co_yield (traversedSquares(square, {.file = square.file, .rank = Rank::k1},
+                             Origin::kSkip));
+  co_yield (traversedSquares(square, {.file = square.file, .rank = Rank::k8},
+                             Origin::kSkip));
+  co_yield (traversedSquares(square, {.file = File::kA, .rank = square.rank},
+                             Origin::kSkip));
+  co_yield (traversedSquares(square, {.file = File::kH, .rank = square.rank},
+                             Origin::kSkip));
 }
 
-inline auto bishopSlidingMoves(Square sq)
+inline auto bishopSlidingMoves(Square square)
     -> std::generator<std::generator<Square>> {
-  constexpr static std::array<Square, 4> corners = {
+  constexpr static std::array<Square, 4> kCorners = {
       {{.file = File::kA, .rank = Rank::k8},
        {.file = File::kH, .rank = Rank::k8},
        {.file = File::kA, .rank = Rank::k1},
        {.file = File::kH, .rank = Rank::k1}}};
 
-  for (const auto& corner : corners) {
-    auto projection = diagonalProjection(sq, corner);
-    co_yield (traversedSquares(sq, projection, Origin::kSkip));
+  for (const auto& corner : kCorners) {
+    auto projection = diagonalProjection(square, corner);
+    co_yield (traversedSquares(square, projection, Origin::kSkip));
   }
 }
 
-inline auto queenSlidingMoves(Square sq)
+inline auto queenSlidingMoves(Square square)
     -> std::generator<std::generator<Square>> {
-  co_yield std::ranges::elements_of(rookSlidingMoves(sq));
-  co_yield std::ranges::elements_of(bishopSlidingMoves(sq));
+  co_yield std::ranges::elements_of(rookSlidingMoves(square));
+  co_yield std::ranges::elements_of(bishopSlidingMoves(square));
 }
 
 }  // namespace chesskit::internal

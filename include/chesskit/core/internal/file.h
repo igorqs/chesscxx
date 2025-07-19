@@ -7,10 +7,10 @@
 #include "../../file.h"
 
 namespace chesskit::internal {
-inline constexpr auto index(const File& file) -> uint8_t {
+constexpr auto index(const File& file) -> uint8_t {
   return static_cast<uint8_t>(file);
 }
-inline constexpr auto toFile(const uint8_t& index) -> std::optional<File> {
+constexpr auto toFile(const uint8_t& index) -> std::optional<File> {
   if (index >= kNumFiles) return std::nullopt;
 
   return static_cast<File>(index);

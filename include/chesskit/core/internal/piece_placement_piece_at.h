@@ -11,31 +11,32 @@
 
 namespace chesskit::internal {
 
-inline auto pieceAt(const PiecePlacement& pp, const Square& square)
+inline auto pieceAt(const PiecePlacement& piece_placement, const Square& square)
     -> const std::optional<Piece>& {
-  return pp.pieceArray()[index(square)];
+  return piece_placement.pieceArray()[index(square)];
 }
 
-inline auto hasPieceAt(const PiecePlacement& pp, const Square& square) -> bool {
-  return pieceAt(pp, square).has_value();
+inline auto hasPieceAt(const PiecePlacement& piece_placement,
+                       const Square& square) -> bool {
+  return pieceAt(piece_placement, square).has_value();
 }
 
-inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const PieceType& type) -> bool {
-  const auto& piece = pieceAt(pp, square);
+inline auto hasPieceAt(const PiecePlacement& piece_placement,
+                       const Square& square, const PieceType& type) -> bool {
+  const auto& piece = pieceAt(piece_placement, square);
   return piece && piece->type == type;
 }
 
-inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const Color& color) -> bool {
-  const auto& piece = pieceAt(pp, square);
+inline auto hasPieceAt(const PiecePlacement& piece_placement,
+                       const Square& square, const Color& color) -> bool {
+  const auto& piece = pieceAt(piece_placement, square);
   return piece && piece->color == color;
 }
 
-inline auto hasPieceAt(const PiecePlacement& pp, const Square& square,
-                       const Piece& piece) -> bool {
-  const auto& squarePiece = pieceAt(pp, square);
-  return squarePiece && *squarePiece == piece;
+inline auto hasPieceAt(const PiecePlacement& piece_placement,
+                       const Square& square, const Piece& piece) -> bool {
+  const auto& square_piece = pieceAt(piece_placement, square);
+  return square_piece && *square_piece == piece;
 }
 
 }  // namespace chesskit::internal

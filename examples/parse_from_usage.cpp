@@ -23,14 +23,14 @@ auto main() -> int {
   // empty game
   auto rit = std::ranges::find_if_not(
       std::ranges::reverse_view(buffer),
-      [](unsigned char ch) { return std::isspace(ch); });
+      [](unsigned char character) { return std::isspace(character); });
 
-  std::string_view const sv(buffer.begin(), rit.base());
+  std::string_view const str(buffer.begin(), rit.base());
 
-  for (auto it = sv.begin(); it != sv.end();) {
-    auto result = chesskit::parseFrom<chesskit::Game>(it, sv.end());
+  for (const auto *it = str.begin(); it != str.end();) {
+    auto result = chesskit::parseFrom<chesskit::Game>(it, str.end());
     assert(result);
-    std::println("{}", result->parsedValue);
+    std::println("{}", result->parsed_value);
     it = result->ptr;
   }
 }

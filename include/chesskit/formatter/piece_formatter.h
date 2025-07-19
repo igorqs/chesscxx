@@ -16,12 +16,12 @@ struct std::formatter<chesskit::Piece>
     : chesskit::internal::SpecDispatcher<chesskit::internal::VerboseSpec,
                                          chesskit::internal::CompactSpec> {
   auto handleSpec(const chesskit::Piece& piece, auto& ctx,
-                  chesskit::internal::VerboseSpec) const {
+                  chesskit::internal::VerboseSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{} {}", piece.color, piece.type);
   }
 
   auto handleSpec(const chesskit::Piece& piece, auto& ctx,
-                  chesskit::internal::CompactSpec) const {
+                  chesskit::internal::CompactSpec /*unused*/) const {
     if (piece.color == chesskit::Color::kBlack) {
       return std::format_to(ctx.out(), "{:l}", piece.type);
     }

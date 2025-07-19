@@ -16,23 +16,23 @@
 
 namespace internal {
 template <typename RankRange, typename OutputIt>
-inline constexpr auto formatRank(OutputIt out, RankRange&& rank) -> OutputIt {
-  int emptyCounter = 0;
+constexpr auto formatRank(OutputIt out, RankRange&& rank) -> OutputIt {
+  int empty_counter = 0;
 
   for (const auto& piece : rank) {
     if (piece.has_value()) {
-      if (emptyCounter) {
-        out = std::format_to(out, "{}", emptyCounter);
-        emptyCounter = 0;
+      if (empty_counter) {
+        out = std::format_to(out, "{}", empty_counter);
+        empty_counter = 0;
       }
 
       out = std::format_to(out, "{:c}", *piece);
     } else {
-      ++emptyCounter;
+      ++empty_counter;
     }
   }
 
-  if (emptyCounter) out = std::format_to(out, "{}", emptyCounter);
+  if (empty_counter) out = std::format_to(out, "{}", empty_counter);
   return out;
 }
 }  // namespace internal
@@ -44,28 +44,30 @@ struct std::formatter<chesskit::PiecePlacement>
     : chesskit::internal::SpecDispatcher<chesskit::internal::FenSpec,
                                          chesskit::internal::AsciiSpec,
                                          chesskit::internal::PieceListSpec> {
-  auto handleSpec(const chesskit::PiecePlacement& pp, auto& ctx,
-                  chesskit::internal::FenSpec) const {
+  auto handleSpec(const chesskit::PiecePlacement& piece_placement, auto& ctx,
+                  chesskit::internal::FenSpec /*unused*/) const {
     auto out = ctx.out();
 
     for (std::size_t rank = 0; rank < chesskit::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '/';
-      auto begin = pp.pieceArray().begin() + rank * chesskit::kNumFiles;
-      auto end = begin + chesskit::kNumFiles;
+      const auto* begin =
+          piece_placement.pieceArray().begin() + ((rank * chesskit::kNumFiles));
+      const auto* end = begin + chesskit::kNumFiles;
       out = internal::formatRank(out, std::ranges::subrange(begin, end));
     }
 
     return out;
   }
 
-  auto handleSpec(const chesskit::PiecePlacement& pp, auto& ctx,
-                  chesskit::internal::AsciiSpec) const {
+  auto handleSpec(const chesskit::PiecePlacement& piece_placement, auto& ctx,
+                  chesskit::internal::AsciiSpec /*unused*/) const {
     auto out = ctx.out();
 
     for (std::size_t rank = 0; rank < chesskit::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '\n';
-      auto begin = pp.pieceArray().begin() + rank * chesskit::kNumFiles;
-      auto end = begin + chesskit::kNumFiles;
+      const auto* begin =
+          piece_placement.pieceArray().begin() + ((rank * chesskit::kNumFiles));
+      const auto* end = begin + chesskit::kNumFiles;
       for (const auto& piece : std::ranges::subrange(begin, end)) {
         out = std::format_to(out, "{:[c]?.}", piece);
       }
@@ -74,18 +76,19 @@ struct std::formatter<chesskit::PiecePlacement>
     return out;
   }
 
-  auto handleSpec(const chesskit::PiecePlacement& pp, auto& ctx,
-                  chesskit::internal::PieceListSpec) const {
+  auto handleSpec(const chesskit::PiecePlacement& piece_placement, auto& ctx,
+                  chesskit::internal::PieceListSpec /*unused*/) const {
     auto out = ctx.out();
 
-    bool printComma = false;
+    bool print_comma = false;
 
     out = std::format_to(out, "{{ ");
-    for (const auto& [color, locationsByType] : pp.pieceLocations()) {
+    for (const auto& [color, locationsByType] :
+         piece_placement.pieceLocations()) {
       for (const auto& [type, locations] : locationsByType) {
         const std::string_view plural = locations.size() > 1 ? "s" : "";
-        out = std::format_to(out, "{}{} {}{}: [", printComma ? ", " : "", color,
-                             type, plural);
+        out = std::format_to(out, "{}{} {}{}: [", print_comma ? ", " : "",
+                             color, type, plural);
 
         for (auto it = locations.begin(); it != locations.end(); ++it) {
           if (it != locations.begin()) out = std::format_to(out, ", ");
@@ -93,7 +96,7 @@ struct std::formatter<chesskit::PiecePlacement>
         }
 
         out = std::format_to(out, "]");
-        printComma = true;
+        print_comma = true;
       }
     }
     out = std::format_to(out, " }}");

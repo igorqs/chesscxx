@@ -1,12 +1,10 @@
 #include <chesskit/color.h>
-#include <chesskit/file.h>
 #include <chesskit/parse.h>
 #include <chesskit/parse_error.h>
 #include <chesskit/piece.h>
 #include <chesskit/piece_placement.h>
 #include <chesskit/piece_placement_error.h>
 #include <chesskit/piece_type.h>
-#include <chesskit/rank.h>
 #include <chesskit/square.h>
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
@@ -31,7 +29,7 @@ namespace chesskit {
 template <>
 class Parser<PiecePlacement::PieceArray, const char*, parse_as::Default> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
                        ParseError> {
     return internal::parsePieceArray(begin, end);
@@ -187,9 +185,9 @@ TEST_P(ValidInputSuite, ParsesSuccessfully) {
 
 TEST_P(ValidInputSuite, ConstructsFromPieceArraySuccessfully) {
   const auto& array = GetParam().piece_array();
-  auto pp = chesskit::PiecePlacement::fromPieceArray(array);
-  ASSERT_TRUE(pp);
-  EXPECT_EQ(pp->pieceArray(), array);
+  auto piece_placement = chesskit::PiecePlacement::fromPieceArray(array);
+  ASSERT_TRUE(piece_placement);
+  EXPECT_EQ(piece_placement->pieceArray(), array);
 }
 
 TEST_P(ValidInputSuite, ComparesEqual) {
@@ -200,37 +198,38 @@ TEST_P(ValidInputSuite, ComparesEqual) {
 }
 
 TEST_P(ValidInputSuite, PieceArrayAndPieceLocationsAreConsistent) {
-  const auto& pp = GetParam().piece_placement();
+  const auto& piece_placement = GetParam().piece_placement();
   std::bitset<chesskit::kNumSquares> seen;
 
-  for (const auto& [color, locationsByPieceType] : pp.pieceLocations()) {
+  for (const auto& [color, locationsByPieceType] :
+       piece_placement.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
       for (const chesskit::Square& location : locations) {
         chesskit::Piece const piece = {.type = type, .color = color};
         auto location_index = chesskit::index(location);
         seen.set(location_index);
-        EXPECT_EQ(pp.pieceArray().at(location_index), piece);
+        EXPECT_EQ(piece_placement.pieceArray().at(location_index), piece);
       }
     }
   }
 
   for (size_t i = 0; i < chesskit::kNumSquares; i++) {
-    if (!seen[i]) EXPECT_EQ(pp.pieceArray().at(i), std::nullopt);
+    if (!seen[i]) EXPECT_EQ(piece_placement.pieceArray().at(i), std::nullopt);
   }
 }
 
 TEST_P(ValidInputSuite, RoundTripConversionIsSuccessful) {
-  const auto& pp = GetParam().piece_placement();
-  EXPECT_EQ(
-      pp, chesskit::parse<chesskit::PiecePlacement>(std::format("{:fen}", pp)));
+  const auto& piece_placement = GetParam().piece_placement();
+  EXPECT_EQ(piece_placement, chesskit::parse<chesskit::PiecePlacement>(
+                                 std::format("{:fen}", piece_placement)));
 }
 
 TEST_P(ValidInputSuite, FormatProducesNonEmptyStrings) {
-  const auto& pp = GetParam().piece_placement();
-  EXPECT_FALSE(std::format("{}", pp).empty());
-  EXPECT_FALSE(std::format("{:fen}", pp).empty());
-  EXPECT_FALSE(std::format("{:ascii}", pp).empty());
-  EXPECT_FALSE(std::format("{:lists}", pp).empty());
+  const auto& piece_placement = GetParam().piece_placement();
+  EXPECT_FALSE(std::format("{}", piece_placement).empty());
+  EXPECT_FALSE(std::format("{:fen}", piece_placement).empty());
+  EXPECT_FALSE(std::format("{:ascii}", piece_placement).empty());
+  EXPECT_FALSE(std::format("{:lists}", piece_placement).empty());
 }
 
 TEST_P(ValidInputPairSuite, ComparesUnequal) {
@@ -264,10 +263,10 @@ TEST(PiecePlacementTest, DefaultConstructionCreatesDefaultPieceArray) {
 
 TEST(PiecePlacementTest, FormatComplexInputCorrectly) {
   auto complex = GetComplexInput();
-  const auto& pp = complex.piece_placement();
-  EXPECT_EQ(std::format("{}", pp), complex.raw());
-  EXPECT_EQ(std::format("{:fen}", pp), complex.raw());
-  EXPECT_EQ(std::format("{:ascii}", pp),
+  const auto& piece_placement = complex.piece_placement();
+  EXPECT_EQ(std::format("{}", piece_placement), complex.raw());
+  EXPECT_EQ(std::format("{:fen}", piece_placement), complex.raw());
+  EXPECT_EQ(std::format("{:ascii}", piece_placement),
             "r..qk..Q\n"
             "pppppppp\n"
             ".nb.Pbnr\n"
@@ -277,7 +276,7 @@ TEST(PiecePlacementTest, FormatComplexInputCorrectly) {
             "........\n"
             ".NBQKBNR");
   EXPECT_EQ(
-      std::format("{:lists}", pp),
+      std::format("{:lists}", piece_placement),
       "{ white king: [e1], white bishops: [f1, c1], white knights: [g1, "
       "b1], white rooks: [h1, a4], white pawns: [d4, e6], white queens: [d1, "
       "h8], black bishops: [f6, c6], black knights: [g6, b6], black "
@@ -288,87 +287,59 @@ TEST(PiecePlacementTest, FormatComplexInputCorrectly) {
 TEST(PiecePlacementTest, ParseComplexInputCorrectly) {
   using enum chesskit::PieceType;
   using enum chesskit::Color;
-  using enum chesskit::Rank;
-  using enum chesskit::File;
-  using chesskit::Piece, chesskit::Square, chesskit::index;
+  using chesskit::Piece;
+
+  static constexpr auto kWRook = Piece(kRook, kWhite);
+  static constexpr auto kWKnight = Piece(kKnight, kWhite);
+  static constexpr auto kWBishop = Piece(kBishop, kWhite);
+  static constexpr auto kWQueen = Piece(kQueen, kWhite);
+  static constexpr auto kWKing = Piece(kKing, kWhite);
+  static constexpr auto kWPawn = Piece(kPawn, kWhite);
+  static constexpr auto kBRook = Piece(kRook, kBlack);
+  static constexpr auto kBKnight = Piece(kKnight, kBlack);
+  static constexpr auto kBBishop = Piece(kBishop, kBlack);
+  static constexpr auto kBQueen = Piece(kQueen, kBlack);
+  static constexpr auto kBKing = Piece(kKing, kBlack);
+  static constexpr auto kBPawn = Piece(kPawn, kBlack);
+  static constexpr auto kEmpty = std::nullopt;
+
+  static constexpr std::array<std::optional<Piece>, 64> kExpectedBoard = {
+      // Rank 8: r2qk2Q
+      kBRook, kEmpty, kEmpty, kBQueen, kBKing, kEmpty, kEmpty, kWQueen,
+      // Rank 7: pppppppp
+      kBPawn, kBPawn, kBPawn, kBPawn, kBPawn, kBPawn, kBPawn, kBPawn,
+      // Rank 6: 1nb1Pbnr
+      kEmpty, kBKnight, kBBishop, kEmpty, kWPawn, kBBishop, kBKnight, kBRook,
+      // Rank 5: 8 (empty)
+      kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty,
+      // Rank 4: R2Pp3
+      kWRook, kEmpty, kEmpty, kWPawn, kBPawn, kEmpty, kEmpty, kEmpty,
+      // Rank 3: 8 (empty)
+      kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty,
+      // Rank 2: 8 (empty)
+      kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty, kEmpty,
+      // Rank 1: 1NBQKBNR
+      kEmpty, kWKnight, kWBishop, kWQueen, kWKing, kWBishop, kWKnight, kWRook};
 
   auto parsed_pp =
       chesskit::parse<chesskit::PiecePlacement>(GetComplexInput().raw());
   ASSERT_TRUE(parsed_pp);
-
-  const auto& array = parsed_pp->pieceArray();
-
-  // Rank 8: r2qk2Q
-  EXPECT_EQ(array[index(Square(kA, k8))], Piece(kRook, kBlack));
-  EXPECT_EQ(array[index(Square(kB, k8))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kC, k8))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kD, k8))], Piece(kQueen, kBlack));
-  EXPECT_EQ(array[index(Square(kE, k8))], Piece(kKing, kBlack));
-  EXPECT_EQ(array[index(Square(kF, k8))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kG, k8))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kH, k8))], Piece(kQueen, kWhite));
-
-  // Rank 7: pppppppp
-  for (auto file : {kA, kB, kC, kD, kE, kF, kG, kH}) {
-    EXPECT_EQ(array[index(Square(file, k7))], Piece(kPawn, kBlack));
-  }
-
-  // Rank 6: 1nb1Pbnr
-  EXPECT_EQ(array[index(Square(kA, k6))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kB, k6))], Piece(kKnight, kBlack));
-  EXPECT_EQ(array[index(Square(kC, k6))], Piece(kBishop, kBlack));
-  EXPECT_EQ(array[index(Square(kD, k6))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kE, k6))], Piece(kPawn, kWhite));
-  EXPECT_EQ(array[index(Square(kF, k6))], Piece(kBishop, kBlack));
-  EXPECT_EQ(array[index(Square(kG, k6))], Piece(kKnight, kBlack));
-  EXPECT_EQ(array[index(Square(kH, k6))], Piece(kRook, kBlack));
-
-  // Rank 5: 8 (empty)
-  for (auto file : {kA, kB, kC, kD, kE, kF, kG, kH}) {
-    EXPECT_EQ(array[index(Square(file, k5))], std::nullopt);
-  }
-
-  // Rank 4: R2Pp3
-  EXPECT_EQ(array[index(Square(kA, k4))], Piece(kRook, kWhite));
-  EXPECT_EQ(array[index(Square(kB, k4))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kC, k4))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kD, k4))], Piece(kPawn, kWhite));
-  EXPECT_EQ(array[index(Square(kE, k4))], Piece(kPawn, kBlack));
-  EXPECT_EQ(array[index(Square(kF, k4))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kG, k4))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kH, k4))], std::nullopt);
-
-  // Rank 3 and 2: 8 (empty)
-  for (auto rank : {k3, k2}) {
-    for (auto file : {kA, kB, kC, kD, kE, kF, kG, kH}) {
-      EXPECT_EQ(array[index(Square(file, rank))], std::nullopt);
-    }
-  }
-
-  // Rank 1: 1NBQKBNR
-  EXPECT_EQ(array[index(Square(kA, k1))], std::nullopt);
-  EXPECT_EQ(array[index(Square(kB, k1))], Piece(kKnight, kWhite));
-  EXPECT_EQ(array[index(Square(kC, k1))], Piece(kBishop, kWhite));
-  EXPECT_EQ(array[index(Square(kD, k1))], Piece(kQueen, kWhite));
-  EXPECT_EQ(array[index(Square(kE, k1))], Piece(kKing, kWhite));
-  EXPECT_EQ(array[index(Square(kF, k1))], Piece(kBishop, kWhite));
-  EXPECT_EQ(array[index(Square(kG, k1))], Piece(kKnight, kWhite));
-  EXPECT_EQ(array[index(Square(kH, k1))], Piece(kRook, kWhite));
+  EXPECT_EQ(parsed_pp->pieceArray(), kExpectedBoard);
 }
 
 TEST(PiecePlacementTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
-  constexpr int max_collisions = 1;
+  constexpr int kMaxCollisions = 1;
   std::unordered_map<size_t, std::vector<chesskit::PiecePlacement>>
       hash_counter;
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
-    const auto& pp = fixture.piece_placement();
-    auto hash = std::hash<chesskit::PiecePlacement>{}(pp);
-    hash_counter[hash].push_back(pp);
+    const auto& piece_placement = fixture.piece_placement();
+    auto hash = std::hash<chesskit::PiecePlacement>{}(piece_placement);
+    hash_counter[hash].push_back(piece_placement);
     auto collisions = hash_counter[hash].size();
-    EXPECT_LE(collisions, max_collisions)
-        << std::format("pp={}, hash_counter={}", pp, hash_counter);
+    EXPECT_LE(collisions, kMaxCollisions) << std::format(
+        "piece_placement={}, hash_counter={}", piece_placement, hash_counter);
   });
 }
 
@@ -395,15 +366,19 @@ TEST(PiecePlacementTest, FormatProducesUniqueStrings) {
   auto assert_unique_insertion = [](auto& map, const auto& key,
                                     const auto& val) {
     map[key].push_back(val);
-    EXPECT_EQ(map[key].size(), 1) << std::format("pp={}, map={}", val, map);
+    EXPECT_EQ(map[key].size(), 1)
+        << std::format("piece_placement={}, map={}", val, map);
   };
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
-    const auto& pp = fixture.piece_placement();
-    assert_unique_insertion(fmt_collisions, std::format("{}", pp), pp);
-    assert_unique_insertion(ascii_fmt_collisions, std::format("{:ascii}", pp),
-                            pp);
-    assert_unique_insertion(lists_fmt_collisions, std::format("{:lists}", pp),
-                            pp);
+    const auto& piece_placement = fixture.piece_placement();
+    assert_unique_insertion(fmt_collisions, std::format("{}", piece_placement),
+                            piece_placement);
+    assert_unique_insertion(ascii_fmt_collisions,
+                            std::format("{:ascii}", piece_placement),
+                            piece_placement);
+    assert_unique_insertion(lists_fmt_collisions,
+                            std::format("{:lists}", piece_placement),
+                            piece_placement);
   });
 }

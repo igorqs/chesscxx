@@ -5,36 +5,36 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAsUppercaseAndPrint(std::string_view sv) {
-  auto parsedPieceType =
-      chesskit::parse<chesskit::PieceType>(sv, chesskit::parse_as::Uppercase{});
+void parseAsUppercaseAndPrint(std::string_view str) {
+  auto parsed_piece_type = chesskit::parse<chesskit::PieceType>(
+      str, chesskit::parse_as::Uppercase{});
 
-  auto parsedPromotablePieceType =
+  auto parsed_promotable_piece_type =
       chesskit::parse<chesskit::PromotablePieceType>(
-          sv, chesskit::parse_as::Uppercase{});
+          str, chesskit::parse_as::Uppercase{});
 
-  printErrorOrValue(parsedPieceType);
-  printErrorOrValue(parsedPromotablePieceType);
+  printErrorOrValue(parsed_piece_type);
+  printErrorOrValue(parsed_promotable_piece_type);
 }
 
-void parseAsLowercaseAndPrint(std::string_view sv) {
-  auto parsedPieceType =
-      chesskit::parse<chesskit::PieceType>(sv, chesskit::parse_as::Lowercase{});
+void parseAsLowercaseAndPrint(std::string_view str) {
+  auto parsed_piece_type = chesskit::parse<chesskit::PieceType>(
+      str, chesskit::parse_as::Lowercase{});
 
-  auto parsedPromotablePieceType =
+  auto parsed_promotable_piece_type =
       chesskit::parse<chesskit::PromotablePieceType>(
-          sv, chesskit::parse_as::Lowercase{});
+          str, chesskit::parse_as::Lowercase{});
 
-  printErrorOrValue(parsedPieceType);
-  printErrorOrValue(parsedPromotablePieceType);
+  printErrorOrValue(parsed_piece_type);
+  printErrorOrValue(parsed_promotable_piece_type);
 }
 }  // namespace
 

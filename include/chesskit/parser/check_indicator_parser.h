@@ -20,12 +20,12 @@ namespace chesskit {
 template <>
 class Parser<CheckIndicator, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<CheckIndicator, const char*>, ParseError> {
-    static constexpr std::string_view allowed = "+#";
+    static constexpr std::string_view kAllowed = "+#";
 
     return internal::parseEnum<CheckIndicator>(
-        begin, end, allowed, ParseError::kInvalidCheckIndicator);
+        begin, end, kAllowed, ParseError::kInvalidCheckIndicator);
   }
 };
 

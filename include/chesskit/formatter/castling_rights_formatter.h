@@ -23,8 +23,8 @@ struct std::formatter<chesskit::CastlingRights> : chesskit::internal::NoSpec {
 
     if (rights.none()) return *out++ = '-';
 
-    for (auto i : std::views::iota(0, kSize)) {
-      if (rights.toBitset().test(i)) *out++ = kCastlingSymbols[i];
+    for (auto right : std::views::iota(0, kSize)) {
+      if (rights.toBitset().test(right)) *out++ = kCastlingSymbols[right];
     }
 
     return out;

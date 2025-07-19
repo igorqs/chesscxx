@@ -21,20 +21,22 @@ namespace chesskit {
 template <>
 class Parser<Piece, const char*, parse_as::Default> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<Piece, const char*>, ParseError> {
-    auto whitePiece = parseFrom<PieceType>(begin, end, parse_as::Uppercase{});
-    if (whitePiece) {
-      return ParseResult{.parsedValue = Piece{.type = whitePiece->parsedValue,
-                                              .color = Color::kWhite},
-                         .ptr = whitePiece->ptr};
+    auto white_piece = parseFrom<PieceType>(begin, end, parse_as::Uppercase{});
+    if (white_piece) {
+      return ParseResult{
+          .parsed_value =
+              Piece{.type = white_piece->parsed_value, .color = Color::kWhite},
+          .ptr = white_piece->ptr};
     }
 
-    auto blackPiece = parseFrom<PieceType>(begin, end, parse_as::Lowercase{});
-    if (blackPiece) {
-      return ParseResult{.parsedValue = Piece{.type = blackPiece->parsedValue,
-                                              .color = Color::kBlack},
-                         .ptr = blackPiece->ptr};
+    auto black_piece = parseFrom<PieceType>(begin, end, parse_as::Lowercase{});
+    if (black_piece) {
+      return ParseResult{
+          .parsed_value =
+              Piece{.type = black_piece->parsed_value, .color = Color::kBlack},
+          .ptr = black_piece->ptr};
     }
 
     return std::unexpected(ParseError::kInvalidPiece);

@@ -9,17 +9,17 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedUciMove = chesskit::parse<chesskit::UciMove>(sv);
-  printErrorOrValue(parsedUciMove);
+void parseAndPrint(std::string_view str) {
+  auto parsed_uci_move = chesskit::parse<chesskit::UciMove>(str);
+  printErrorOrValue(parsed_uci_move);
 }
 }  // namespace
 

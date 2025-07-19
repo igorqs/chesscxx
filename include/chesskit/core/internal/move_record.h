@@ -22,20 +22,20 @@ struct CastlingMoveRecord {
   CastlingSide side;
   Color color;
   std::optional<CheckIndicator> check_indicator;
-  CastlingRights previousCastlingRights;
-  std::optional<File> previousEnPassantFile;
+  CastlingRights previous_castling_rights;
+  std::optional<File> previous_en_passant_file;
 };
 
 struct NormalMoveRecord {
-  PieceType pieceType;
-  PartialSquare partialOrigin;
-  std::optional<PieceType> capturedPieceType;
-  bool isEnPassantCapture = false;
-  UciMove uciMove;
+  PieceType piece_type;
+  PartialSquare partial_origin;
+  std::optional<PieceType> captured_piece_type;
+  bool is_en_passant_capture = false;
+  UciMove uci_move;
   std::optional<CheckIndicator> check_indicator;
-  std::optional<CastlingRights> previousCastlingRights;
-  std::optional<File> previousEnPassantFile;
-  uint32_t previousHalfmoveClock;
+  std::optional<CastlingRights> previous_castling_rights;
+  std::optional<File> previous_en_passant_file;
+  uint32_t previous_halfmove_clock;
 };
 
 using MoveRecord = std::variant<NormalMoveRecord, CastlingMoveRecord>;
@@ -46,33 +46,33 @@ struct Converter;
 template <>
 struct Converter<UciMove> {
   auto operator()(const NormalMoveRecord& move) -> UciMove {
-    return move.uciMove;
-  };
+    return move.uci_move;
+  }
   auto operator()(const CastlingMoveRecord& move) -> UciMove {
-    auto rawMove = castlingMoves(move.side, move.color).kingMove;
-    return UciMove(rawMove.origin, rawMove.destination, std::nullopt);
-  };
+    auto raw_move = castlingMoves(move.side, move.color).king_move;
+    return UciMove(raw_move.origin, raw_move.destination, std::nullopt);
+  }
 };
 
 template <>
 struct Converter<SanMove> {
   auto operator()(const NormalMoveRecord& move) -> SanMove {
-    return SanNormalMove{.pieceType = move.pieceType,
-                         .origin = move.partialOrigin,
-                         .isCapture = move.capturedPieceType.has_value() ||
-                                      move.isEnPassantCapture,
-                         .destination = move.uciMove.destination,
-                         .promotion = move.uciMove.promotion,
+    return SanNormalMove{.piece_type = move.piece_type,
+                         .origin = move.partial_origin,
+                         .is_capture = move.captured_piece_type.has_value() ||
+                                       move.is_en_passant_capture,
+                         .destination = move.uci_move.destination,
+                         .promotion = move.uci_move.promotion,
                          .check_indicator = move.check_indicator};
-  };
+  }
   auto operator()(const CastlingMoveRecord& move) -> SanMove {
     return SanCastlingMove(move.side);
-  };
+  }
 };
 
 template <typename MovedOutput>
-inline constexpr auto convertTo(const MoveRecord& moveRecord) -> MovedOutput {
-  return std::visit(Converter<MovedOutput>{}, moveRecord);
+constexpr auto convertTo(const MoveRecord& move_record) -> MovedOutput {
+  return std::visit(Converter<MovedOutput>{}, move_record);
 }
 
 }  // namespace chesskit::internal

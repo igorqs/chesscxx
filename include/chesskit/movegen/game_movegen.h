@@ -20,7 +20,7 @@ namespace chesskit {
 /// @return A generator yielding legal moves in UCI format.
 /// @note The moves are not guaranteed to be generated in any specific order.
 inline auto legalUciMoves(const Game& game) -> std::generator<UciMove> {
-  return internal::legalMoves<UciMove>(game.currentPosition());
+  return internal::legalMoves(game.currentPosition());
 }
 
 /// @brief Generates all legal moves in SAN (Standard Algebraic Notation) format
@@ -29,7 +29,7 @@ inline auto legalUciMoves(const Game& game) -> std::generator<UciMove> {
 /// @return A generator yielding legal moves in SAN format.
 /// @note The moves are not guaranteed to be generated in any specific order.
 inline auto legalSanMoves(const Game& game) -> std::generator<SanMove> {
-  return internal::legalMoves<SanMove>(game.currentPosition());
+  return internal::legalSanMoves(game.currentPosition());
 }
 
 /// @}

@@ -6,7 +6,6 @@
 #include <array>
 #include <expected>
 #include <magic_enum/magic_enum.hpp>
-#include <ranges>
 #include <string_view>
 
 struct PortugueseUppercase {};
@@ -15,20 +14,20 @@ struct PortugueseLowercase {};
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<chesskit::PieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "PCBTDR";
+    static constexpr std::string_view kAllowed = "PCBTDR";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
 
-    auto index = allowed.find(*begin);
+    auto index = kAllowed.find(*begin);
 
     if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
                        .ptr = begin + 1};
   }
 };
@@ -36,46 +35,46 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<chesskit::PieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "pcbtdr";
+    static constexpr std::string_view kAllowed = "pcbtdr";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
 
-    auto index = allowed.find(*begin);
+    auto index = kAllowed.find(*begin);
 
     if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
                        .ptr = begin + 1};
   }
 };
 
-static constexpr auto lowercase_inputs =
+static constexpr auto kLowercaseInputs =
     std::array{"p", "c", "b", "t", "d", "r"};
-static constexpr auto uppercase_inputs =
+static constexpr auto kUppercaseInputs =
     std::array{"P", "C", "B", "T", "D", "R"};
-static constexpr auto kInputsSize = static_cast<int>(lowercase_inputs.size());
-static_assert(lowercase_inputs.size() == uppercase_inputs.size());
+static constexpr auto kInputsSize = static_cast<int>(kLowercaseInputs.size());
+static_assert(kLowercaseInputs.size() == kUppercaseInputs.size());
 
 TEST(ParseTest, ParseFromHandlesValidInputCorrectly) {
   using chesskit::parseFrom;
   using chesskit::PieceType;
 
-  for (auto i : std::views::iota(0, kInputsSize)) {
-    std::string_view input = lowercase_inputs[i];
+  for (int i = 0; i < kInputsSize; i++) {
+    std::string_view input = kLowercaseInputs[i];
     auto result =
         parseFrom<PieceType>(input.begin(), input.end(), PortugueseLowercase{});
-    EXPECT_EQ(result->parsedValue, magic_enum::enum_cast<PieceType>(i));
+    EXPECT_EQ(result->parsed_value, magic_enum::enum_cast<PieceType>(i));
     EXPECT_EQ(result->ptr, input.end());
 
-    input = uppercase_inputs[i];
+    input = kUppercaseInputs[i];
     result =
         parseFrom<PieceType>(input.begin(), input.end(), PortugueseUppercase{});
-    EXPECT_EQ(result->parsedValue, magic_enum::enum_cast<PieceType>(i));
+    EXPECT_EQ(result->parsed_value, magic_enum::enum_cast<PieceType>(i));
     EXPECT_EQ(result->ptr, input.end());
   }
 }
@@ -88,14 +87,14 @@ TEST(ParseTest, ParseFromHandlesExtraCharactersSuccessfully) {
   std::string_view input = "p ";
   auto result =
       parseFrom<PieceType>(input.begin(), input.end(), PortugueseLowercase{});
-  EXPECT_EQ(result->parsedValue, PieceType::kPawn);
+  EXPECT_EQ(result->parsed_value, PieceType::kPawn);
   EXPECT_EQ(result->ptr, input.begin() + 1);
   EXPECT_NE(result->ptr, input.end());
 
   input = "P ";
   result =
       parseFrom<PieceType>(input.begin(), input.end(), PortugueseUppercase{});
-  EXPECT_EQ(result->parsedValue, PieceType::kPawn);
+  EXPECT_EQ(result->parsed_value, PieceType::kPawn);
   EXPECT_EQ(result->ptr, input.begin() + 1);
   EXPECT_NE(result->ptr, input.end());
 }
@@ -119,12 +118,12 @@ TEST(ParseTest, ParseHandlesValidInputCorrectly) {
   using chesskit::parse;
   using chesskit::PieceType;
 
-  for (auto i : std::views::iota(0, kInputsSize)) {
-    std::string_view input = lowercase_inputs[i];
+  for (int i = 0; i < kInputsSize; i++) {
+    std::string_view input = kLowercaseInputs[i];
     auto result = parse<PieceType>(input, PortugueseLowercase{});
     EXPECT_EQ(result.value(), magic_enum::enum_cast<PieceType>(i));
 
-    input = uppercase_inputs[i];
+    input = kUppercaseInputs[i];
     result = parse<PieceType>(input, PortugueseUppercase{});
     EXPECT_EQ(result.value(), magic_enum::enum_cast<PieceType>(i));
   }

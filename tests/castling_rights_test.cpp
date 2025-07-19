@@ -43,9 +43,11 @@ TEST(CastlingRightsTest, ComparesEqualValuesSuccessfully) {
 
 TEST(CastlingRightsTest, ComparesDifferentValuesSuccessfully) {
   constexpr auto kSize = static_cast<int>(kAllCastlingRights.size());
-  for (int const i : std::views::iota(0, kSize)) {
-    for (int const j : std::views::iota(0, kSize)) {
-      if (i != j) EXPECT_NE(kAllCastlingRights[i], kAllCastlingRights[j]);
+  for (int const lhs : std::views::iota(0, kSize)) {
+    for (int const rhs : std::views::iota(0, kSize)) {
+      if (lhs != rhs) {
+        EXPECT_NE(kAllCastlingRights[lhs], kAllCastlingRights[rhs]);
+      }
     }
   }
 }
@@ -88,33 +90,37 @@ TEST(CastlingRightsTest, NoneReturnsTrueOnlyWhenNoRightsSet) {
 TEST(CastlingRightsTest, EnableHandlesBySideAndColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color color) {
-    enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide side) {
-      auto rights = kNone;
-      rights.enable(side, color);
+  enum_for_each<chesskit::Color>([&](chesskit::Color enabled_color) {
+    enum_for_each<chesskit::CastlingSide>(
+        [&](chesskit::CastlingSide enabled_side) {
+          auto rights = kNone;
+          rights.enable(enabled_side, enabled_color);
 
-      enum_for_each<chesskit::Color>([&](chesskit::Color c) {
-        enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-          bool const expected = (c == color && s == side);
-          EXPECT_EQ(rights.canCastle(s, c), expected);
+          enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
+            enum_for_each<chesskit::CastlingSide>(
+                [&](chesskit::CastlingSide test_side) {
+                  bool const expected = (test_color == enabled_color &&
+                                         test_side == enabled_side);
+                  EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
+                });
+          });
         });
-      });
-    });
   });
 }
 
 TEST(CastlingRightsTest, EnableHandlesByColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color color) {
+  enum_for_each<chesskit::Color>([&](chesskit::Color enabled_color) {
     auto rights = kNone;
-    rights.enable(color);
+    rights.enable(enabled_color);
 
-    enum_for_each<chesskit::Color>([&](chesskit::Color c) {
-      enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-        bool const expected = (c == color);
-        EXPECT_EQ(rights.canCastle(s, c), expected);
-      });
+    enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
+      enum_for_each<chesskit::CastlingSide>(
+          [&](chesskit::CastlingSide test_side) {
+            bool const expected = (test_color == enabled_color);
+            EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
+          });
     });
   });
 }
@@ -128,33 +134,37 @@ TEST(CastlingRightsTest, EnableHandlesAllCorrectly) {
 TEST(CastlingRightsTest, DisableHandlesBySideAndColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color color) {
-    enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide side) {
-      auto rights = kAll;
-      rights.disable(side, color);
+  enum_for_each<chesskit::Color>([&](chesskit::Color disabled_color) {
+    enum_for_each<chesskit::CastlingSide>(
+        [&](chesskit::CastlingSide disabled_side) {
+          auto rights = kAll;
+          rights.disable(disabled_side, disabled_color);
 
-      enum_for_each<chesskit::Color>([&](chesskit::Color c) {
-        enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-          bool const expected = (c != color || s != side);
-          EXPECT_EQ(rights.canCastle(s, c), expected);
+          enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
+            enum_for_each<chesskit::CastlingSide>(
+                [&](chesskit::CastlingSide test_side) {
+                  bool const expected = (test_color != disabled_color ||
+                                         test_side != disabled_side);
+                  EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
+                });
+          });
         });
-      });
-    });
   });
 }
 
 TEST(CastlingRightsTest, DisableHandlesByColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color color) {
+  enum_for_each<chesskit::Color>([&](chesskit::Color disabled_color) {
     auto rights = kAll;
-    rights.disable(color);
+    rights.disable(disabled_color);
 
-    enum_for_each<chesskit::Color>([&](chesskit::Color c) {
-      enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide s) {
-        bool const expected = (c != color);
-        EXPECT_EQ(rights.canCastle(s, c), expected);
-      });
+    enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
+      enum_for_each<chesskit::CastlingSide>(
+          [&](chesskit::CastlingSide test_side) {
+            bool const expected = (test_color != disabled_color);
+            EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
+          });
     });
   });
 }

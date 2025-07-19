@@ -29,12 +29,12 @@ struct SanCastlingMove {
 /// Notation (SAN).
 struct SanNormalMove {
   /// @brief The type of piece being moved.
-  PieceType pieceType{};
+  PieceType piece_type{};
   /// @brief The origin square of the move, which may be fully specified,
   /// partially specified (by file or rank), or unspecified.
   PartialSquare origin;
   /// @brief True if the move captures an opponent's piece.
-  bool isCapture = false;
+  bool is_capture = false;
   /// @brief The destination square of the move.
   Square destination;
   /// @brief Optional promotion piece type.

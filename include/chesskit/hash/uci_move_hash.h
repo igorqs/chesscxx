@@ -18,14 +18,14 @@
 template <>
 struct std::hash<chesskit::UciMove> {
   auto operator()(const chesskit::UciMove& uci) const -> size_t {
-    constexpr uint8_t max_square_value = chesskit::kNumSquares - 1;
+    constexpr uint8_t kMaxSquareValue = chesskit::kNumSquares - 1;
 
-    constexpr int width = std::bit_width(max_square_value);
-    constexpr int double_width = width << 1;
+    constexpr int kWidth = std::bit_width(kMaxSquareValue);
+    constexpr int kDoubleWidth = kWidth << 1;
     using PromotionT = std::optional<chesskit::PromotablePieceType>;
 
-    return (std::hash<PromotionT>{}(uci.promotion) << double_width) |
-           (chesskit::index(uci.origin) << width) |
+    return (std::hash<PromotionT>{}(uci.promotion) << kDoubleWidth) |
+           (chesskit::index(uci.origin) << kWidth) |
            chesskit::index(uci.destination);
   };
 };

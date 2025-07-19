@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <expected>
 #include <optional>
-#include <ranges>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -57,9 +56,9 @@ class PiecePlacement {
 
   /// @brief Creates a PiecePlacement object from a PieceArray, or returns an
   /// error if validation fails.
-  constexpr static auto fromPieceArray(const PieceArray& pieceArray)
+  constexpr static auto fromPieceArray(const PieceArray& piece_array)
       -> std::expected<PiecePlacement, PiecePlacementError> {
-    PiecePlacement piece_placement(pieceArray);
+    PiecePlacement piece_placement(piece_array);
 
     if (auto error = piece_placement.validationError()) {
       return std::unexpected(*error);
@@ -75,7 +74,7 @@ class PiecePlacement {
 
   /// @brief Equality comparison operator.
   constexpr auto operator==(const PiecePlacement& other) const -> bool {
-    return pieceArray_ == other.pieceArray_;
+    return piece_array_ == other.piece_array_;
   }
 
   /// @}
@@ -84,11 +83,11 @@ class PiecePlacement {
   /// @{
 
   /// @brief Returns the piece array representing the board.
-  auto pieceArray() const -> const PieceArray& { return pieceArray_; }
+  auto pieceArray() const -> const PieceArray& { return piece_array_; }
 
   /// @brief Returns the locations of pieces categorized by type and color.
   auto pieceLocations() const -> const PieceLocationsByTypeAndColor& {
-    return pieceLocations_;
+    return piece_locations_;
   }
 
   /// @}
@@ -96,29 +95,28 @@ class PiecePlacement {
  private:
   friend class internal::PiecePlacementModifier;
 
-  constexpr explicit PiecePlacement(const PieceArray& pieceArray) {
-    for (uint8_t const i :
-         std::views::iota(0, static_cast<int8_t>(kNumSquares))) {
-      auto sq = internal::createSquareFromIndex(i);
-      assert(sq.has_value());
-      updatePieceAt(*sq, pieceArray[i]);
+  constexpr explicit PiecePlacement(const PieceArray& piece_array) {
+    for (uint8_t i = 0; i < kNumSquares; ++i) {
+      auto square = internal::createSquareFromIndex(i);
+      assert(square.has_value());
+      updatePieceAt(*square, piece_array[i]);
     }
   }
 
   constexpr void updatePieceAt(const Square& square,
-                               const std::optional<Piece>& newPiece) {
+                               const std::optional<Piece>& new_piece) {
     if (auto previous = pieceAt(square)) {
-      pieceLocations_[previous->color][previous->type].erase(square);
-      if (pieceLocations_[previous->color][previous->type].empty()) {
-        pieceLocations_[previous->color].erase(previous->type);
+      piece_locations_[previous->color][previous->type].erase(square);
+      if (piece_locations_[previous->color][previous->type].empty()) {
+        piece_locations_[previous->color].erase(previous->type);
       }
     }
 
-    if (newPiece) {
-      pieceLocations_[newPiece->color][newPiece->type].insert(square);
+    if (new_piece) {
+      piece_locations_[new_piece->color][new_piece->type].insert(square);
     }
 
-    pieceAt(square) = newPiece;
+    pieceAt(square) = new_piece;
   }
 
   constexpr auto validationError() const -> std::optional<PiecePlacementError> {
@@ -143,14 +141,14 @@ class PiecePlacement {
   }
 
   constexpr auto isMissingKing(const Color& color) const -> bool {
-    if (!pieceLocations_.contains(color)) return true;
-    if (!pieceLocations_.at(color).contains(PieceType::kKing)) return true;
+    if (!piece_locations_.contains(color)) return true;
+    if (!piece_locations_.at(color).contains(PieceType::kKing)) return true;
 
     return false;
   }
 
   constexpr auto hasMultipleKings(const Color& color) const -> bool {
-    return pieceLocations_.at(color).at(PieceType::kKing).size() != 1;
+    return piece_locations_.at(color).at(PieceType::kKing).size() != 1;
   }
 
   constexpr auto hasPawnOnBackRank(const Color& color) const -> bool {
@@ -163,19 +161,19 @@ class PiecePlacement {
 
   constexpr auto hasPawnOnRank(const Color& color, const Rank& rank) const
       -> bool {
-    if (!pieceLocations_.at(color).contains(PieceType::kPawn)) return false;
+    if (!piece_locations_.at(color).contains(PieceType::kPawn)) return false;
 
     return std::ranges::any_of(
-        pieceLocations_.at(color).at(PieceType::kPawn),
+        piece_locations_.at(color).at(PieceType::kPawn),
         [rank](const Square& square) { return square.rank == rank; });
   }
 
   constexpr auto pieceAt(const Square& square) -> std::optional<Piece>& {
-    return pieceArray_[index(square)];
+    return piece_array_[index(square)];
   }
 
-  PieceArray pieceArray_;
-  PieceLocationsByTypeAndColor pieceLocations_;
+  PieceArray piece_array_;
+  PieceLocationsByTypeAndColor piece_locations_;
 };
 
 }  // namespace chesskit

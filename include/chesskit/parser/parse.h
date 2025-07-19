@@ -32,8 +32,8 @@ namespace chesskit {
 /// be defined. If no such specialization exists, the function is ill-formed and
 /// will not compile.
 template <typename T, typename InputIt, typename Tag = parse_as::Default>
-inline constexpr auto parseFrom(InputIt begin, InputIt end,
-                                Tag /*tag*/ = parse_as::Default{})
+constexpr auto parseFrom(InputIt begin, InputIt end,
+                         Tag /*tag*/ = parse_as::Default{})
     -> std::expected<ParseResult<T, InputIt>, ParseError> {
   return Parser<T, InputIt, Tag>{}.parse(begin, end);
 };
@@ -45,7 +45,7 @@ inline constexpr auto parseFrom(InputIt begin, InputIt end,
 /// @tparam Tag Optional parsing tag to customize parsing behavior. Defaults to
 /// parse_as::Default.
 ///
-/// @param sv The string view to parse.
+/// @param str The string view to parse.
 /// @param tag Parsing tag to control specific parsing rules.
 ///
 /// @return A std::expected containing the parsed value on success, or a
@@ -56,19 +56,19 @@ inline constexpr auto parseFrom(InputIt begin, InputIt end,
 /// to be defined. If no such specialization exists, the function is ill-formed
 /// and will not compile.
 template <typename T, typename Tag = parse_as::Default>
-inline constexpr auto parse(std::string_view sv, Tag tag = parse_as::Default{})
+constexpr auto parse(std::string_view str, Tag tag = parse_as::Default{})
     -> std::expected<T, ParseError> {
   using InputIt = std::string_view::const_pointer;
 
-  auto parseResult = parseFrom<T, InputIt, Tag>(sv.begin(), sv.end(), tag);
+  auto parse_result = parseFrom<T, InputIt, Tag>(str.begin(), str.end(), tag);
 
-  if (!parseResult) return std::unexpected(parseResult.error());
+  if (!parse_result) return std::unexpected(parse_result.error());
 
-  if (parseResult->ptr != sv.end()) {
+  if (parse_result->ptr != str.end()) {
     return std::unexpected(ParseError::kExpectingEndOfString);
   }
 
-  return parseResult->parsedValue;
+  return parse_result->parsed_value;
 }
 
 }  // namespace chesskit

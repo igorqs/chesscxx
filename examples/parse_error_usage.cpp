@@ -6,23 +6,23 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{:fen}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{:fen}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAsPgnAndPrint(std::string_view sv) {
-  auto parsedGame = chesskit::parse<chesskit::Game>(sv);
-  printErrorOrValue(parsedGame);
+void parseAsPgnAndPrint(std::string_view str) {
+  auto parsed_game = chesskit::parse<chesskit::Game>(str);
+  printErrorOrValue(parsed_game);
 }
 
-void parseAsFenAndPrint(std::string_view sv) {
-  auto parsedGame =
-      chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
-  printErrorOrValue(parsedGame);
+void parseAsFenAndPrint(std::string_view str) {
+  auto parsed_game =
+      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+  printErrorOrValue(parsed_game);
 }
 }  // namespace
 

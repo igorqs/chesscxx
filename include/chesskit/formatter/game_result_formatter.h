@@ -17,12 +17,12 @@ struct std::formatter<chesskit::GameResult>
     : chesskit::internal::SpecDispatcher<chesskit::internal::VerboseSpec,
                                          chesskit::internal::CompactSpec> {
   auto handleSpec(const auto& result, auto& ctx,
-                  chesskit::internal::VerboseSpec) const {
+                  chesskit::internal::VerboseSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}", description(result));
   }
 
   auto handleSpec(const auto& result, auto& ctx,
-                  chesskit::internal::CompactSpec) const {
+                  chesskit::internal::CompactSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{}", compact(result));
   }
 

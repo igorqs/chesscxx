@@ -29,7 +29,7 @@ inline auto parseNumber(const char* begin, const char* end)
   uint32_t value{};
   auto [ptr, ec] = std::from_chars(begin, end, value);
 
-  if (ec == std::errc()) return ParseResult{.parsedValue = value, .ptr = ptr};
+  if (ec == std::errc()) return ParseResult{.parsed_value = value, .ptr = ptr};
 
   if (ec == std::errc::result_out_of_range) {
     return std::unexpected(ParseError::kNumberOutOfRange);
@@ -40,54 +40,54 @@ inline auto parseNumber(const char* begin, const char* end)
 
 inline auto parsePositionParams(const char* begin, const char* end)
     -> std::expected<ParseResult<Position::Params, const char*>, ParseError> {
-  auto isSpace = [&end](const auto& it) { return it != end && *it == ' '; };
-  auto isDash = [&end](const auto& it) { return it != end && *it == '-'; };
+  auto is_space = [&end](const auto& ptr) { return ptr != end && *ptr == ' '; };
+  auto is_dash = [&end](const auto& ptr) { return ptr != end && *ptr == '-'; };
 
-  auto ptr = begin;
+  const auto* ptr = begin;
 
-  auto piecePlacement = parseFrom<PiecePlacement>(ptr, end);
-  if (!piecePlacement) return std::unexpected(piecePlacement.error());
-  ptr = piecePlacement->ptr;
+  auto piece_placement = parseFrom<PiecePlacement>(ptr, end);
+  if (!piece_placement) return std::unexpected(piece_placement.error());
+  ptr = piece_placement->ptr;
 
-  if (!isSpace(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
 
-  auto activeColor = parseFrom<Color>(ptr, end);
-  if (!activeColor) return std::unexpected(activeColor.error());
-  ptr = activeColor->ptr;
+  auto active_color = parseFrom<Color>(ptr, end);
+  if (!active_color) return std::unexpected(active_color.error());
+  ptr = active_color->ptr;
 
-  if (!isSpace(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
 
-  auto castlingRights = parseFrom<CastlingRights>(ptr, end);
-  if (!castlingRights) return std::unexpected(castlingRights.error());
-  ptr = castlingRights->ptr;
+  auto castling_rights = parseFrom<CastlingRights>(ptr, end);
+  if (!castling_rights) return std::unexpected(castling_rights.error());
+  ptr = castling_rights->ptr;
 
-  if (!isSpace(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
 
-  auto enPassantSquare = internal::tryParseFrom<Square>(ptr, end);
-  ptr = enPassantSquare.ptr;
-  if (!enPassantSquare.parsedValue) {
-    if (!isDash(ptr++)) return std::unexpected(ParseError::kInvalidDashSymbol);
+  auto en_passant_square = internal::tryParseFrom<Square>(ptr, end);
+  ptr = en_passant_square.ptr;
+  if (!en_passant_square.parsed_value) {
+    if (!is_dash(ptr++)) return std::unexpected(ParseError::kInvalidDashSymbol);
   }
 
-  if (!isSpace(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
 
-  auto halfmoveClock = parseNumber(ptr, end);
-  if (!halfmoveClock) return std::unexpected(halfmoveClock.error());
-  ptr = halfmoveClock->ptr;
+  auto halfmove_clock = parseNumber(ptr, end);
+  if (!halfmove_clock) return std::unexpected(halfmove_clock.error());
+  ptr = halfmove_clock->ptr;
 
-  if (!isSpace(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
 
-  auto fullmoveNumber = parseNumber(ptr, end);
-  if (!fullmoveNumber) return std::unexpected(fullmoveNumber.error());
-  ptr = fullmoveNumber->ptr;
+  auto fullmove_number = parseNumber(ptr, end);
+  if (!fullmove_number) return std::unexpected(fullmove_number.error());
+  ptr = fullmove_number->ptr;
 
   auto params = Position::Params{
-      .piecePlacement = piecePlacement->parsedValue,
-      .activeColor = activeColor->parsedValue,
-      .castlingRights = castlingRights->parsedValue,
-      .enPassantTargetSquare = enPassantSquare.parsedValue,
-      .halfmoveClock = halfmoveClock->parsedValue,
-      .fullmoveNumber = fullmoveNumber->parsedValue,
+      .piece_placement = piece_placement->parsed_value,
+      .active_color = active_color->parsed_value,
+      .castling_rights = castling_rights->parsed_value,
+      .en_passant_target_square = en_passant_square.parsed_value,
+      .halfmove_clock = halfmove_clock->parsed_value,
+      .fullmove_number = fullmove_number->parsed_value,
   };
 
   return ParseResult(params, ptr);
@@ -100,12 +100,12 @@ inline auto parsePositionParams(const char* begin, const char* end)
 template <>
 class Parser<Position, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<Position, const char*>, ParseError> {
     auto params = internal::parsePositionParams(begin, end);
     if (!params) return std::unexpected(params.error());
 
-    auto position = Position::fromParams(params->parsedValue);
+    auto position = Position::fromParams(params->parsed_value);
     if (!position) return std::unexpected(ParseError::kInvalidPosition);
 
     return ParseResult(position.value(), params->ptr);

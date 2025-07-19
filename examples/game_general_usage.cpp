@@ -8,16 +8,16 @@
 #include <string_view>
 
 namespace {
-auto parseSanMove(std::string_view sv) -> chesskit::SanMove {
-  auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
-  assert(parsedSanMove);
-  return parsedSanMove.value();
+auto parseSanMove(std::string_view str) -> chesskit::SanMove {
+  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+  assert(parsed_san_move);
+  return parsed_san_move.value();
 }
 
-auto parsePosition(std::string_view sv) -> chesskit::Position {
-  auto parsedPosition = chesskit::parse<chesskit::Position>(sv);
-  assert(parsedPosition);
-  return parsedPosition.value();
+auto parsePosition(std::string_view str) -> chesskit::Position {
+  auto parsed_position = chesskit::parse<chesskit::Position>(str);
+  assert(parsed_position);
+  return parsed_position.value();
 }
 }  // namespace
 

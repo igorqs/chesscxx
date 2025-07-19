@@ -13,11 +13,11 @@ void printDrawReason(std::optional<chesskit::DrawReason> draw_reason) {
   std::println("{}", draw_reason.value());
 }
 
-void parseFenAndPrintDrawReason(std::string_view sv) {
-  auto parsedGame =
-      chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
-  assert(parsedGame);
-  printDrawReason(parsedGame.value().drawReason());
+void parseFenAndPrintDrawReason(std::string_view str) {
+  auto parsed_game =
+      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+  assert(parsed_game);
+  printDrawReason(parsed_game.value().drawReason());
 }
 }  // namespace
 

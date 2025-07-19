@@ -9,31 +9,31 @@
 namespace chesskit::internal {
 
 struct RepetitionSpec {
-  static constexpr std::string_view token = "rep";
+  static constexpr std::string_view kToken = "rep";
 };
 struct CompactUpperSpec {
-  static constexpr std::string_view token = "u";
+  static constexpr std::string_view kToken = "u";
 };
 struct CompactLowerSpec {
-  static constexpr std::string_view token = "l";
+  static constexpr std::string_view kToken = "l";
 };
 struct CompactSpec {
-  static constexpr std::string_view token = "c";
+  static constexpr std::string_view kToken = "c";
 };
 struct VerboseSpec {
-  static constexpr std::string_view token = "v";
+  static constexpr std::string_view kToken = "v";
 };
 struct PgnSpec {
-  static constexpr std::string_view token = "pgn";
+  static constexpr std::string_view kToken = "pgn";
 };
 struct FenSpec {
-  static constexpr std::string_view token = "fen";
+  static constexpr std::string_view kToken = "fen";
 };
 struct AsciiSpec {
-  static constexpr std::string_view token = "ascii";
+  static constexpr std::string_view kToken = "ascii";
 };
 struct PieceListSpec {
-  static constexpr std::string_view token = "lists";
+  static constexpr std::string_view kToken = "lists";
 };
 
 struct NoSpec : BaseFormatter {
@@ -48,31 +48,31 @@ template <typename... Specs>
 struct SpecDispatcher : BaseFormatter {
   template <typename ParseContext>
   constexpr auto parse(ParseContext& ctx) {
-    auto it = ctx.begin();
+    auto ptr = ctx.begin();
     const auto end = ctx.end();
 
-    std::string_view sv(ctx);
+    std::string_view str(ctx);
 
     ([&] {
-      if (sv.size() < Specs::token.size()) return false;
+      if (str.size() < Specs::kToken.size()) return false;
 
-      auto next = it + Specs::token.size();
-      if (sv.starts_with(Specs::token) && ((next == end) || *next == '}')) {
+      auto next = ptr + Specs::kToken.size();
+      if (str.starts_with(Specs::kToken) && ((next == end) || *next == '}')) {
         spec = Specs{};
-        it = next;
+        ptr = next;
         return true;
       }
       return false;
     }() ||
      ...);
 
-    return it;
+    return ptr;
   }
 
   template <typename Self, typename FmtContext>
   auto format(this Self&& self, const auto& value, FmtContext& ctx) {
     return std::visit(
-        [&](const auto& s) { return self.handleSpec(value, ctx, s); },
+        [&](const auto& spec) { return self.handleSpec(value, ctx, spec); },
         self.spec);
   }
 

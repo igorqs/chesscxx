@@ -25,45 +25,45 @@
 
 namespace chesskit::internal {
 
-inline constexpr auto isCheck(const Position& position) -> bool {
+constexpr auto isCheck(const Position& position) -> bool {
   return isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr auto isCheckmate(const Position& position) -> bool {
+constexpr auto isCheckmate(const Position& position) -> bool {
   return !hasLegalMove(position) &&
          isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr auto isStalemate(const Position& position) -> bool {
+constexpr auto isStalemate(const Position& position) -> bool {
   return !hasLegalMove(position) &&
          !isKingAttacked(position.piecePlacement(), position.activeColor());
 }
-inline constexpr auto isFiftyMoveRuleDraw(const Position& position) -> bool {
-  return position.halfmoveClock() >= 100 && hasLegalMove(position);
+constexpr auto isFiftyMoveRuleDraw(const Position& position) -> bool {
+  constexpr static auto kFiftyMoveLimit = 100;
+  return position.halfmoveClock() >= kFiftyMoveLimit && hasLegalMove(position);
 }
-inline constexpr auto isInsufficientMaterialDraw(const Position& position)
-    -> bool {
+constexpr auto isInsufficientMaterialDraw(const Position& position) -> bool {
   return isInsufficientMaterialDraw(position.piecePlacement());
 }
-inline constexpr auto isDraw(const Position& position) -> bool {
+constexpr auto isDraw(const Position& position) -> bool {
   return isStalemate(position) || isFiftyMoveRuleDraw(position) ||
          isInsufficientMaterialDraw(position);
 }
-inline constexpr auto isGameOver(const Position& position) -> bool {
+constexpr auto isGameOver(const Position& position) -> bool {
   return isCheckmate(position) || isDraw(position);
 }
 
-inline auto uciFromSan(const Position& position, const SanNormalMove& sanMove,
+inline auto uciFromSan(const Position& position, const SanNormalMove& san_move,
                        const Color& color)
     -> std::expected<UciMove, MoveError> {
-  auto pieceType = sanMove.pieceType;
-  auto destination = sanMove.destination;
+  auto piece_type = san_move.piece_type;
+  auto destination = san_move.destination;
 
-  auto possibleOrigins = piecesReaching(position, destination,
-                                        {.type = pieceType, .color = color});
-  auto partialOrigin = sanMove.origin;
+  auto possible_origins = piecesReaching(position, destination,
+                                         {.type = piece_type, .color = color});
+  auto partial_origin = san_move.origin;
   std::optional<Square> origin;
 
-  for (const Square& square : possibleOrigins) {
-    if (!matches(partialOrigin, square)) continue;
+  for (const Square& square : possible_origins) {
+    if (!matches(partial_origin, square)) continue;
 
     if (!origin) {
       origin = square;
@@ -74,7 +74,7 @@ inline auto uciFromSan(const Position& position, const SanNormalMove& sanMove,
 
   if (!origin) return std::unexpected(MoveError::kNoValidOrigin);
 
-  return UciMove(*origin, destination, sanMove.promotion);
+  return UciMove(*origin, destination, san_move.promotion);
 }
 
 inline auto partialOriginFromMove(const Position& position, const RawMove& move)
@@ -86,33 +86,33 @@ inline auto partialOriginFromMove(const Position& position, const RawMove& move)
   if (!piece) return std::unexpected(MoveError::kNoPieceAtOrigin);
 
   if (piece->type == PieceType::kPawn) {
-    auto capturedPiece = pieceAt(position.piecePlacement(), destination);
-    bool const isEnPassantCapture =
+    auto captured_piece = pieceAt(position.piecePlacement(), destination);
+    bool const is_en_passant_capture =
         position.enPassantTargetSquare() == destination;
-    if (!capturedPiece && !isEnPassantCapture) return PartialSquare{};
+    if (!captured_piece && !is_en_passant_capture) return PartialSquare{};
     return PartialSquare(origin.file, std::nullopt);
   }
 
-  auto possibleOrigins = piecesReaching(position, destination, *piece);
+  auto possible_origins = piecesReaching(position, destination, *piece);
 
-  std::unordered_map<File, uint8_t> fileCounter;
-  std::unordered_map<Rank, uint8_t> rankCounter;
+  std::unordered_map<File, uint8_t> file_counter;
+  std::unordered_map<Rank, uint8_t> rank_counter;
 
   int total = 0;
-  for (const Square& square : possibleOrigins) {
-    fileCounter[square.file]++;
-    rankCounter[square.rank]++;
+  for (const Square& square : possible_origins) {
+    file_counter[square.file]++;
+    rank_counter[square.rank]++;
     total++;
   }
 
   if (total == 0) return std::unexpected(MoveError::kNoValidOrigin);
   if (total == 1) return PartialSquare{};
 
-  if (fileCounter[origin.file] == 1) {
+  if (file_counter[origin.file] == 1) {
     return PartialSquare(origin.file, std::nullopt);
   }
 
-  if (rankCounter[origin.rank] == 1) {
+  if (rank_counter[origin.rank] == 1) {
     return PartialSquare(std::nullopt, origin.rank);
   }
 
@@ -127,9 +127,9 @@ inline auto uciMoveError(const Position& position, const RawMove& move)
   auto piece = pieceAt(position.piecePlacement(), origin);
   if (!piece) return MoveError::kNoPieceAtOrigin;
 
-  auto possibleOrigins = piecesReaching(position, destination, *piece);
+  auto possible_origins = piecesReaching(position, destination, *piece);
 
-  if (std::ranges::find(possibleOrigins, origin) == possibleOrigins.end()) {
+  if (std::ranges::find(possible_origins, origin) == possible_origins.end()) {
     return MoveError::kIllegalMove;
   }
 
@@ -143,13 +143,13 @@ inline auto overflowError(const Position& position, const RawMove& move)
     return MoveError::kFullmoveNumberOverflow;
   }
 
-  auto destinationPiece = pieceAt(position.piecePlacement(), move.destination);
-  auto originPiece = pieceAt(position.piecePlacement(), move.origin);
-  if (!originPiece) return MoveError::kNoPieceAtOrigin;
-  bool const isPawnMove = originPiece->type == PieceType::kPawn;
-  bool const isNormalCapture = destinationPiece.has_value();
+  auto destination_piece = pieceAt(position.piecePlacement(), move.destination);
+  auto origin_piece = pieceAt(position.piecePlacement(), move.origin);
+  if (!origin_piece) return MoveError::kNoPieceAtOrigin;
+  bool const is_pawn_move = origin_piece->type == PieceType::kPawn;
+  bool const is_normal_capture = destination_piece.has_value();
 
-  if (!isPawnMove && !isNormalCapture &&
+  if (!is_pawn_move && !is_normal_capture &&
       position.halfmoveClock() == Position::kMaxHalfmoveClock) {
     return MoveError::kHalfmoveClockOverflow;
   }

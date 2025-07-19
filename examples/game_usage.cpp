@@ -10,16 +10,16 @@
 #include <string_view>
 
 namespace {
-auto parseUciMove(std::string_view sv) -> chesskit::UciMove {
-  auto parsedUciMove = chesskit::parse<chesskit::UciMove>(sv);
-  assert(parsedUciMove);
-  return parsedUciMove.value();
+auto parseUciMove(std::string_view str) -> chesskit::UciMove {
+  auto parsed_uci_move = chesskit::parse<chesskit::UciMove>(str);
+  assert(parsed_uci_move);
+  return parsed_uci_move.value();
 }
 
-auto parseSanMove(std::string_view sv) -> chesskit::SanMove {
-  auto parsedSanMove = chesskit::parse<chesskit::SanMove>(sv);
-  assert(parsedSanMove);
-  return parsedSanMove.value();
+auto parseSanMove(std::string_view str) -> chesskit::SanMove {
+  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+  assert(parsed_san_move);
+  return parsed_san_move.value();
 }
 }  // namespace
 

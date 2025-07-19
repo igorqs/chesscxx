@@ -19,7 +19,6 @@
 #include <ranges>
 #include <string_view>
 #include <tuple>
-#include <type_traits>
 #include <variant>
 
 #include "test_helper.h"
@@ -121,8 +120,8 @@ TEST(SanCastlingMoveTest, FormatProducesExpectedOutput) {
           {SanCastlingMove(kKingside, kCheckmate), "O-O#"},
       }};
 
-  for (const auto& [rank, sv] : kFixtures) {
-    EXPECT_EQ(std::format("{}", rank), sv);
+  for (const auto& [rank, str] : kFixtures) {
+    EXPECT_EQ(std::format("{}", rank), str);
   }
 }
 
@@ -146,10 +145,10 @@ TEST(SanCastlingMoveTest, ParseHandlesInvalidInputCorrectly) {
 TEST(SanNormalMoveTest, DefaultConstructionResultsInValidSanNormalMove) {
   chesskit::SanNormalMove const san_normal;
   EXPECT_TRUE(
-      magic_enum::enum_contains<chesskit::PieceType>(san_normal.pieceType));
+      magic_enum::enum_contains<chesskit::PieceType>(san_normal.piece_type));
   EXPECT_EQ(san_normal.origin.file, std::nullopt);
   EXPECT_EQ(san_normal.origin.rank, std::nullopt);
-  EXPECT_EQ(san_normal.isCapture, false);
+  EXPECT_EQ(san_normal.is_capture, false);
   EXPECT_EQ(chesskit::index(san_normal.destination), 0);
   EXPECT_EQ(san_normal.promotion, std::nullopt);
   EXPECT_EQ(san_normal.check_indicator, std::nullopt);
@@ -180,14 +179,14 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kPawn,
+                            .piece_type = kPawn,
                             .destination = Square(kE, k4),
                         }),
             "e4");
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kPawn,
+                            .piece_type = kPawn,
                             .destination = Square(kA, k8),
                             .promotion = PromotablePieceType::kQueen,
                         }),
@@ -195,7 +194,7 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kQueen,
+                            .piece_type = kQueen,
                             .origin = PartialSquare(kD, std::nullopt),
                             .destination = Square(kE, k4),
                         }),
@@ -203,7 +202,7 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kKnight,
+                            .piece_type = kKnight,
                             .origin = PartialSquare(std::nullopt, k3),
                             .destination = Square(kD, k5),
                         }),
@@ -211,7 +210,7 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kBishop,
+                            .piece_type = kBishop,
                             .origin = PartialSquare(kA, k3),
                             .destination = Square(kF, k8),
                         }),
@@ -219,8 +218,8 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kRook,
-                            .isCapture = true,
+                            .piece_type = kRook,
+                            .is_capture = true,
                             .destination = Square(kH, k5),
                             .check_indicator = kCheck,
                         }),
@@ -228,8 +227,8 @@ TEST(SanNormalMoveTest, FormatProducesExpectedOutput) {
 
   EXPECT_EQ(std::format("{}",
                         SanNormalMove{
-                            .pieceType = kKing,
-                            .isCapture = true,
+                            .piece_type = kKing,
+                            .is_capture = true,
                             .destination = Square(kF, k7),
                             .check_indicator = kCheckmate,
                         }),
@@ -282,25 +281,33 @@ TEST(SanNormalMoveTest, ParseHandlesInvalidInputCorrectly) {
 
 // SanMove
 
+struct SanMoveDefaultTester {
+  void operator()(chesskit::SanNormalMove move) const {
+    auto is_equal = [](const chesskit::PartialSquare& lhs,
+                       const chesskit::PartialSquare& rhs) -> bool {
+      return lhs.file == rhs.file && lhs.rank == rhs.rank;
+    };
+
+    const chesskit::PartialSquare partial = {.file = std::nullopt,
+                                             .rank = std::nullopt};
+
+    EXPECT_TRUE(
+        magic_enum::enum_contains<chesskit::PieceType>(move.piece_type));
+    EXPECT_TRUE(is_equal(move.origin, partial));
+    EXPECT_EQ(move.is_capture, false);
+    EXPECT_EQ(chesskit::index(move.destination), 0);
+    EXPECT_EQ(move.promotion, std::nullopt);
+    EXPECT_EQ(move.check_indicator, std::nullopt);
+  }
+  template <typename MoveType>
+  void operator()(MoveType /*unused*/) const {
+    FAIL() << "SanMove should default to SanNormalMove.";
+  }
+};
+
 TEST(SanMoveTest, DefaultConstructionResultsInValidSanNormalMove) {
-  chesskit::SanMove san;
-  std::visit(
-      [](const auto& value) {
-        using T = std::decay_t<decltype(value)>;
-        if constexpr (std::is_same_v<T, chesskit::SanNormalMove>) {
-          EXPECT_TRUE(
-              magic_enum::enum_contains<chesskit::PieceType>(value.pieceType));
-          EXPECT_EQ(value.origin.file, std::nullopt);
-          EXPECT_EQ(value.origin.rank, std::nullopt);
-          EXPECT_EQ(value.isCapture, false);
-          EXPECT_EQ(chesskit::index(value.destination), 0);
-          EXPECT_EQ(value.promotion, std::nullopt);
-          EXPECT_EQ(value.check_indicator, std::nullopt);
-        } else {
-          FAIL() << "SanMove should default to SanNormalMove.";
-        }
-      },
-      san);
+  chesskit::SanMove const san;
+  std::visit(SanMoveDefaultTester{}, san);
 }
 
 TEST(SanMoveTest, RoundTripConversionIsSuccessful) {

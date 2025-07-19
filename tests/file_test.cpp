@@ -47,8 +47,8 @@ TEST(FileTest, FormatProducesExpectedOutput) {
           {File::kH, "h"},
       }};
 
-  for (const auto& [rank, sv] : kFixtures) {
-    EXPECT_EQ(std::format("{}", rank), sv);
+  for (const auto& [rank, str] : kFixtures) {
+    EXPECT_EQ(std::format("{}", rank), str);
   }
 }
 

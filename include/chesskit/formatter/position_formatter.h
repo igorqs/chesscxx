@@ -18,7 +18,7 @@ struct std::formatter<chesskit::Position>
                                          chesskit::internal::PieceListSpec,
                                          chesskit::internal::RepetitionSpec> {
   auto handleSpec(const chesskit::Position& position, auto& ctx,
-                  chesskit::internal::FenSpec) const {
+                  chesskit::internal::FenSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{:fen} {:c} {} {:?-} {} {}",
                           position.piecePlacement(), position.activeColor(),
                           position.castlingRights(),
@@ -27,7 +27,7 @@ struct std::formatter<chesskit::Position>
   }
 
   auto handleSpec(const chesskit::Position& position, auto& ctx,
-                  chesskit::internal::AsciiSpec) const {
+                  chesskit::internal::AsciiSpec /*unused*/) const {
     return std::format_to(
         ctx.out(),
         "{:ascii}\nActive color: {}\nCastling availability: {}\nEn passant "
@@ -38,7 +38,7 @@ struct std::formatter<chesskit::Position>
   }
 
   auto handleSpec(const chesskit::Position& position, auto& ctx,
-                  chesskit::internal::PieceListSpec) const {
+                  chesskit::internal::PieceListSpec /*unused*/) const {
     return std::format_to(
         ctx.out(),
         "{:lists}\nActive color: {}\nCastling availability: {}\nEn passant "
@@ -49,7 +49,7 @@ struct std::formatter<chesskit::Position>
   }
 
   auto handleSpec(const chesskit::Position& position, auto& ctx,
-                  chesskit::internal::RepetitionSpec) const {
+                  chesskit::internal::RepetitionSpec /*unused*/) const {
     return std::format_to(ctx.out(), "{:fen} {:c} {} {:?-}",
                           position.piecePlacement(), position.activeColor(),
                           position.castlingRights(),

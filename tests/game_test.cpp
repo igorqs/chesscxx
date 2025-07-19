@@ -420,13 +420,14 @@ class FormatFixture {
 template <>
 struct YAML::convert<FormatFixture> {
   static auto decode(const Node& node, FormatFixture& rhs) -> bool {
-    rhs.set_input(node[0].as<std::string>());
-    rhs.set_default(node[1].as<std::string>());
-    rhs.set_pgn(node[2].as<std::string>());
-    rhs.set_fen(node[3].as<std::string>());
-    rhs.set_ascii(node[4].as<std::string>());
-    rhs.set_lists(node[5].as<std::string>());
-    rhs.set_rep(node[6].as<std::string>());
+    int index = 0;
+    rhs.set_input(node[index++].as<std::string>());
+    rhs.set_default(node[index++].as<std::string>());
+    rhs.set_pgn(node[index++].as<std::string>());
+    rhs.set_fen(node[index++].as<std::string>());
+    rhs.set_ascii(node[index++].as<std::string>());
+    rhs.set_lists(node[index++].as<std::string>());
+    rhs.set_rep(node[index].as<std::string>());
     return true;
   }
 };
@@ -473,13 +474,14 @@ class FenFormatFixture {
 template <>
 struct YAML::convert<FenFormatFixture> {
   static auto decode(const Node& node, FenFormatFixture& rhs) -> bool {
-    rhs.set_input(node[0].as<std::string>());
-    rhs.set_default(node[1].as<std::string>());
-    rhs.set_pgn(node[2].as<std::string>());
-    rhs.set_fen(node[3].as<std::string>());
-    rhs.set_ascii(node[4].as<std::string>());
-    rhs.set_lists(node[5].as<std::string>());
-    rhs.set_rep(node[6].as<std::string>());
+    int index = 0;
+    rhs.set_input(node[index++].as<std::string>());
+    rhs.set_default(node[index++].as<std::string>());
+    rhs.set_pgn(node[index++].as<std::string>());
+    rhs.set_fen(node[index++].as<std::string>());
+    rhs.set_ascii(node[index++].as<std::string>());
+    rhs.set_lists(node[index++].as<std::string>());
+    rhs.set_rep(node[index].as<std::string>());
     return true;
   }
 };
@@ -683,7 +685,7 @@ TEST_P(RepetitionTrackerSuite, BuildRepetitionTrackerCorrectly) {
                      chesskit::RepetitionEqual>
       seen;
 
-  for (const auto& [position, expected, _] : fixture.repetitions()) {
+  for (const auto& [position, expected, ignore] : fixture.repetitions()) {
     if (expected > 0) {
       ASSERT_TRUE(game.repetitionTracker().contains(position));
       EXPECT_EQ(game.repetitionTracker().at(position), expected);
@@ -703,7 +705,7 @@ TEST_P(RepetitionTrackerSuite, BuildRepetitionTrackerCorrectlyAfterUndo) {
                      chesskit::RepetitionEqual>
       seen;
 
-  for (const auto& [position, _, expected] : fixture.repetitions()) {
+  for (const auto& [position, ignore, expected] : fixture.repetitions()) {
     if (expected > 0) {
       ASSERT_TRUE(game.repetitionTracker().contains(position));
       EXPECT_EQ(game.repetitionTracker().at(position), expected);
@@ -913,7 +915,7 @@ TEST(GameTest, FormatProducesUniqueStringsForUniqueRepetitionTracker) {
 
 TEST(GameTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
-  constexpr int max_collisions = 1;
+  constexpr int kMaxCollisions = 1;
   std::unordered_map<size_t, std::vector<chesskit::Game>> hash_counter;
 
   std::ranges::for_each(GetGameEqualityFixtures(), [&](const auto& fixture) {
@@ -921,7 +923,7 @@ TEST(GameTest, HashProducesFewCollisions) {
     auto hash = std::hash<chesskit::Game>{}(game);
     hash_counter[hash].push_back(game);
     auto collisions = hash_counter[hash].size();
-    EXPECT_LE(collisions, max_collisions)
+    EXPECT_LE(collisions, kMaxCollisions)
         << std::format("game={}, hash_counter={}", game, hash_counter);
   });
 }

@@ -27,22 +27,22 @@ auto main() -> int {
   std::println("{}", chesskit::PositionError::kEnPassantTargetSquareOccupied);
   std::println("{}\n", chesskit::PositionError::kSideNotToMoveIsUnderAttack);
 
-  chesskit::Position::Params params = {.fullmoveNumber = 0};
+  chesskit::Position::Params params = {.fullmove_number = 0};
   createPositionAndPrint(params);
 
-  params.fullmoveNumber = 1;
-  params.halfmoveClock = 10;
+  params.fullmove_number = 1;
   createPositionAndPrint(params);
 
-  auto pp = chesskit::parse<chesskit::PiecePlacement>("k7/1B6/8/8/8/8/8/7K");
-  assert(pp);
-  params.halfmoveClock = 0;
-  params.piecePlacement = pp.value();
+  auto piece_placement =
+      chesskit::parse<chesskit::PiecePlacement>("k7/1B6/8/8/8/8/8/7K");
+  assert(piece_placement);
+  params.halfmove_clock = 0;
+  params.piece_placement = piece_placement.value();
   createPositionAndPrint(params);
 
-  params.castlingRights = chesskit::CastlingRights(0);
+  params.castling_rights = chesskit::CastlingRights(0);
   createPositionAndPrint(params);
 
-  params.activeColor = chesskit::Color::kBlack;
+  params.active_color = chesskit::Color::kBlack;
   createPositionAndPrint(params);
 }

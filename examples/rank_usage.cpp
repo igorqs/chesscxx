@@ -5,17 +5,17 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedRank = chesskit::parse<chesskit::Rank>(sv);
-  printErrorOrValue(parsedRank);
+void parseAndPrint(std::string_view str) {
+  auto parsed_rank = chesskit::parse<chesskit::Rank>(str);
+  printErrorOrValue(parsed_rank);
 }
 }  // namespace
 

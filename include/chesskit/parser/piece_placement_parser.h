@@ -24,43 +24,45 @@ namespace internal {
 constexpr auto parsePieceArray(const char* begin, const char* end)
     -> std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
                      ParseError> {
-  auto toChar = [](uint8_t i) -> unsigned char { return i + '0'; };
-  auto fromChar = [](char c) -> uint8_t { return c - '0'; };
+  auto to_char = [](uint8_t digit) -> unsigned char { return digit + '0'; };
+  auto from_char = [](char digit_char) -> uint8_t { return digit_char - '0'; };
 
-  PiecePlacement::PieceArray pieceArray;
-  uint8_t pieceCounter = 0;
-  std::string_view const sv = std::string_view(begin, end);
+  PiecePlacement::PieceArray piece_array;
+  uint8_t piece_counter = 0;
+  std::string_view const str = std::string_view(begin, end);
 
-  for (const auto& rank : sv | std::views::split('/')) {
-    uint8_t missingPieces = kNumFiles;
+  for (const auto& rank : str | std::views::split('/')) {
+    uint8_t missing_pieces = kNumFiles;
 
-    for (auto it = rank.begin(); it < rank.end();) {
-      if (missingPieces == 0) {
+    for (const auto* it = rank.begin(); it < rank.end();) {
+      if (missing_pieces == 0) {
         return std::unexpected(ParseError::kInvalidSlashSymbol);
       }
 
-      if (*it >= '1' && *it <= toChar(missingPieces)) {
-        missingPieces -= fromChar(*it);
-        pieceCounter += fromChar(*it);
+      if (*it >= '1' && *it <= to_char(missing_pieces)) {
+        missing_pieces -= from_char(*it);
+        piece_counter += from_char(*it);
         ++it;
-        if (pieceCounter == kNumSquares) {
-          return ParseResult{.parsedValue = pieceArray, .ptr = it};
+        if (piece_counter == kNumSquares) {
+          return ParseResult{.parsed_value = piece_array, .ptr = it};
         }
         continue;
       }
 
       auto piece = parseFrom<Piece>(it, rank.end());
       if (!piece) return std::unexpected(piece.error());
-      pieceArray[pieceCounter++] = piece->parsedValue;
+      piece_array[piece_counter++] = piece->parsed_value;
       it = piece->ptr;
-      missingPieces--;
+      missing_pieces--;
 
-      if (pieceCounter == kNumSquares) {
-        return ParseResult{.parsedValue = pieceArray, .ptr = it};
+      if (piece_counter == kNumSquares) {
+        return ParseResult{.parsed_value = piece_array, .ptr = it};
       }
     }
 
-    if (missingPieces > 0) return std::unexpected(ParseError::kMissingRankInfo);
+    if (missing_pieces > 0) {
+      return std::unexpected(ParseError::kMissingRankInfo);
+    }
   }
 
   return std::unexpected(ParseError::kMissingPiecePlacementInfo);
@@ -72,15 +74,18 @@ constexpr auto parsePieceArray(const char* begin, const char* end)
 template <>
 class Parser<PiecePlacement, const char*, parse_as::Default> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PiecePlacement, const char*>, ParseError> {
     auto array = internal::parsePieceArray(begin, end);
     if (!array) return std::unexpected(array.error());
 
-    auto pp = PiecePlacement::fromPieceArray(array->parsedValue);
-    if (!pp) return std::unexpected(ParseError::kInvalidPiecePlacement);
+    auto piece_placement = PiecePlacement::fromPieceArray(array->parsed_value);
+    if (!piece_placement) {
+      return std::unexpected(ParseError::kInvalidPiecePlacement);
+    }
 
-    return ParseResult{.parsedValue = pp.value(), .ptr = array->ptr};
+    return ParseResult{.parsed_value = piece_placement.value(),
+                       .ptr = array->ptr};
   }
 };
 

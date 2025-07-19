@@ -20,11 +20,11 @@ namespace chesskit {
 template <>
 class Parser<Rank, const char*, parse_as::Default> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<Rank, const char*>, ParseError> {
-    static constexpr std::string_view allowed = "87654321";
+    static constexpr std::string_view kAllowed = "87654321";
 
-    return internal::parseEnum<Rank>(begin, end, allowed,
+    return internal::parseEnum<Rank>(begin, end, kAllowed,
                                      ParseError::kInvalidRank);
   }
 };

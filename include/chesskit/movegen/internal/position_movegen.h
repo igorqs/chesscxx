@@ -27,9 +27,9 @@ inline auto pseudoLegalPawnCaptures(const Position& position, Square square,
                                     Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnCaptures(square, color) |
-      std::views::filter([position, color](const Square& sq) {
-        return hasPieceAt(position.piecePlacement(), sq, !color) ||
-               sq == position.enPassantTargetSquare();
+      std::views::filter([position, color](const Square& square) {
+        return hasPieceAt(position.piecePlacement(), square, !color) ||
+               square == position.enPassantTargetSquare();
       }));
 }
 
@@ -43,9 +43,9 @@ inline auto pseudoLegalPawnMoves(const Position& position, Square square,
 
 inline auto pseudoLegalMoves(const Position& position, Square square)
     -> std::generator<Square> {
-  const auto& pp = position.piecePlacement();
+  const auto& piece_placement = position.piecePlacement();
 
-  auto piece = pieceAt(pp, square);
+  auto piece = pieceAt(piece_placement, square);
   if (!piece) co_return;
 
   using std::ranges::elements_of;
@@ -56,43 +56,49 @@ inline auto pseudoLegalMoves(const Position& position, Square square)
           pseudoLegalPawnMoves(position, square, piece->color));
       co_return;
     case PieceType::kKnight:
-      co_yield elements_of(pseudoLegalKnightMoves(pp, square, piece->color));
+      co_yield elements_of(
+          pseudoLegalKnightMoves(piece_placement, square, piece->color));
       co_return;
     case PieceType::kKing:
-      co_yield elements_of(pseudoLegalKingMoves(pp, square, piece->color));
+      co_yield elements_of(
+          pseudoLegalKingMoves(piece_placement, square, piece->color));
       co_return;
     case PieceType::kRook:
-      co_yield elements_of(pseudoLegalRookMoves(pp, square, piece->color));
+      co_yield elements_of(
+          pseudoLegalRookMoves(piece_placement, square, piece->color));
       co_return;
     case PieceType::kBishop:
-      co_yield elements_of(pseudoLegalBishopMoves(pp, square, piece->color));
+      co_yield elements_of(
+          pseudoLegalBishopMoves(piece_placement, square, piece->color));
       co_return;
     case PieceType::kQueen:
-      co_yield elements_of(pseudoLegalQueenMoves(pp, square, piece->color));
+      co_yield elements_of(
+          pseudoLegalQueenMoves(piece_placement, square, piece->color));
       co_return;
     default:
       std::unreachable();
   }
 }
 
-inline auto pseudoLegalMoves(const Position position)
+inline auto pseudoLegalMoves(const Position& position)
     -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
-  const auto& pp = position.piecePlacement();
+  const auto& piece_placement = position.piecePlacement();
   const auto& color = position.activeColor();
 
-  auto locationToPseudoLegalMoves =
-      [&](Square pieceLocation) -> std::generator<RawMove> {
-    co_yield elements_of(pseudoLegalMoves(position, pieceLocation) |
+  auto location_to_pseudo_legal_moves =
+      [&](Square piece_location) -> std::generator<RawMove> {
+    co_yield elements_of(pseudoLegalMoves(position, piece_location) |
                          std::views::transform([&](const Square& destination) {
-                           return RawMove(pieceLocation, destination);
+                           return RawMove(piece_location, destination);
                          }));
   };
 
-  co_yield elements_of(
-      pp.pieceLocations().at(color) | std::views::values | std::views::join |
-      std::views::transform(locationToPseudoLegalMoves) | std::views::join);
+  co_yield elements_of(piece_placement.pieceLocations().at(color) |
+                       std::views::values | std::views::join |
+                       std::views::transform(location_to_pseudo_legal_moves) |
+                       std::views::join);
 }
 
 inline auto legalRawMoves(const Position& position) -> std::generator<RawMove> {
@@ -108,12 +114,12 @@ inline auto legalRawMoves(const Position& position) -> std::generator<RawMove> {
 
 inline auto legalCastlings(const Position& position)
     -> std::generator<CastlingSide> {
-  constexpr static std::array<CastlingSide, 2> sides = {
+  constexpr static std::array<CastlingSide, 2> kSides = {
       CastlingSide::kKingside, CastlingSide::kQueenside};
 
   const auto& color = position.activeColor();
 
-  for (const auto& side : sides) {
+  for (const auto& side : kSides) {
     bool const can_castle = position.castlingRights().canCastle(side, color);
     if (!can_castle) continue;
 
@@ -122,47 +128,42 @@ inline auto legalCastlings(const Position& position)
 }
 
 inline auto uciPromotions(const RawMove& raw_move) -> std::generator<UciMove> {
-  constexpr static std::array<PromotablePieceType, 4> promotions = {
+  constexpr static std::array<PromotablePieceType, 4> kPromotions = {
       PromotablePieceType::kKnight, PromotablePieceType::kBishop,
       PromotablePieceType::kRook, PromotablePieceType::kQueen};
 
-  for (const auto& promotion : promotions) {
+  for (const auto& promotion : kPromotions) {
     co_yield UciMove(raw_move.origin, raw_move.destination, promotion);
   }
 }
 
-template <typename T = UciMove>
-inline auto legalMoves(const Position) -> std::generator<T>;
-
-template <>
-inline auto legalMoves(const Position position) -> std::generator<UciMove> {
+inline auto legalMoves(Position position) -> std::generator<UciMove> {
   using std::ranges::elements_of;
 
   co_yield elements_of(
       legalCastlings(position) |
       std::views::transform([&position](const auto& side) {
-        auto raw_move = castlingMoves(side, position.activeColor()).kingMove;
+        auto raw_move = castlingMoves(side, position.activeColor()).king_move;
         return UciMove(raw_move.origin, raw_move.destination, std::nullopt);
       }));
 
   co_yield elements_of(
       legalRawMoves(position) |
-      std::views::transform(
-          [&position](const auto& raw_move) -> std::generator<UciMove> {
-            auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
-            bool const isPawn = piece && piece->type == PieceType::kPawn;
-            bool const isPromotionRank = raw_move.destination.rank ==
-                                         promotionRank(position.activeColor());
-            bool const isPromotion = isPawn && isPromotionRank;
+      std::views::transform([&position](const auto& raw_move)
+                                -> std::generator<UciMove> {
+        auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
+        bool const is_pawn = piece && piece->type == PieceType::kPawn;
+        bool const is_promotion_rank =
+            raw_move.destination.rank == promotionRank(position.activeColor());
+        bool const is_promotion = is_pawn && is_promotion_rank;
 
-            if (isPromotion) {
-              co_yield elements_of(uciPromotions(raw_move));
-              co_return;
-            }
+        if (is_promotion) {
+          co_yield elements_of(uciPromotions(raw_move));
+          co_return;
+        }
 
-            co_yield UciMove(raw_move.origin, raw_move.destination,
-                             std::nullopt);
-          }) |
+        co_yield UciMove(raw_move.origin, raw_move.destination, std::nullopt);
+      }) |
       std::views::join);
 
   co_return;
@@ -173,31 +174,32 @@ inline auto hasLegalMove(const Position& position) -> bool {
   return moves.begin() != moves.end();
 }
 
-inline auto pawnsCapturing(Position position, Square square, Color color)
+inline auto pawnsCapturing(const Position& position, Square square, Color color)
     -> std::generator<Square> {
-  bool const hasOpponent =
+  bool const has_opponent =
       hasPieceAt(position.piecePlacement(), square, !color);
-  bool const isEnPassantTarget = (square == position.enPassantTargetSquare());
+  bool const is_en_passant_target =
+      (square == position.enPassantTargetSquare());
 
-  if (!hasOpponent && !isEnPassantTarget) co_return;
+  if (!has_opponent && !is_en_passant_target) co_return;
 
   co_yield std::ranges::elements_of(
       pawnsAttacking(position.piecePlacement(), square, color));
 }
 
-inline auto pawnsReaching(Position position, Square square, Color color)
+inline auto pawnsReaching(const Position& position, Square square, Color color)
     -> std::generator<Square> {
   co_yield std::ranges::elements_of(pawnsCapturing(position, square, color));
   co_yield std::ranges::elements_of(
       pawnMovingTo(position.piecePlacement(), square, color));
 }
 
-inline auto piecesReaching(Position position, Square square, Piece piece)
+inline auto piecesReaching(const Position& position, Square square, Piece piece)
     -> std::generator<Square> {
-  const auto& pp = position.piecePlacement();
+  const auto& piece_placement = position.piecePlacement();
 
-  auto pieceAtTargetSquare = pieceAt(pp, square);
-  if (pieceAtTargetSquare && pieceAtTargetSquare->color == piece.color) {
+  auto piece_at_target_square = pieceAt(piece_placement, square);
+  if (piece_at_target_square && piece_at_target_square->color == piece.color) {
     co_return;
   }
 
@@ -208,19 +210,22 @@ inline auto piecesReaching(Position position, Square square, Piece piece)
       co_yield elements_of(pawnsReaching(position, square, piece.color));
       co_return;
     case PieceType::kKnight:
-      co_yield elements_of(knightsReaching(pp, square, piece.color));
+      co_yield elements_of(
+          knightsReaching(piece_placement, square, piece.color));
       co_return;
     case PieceType::kKing:
-      co_yield elements_of(kingsReaching(pp, square, piece.color));
+      co_yield elements_of(kingsReaching(piece_placement, square, piece.color));
       co_return;
     case PieceType::kRook:
-      co_yield elements_of(rooksReaching(pp, square, piece.color));
+      co_yield elements_of(rooksReaching(piece_placement, square, piece.color));
       co_return;
     case PieceType::kBishop:
-      co_yield elements_of(bishopsReaching(pp, square, piece.color));
+      co_yield elements_of(
+          bishopsReaching(piece_placement, square, piece.color));
       co_return;
     case PieceType::kQueen:
-      co_yield elements_of(queensReaching(pp, square, piece.color));
+      co_yield elements_of(
+          queensReaching(piece_placement, square, piece.color));
       co_return;
     default:
       std::unreachable();

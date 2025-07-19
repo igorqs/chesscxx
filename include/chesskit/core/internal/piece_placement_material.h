@@ -10,74 +10,91 @@
 
 namespace chesskit::internal {
 
-inline constexpr auto hasOnlyKing(const PiecePlacement& pp, const Color& color)
+constexpr auto hasOnlyKing(const PiecePlacement& piece_placement,
+                           const Color& color) -> bool {
+  return piece_placement.pieceLocations().at(color).size() == 1;
+}
+
+constexpr auto hasOnlyKingAndKnight(const PiecePlacement& piece_placement,
+                                    const Color& color) -> bool {
+  return piece_placement.pieceLocations().at(color).size() == 2 &&
+         piece_placement.pieceLocations().at(color).contains(
+             PieceType::kKnight) &&
+         piece_placement.pieceLocations()
+                 .at(color)
+                 .at(PieceType::kKnight)
+                 .size() == 1;
+}
+
+constexpr auto hasOnlyKingAndBishops(const PiecePlacement& piece_placement,
+                                     const Color& color) -> bool {
+  return piece_placement.pieceLocations().at(color).size() == 2 &&
+         piece_placement.pieceLocations().at(color).contains(
+             PieceType::kBishop);
+}
+
+constexpr auto hasBishops(const PiecePlacement& piece_placement) -> bool {
+  return piece_placement.pieceLocations()
+             .at(Color::kWhite)
+             .contains(PieceType::kBishop) ||
+         piece_placement.pieceLocations()
+             .at(Color::kBlack)
+             .contains(PieceType::kBishop);
+}
+
+constexpr auto isKingVsKing(const PiecePlacement& piece_placement) -> bool {
+  return hasOnlyKing(piece_placement, Color::kWhite) &&
+         hasOnlyKing(piece_placement, Color::kBlack);
+}
+
+constexpr auto isKingAndKnightVsKing(const PiecePlacement& piece_placement)
     -> bool {
-  return pp.pieceLocations().at(color).size() == 1;
+  return (hasOnlyKing(piece_placement, Color::kWhite) &&
+          hasOnlyKingAndKnight(piece_placement, Color::kBlack)) ||
+         (hasOnlyKing(piece_placement, Color::kBlack) &&
+          hasOnlyKingAndKnight(piece_placement, Color::kWhite));
 }
 
-inline constexpr auto hasOnlyKingAndKnight(const PiecePlacement& pp,
-                                           const Color& color) -> bool {
-  return pp.pieceLocations().at(color).size() == 2 &&
-         pp.pieceLocations().at(color).contains(PieceType::kKnight) &&
-         pp.pieceLocations().at(color).at(PieceType::kKnight).size() == 1;
-}
-
-inline constexpr auto hasOnlyKingAndBishops(const PiecePlacement& pp,
-                                            const Color& color) -> bool {
-  return pp.pieceLocations().at(color).size() == 2 &&
-         pp.pieceLocations().at(color).contains(PieceType::kBishop);
-}
-
-inline constexpr auto hasBishops(const PiecePlacement& pp) -> bool {
-  return pp.pieceLocations().at(Color::kWhite).contains(PieceType::kBishop) ||
-         pp.pieceLocations().at(Color::kBlack).contains(PieceType::kBishop);
-}
-
-inline constexpr auto isKingVsKing(const PiecePlacement& pp) -> bool {
-  return hasOnlyKing(pp, Color::kWhite) && hasOnlyKing(pp, Color::kBlack);
-}
-
-inline constexpr auto isKingAndKnightVsKing(const PiecePlacement& pp) -> bool {
-  return (hasOnlyKing(pp, Color::kWhite) &&
-          hasOnlyKingAndKnight(pp, Color::kBlack)) ||
-         (hasOnlyKing(pp, Color::kBlack) &&
-          hasOnlyKingAndKnight(pp, Color::kWhite));
-}
-
-inline constexpr auto isBishopsOnSameColorDraw(const PiecePlacement& pp)
+constexpr auto isBishopsOnSameColorDraw(const PiecePlacement& piece_placement)
     -> bool {
-  if (!hasBishops(pp)) return false;
+  if (!hasBishops(piece_placement)) return false;
 
-  bool const validWhite = hasOnlyKing(pp, Color::kWhite) ||
-                          hasOnlyKingAndBishops(pp, Color::kWhite);
-  bool const validBlack = hasOnlyKing(pp, Color::kBlack) ||
-                          hasOnlyKingAndBishops(pp, Color::kBlack);
+  bool const valid_white =
+      hasOnlyKing(piece_placement, Color::kWhite) ||
+      hasOnlyKingAndBishops(piece_placement, Color::kWhite);
+  bool const valid_black =
+      hasOnlyKing(piece_placement, Color::kBlack) ||
+      hasOnlyKingAndBishops(piece_placement, Color::kBlack);
 
-  if (!validWhite || !validBlack) return false;
+  if (!valid_white || !valid_black) return false;
 
-  std::optional<Color> squareColor;
+  std::optional<Color> square_color;
 
   for (const auto& color : {Color::kWhite, Color::kBlack}) {
-    if (!pp.pieceLocations().at(color).contains(PieceType::kBishop)) continue;
+    if (!piece_placement.pieceLocations().at(color).contains(
+            PieceType::kBishop)) {
+      continue;
+    }
 
     for (const auto& square :
-         pp.pieceLocations().at(color).at(PieceType::kBishop)) {
-      if (squareColor.has_value() &&
-          squareColor.value() != square_color(square)) {
+         piece_placement.pieceLocations().at(color).at(PieceType::kBishop)) {
+      if (square_color.has_value() &&
+          square_color.value() != squareColor(square)) {
         return false;
       }
 
-      squareColor = square_color(square);
+      square_color = squareColor(square);
     }
   }
 
   return true;
 }
 
-inline constexpr auto isInsufficientMaterialDraw(const PiecePlacement& pp)
+constexpr auto isInsufficientMaterialDraw(const PiecePlacement& piece_placement)
     -> bool {
-  return isKingVsKing(pp) || isKingAndKnightVsKing(pp) ||
-         isBishopsOnSameColorDraw(pp);
+  return isKingVsKing(piece_placement) ||
+         isKingAndKnightVsKing(piece_placement) ||
+         isBishopsOnSameColorDraw(piece_placement);
 }
 
 }  // namespace chesskit::internal

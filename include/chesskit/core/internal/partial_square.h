@@ -10,10 +10,10 @@ namespace chesskit::internal {
 
 inline auto matches(const PartialSquare& partial, const Square& square)
     -> bool {
-  bool const validFile = (!partial.file) || (*(partial.file) == square.file);
-  bool const validRank = (!partial.rank) || (*(partial.rank) == square.rank);
+  bool const valid_file = (!partial.file) || (*(partial.file) == square.file);
+  bool const valid_rank = (!partial.rank) || (*(partial.rank) == square.rank);
 
-  return (validFile && validRank);
+  return (valid_file && valid_rank);
 }
 
 inline auto toSquare(const PartialSquare& partial) -> std::optional<Square> {

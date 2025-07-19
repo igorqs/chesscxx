@@ -8,38 +8,39 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedGameResult = chesskit::parse<chesskit::GameResult>(sv);
-  printErrorOrValue(parsedGameResult);
+void parseAndPrint(std::string_view str) {
+  auto parsed_game_result = chesskit::parse<chesskit::GameResult>(str);
+  printErrorOrValue(parsed_game_result);
 }
 
-void parseFenAndPrintGameResult(std::string_view sv) {
-  auto parsedGame =
-      chesskit::parse<chesskit::Game>(sv, chesskit::parse_as::Fen{});
-  assert(parsedGame);
+void parseFenAndPrintGameResult(std::string_view str) {
+  auto parsed_game =
+      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+  assert(parsed_game);
 
-  std::optional<chesskit::GameResult> gameResult = parsedGame.value().result();
-  assert(gameResult);
+  std::optional<chesskit::GameResult> game_result =
+      parsed_game.value().result();
+  assert(game_result);
 
-  std::println("{}", gameResult.value());
+  std::println("{}", game_result.value());
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::GameResult blackWins = chesskit::GameResult::kBlackWins;
-  chesskit::GameResult whiteWins = chesskit::GameResult::kWhiteWins;
-  chesskit::GameResult draw = chesskit::GameResult::kDraw;
-  std::println(R"("{}" "{}" "{}")", blackWins, whiteWins, draw);
-  std::println(R"("{:v}" "{:v}" "{:v}")", blackWins, whiteWins, draw);
-  std::println(R"("{:c}" "{:c}" "{:c}")", blackWins, whiteWins, draw);
+  chesskit::GameResult const black_wins = chesskit::GameResult::kBlackWins;
+  chesskit::GameResult const white_wins = chesskit::GameResult::kWhiteWins;
+  chesskit::GameResult const draw = chesskit::GameResult::kDraw;
+  std::println(R"("{}" "{}" "{}")", black_wins, white_wins, draw);
+  std::println(R"("{:v}" "{:v}" "{:v}")", black_wins, white_wins, draw);
+  std::println(R"("{:c}" "{:c}" "{:c}")", black_wins, white_wins, draw);
 
   parseAndPrint("1-0");
   parseAndPrint("0-1");

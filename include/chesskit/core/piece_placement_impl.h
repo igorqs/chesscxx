@@ -10,12 +10,12 @@
 namespace chesskit {
 
 namespace internal {
-inline constexpr auto standardStartPosition() -> PiecePlacement {
+constexpr auto standardStartPosition() -> PiecePlacement {
   return *parse<PiecePlacement>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 }
 }  // namespace internal
 
-inline constexpr PiecePlacement::PiecePlacement()
+constexpr PiecePlacement::PiecePlacement()
     : PiecePlacement(internal::standardStartPosition()) {}
 
 }  // namespace chesskit

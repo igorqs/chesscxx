@@ -7,17 +7,17 @@
 #include <string_view>
 
 namespace {
-void printErrorOrValue(auto parsedValue) {
-  if (parsedValue) {
-    std::println("{}", parsedValue.value());
+void printErrorOrValue(auto parsed_value) {
+  if (parsed_value) {
+    std::println("{}", parsed_value.value());
   } else {
-    std::println("{}", parsedValue.error());
+    std::println("{}", parsed_value.error());
   }
 }
 
-void parseAndPrint(std::string_view sv) {
-  auto parsedPiece = chesskit::parse<chesskit::Piece>(sv);
-  printErrorOrValue(parsedPiece);
+void parseAndPrint(std::string_view str) {
+  auto parsed_piece = chesskit::parse<chesskit::Piece>(str);
+  printErrorOrValue(parsed_piece);
 }
 }  // namespace
 

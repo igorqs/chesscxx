@@ -20,11 +20,11 @@ namespace chesskit {
 template <>
 class Parser<PieceType, const char*, parse_as::Uppercase> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PieceType, const char*>, ParseError> {
-    static constexpr std::string_view allowed = "PNBRQK";
+    static constexpr std::string_view kAllowed = "PNBRQK";
 
-    return internal::parseEnum<PieceType>(begin, end, allowed,
+    return internal::parseEnum<PieceType>(begin, end, kAllowed,
                                           ParseError::kInvalidPieceType);
   }
 };
@@ -34,11 +34,11 @@ class Parser<PieceType, const char*, parse_as::Uppercase> {
 template <>
 class Parser<PieceType, const char*, parse_as::Lowercase> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PieceType, const char*>, ParseError> {
-    static constexpr std::string_view allowed = "pnbrqk";
+    static constexpr std::string_view kAllowed = "pnbrqk";
 
-    return internal::parseEnum<PieceType>(begin, end, allowed,
+    return internal::parseEnum<PieceType>(begin, end, kAllowed,
                                           ParseError::kInvalidPieceType);
   }
 };
@@ -48,13 +48,13 @@ class Parser<PieceType, const char*, parse_as::Lowercase> {
 template <>
 class Parser<PromotablePieceType, const char*, parse_as::Uppercase> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PromotablePieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "NBRQ";
+    static constexpr std::string_view kAllowed = "NBRQ";
 
     return internal::parseEnum<PromotablePieceType>(
-        begin, end, allowed, ParseError::kInvalidPromotablePieceType);
+        begin, end, kAllowed, ParseError::kInvalidPromotablePieceType);
   }
 };
 
@@ -63,13 +63,13 @@ class Parser<PromotablePieceType, const char*, parse_as::Uppercase> {
 template <>
 class Parser<PromotablePieceType, const char*, parse_as::Lowercase> {
  public:
-  constexpr auto parse(const char* begin, const char* end)
+  static constexpr auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<PromotablePieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "nbrq";
+    static constexpr std::string_view kAllowed = "nbrq";
 
     return internal::parseEnum<PromotablePieceType>(
-        begin, end, allowed, ParseError::kInvalidPromotablePieceType);
+        begin, end, kAllowed, ParseError::kInvalidPromotablePieceType);
   }
 };
 

@@ -10,8 +10,8 @@
 namespace chesskit::internal {
 
 template <typename Enum>
-inline constexpr auto parseEnum(const char* begin, const char* end,
-                                std::string_view allowed, ParseError error)
+constexpr auto parseEnum(const char* begin, const char* end,
+                         std::string_view allowed, ParseError error)
     -> std::expected<ParseResult<Enum, const char*>, ParseError> {
   if (begin == end) return std::unexpected(error);
 

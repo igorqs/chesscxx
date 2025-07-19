@@ -32,11 +32,11 @@ struct std::formatter<chesskit::SanNormalMove> : chesskit::internal::NoSpec {
   template <typename FmtContext>
   auto format(const auto& san, FmtContext& ctx) const {
     std::optional<chesskit::PieceType> piece;
-    if (san.pieceType != chesskit::PieceType::kPawn) piece = san.pieceType;
+    if (san.piece_type != chesskit::PieceType::kPawn) piece = san.piece_type;
 
     return std::format_to(ctx.out(), "{:[u]}{}{}{}{:=[u]}{:[c]}", piece,
-                          san.origin, san.isCapture ? "x" : "", san.destination,
-                          san.promotion, san.check_indicator);
+                          san.origin, san.is_capture ? "x" : "",
+                          san.destination, san.promotion, san.check_indicator);
   }
 };
 

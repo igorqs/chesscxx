@@ -13,20 +13,20 @@ struct PortugueseLowercase {};
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<chesskit::PieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "PCBTDR";
+    static constexpr std::string_view kAllowed = "PCBTDR";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
 
-    auto index = allowed.find(*begin);
+    auto index = kAllowed.find(*begin);
 
     if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
                        .ptr = begin + 1};
   }
 };
@@ -34,27 +34,27 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
 template <>
 class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
  public:
-  auto parse(const char* begin, const char* end)
+  static auto parse(const char* begin, const char* end)
       -> std::expected<ParseResult<chesskit::PieceType, const char*>,
                        ParseError> {
-    static constexpr std::string_view allowed = "pcbtdr";
+    static constexpr std::string_view kAllowed = "pcbtdr";
 
     if (begin == end) return std::unexpected(ParseError::kInvalidPieceType);
 
-    auto index = allowed.find(*begin);
+    auto index = kAllowed.find(*begin);
 
     if (index == std::string_view::npos) {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsedValue = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
                        .ptr = begin + 1};
   }
 };
 
 namespace {
-void parsePortugueseAndPrint(std::string_view sv, auto tag) {
-  auto piece_type = chesskit::parse<chesskit::PieceType>(sv, tag);
+void parsePortugueseAndPrint(std::string_view str, auto tag) {
+  auto piece_type = chesskit::parse<chesskit::PieceType>(str, tag);
   assert(piece_type);
 
   std::println("{}", piece_type.value());

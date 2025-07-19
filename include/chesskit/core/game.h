@@ -42,10 +42,10 @@ class Game {
   constexpr Game() { updateRepetitionTracker(); }
 
   /// @brief Constructs a new game with a specified initial position.
-  constexpr explicit Game(const Position& initialPosition)
-      : initialPosition_(initialPosition),
-        currentPosition_(initialPosition),
-        isDefaultStart_(initialPosition == Position{}) {
+  constexpr explicit Game(const Position& initial_position)
+      : initial_position_(initial_position),
+        current_position_(initial_position),
+        is_default_start_(initial_position == Position{}) {
     updateRepetitionTracker();
   }
 
@@ -56,8 +56,8 @@ class Game {
 
   /// @brief Equality comparison operator.
   constexpr auto operator==(const Game& other) const -> bool {
-    return initialPosition_ == other.initialPosition_ &&
-           uciMoveHistory_ == other.uciMoveHistory_;
+    return initial_position_ == other.initial_position_ &&
+           uci_move_history_ == other.uci_move_history_;
   };
 
   /// @}
@@ -66,58 +66,58 @@ class Game {
   /// @{
 
   /// @brief Returns the initial game position.
-  auto initialPosition() const -> const Position& { return initialPosition_; }
+  auto initialPosition() const -> const Position& { return initial_position_; }
   /// @brief Indicates whether the game started from the default position.
-  auto startsFromDefaultPosition() const -> bool { return isDefaultStart_; }
+  auto startsFromDefaultPosition() const -> bool { return is_default_start_; }
 
   /// @brief Returns the current game position.
-  auto currentPosition() const -> const Position& { return currentPosition_; }
+  auto currentPosition() const -> const Position& { return current_position_; }
 
   /// @brief Returns the piece placement of the current position.
   auto piecePlacement() const -> const PiecePlacement& {
-    return currentPosition_.piecePlacement();
+    return current_position_.piecePlacement();
   }
   /// @brief Returns the active color (the side to move).
   auto activeColor() const -> const Color& {
-    return currentPosition_.activeColor();
+    return current_position_.activeColor();
   }
   /// @brief Returns the en passant target square, if any.
   auto enPassantTargetSquare() const -> std::optional<Square> {
-    return currentPosition_.enPassantTargetSquare();
+    return current_position_.enPassantTargetSquare();
   }
   /// @brief Returns the en passant target square if it's legally capturable.
   auto legalEnPassantTargetSquare() const -> std::optional<Square> {
-    return currentPosition_.legalEnPassantTargetSquare();
+    return current_position_.legalEnPassantTargetSquare();
   }
   /// @brief Returns the number of halfmoves since the last capture or pawn
   /// move.
   auto halfmoveClock() const -> const uint32_t& {
-    return currentPosition_.halfmoveClock();
+    return current_position_.halfmoveClock();
   }
   /// @brief Returns the current fullmove number.
   auto fullmoveNumber() const -> const uint32_t& {
-    return currentPosition_.fullmoveNumber();
+    return current_position_.fullmoveNumber();
   }
   /// @brief Returns the current castling rights.
   auto castlingRights() const -> const CastlingRights& {
-    return currentPosition_.castlingRights();
+    return current_position_.castlingRights();
   }
 
   /// @brief Returns the list of moves in UCI notation played since the initial
   /// position.
   auto uciMoves() const -> const std::vector<UciMove>& {
-    return uciMoveHistory_;
+    return uci_move_history_;
   }
 
   /// @brief Returns the list of moves in SAN notation played since the initial
   /// position.
   auto sanMoves() const -> const std::vector<SanMove>& {
-    return sanMoveHistory_;
+    return san_move_history_;
   }
 
   /// @brief Returns the repetition tracker.
   auto repetitionTracker() const -> const RepetitionTracker& {
-    return repetitionTracker_;
+    return repetition_tracker_;
   }
 
   ///  @brief Returns the result of the game if it is over.
@@ -166,14 +166,14 @@ class Game {
     removePositionOccurrence();
 
     const auto& move = lastMove();
-    internal::PositionModifier::undoMove(currentPosition_, move);
+    internal::PositionModifier::undoMove(current_position_, move);
 
     popBackHistory();
   }
 
   /// @brief Resets the game to the initial position
   void reset() {
-    currentPosition_ = initialPosition_;
+    current_position_ = initial_position_;
 
     clearHistory();
 
@@ -186,7 +186,7 @@ class Game {
  private:
   template <typename MoveInput>
   auto executeMove(const MoveInput& move) -> std::expected<void, MoveError> {
-    auto result = internal::PositionModifier::move(currentPosition_, move);
+    auto result = internal::PositionModifier::move(current_position_, move);
 
     if (result) {
       addToHistory(*result);
@@ -199,60 +199,60 @@ class Game {
 
   auto isGameOver() const -> bool { return isCheckmate() || isDraw(); }
   auto isCheckmate() const -> bool {
-    return internal::isCheckmate(currentPosition_);
+    return internal::isCheckmate(current_position_);
   }
   auto isDraw() const -> bool {
-    return internal::isDraw(currentPosition_) || isThreefoldRepetition();
+    return internal::isDraw(current_position_) || isThreefoldRepetition();
   }
   auto isStalemate() const -> bool {
-    return internal::isStalemate(currentPosition_);
+    return internal::isStalemate(current_position_);
   }
   auto isFiftyMoveRuleDraw() const -> bool {
-    return internal::isFiftyMoveRuleDraw(currentPosition_);
+    return internal::isFiftyMoveRuleDraw(current_position_);
   }
   auto isInsufficientMaterialDraw() const -> bool {
-    return internal::isInsufficientMaterialDraw(currentPosition_);
+    return internal::isInsufficientMaterialDraw(current_position_);
   }
   auto isThreefoldRepetition() const -> bool {
-    return repetitionTracker_.at(currentPosition_) >= 3;
+    return repetition_tracker_.at(current_position_) >= 3;
   }
 
-  auto historyIsEmpty() -> bool { return moveHistory_.empty(); }
+  auto historyIsEmpty() -> bool { return move_history_.empty(); }
   void clearHistory() {
-    moveHistory_.clear();
-    uciMoveHistory_.clear();
-    sanMoveHistory_.clear();
+    move_history_.clear();
+    uci_move_history_.clear();
+    san_move_history_.clear();
   }
   void addToHistory(const internal::MoveRecord& move) {
-    moveHistory_.push_back(move);
-    uciMoveHistory_.push_back(internal::convertTo<UciMove>(move));
-    sanMoveHistory_.push_back(internal::convertTo<SanMove>(move));
+    move_history_.push_back(move);
+    uci_move_history_.push_back(internal::convertTo<UciMove>(move));
+    san_move_history_.push_back(internal::convertTo<SanMove>(move));
   }
   void popBackHistory() {
-    moveHistory_.pop_back();
-    uciMoveHistory_.pop_back();
-    sanMoveHistory_.pop_back();
+    move_history_.pop_back();
+    uci_move_history_.pop_back();
+    san_move_history_.pop_back();
   }
   auto lastMove() -> const internal::MoveRecord& {
-    return moveHistory_.back();
+    return move_history_.back();
   };
 
-  void clearRepetitionTracker() { repetitionTracker_.clear(); }
+  void clearRepetitionTracker() { repetition_tracker_.clear(); }
   void removePositionOccurrence() {
-    repetitionTracker_[currentPosition_]--;
-    if (repetitionTracker_[currentPosition_] == 0) {
-      repetitionTracker_.erase(currentPosition_);
+    repetition_tracker_[current_position_]--;
+    if (repetition_tracker_[current_position_] == 0) {
+      repetition_tracker_.erase(current_position_);
     }
   }
-  void updateRepetitionTracker() { repetitionTracker_[currentPosition_]++; }
+  void updateRepetitionTracker() { repetition_tracker_[current_position_]++; }
 
-  Position initialPosition_;
-  bool isDefaultStart_ = true;
-  Position currentPosition_;
-  std::vector<internal::MoveRecord> moveHistory_;
-  std::vector<UciMove> uciMoveHistory_;
-  std::vector<SanMove> sanMoveHistory_;
-  RepetitionTracker repetitionTracker_;
+  Position initial_position_;
+  bool is_default_start_ = true;
+  Position current_position_;
+  std::vector<internal::MoveRecord> move_history_;
+  std::vector<UciMove> uci_move_history_;
+  std::vector<SanMove> san_move_history_;
+  RepetitionTracker repetition_tracker_;
 };
 
 }  // namespace chesskit
