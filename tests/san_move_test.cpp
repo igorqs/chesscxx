@@ -76,17 +76,20 @@ constexpr static auto kTestSanNormalMoves =
                                      destination, promotion, check_indicator);
     });
 
-const static auto kTestSanMoves = [] {
-  using chesskit::SanMove;
+namespace {
+constexpr auto makeTestSanMoves() noexcept {
   constexpr auto kSize =
       kAllSanCastlingMoves.size() + kTestSanNormalMoves.size();
-  std::array<SanMove, kSize> arr;
+  std::array<chesskit::SanMove, kSize> arr;
   auto result = std::ranges::copy(kAllSanCastlingMoves.begin(),
                                   kAllSanCastlingMoves.end(), arr.begin());
   std::ranges::copy(kTestSanNormalMoves.begin(), kTestSanNormalMoves.end(),
                     result.out);
   return arr;
-}();
+}
+}  // namespace
+
+const static auto kTestSanMoves = makeTestSanMoves();
 
 // SanCastlingMove
 

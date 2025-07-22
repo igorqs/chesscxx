@@ -19,7 +19,7 @@ template <typename RankRange, typename OutputIt>
 constexpr auto formatRank(OutputIt out, RankRange&& rank) -> OutputIt {
   int empty_counter = 0;
 
-  for (const auto& piece : rank) {
+  for (const auto& piece : std::forward<RankRange>(rank)) {
     if (piece.has_value()) {
       if (empty_counter) {
         out = std::format_to(out, "{}", empty_counter);
@@ -52,7 +52,7 @@ struct std::formatter<chesskit::PiecePlacement>
       if (rank != 0) *out++ = '/';
       const auto* begin =
           piece_placement.pieceArray().begin() + ((rank * chesskit::kNumFiles));
-      const auto* end = begin + chesskit::kNumFiles;
+      const auto* end = std::next(begin, chesskit::kNumFiles);
       out = internal::formatRank(out, std::ranges::subrange(begin, end));
     }
 
@@ -67,7 +67,7 @@ struct std::formatter<chesskit::PiecePlacement>
       if (rank != 0) *out++ = '\n';
       const auto* begin =
           piece_placement.pieceArray().begin() + ((rank * chesskit::kNumFiles));
-      const auto* end = begin + chesskit::kNumFiles;
+      const auto* end = std::next(begin, chesskit::kNumFiles);
       for (const auto& piece : std::ranges::subrange(begin, end)) {
         out = std::format_to(out, "{:[c]?.}", piece);
       }

@@ -79,7 +79,7 @@ class InvalidParamsFixture {
  private:
   std::string raw_;
   chesskit::Position::Params params_;
-  chesskit::PositionError error_;
+  chesskit::PositionError error_{};
 };
 
 template <>
@@ -108,7 +108,7 @@ class InvalidFixture {
 
  private:
   std::string raw_;
-  chesskit::ParseError error_;
+  chesskit::ParseError error_{};
 };
 
 template <>

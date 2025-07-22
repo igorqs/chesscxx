@@ -13,7 +13,7 @@
 
 namespace chesskit::internal {
 
-inline auto pseudoLegalEnPassantCaptures(const Position& position)
+inline auto pseudoLegalEnPassantCaptures(Position position)
     -> std::generator<RawMove> {
   if (!position.enPassantTargetSquare()) co_return;
 
@@ -26,7 +26,7 @@ inline auto pseudoLegalEnPassantCaptures(const Position& position)
           [&](const Square& origin) { return RawMove(origin, target); }));
 }
 
-inline auto legalEnPassantCaptures(const Position& position)
+inline auto legalEnPassantCaptures(Position position)
     -> std::generator<RawMove> {
   using std::ranges::elements_of;
 

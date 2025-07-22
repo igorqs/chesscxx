@@ -1,6 +1,7 @@
 #ifndef CHESSKIT_INCLUDE_CHESSKIT_FORMATTER_INTERNAL_FORMATTER_HELPER_H_
 #define CHESSKIT_INCLUDE_CHESSKIT_FORMATTER_INTERNAL_FORMATTER_HELPER_H_
 
+#include <iterator>
 #include <string_view>
 #include <variant>
 
@@ -56,7 +57,7 @@ struct SpecDispatcher : BaseFormatter {
     ([&] {
       if (str.size() < Specs::kToken.size()) return false;
 
-      auto next = ptr + Specs::kToken.size();
+      auto next = std::next(ptr, Specs::kToken.size());
       if (str.starts_with(Specs::kToken) && ((next == end) || *next == '}')) {
         spec = Specs{};
         ptr = next;
@@ -70,7 +71,7 @@ struct SpecDispatcher : BaseFormatter {
   }
 
   template <typename Self, typename FmtContext>
-  auto format(this Self&& self, const auto& value, FmtContext& ctx) {
+  auto format(this const Self& self, const auto& value, FmtContext& ctx) {
     return std::visit(
         [&](const auto& spec) { return self.handleSpec(value, ctx, spec); },
         self.spec);

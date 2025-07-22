@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <expected>
+#include <iterator>
 #include <print>
 #include <string_view>
 
@@ -27,7 +28,7 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
     }
 
     return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
-                       .ptr = begin + 1};
+                       .ptr = std::next(begin)};
   }
 };
 
@@ -48,7 +49,7 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
     }
 
     return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
-                       .ptr = begin + 1};
+                       .ptr = std::next(begin)};
   }
 };
 

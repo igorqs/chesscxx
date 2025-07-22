@@ -241,7 +241,7 @@ class SanMoveErrorFixture {
   std::string raw_;
   chesskit::Game game_;
   chesskit::SanMove move_;
-  chesskit::MoveError error_;
+  chesskit::MoveError error_{};
 };
 
 template <>
@@ -285,7 +285,7 @@ class UciMoveErrorFixture {
   std::string raw_;
   chesskit::Game game_;
   chesskit::UciMove move_;
-  chesskit::MoveError error_;
+  chesskit::MoveError error_{};
 };
 
 template <>
@@ -498,7 +498,7 @@ class InvalidFixture {
 
  private:
   std::string raw_;
-  chesskit::ParseError error_;
+  chesskit::ParseError error_{};
 };
 
 template <>

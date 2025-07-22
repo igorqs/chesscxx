@@ -5,6 +5,7 @@
 
 #include <array>
 #include <expected>
+#include <iterator>
 #include <magic_enum/magic_enum.hpp>
 #include <string_view>
 
@@ -28,7 +29,7 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
     }
 
     return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
-                       .ptr = begin + 1};
+                       .ptr = std::next(begin)};
   }
 };
 
@@ -49,7 +50,7 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
     }
 
     return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
-                       .ptr = begin + 1};
+                       .ptr = std::next(begin)};
   }
 };
 
@@ -65,13 +66,13 @@ TEST(ParseTest, ParseFromHandlesValidInputCorrectly) {
   using chesskit::PieceType;
 
   for (int i = 0; i < kInputsSize; i++) {
-    std::string_view input = kLowercaseInputs[i];
+    std::string_view input = kLowercaseInputs.at(i);
     auto result =
         parseFrom<PieceType>(input.begin(), input.end(), PortugueseLowercase{});
     EXPECT_EQ(result->parsed_value, magic_enum::enum_cast<PieceType>(i));
     EXPECT_EQ(result->ptr, input.end());
 
-    input = kUppercaseInputs[i];
+    input = kUppercaseInputs.at(i);
     result =
         parseFrom<PieceType>(input.begin(), input.end(), PortugueseUppercase{});
     EXPECT_EQ(result->parsed_value, magic_enum::enum_cast<PieceType>(i));
@@ -119,11 +120,11 @@ TEST(ParseTest, ParseHandlesValidInputCorrectly) {
   using chesskit::PieceType;
 
   for (int i = 0; i < kInputsSize; i++) {
-    std::string_view input = kLowercaseInputs[i];
+    std::string_view input = kLowercaseInputs.at(i);
     auto result = parse<PieceType>(input, PortugueseLowercase{});
     EXPECT_EQ(result.value(), magic_enum::enum_cast<PieceType>(i));
 
-    input = kUppercaseInputs[i];
+    input = kUppercaseInputs.at(i);
     result = parse<PieceType>(input, PortugueseUppercase{});
     EXPECT_EQ(result.value(), magic_enum::enum_cast<PieceType>(i));
   }

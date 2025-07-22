@@ -87,7 +87,7 @@ class InvalidPieceArrayFixture {
  private:
   std::string raw_;
   chesskit::PiecePlacement::PieceArray piece_array_;
-  chesskit::PiecePlacementError error_;
+  chesskit::PiecePlacementError error_{};
 };
 
 template <>
@@ -115,7 +115,7 @@ class InvalidFixture {
 
  private:
   std::string raw_;
-  chesskit::ParseError error_;
+  chesskit::ParseError error_{};
 };
 
 template <>

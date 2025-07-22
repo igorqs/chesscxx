@@ -10,8 +10,8 @@ namespace chesskit::internal {
 template <typename T>
 auto merge(const size_t& seed, const T& element) -> size_t {
   constexpr static auto kGoldenRatio = 0x9e3779b9;
-  constexpr static auto kLeftShift = 6;
-  constexpr static auto kRightShift = 2;
+  constexpr static auto kLeftShift = 6U;
+  constexpr static auto kRightShift = 2U;
 
   return seed ^ (std::hash<T>{}(element) + kGoldenRatio + (seed << kLeftShift) +
                  (seed >> kRightShift));

@@ -72,7 +72,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
       if (ptr == end || !isLeftBracket(*ptr)) {
         return ParseResult{.parsed_value = position, .ptr = ptr};
       }
-      ++ptr;
+      std::advance(ptr, 1);
 
       auto parsed_tag = parseTag(ptr, end);
       if (!parsed_tag) return std::unexpected(parsed_tag.error());
@@ -87,7 +87,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
       if (ptr == end || !is_right_bracket(*ptr)) {
         return std::unexpected(ParseError::kInvalidRightBracket);
       }
-      ++ptr;
+      std::advance(ptr, 1);
     }
 
     return ParseResult{.parsed_value = position, .ptr = ptr};
@@ -106,8 +106,9 @@ class Parser<Game, const char*, parse_as::Pgn> {
     }
 
     auto str = std::string_view(ptr, end);
-    bool const is_fen = str.starts_with("FEN") &&
-                        (ptr + 3 == end || !isSymbolToken(*(ptr + 3)));
+    bool const is_fen =
+        str.starts_with("FEN") &&
+        (std::next(ptr, 3) == end || !isSymbolToken(*std::next(ptr, 3)));
 
     ptr = trimSymbolToken(ptr, end);
 
@@ -116,7 +117,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
     if (ptr == end || !isQuote(*ptr)) {
       return std::unexpected(ParseError::kInvalidQuote);
     }
-    ptr++;
+    std::advance(ptr, 1);
 
     if (is_fen) {
       auto parsed_position = parseFrom<Position>(ptr, end);
@@ -130,7 +131,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
     if (ptr == end || !isQuote(*ptr)) {
       return std::unexpected(ParseError::kInvalidQuote);
     }
-    ptr++;
+    std::advance(ptr, 1);
 
     ptr = trimWhiteSpaces(ptr, end);
 
@@ -151,7 +152,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
       // Game termination marks
       if (ptr == end) break;
       if (is_asterisk(*ptr)) {
-        ptr++;
+        std::advance(ptr, 1);
         break;
       }
       auto game_result = parseFrom<GameResult>(ptr, end);
@@ -209,8 +210,8 @@ class Parser<Game, const char*, parse_as::Pgn> {
   static auto trimBlock(const char* begin, const char* end,
                         std::array<char, 2> block_delimiters) -> const char* {
     if (begin != end && *begin == block_delimiters[0]) {
-      begin = std::find(begin + 1, end, block_delimiters[1]);
-      if (begin != end) begin++;
+      begin = std::find(std::next(begin), end, block_delimiters[1]);
+      if (begin != end) std::advance(begin, 1);
     }
 
     return begin;
@@ -228,7 +229,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
   static auto trimLineComment(const char* begin, const char* end) -> const
       char* {
     if (begin != end && isSemicolon(*begin)) {
-      begin = std::find(begin + 1, end, '\n');
+      begin = std::find(std::next(begin), end, '\n');
     }
 
     return begin;
@@ -236,28 +237,28 @@ class Parser<Game, const char*, parse_as::Pgn> {
 
   static auto trimNag(const char* begin, const char* end) -> const char* {
     if (begin != end && isDollarSign(*begin)) {
-      begin = std::find_if_not(begin + 1, end, isDigit);
+      begin = std::find_if_not(std::next(begin), end, isDigit);
     }
 
     return begin;
   }
 
   static auto trimPeriod(const char* begin, const char* end) -> const char* {
-    if (begin != end && isPeriod(*begin)) begin++;
+    if (begin != end && isPeriod(*begin)) std::advance(begin, 1);
 
     return begin;
   }
 
   static auto trimMoveAnnotation(const char* begin, const char* end) -> const
       char* {
-    if (begin != end && isMoveAnnotation(*begin)) begin++;
+    if (begin != end && isMoveAnnotation(*begin)) std::advance(begin, 1);
 
     return begin;
   }
 
   static auto trimDigit(const char* begin, const char* end) -> const char* {
     if (begin != end && isDigit(*begin)) {
-      const auto* skipped = std::find_if_not(begin + 1, end, isDigit);
+      const auto* skipped = std::find_if_not(std::next(begin), end, isDigit);
 
       bool const was_number = (skipped == end) || isSkippable(*skipped);
 
@@ -286,7 +287,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
 
     bool escaping = false;
 
-    for (; ptr != end; ++ptr) {
+    for (; ptr != end; std::advance(ptr, 1)) {
       if (is_string_escape(*ptr)) {
         escaping = !escaping;
         continue;

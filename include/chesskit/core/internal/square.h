@@ -75,7 +75,7 @@ constexpr auto farthestPawnPush(const Square& square, const Color& color)
 }
 
 constexpr auto squareColor(const Square& square) -> Color {
-  auto parity = (index(square.file) + index(square.rank)) & 1;
+  auto parity = static_cast<uint>(index(square.file) + index(square.rank)) & 1U;
   return (parity == 0) ? Color::kWhite : Color::kBlack;
 }
 

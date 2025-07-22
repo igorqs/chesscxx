@@ -13,7 +13,7 @@ namespace chesskit::internal {
 
 inline auto pieceAt(const PiecePlacement& piece_placement, const Square& square)
     -> const std::optional<Piece>& {
-  return piece_placement.pieceArray()[index(square)];
+  return piece_placement.pieceArray().at(index(square));
 }
 
 inline auto hasPieceAt(const PiecePlacement& piece_placement,

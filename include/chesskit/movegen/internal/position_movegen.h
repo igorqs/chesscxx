@@ -23,7 +23,7 @@
 
 namespace chesskit::internal {
 
-inline auto pseudoLegalPawnCaptures(const Position& position, Square square,
+inline auto pseudoLegalPawnCaptures(Position position, Square square,
                                     Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnCaptures(square, color) |
@@ -33,15 +33,15 @@ inline auto pseudoLegalPawnCaptures(const Position& position, Square square,
       }));
 }
 
-inline auto pseudoLegalPawnMoves(const Position& position, Square square,
-                                 Color color) -> std::generator<Square> {
+inline auto pseudoLegalPawnMoves(Position position, Square square, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pseudoLegalPawnPushs(position.piecePlacement(), square, color));
   co_yield std::ranges::elements_of(
       pseudoLegalPawnCaptures(position, square, color));
 }
 
-inline auto pseudoLegalMoves(const Position& position, Square square)
+inline auto pseudoLegalMoves(Position position, Square square)
     -> std::generator<Square> {
   const auto& piece_placement = position.piecePlacement();
 
@@ -80,15 +80,14 @@ inline auto pseudoLegalMoves(const Position& position, Square square)
   }
 }
 
-inline auto pseudoLegalMoves(const Position& position)
-    -> std::generator<RawMove> {
+inline auto pseudoLegalMoves(Position position) -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
   const auto& piece_placement = position.piecePlacement();
   const auto& color = position.activeColor();
 
   auto location_to_pseudo_legal_moves =
-      [&](Square piece_location) -> std::generator<RawMove> {
+      [&position](Square piece_location) -> std::generator<RawMove> {
     co_yield elements_of(pseudoLegalMoves(position, piece_location) |
                          std::views::transform([&](const Square& destination) {
                            return RawMove(piece_location, destination);
@@ -101,7 +100,7 @@ inline auto pseudoLegalMoves(const Position& position)
                        std::views::join);
 }
 
-inline auto legalRawMoves(const Position& position) -> std::generator<RawMove> {
+inline auto legalRawMoves(Position position) -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
   co_yield elements_of(pseudoLegalMoves(position) |
@@ -112,8 +111,7 @@ inline auto legalRawMoves(const Position& position) -> std::generator<RawMove> {
                        }));
 }
 
-inline auto legalCastlings(const Position& position)
-    -> std::generator<CastlingSide> {
+inline auto legalCastlings(Position position) -> std::generator<CastlingSide> {
   constexpr static std::array<CastlingSide, 2> kSides = {
       CastlingSide::kKingside, CastlingSide::kQueenside};
 
@@ -127,7 +125,7 @@ inline auto legalCastlings(const Position& position)
   }
 }
 
-inline auto uciPromotions(const RawMove& raw_move) -> std::generator<UciMove> {
+inline auto uciPromotions(RawMove raw_move) -> std::generator<UciMove> {
   constexpr static std::array<PromotablePieceType, 4> kPromotions = {
       PromotablePieceType::kKnight, PromotablePieceType::kBishop,
       PromotablePieceType::kRook, PromotablePieceType::kQueen};
@@ -149,8 +147,8 @@ inline auto legalMoves(Position position) -> std::generator<UciMove> {
 
   co_yield elements_of(
       legalRawMoves(position) |
-      std::views::transform([&position](const auto& raw_move)
-                                -> std::generator<UciMove> {
+      std::views::transform([&position](
+                                auto raw_move) -> std::generator<UciMove> {
         auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
         bool const is_pawn = piece && piece->type == PieceType::kPawn;
         bool const is_promotion_rank =
@@ -174,7 +172,7 @@ inline auto hasLegalMove(const Position& position) -> bool {
   return moves.begin() != moves.end();
 }
 
-inline auto pawnsCapturing(const Position& position, Square square, Color color)
+inline auto pawnsCapturing(Position position, Square square, Color color)
     -> std::generator<Square> {
   bool const has_opponent =
       hasPieceAt(position.piecePlacement(), square, !color);
@@ -187,14 +185,14 @@ inline auto pawnsCapturing(const Position& position, Square square, Color color)
       pawnsAttacking(position.piecePlacement(), square, color));
 }
 
-inline auto pawnsReaching(const Position& position, Square square, Color color)
+inline auto pawnsReaching(Position position, Square square, Color color)
     -> std::generator<Square> {
   co_yield std::ranges::elements_of(pawnsCapturing(position, square, color));
   co_yield std::ranges::elements_of(
       pawnMovingTo(position.piecePlacement(), square, color));
 }
 
-inline auto piecesReaching(const Position& position, Square square, Piece piece)
+inline auto piecesReaching(Position position, Square square, Piece piece)
     -> std::generator<Square> {
   const auto& piece_placement = position.piecePlacement();
 

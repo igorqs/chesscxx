@@ -46,7 +46,7 @@ class Parser<SanNormalMove, const char*, parse_as::Default> {
     move.is_capture = false;
     if (ptr != end && *ptr == 'x') {
       move.is_capture = true;
-      ptr++;
+      std::advance(ptr, 1);
     }
 
     auto destination = parseFrom<Square>(ptr, end);
@@ -68,7 +68,7 @@ class Parser<SanNormalMove, const char*, parse_as::Default> {
     bool has_promotion_symbol = false;
     if (ptr != end && *ptr == '=') {
       has_promotion_symbol = true;
-      ptr++;
+      std::advance(ptr, 1);
     }
 
     auto promotion =
@@ -100,15 +100,15 @@ class Parser<SanCastlingMove, const char*, parse_as::Default> {
     static constexpr std::string_view kQueenside = "O-O-O";
     static constexpr std::string_view kKingside = "O-O";
 
-    CastlingSide side;
+    CastlingSide side{};
     const auto* ptr = begin;
     std::string_view const input{begin, end};
 
     if (input.starts_with(kQueenside)) {
-      ptr += kQueenside.size();
+      std::advance(ptr, kQueenside.size());
       side = CastlingSide::kQueenside;
     } else if (input.starts_with(kKingside)) {
-      ptr += kKingside.size();
+      std::advance(ptr, kKingside.size());
       side = CastlingSide::kKingside;
     } else {
       return std::unexpected(ParseError::kInvalidSanCastling);

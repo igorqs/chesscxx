@@ -18,7 +18,7 @@ constexpr auto kAll = chesskit::CastlingRights{};
 constexpr auto kNone = chesskit::CastlingRights{0};
 
 static constexpr int kMaxBitset =
-    (1 << chesskit::CastlingRights::kNumCastlingRights);
+    (1U << chesskit::CastlingRights::kNumCastlingRights);
 
 constexpr static auto kAllCastlingRights =
     std::views::iota(0, kMaxBitset) | std::views::transform([](auto bits) {

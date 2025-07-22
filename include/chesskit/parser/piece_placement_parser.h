@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <expected>
+#include <iterator>
 #include <ranges>
 #include <string_view>
 
@@ -42,7 +43,7 @@ constexpr auto parsePieceArray(const char* begin, const char* end)
       if (*it >= '1' && *it <= to_char(missing_pieces)) {
         missing_pieces -= from_char(*it);
         piece_counter += from_char(*it);
-        ++it;
+        std::advance(it, 1);
         if (piece_counter == kNumSquares) {
           return ParseResult{.parsed_value = piece_array, .ptr = it};
         }
@@ -51,7 +52,7 @@ constexpr auto parsePieceArray(const char* begin, const char* end)
 
       auto piece = parseFrom<Piece>(it, rank.end());
       if (!piece) return std::unexpected(piece.error());
-      piece_array[piece_counter++] = piece->parsed_value;
+      piece_array.at(piece_counter++) = piece->parsed_value;
       it = piece->ptr;
       missing_pieces--;
 

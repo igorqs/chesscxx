@@ -23,11 +23,11 @@ auto parsePiece(std::string_view str) {
 }
 
 void setPiece(auto& array, const auto& square, const auto& piece) {
-  array[chesskit::index(square)] = piece;
+  array.at(chesskit::index(square)) = piece;
 }
 
 void clearSquare(auto& array, const auto& square) {
-  array[chesskit::index(square)] = std::nullopt;
+  array.at(chesskit::index(square)) = std::nullopt;
 }
 
 void printErrorOrValue(const auto& piece_placement) {

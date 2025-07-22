@@ -99,7 +99,7 @@ class PiecePlacement {
     for (uint8_t i = 0; i < kNumSquares; ++i) {
       auto square = internal::createSquareFromIndex(i);
       assert(square.has_value());
-      updatePieceAt(*square, piece_array[i]);
+      updatePieceAt(*square, piece_array.at(i));
     }
   }
 
@@ -169,7 +169,7 @@ class PiecePlacement {
   }
 
   constexpr auto pieceAt(const Square& square) -> std::optional<Piece>& {
-    return piece_array_[index(square)];
+    return piece_array_.at(index(square));
   }
 
   PieceArray piece_array_;

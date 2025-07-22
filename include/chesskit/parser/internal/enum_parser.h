@@ -2,6 +2,7 @@
 #define CHESSKIT_INCLUDE_CHESSKIT_PARSER_INTERNAL_ENUM_PARSER_H_
 
 #include <expected>
+#include <iterator>
 #include <string_view>
 
 #include "../../parse_error.h"
@@ -19,7 +20,7 @@ constexpr auto parseEnum(const char* begin, const char* end,
 
   if (index == std::string_view::npos) return std::unexpected(error);
 
-  return ParseResult{static_cast<Enum>(index), begin + 1};
+  return ParseResult{static_cast<Enum>(index), std::next(begin)};
 }
 
 }  // namespace chesskit::internal

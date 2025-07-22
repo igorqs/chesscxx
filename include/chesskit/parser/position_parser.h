@@ -49,33 +49,39 @@ inline auto parsePositionParams(const char* begin, const char* end)
   if (!piece_placement) return std::unexpected(piece_placement.error());
   ptr = piece_placement->ptr;
 
-  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  std::advance(ptr, 1);
 
   auto active_color = parseFrom<Color>(ptr, end);
   if (!active_color) return std::unexpected(active_color.error());
   ptr = active_color->ptr;
 
-  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  std::advance(ptr, 1);
 
   auto castling_rights = parseFrom<CastlingRights>(ptr, end);
   if (!castling_rights) return std::unexpected(castling_rights.error());
   ptr = castling_rights->ptr;
 
-  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  std::advance(ptr, 1);
 
   auto en_passant_square = internal::tryParseFrom<Square>(ptr, end);
   ptr = en_passant_square.ptr;
   if (!en_passant_square.parsed_value) {
-    if (!is_dash(ptr++)) return std::unexpected(ParseError::kInvalidDashSymbol);
+    if (!is_dash(ptr)) return std::unexpected(ParseError::kInvalidDashSymbol);
+    std::advance(ptr, 1);
   }
 
-  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  std::advance(ptr, 1);
 
   auto halfmove_clock = parseNumber(ptr, end);
   if (!halfmove_clock) return std::unexpected(halfmove_clock.error());
   ptr = halfmove_clock->ptr;
 
-  if (!is_space(ptr++)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  if (!is_space(ptr)) return std::unexpected(ParseError::kInvalidWhiteSpace);
+  std::advance(ptr, 1);
 
   auto fullmove_number = parseNumber(ptr, end);
   if (!fullmove_number) return std::unexpected(fullmove_number.error());

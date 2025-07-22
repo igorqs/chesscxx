@@ -104,14 +104,14 @@ class CastlingRights {
   /// @}
 
  private:
-  static constexpr uint8_t kInitialValue = (1 << kNumCastlingRights) - 1;
+  static constexpr uint8_t kInitialValue = (1U << kNumCastlingRights) - 1;
 
   static constexpr auto index(const CastlingSide& side, const Color& color)
       -> uint8_t {
-    uint8_t const side_index = (side == CastlingSide::kKingside) ? 0 : 1;
-    uint8_t const color_index = (color == Color::kWhite) ? 0 : 1;
+    uint const side_index = (side == CastlingSide::kKingside) ? 0 : 1;
+    uint const color_index = (color == Color::kWhite) ? 0 : 1;
 
-    return (color_index << 1) | side_index;
+    return (color_index << 1U) | side_index;
   }
 
   std::bitset<kNumCastlingRights> castling_rights_{kInitialValue};

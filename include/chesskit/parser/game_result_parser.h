@@ -32,8 +32,9 @@ class Parser<GameResult, const char*, parse_as::Default> {
 
     for (const auto& [pattern, result] : kGameResults) {
       if (str.starts_with(pattern)) {
-        return ParseResult{.parsed_value = result,
-                           .ptr = begin + pattern.size()};
+        return ParseResult{
+            .parsed_value = result,
+            .ptr = std::next(begin, static_cast<ptrdiff_t>(pattern.size()))};
       }
     }
 

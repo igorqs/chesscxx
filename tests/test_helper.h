@@ -77,7 +77,7 @@ constexpr auto make_optional_enum_array() {
 }
 
 template <typename Range>
-constexpr auto make_distinct_pairs(Range&& range) {
+constexpr auto make_distinct_pairs(const Range& range) {
   using T = std::ranges::range_value_t<Range>;
   std::vector<std::tuple<T, T>> pairs;
 
