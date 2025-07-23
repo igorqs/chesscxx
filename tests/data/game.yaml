@@ -209,6 +209,58 @@ format_fixtures:
       Halfmove clock: 1
       Fullmove number: 1
     - "{ \"7k/7P/5B1K/8/8/8/8/8 b - -\": 1, \"7k/7P/7K/8/7B/8/8/8 w - -\": 1 }"
+  - - "[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 6\"]Bf6"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 6\"]\n[SetUp \"1\"]\n\n6. Bf6# 1-0"
+    - "[Result \"1-0\"]\n[FEN \"7k/7P/7K/8/7B/8/8/8 w - - 0 6\"]\n[SetUp \"1\"]\n\n6. Bf6# 1-0"
+    - "7k/7P/5B1K/8/8/8/8/8 b - - 1 6"
+    - |-
+      .......k
+      .......P
+      .....B.K
+      ........
+      ........
+      ........
+      ........
+      ........
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 6
+    - |-
+      { white bishop: [f6], white king: [h6], white pawn: [h7], black king: [h8] }
+      Active color: black
+      Castling availability: -
+      En passant target square: -
+      Halfmove clock: 1
+      Fullmove number: 6
+    - "{ \"7k/7P/5B1K/8/8/8/8/8 b - -\": 1, \"7k/7P/7K/8/7B/8/8/8 w - -\": 1 }"
+  - - "[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 8\"] e5 e4"
+    - "[Result \"*\"]\n[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 8\"]\n[SetUp \"1\"]\n\n8... e5 9. e4 *"
+    - "[Result \"*\"]\n[FEN \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 8\"]\n[SetUp \"1\"]\n\n8... e5 9. e4 *"
+    - "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 9"
+    - |-
+      rnbqkbnr
+      pppp.ppp
+      ........
+      ....p...
+      ....P...
+      ........
+      PPPP.PPP
+      RNBQKBNR
+      Active color: black
+      Castling availability: KQkq
+      En passant target square: e3
+      Halfmove clock: 0
+      Fullmove number: 9
+    - |-
+      { white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, g2, f2, d2, c2, e4, b2, a2], black pawns: [e5, h7, g7, f7, d7, c7, b7, a7], black king: [e8], black queen: [d8], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+      Active color: black
+      Castling availability: KQkq
+      En passant target square: e3
+      Halfmove clock: 0
+      Fullmove number: 9
+    - "{ \"rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -\": 1, \"rnbqkbnr/pppp1ppp/8/4p3/8/8/PPPPPPPP/RNBQKBNR w KQkq -\": 1, \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -\": 1 }"
 
 unique_repetition_tracker_fixtures:
   - ""

@@ -33,6 +33,10 @@ struct std::formatter<chesskit::Game>
     auto color = game.initialPosition().activeColor();
     auto move_number = game.initialPosition().fullmoveNumber();
 
+    if (color == chesskit::Color::kBlack && !moves.empty()) {
+      out = std::format_to(out, "{}... ", move_number);
+    }
+
     for (const auto& move : moves) {
       if (color == chesskit::Color::kWhite) {
         out = std::format_to(out, "{}. ", move_number);
@@ -40,7 +44,7 @@ struct std::formatter<chesskit::Game>
 
       out = std::format_to(out, "{} ", move);
 
-      if (color == chesskit::Color::kWhite) move_number++;
+      if (color == chesskit::Color::kBlack) move_number++;
       color = !color;
     }
 
