@@ -10,7 +10,7 @@ Checks: >
   -modernize-use-constraints,
   -readability-braces-around-statements,
   -hicpp-braces-around-statements
-WarningsAsErrors: '*,-bugprone-exception-escape,-cppcoreguidelines-avoid-capturing-lambda-coroutines,-cert-dcl58-cpp'
+WarningsAsErrors: '*,-bugprone-exception-escape,-cert-dcl58-cpp'
 CheckOptions:
   - { key: misc-include-cleaner.IgnoreHeaders,                         value: 'yaml-cpp/.*' }
   - { key: readability-identifier-naming.ClassCase,                    value: CamelCase  }

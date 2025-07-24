@@ -86,12 +86,11 @@ inline auto pseudoLegalMoves(Position position) -> std::generator<RawMove> {
   const auto& piece_placement = position.piecePlacement();
   const auto& color = position.activeColor();
 
-  auto location_to_pseudo_legal_moves =
-      [&position](Square piece_location) -> std::generator<RawMove> {
-    co_yield elements_of(pseudoLegalMoves(position, piece_location) |
-                         std::views::transform([&](const Square& destination) {
-                           return RawMove(piece_location, destination);
-                         }));
+  auto location_to_pseudo_legal_moves = [position](Square piece_location) {
+    return pseudoLegalMoves(position, piece_location) |
+           std::views::transform([piece_location](const Square& destination) {
+             return RawMove(piece_location, destination);
+           });
   };
 
   co_yield elements_of(piece_placement.pieceLocations().at(color) |
@@ -135,6 +134,25 @@ inline auto uciPromotions(RawMove raw_move) -> std::generator<UciMove> {
   }
 }
 
+inline auto legalNormalUciMoves(Position position) -> std::generator<UciMove> {
+  using std::ranges::elements_of;
+
+  for (auto raw_move : legalRawMoves(position)) {
+    auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
+    bool const is_pawn = piece && piece->type == PieceType::kPawn;
+    bool const is_promotion_rank =
+        raw_move.destination.rank == promotionRank(position.activeColor());
+    bool const is_promotion = is_pawn && is_promotion_rank;
+
+    if (is_promotion) {
+      co_yield elements_of(uciPromotions(raw_move));
+      continue;
+    }
+
+    co_yield UciMove(raw_move.origin, raw_move.destination, std::nullopt);
+  }
+}
+
 inline auto legalMoves(Position position) -> std::generator<UciMove> {
   using std::ranges::elements_of;
 
@@ -145,26 +163,7 @@ inline auto legalMoves(Position position) -> std::generator<UciMove> {
         return UciMove(raw_move.origin, raw_move.destination, std::nullopt);
       }));
 
-  co_yield elements_of(
-      legalRawMoves(position) |
-      std::views::transform([&position](
-                                auto raw_move) -> std::generator<UciMove> {
-        auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
-        bool const is_pawn = piece && piece->type == PieceType::kPawn;
-        bool const is_promotion_rank =
-            raw_move.destination.rank == promotionRank(position.activeColor());
-        bool const is_promotion = is_pawn && is_promotion_rank;
-
-        if (is_promotion) {
-          co_yield elements_of(uciPromotions(raw_move));
-          co_return;
-        }
-
-        co_yield UciMove(raw_move.origin, raw_move.destination, std::nullopt);
-      }) |
-      std::views::join);
-
-  co_return;
+  co_yield elements_of(legalNormalUciMoves(position));
 }
 
 inline auto hasLegalMove(const Position& position) -> bool {
