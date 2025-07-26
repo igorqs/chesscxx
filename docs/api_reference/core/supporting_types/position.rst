@@ -22,43 +22,43 @@ Examples
 General
 ~~~~~~~
 
-.. literalinclude:: ../../../../examples/position_usage.cpp
+.. literalinclude:: /../examples/position_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/position_usage.out
+.. literalinclude:: /examples_outputs/position_usage.out
    :language: none
 
 Creating from Params
 ~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/position_error_usage.cpp
+.. literalinclude:: /../examples/position_error_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/position_error_usage.out
+.. literalinclude:: /examples_outputs/position_error_usage.out
    :language: none
 
 Hashing
 ~~~~~~~
 
-.. literalinclude:: ../../../../examples/position_hash_usage.cpp
+.. literalinclude:: /../examples/position_hash_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/position_hash_usage.out
+.. literalinclude:: /examples_outputs/position_hash_usage.out
    :language: none
 
 Legal en passant target square
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/position_legal_en_passant_usage.cpp
+.. literalinclude:: /../examples/position_legal_en_passant_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/position_legal_en_passant_usage.out
+.. literalinclude:: /examples_outputs/position_legal_en_passant_usage.out
    :language: none

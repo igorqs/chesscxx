@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/position_error_usage.cpp
+.. literalinclude:: /../examples/position_error_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/position_error_usage.out
+.. literalinclude:: /examples_outputs/position_error_usage.out
    :language: none

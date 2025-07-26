@@ -16,7 +16,7 @@ struct UciMove {
   ///@{
 
   /// @brief Equality comparison operator.
-  constexpr auto operator==(const UciMove&) const -> bool = default;
+  constexpr auto operator==(const UciMove&) const -> bool;
 
   /// @}
 
@@ -27,6 +27,8 @@ struct UciMove {
   /// @brief Optional promotion piece type.
   std::optional<PromotablePieceType> promotion;
 };
+
+constexpr auto UciMove::operator==(const UciMove&) const -> bool = default;
 
 }  // namespace chesskit
 

@@ -102,7 +102,7 @@ class Position {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr auto operator==(const Position&) const -> bool = default;
+  constexpr auto operator==(const Position&) const -> bool;
 
   /// @}
 
@@ -228,6 +228,8 @@ class Position {
   uint32_t halfmove_clock_ = kMinHalfmoveClock;
   uint32_t fullmove_number_ = kMinFullmoveNumber;
 };
+
+constexpr auto Position::operator==(const Position&) const -> bool = default;
 
 }  // namespace chesskit
 

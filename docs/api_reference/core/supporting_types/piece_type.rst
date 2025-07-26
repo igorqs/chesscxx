@@ -19,10 +19,10 @@ Non-member functions
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/piece_type_usage.cpp
+.. literalinclude:: /../examples/piece_type_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/piece_type_usage.out
+.. literalinclude:: /examples_outputs/piece_type_usage.out
    :language: none

@@ -26,10 +26,10 @@ Non-member constants
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/square_usage.cpp
+.. literalinclude:: /../examples/square_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/square_usage.out
+.. literalinclude:: /examples_outputs/square_usage.out
    :language: none

@@ -7,10 +7,10 @@ parse_as
 Examples
 --------
 
-.. literalinclude:: ../../../examples/parse_as_usage.cpp
+.. literalinclude:: /../examples/parse_as_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../build/examples/parse_as_usage.out
+.. literalinclude:: /examples_outputs/parse_as_usage.out
    :language: none

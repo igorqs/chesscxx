@@ -18,7 +18,7 @@ struct Square {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr auto operator==(const Square&) const -> bool = default;
+  constexpr auto operator==(const Square&) const -> bool;
 
   /// @}
 
@@ -27,6 +27,8 @@ struct Square {
   /// @brief The rank of the square.
   Rank rank{};
 };
+
+constexpr auto Square::operator==(const Square&) const -> bool = default;
 
 /// @defgroup SquareNonMemberFunctions Square non-member functions
 /// @{

@@ -37,6 +37,12 @@ set(WORKING_DIR "${PROJECT_BINARY_DIR}/docs")
 
 file(GLOB_RECURSE SPHINX_RST_FILES "${SPHINX_SOURCE}/*.rst")
 
+set(EXAMPLES_BUILD_DIR "${PROJECT_BINARY_DIR}/examples/")
+set(DOCS_EXAMPLES_OUTPUTS_DIR "${PROJECT_SOURCE_DIR}/docs/examples_outputs/")
+
+file(GLOB OUT_FILES "${EXAMPLES_BUILD_DIR}/*.out")
+file(COPY ${OUT_FILES} DESTINATION ${DOCS_EXAMPLES_OUTPUTS_DIR})
+
 # Only regenerate Sphinx when:
 # - Doxygen has rerun
 # - Our doc files have been updated
@@ -45,7 +51,7 @@ add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    COMMAND 
                      ${SPHINX_EXECUTABLE} -b html
                      -Dbreathe_projects.ChessKit="${DOXYGEN_OUTPUT_DIR}/xml"
-                   ${SPHINX_SOURCE} ${SPHINX_BUILD}
+                     ${SPHINX_SOURCE} ${SPHINX_BUILD}
                    WORKING_DIRECTORY ${WORKING_DIR}
                    DEPENDS
                    ${SPHINX_RST_FILES}

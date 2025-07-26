@@ -14,7 +14,7 @@ struct Piece {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr auto operator==(const Piece&) const -> bool = default;
+  constexpr auto operator==(const Piece&) const -> bool;
 
   /// @}
 
@@ -23,6 +23,8 @@ struct Piece {
   /// @brief Color of the chess piece.
   Color color{};
 };
+
+constexpr auto Piece::operator==(const Piece&) const -> bool = default;
 
 }  // namespace chesskit
 

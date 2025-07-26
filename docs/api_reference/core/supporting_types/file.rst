@@ -18,10 +18,10 @@ Non-member constants
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/file_usage.cpp
+.. literalinclude:: /../examples/file_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/file_usage.out
+.. literalinclude:: /examples_outputs/file_usage.out
    :language: none

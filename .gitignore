@@ -1,3 +1,4 @@
 .cache/
 CMakeUserPresets.json
 build/
+docs/examples_outputs/

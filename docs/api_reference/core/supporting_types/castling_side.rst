@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: ../../../../examples/castling_side_usage.cpp
+.. literalinclude:: /../examples/castling_side_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/castling_side_usage.out
+.. literalinclude:: /examples_outputs/castling_side_usage.out
    :language: none

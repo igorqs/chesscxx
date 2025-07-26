@@ -18,32 +18,32 @@ Examples
 SanMove
 ~~~~~~~
 
-.. literalinclude:: ../../../../examples/san_move_usage.cpp
+.. literalinclude:: /../examples/san_move_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/san_move_usage.out
+.. literalinclude:: /examples_outputs/san_move_usage.out
    :language: none
 
 SanNormalMove
 ~~~~~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/san_normal_move_usage.cpp
+.. literalinclude:: /../examples/san_normal_move_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/san_normal_move_usage.out
+.. literalinclude:: /examples_outputs/san_normal_move_usage.out
    :language: none
 
 SanCastlingMove
 ~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/san_castling_move_usage.cpp
+.. literalinclude:: /../examples/san_castling_move_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/san_castling_move_usage.out
+.. literalinclude:: /examples_outputs/san_castling_move_usage.out
    :language: none

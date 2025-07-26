@@ -7,10 +7,10 @@ ParseResult
 Examples
 --------
 
-.. literalinclude:: ../../../examples/parse_result_usage.cpp
+.. literalinclude:: /../examples/parse_result_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../build/examples/parse_result_usage.out
+.. literalinclude:: /examples_outputs/parse_result_usage.out
    :language: none

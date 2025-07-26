@@ -41,7 +41,7 @@ class CastlingRights {
   /// @{
 
   /// @brief Equality comparison operator.
-  constexpr auto operator==(const CastlingRights&) const -> bool = default;
+  constexpr auto operator==(const CastlingRights&) const -> bool;
 
   /// @}
 
@@ -116,6 +116,9 @@ class CastlingRights {
 
   std::bitset<kNumCastlingRights> castling_rights_{kInitialValue};
 };
+
+constexpr auto CastlingRights::operator==(const CastlingRights&) const
+    -> bool = default;
 
 }  // namespace chesskit
 

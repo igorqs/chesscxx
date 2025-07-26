@@ -37,10 +37,10 @@ Standard specializations for library types
 Examples
 --------
 
-.. literalinclude:: ../../../examples/parser_usage.cpp
+.. literalinclude:: /../examples/parser_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../build/examples/parser_usage.out
+.. literalinclude:: /examples_outputs/parser_usage.out
    :language: none

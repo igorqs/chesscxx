@@ -17,43 +17,43 @@ Examples
 Full game
 ~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/game_usage.cpp
+.. literalinclude:: /../examples/game_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/game_usage.out
+.. literalinclude:: /examples_outputs/game_usage.out
    :language: none
 
 General
 ~~~~~~~
 
-.. literalinclude:: ../../../../examples/game_general_usage.cpp
+.. literalinclude:: /../examples/game_general_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/game_general_usage.out
+.. literalinclude:: /examples_outputs/game_general_usage.out
    :language: none
 
 Repetition
 ~~~~~~~~~~
 
-.. literalinclude:: ../../../../examples/game_repetition_usage.cpp
+.. literalinclude:: /../examples/game_repetition_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/game_repetition_usage.out
+.. literalinclude:: /examples_outputs/game_repetition_usage.out
    :language: none
 
 Hashing
 ~~~~~~~
 
-.. literalinclude:: ../../../../examples/game_hash_usage.cpp
+.. literalinclude:: /../examples/game_hash_usage.cpp
    :language: cpp
 
 Output:
 
-.. literalinclude:: ../../../../build/examples/game_hash_usage.out
+.. literalinclude:: /examples_outputs/game_hash_usage.out
    :language: none
