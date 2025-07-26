@@ -24,13 +24,11 @@ jobs:
         && sudo apt-get install clang-format-20 -q -y
 
     - name: Install codespell
-      run: sudo apt-get update -q
-        && sudo apt-get install codespell -q -y
+      run: pip3 install codespell
 
     - name: Lint
       run: cmake -D FORMAT_COMMAND=clang-format-20 -P cmake/lint.cmake
 
     - name: Spell check
-      if: always()
       run: cmake -P cmake/spell.cmake
 
