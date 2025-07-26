@@ -10,9 +10,7 @@
 namespace {
 auto parseSanMove(std::string_view str) -> chesscxx::SanMove {
   auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
-  assert(
-parsed_san_move
-);
+  assert(parsed_san_move);
   return parsed_san_move.value();
 }
 
