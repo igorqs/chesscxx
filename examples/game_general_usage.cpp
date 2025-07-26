@@ -1,37 +1,37 @@
-#include <chesskit/game.h>
-#include <chesskit/parse.h>
-#include <chesskit/position.h>
-#include <chesskit/san_move.h>
+#include <chesscxx/game.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/position.h>
+#include <chesscxx/san_move.h>
 
 #include <cassert>
 #include <print>
 #include <string_view>
 
 namespace {
-auto parseSanMove(std::string_view str) -> chesskit::SanMove {
-  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+auto parseSanMove(std::string_view str) -> chesscxx::SanMove {
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
   assert(parsed_san_move);
   return parsed_san_move.value();
 }
 
-auto parsePosition(std::string_view str) -> chesskit::Position {
-  auto parsed_position = chesskit::parse<chesskit::Position>(str);
+auto parsePosition(std::string_view str) -> chesscxx::Position {
+  auto parsed_position = chesscxx::parse<chesscxx::Position>(str);
   assert(parsed_position);
   return parsed_position.value();
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Game game;
+  chesscxx::Game game;
   assert(game.startsFromDefaultPosition());
   assert(game.initialPosition() == game.currentPosition());
 
-  game = chesskit::Game(parsePosition(
+  game = chesscxx::Game(parsePosition(
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
   assert(game.startsFromDefaultPosition());
   assert(game.initialPosition() == game.currentPosition());
 
-  game = chesskit::Game(parsePosition(
+  game = chesscxx::Game(parsePosition(
       "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"));
   assert(!game.startsFromDefaultPosition());
   assert(game.initialPosition() == game.currentPosition());

@@ -1,7 +1,7 @@
 PiecePlacementError
 ===================
 
-.. doxygenenum:: chesskit::PiecePlacementError
+.. doxygenenum:: chesscxx::PiecePlacementError
 
 Helper classes
 --------------

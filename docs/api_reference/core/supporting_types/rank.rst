@@ -1,7 +1,7 @@
 Rank
 ====
 
-.. doxygenenum:: chesskit::Rank
+.. doxygenenum:: chesscxx::Rank
 
 Helper classes
 --------------

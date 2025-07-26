@@ -1,7 +1,7 @@
 Square
 ======
 
-.. doxygenstruct:: chesskit::Square
+.. doxygenstruct:: chesscxx::Square
    :members:
    :undoc-members:
 

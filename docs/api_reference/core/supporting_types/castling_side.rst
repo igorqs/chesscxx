@@ -1,7 +1,7 @@
 CastlingSide
 ============
 
-.. doxygenenum:: chesskit::CastlingSide
+.. doxygenenum:: chesscxx::CastlingSide
 
 Helper classes
 --------------

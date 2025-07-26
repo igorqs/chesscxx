@@ -1,28 +1,28 @@
-#include <chesskit/game.h>
-#include <chesskit/parse.h>
-#include <chesskit/san_move.h>
-#include <chesskit/uci_move.h>
+#include <chesscxx/game.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/san_move.h>
+#include <chesscxx/uci_move.h>
 
 #include <cassert>
 #include <print>
 #include <string_view>
 
 namespace {
-auto parseSanMove(std::string_view str) -> chesskit::SanMove {
-  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+auto parseSanMove(std::string_view str) -> chesscxx::SanMove {
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
   assert(parsed_san_move);
   return parsed_san_move.value();
 }
 
-auto parseUciMove(std::string_view str) -> chesskit::UciMove {
-  auto parsed_uci_move = chesskit::parse<chesskit::UciMove>(str);
+auto parseUciMove(std::string_view str) -> chesscxx::UciMove {
+  auto parsed_uci_move = chesscxx::parse<chesscxx::UciMove>(str);
   assert(parsed_uci_move);
   return parsed_uci_move.value();
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Game game;
+  chesscxx::Game game;
 
   assert(game.move(parseSanMove("e4")));
   assert(game.move(parseUciMove("g7g5")));

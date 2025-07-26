@@ -1,5 +1,5 @@
-#include <chesskit/check_indicator.h>
-#include <chesskit/parse.h>
+#include <chesscxx/check_indicator.h>
+#include <chesscxx/parse.h>
 
 #include <print>
 #include <string_view>
@@ -14,14 +14,14 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_check_indicator = chesskit::parse<chesskit::CheckIndicator>(str);
+  auto parsed_check_indicator = chesscxx::parse<chesscxx::CheckIndicator>(str);
   printErrorOrValue(parsed_check_indicator);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::CheckIndicator check = chesskit::CheckIndicator::kCheck;
-  chesskit::CheckIndicator checkmate = chesskit::CheckIndicator::kCheckmate;
+  chesscxx::CheckIndicator check = chesscxx::CheckIndicator::kCheck;
+  chesscxx::CheckIndicator checkmate = chesscxx::CheckIndicator::kCheckmate;
   std::println("{} {}", check, checkmate);
   std::println("{:v} {:v}", check, checkmate);
   std::println("{:c} {:c}", check, checkmate);

@@ -1,6 +1,6 @@
-#include <chesskit/game.h>
-#include <chesskit/game_result.h>
-#include <chesskit/parse.h>
+#include <chesscxx/game.h>
+#include <chesscxx/game_result.h>
+#include <chesscxx/parse.h>
 
 #include <cassert>
 #include <optional>
@@ -17,16 +17,16 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_game_result = chesskit::parse<chesskit::GameResult>(str);
+  auto parsed_game_result = chesscxx::parse<chesscxx::GameResult>(str);
   printErrorOrValue(parsed_game_result);
 }
 
 void parseFenAndPrintGameResult(std::string_view str) {
   auto parsed_game =
-      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+      chesscxx::parse<chesscxx::Game>(str, chesscxx::parse_as::Fen{});
   assert(parsed_game);
 
-  std::optional<chesskit::GameResult> game_result =
+  std::optional<chesscxx::GameResult> game_result =
       parsed_game.value().result();
   assert(game_result);
 
@@ -35,9 +35,9 @@ void parseFenAndPrintGameResult(std::string_view str) {
 }  // namespace
 
 auto main() -> int {
-  chesskit::GameResult const black_wins = chesskit::GameResult::kBlackWins;
-  chesskit::GameResult const white_wins = chesskit::GameResult::kWhiteWins;
-  chesskit::GameResult const draw = chesskit::GameResult::kDraw;
+  chesscxx::GameResult const black_wins = chesscxx::GameResult::kBlackWins;
+  chesscxx::GameResult const white_wins = chesscxx::GameResult::kWhiteWins;
+  chesscxx::GameResult const draw = chesscxx::GameResult::kDraw;
   std::println(R"("{}" "{}" "{}")", black_wins, white_wins, draw);
   std::println(R"("{:v}" "{:v}" "{:v}")", black_wins, white_wins, draw);
   std::println(R"("{:c}" "{:c}" "{:c}")", black_wins, white_wins, draw);

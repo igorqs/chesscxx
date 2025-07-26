@@ -1,7 +1,7 @@
 File
 ====
 
-.. doxygenenum:: chesskit::File
+.. doxygenenum:: chesscxx::File
 
 Helper classes
 --------------

@@ -1,6 +1,6 @@
-#include <chesskit/game.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/game.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 
 #include <print>
 #include <string_view>
@@ -15,20 +15,20 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAsPgnAndPrint(std::string_view str) {
-  auto parsed_game = chesskit::parse<chesskit::Game>(str);
+  auto parsed_game = chesscxx::parse<chesscxx::Game>(str);
   printErrorOrValue(parsed_game);
 }
 
 void parseAsFenAndPrint(std::string_view str) {
   auto parsed_game =
-      chesskit::parse<chesskit::Game>(str, chesskit::parse_as::Fen{});
+      chesscxx::parse<chesscxx::Game>(str, chesscxx::parse_as::Fen{});
   printErrorOrValue(parsed_game);
 }
 }  // namespace
 
 auto main() -> int {
-  std::println("{}", chesskit::ParseError::kInvalidRank);
-  std::println("{}\n", chesskit::ParseError::kExpectingEndOfString);
+  std::println("{}", chesscxx::ParseError::kInvalidRank);
+  std::println("{}\n", chesscxx::ParseError::kExpectingEndOfString);
 
   parseAsFenAndPrint(
       "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1");

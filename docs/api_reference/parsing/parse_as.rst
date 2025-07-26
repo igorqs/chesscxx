@@ -1,7 +1,7 @@
 parse_as
 ==========
 
-.. doxygennamespace:: chesskit::parse_as
+.. doxygennamespace:: chesscxx::parse_as
    :members:
 
 Examples

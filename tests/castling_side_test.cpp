@@ -1,4 +1,4 @@
-#include <chesskit/castling_side.h>
+#include <chesscxx/castling_side.h>
 #include <gtest/gtest.h>
 
 #include <format>
@@ -7,13 +7,13 @@
 #include <unordered_set>
 
 TEST(CastlingSideTest, DefaultConstructionResultsInValidCastlingSide) {
-  chesskit::CastlingSide const side{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::CastlingSide>(side));
+  chesscxx::CastlingSide const side{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::CastlingSide>(side));
 }
 
 TEST(CastlingSideTest, FormatProducesNonEmptyStrings) {
-  magic_enum::enum_for_each<chesskit::CastlingSide>(
-      [](chesskit::CastlingSide castling_side) {
+  magic_enum::enum_for_each<chesscxx::CastlingSide>(
+      [](chesscxx::CastlingSide castling_side) {
         EXPECT_FALSE(std::format("{}", castling_side).empty());
       });
 }
@@ -21,8 +21,8 @@ TEST(CastlingSideTest, FormatProducesNonEmptyStrings) {
 TEST(CastlingSideTest, FormatProducesUniqueStrings) {
   std::unordered_set<std::string> fmt_strings;
 
-  magic_enum::enum_for_each<chesskit::CastlingSide>(
-      [&](chesskit::CastlingSide castling_side) {
+  magic_enum::enum_for_each<chesscxx::CastlingSide>(
+      [&](chesscxx::CastlingSide castling_side) {
         EXPECT_TRUE(
             fmt_strings.insert(std::format("{}", castling_side)).second);
       });

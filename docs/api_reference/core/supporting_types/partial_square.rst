@@ -1,7 +1,7 @@
 PartialSquare
 =============
 
-.. doxygenstruct:: chesskit::PartialSquare
+.. doxygenstruct:: chesscxx::PartialSquare
    :members:
    :undoc-members:
 

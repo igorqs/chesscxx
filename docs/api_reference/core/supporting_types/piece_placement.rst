@@ -1,7 +1,7 @@
 PiecePlacement
 ==============
 
-.. doxygenclass:: chesskit::PiecePlacement
+.. doxygenclass:: chesscxx::PiecePlacement
    :members:
 
 Helper classes

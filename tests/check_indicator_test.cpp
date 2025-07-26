@@ -1,6 +1,6 @@
-#include <chesskit/check_indicator.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/check_indicator.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 #include <gtest/gtest.h>
 
 #include <array>
@@ -11,25 +11,25 @@
 #include <tuple>
 
 TEST(CheckIndicatorTest, DefaultConstructionResultsInValidCheckIndicator) {
-  chesskit::CheckIndicator const check_indicator{};
+  chesscxx::CheckIndicator const check_indicator{};
   EXPECT_TRUE(
-      magic_enum::enum_contains<chesskit::CheckIndicator>(check_indicator));
+      magic_enum::enum_contains<chesscxx::CheckIndicator>(check_indicator));
 }
 
 TEST(CheckIndicatorTest, RoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::CheckIndicator>(
-      [](chesskit::CheckIndicator check_indicator) {
-        EXPECT_EQ(check_indicator, chesskit::parse<chesskit::CheckIndicator>(
+  magic_enum::enum_for_each<chesscxx::CheckIndicator>(
+      [](chesscxx::CheckIndicator check_indicator) {
+        EXPECT_EQ(check_indicator, chesscxx::parse<chesscxx::CheckIndicator>(
                                        std::format("{:c}", check_indicator)));
       });
 }
 
 TEST(CheckIndicatorTest, FormatProducesExpectedOutput) {
-  using chesskit::CheckIndicator;
+  using chesscxx::CheckIndicator;
 
   constexpr std::array<
-      std::tuple<chesskit::CheckIndicator, std::string_view, std::string_view>,
-      magic_enum::enum_count<chesskit::CheckIndicator>()>
+      std::tuple<chesscxx::CheckIndicator, std::string_view, std::string_view>,
+      magic_enum::enum_count<chesscxx::CheckIndicator>()>
       kFixtures = {{
           {CheckIndicator::kCheck, "+", "check"},
           {CheckIndicator::kCheckmate, "#", "checkmate"},
@@ -43,8 +43,8 @@ TEST(CheckIndicatorTest, FormatProducesExpectedOutput) {
 }
 
 TEST(CheckIndicatorTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::CheckIndicator>("!").error(),
-            chesskit::ParseError::kInvalidCheckIndicator);
-  EXPECT_EQ(chesskit::parse<chesskit::CheckIndicator>("+ ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CheckIndicator>("!").error(),
+            chesscxx::ParseError::kInvalidCheckIndicator);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CheckIndicator>("+ ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

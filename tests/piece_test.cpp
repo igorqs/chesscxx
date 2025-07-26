@@ -1,8 +1,8 @@
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece.h>
-#include <chesskit/piece_type.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece.h>
+#include <chesscxx/piece_type.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -17,17 +17,17 @@
 #include <unordered_set>
 
 constexpr auto kAllPieces = std::views::cartesian_product(
-                                magic_enum::enum_values<chesskit::PieceType>(),
-                                magic_enum::enum_values<chesskit::Color>()) |
+                                magic_enum::enum_values<chesscxx::PieceType>(),
+                                magic_enum::enum_values<chesscxx::Color>()) |
                             std::views::transform([](const auto& product) {
                               const auto& [piece_type, color] = product;
-                              return chesskit::Piece(piece_type, color);
+                              return chesscxx::Piece(piece_type, color);
                             });
 
 TEST(PieceTest, DefaultConstructionResultsInValidPiece) {
-  chesskit::Piece const piece;
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::PieceType>(piece.type));
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::Color>(piece.color));
+  chesscxx::Piece const piece;
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::PieceType>(piece.type));
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::Color>(piece.color));
 }
 
 TEST(PieceTest, ComparesEqualValuesSuccessfully) {
@@ -49,21 +49,21 @@ TEST(PieceTest, HashProducesUniqueValues) {
   std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kAllPieces, [&](const auto& piece) {
-    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Piece>{}(piece)).second);
+    EXPECT_TRUE(hashes.insert(std::hash<chesscxx::Piece>{}(piece)).second);
   });
 }
 
 TEST(PieceTest, RoundTripConversionIsSuccessful) {
   std::ranges::for_each(kAllPieces, [](const auto& piece) {
     EXPECT_EQ(piece,
-              chesskit::parse<chesskit::Piece>(std::format("{:c}", piece)));
+              chesscxx::parse<chesscxx::Piece>(std::format("{:c}", piece)));
   });
 }
 
 TEST(PieceTest, FormatProducesExpectedOutput) {
-  using chesskit::Color;
-  using chesskit::Piece;
-  using chesskit::PieceType;
+  using chesscxx::Color;
+  using chesscxx::Piece;
+  using chesscxx::PieceType;
 
   constexpr std::array<std::tuple<Piece, std::string_view, std::string_view>,
                        kAllPieces.size()>
@@ -90,12 +90,12 @@ TEST(PieceTest, FormatProducesExpectedOutput) {
 }
 
 TEST(PieceTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::Piece>("X").error(),
-            chesskit::ParseError::kInvalidPiece);
-  EXPECT_EQ(chesskit::parse<chesskit::Piece>("x").error(),
-            chesskit::ParseError::kInvalidPiece);
-  EXPECT_EQ(chesskit::parse<chesskit::Piece>("q ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
-  EXPECT_EQ(chesskit::parse<chesskit::Piece>("Q ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Piece>("X").error(),
+            chesscxx::ParseError::kInvalidPiece);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Piece>("x").error(),
+            chesscxx::ParseError::kInvalidPiece);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Piece>("q ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Piece>("Q ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

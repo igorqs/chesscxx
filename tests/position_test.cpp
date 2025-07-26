@@ -1,13 +1,13 @@
-#include <chesskit/castling_rights.h>
-#include <chesskit/color.h>
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece_placement.h>
-#include <chesskit/position.h>
-#include <chesskit/position_error.h>
-#include <chesskit/rank.h>
-#include <chesskit/square.h>
+#include <chesscxx/castling_rights.h>
+#include <chesscxx/color.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece_placement.h>
+#include <chesscxx/position.h>
+#include <chesscxx/position_error.h>
+#include <chesscxx/rank.h>
+#include <chesscxx/square.h>
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
 
@@ -27,7 +27,7 @@
 
 #include "test_helper.h"
 
-namespace chesskit {
+namespace chesscxx {
 template <>
 class Parser<Position::Params, const char*, parse_as::Default> {
  public:
@@ -36,24 +36,24 @@ class Parser<Position::Params, const char*, parse_as::Default> {
     return internal::parsePositionParams(begin, end);
   }
 };
-}  // namespace chesskit
+}  // namespace chesscxx
 
 class ValidFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    params_ = chesskit::parse<chesskit::Position::Params>(raw).value();
-    position_ = chesskit::parse<chesskit::Position>(raw).value();
+    params_ = chesscxx::parse<chesscxx::Position::Params>(raw).value();
+    position_ = chesscxx::parse<chesscxx::Position>(raw).value();
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto params() const -> const chesskit::Position::Params& { return params_; }
-  auto position() const -> const chesskit::Position& { return position_; }
+  auto params() const -> const chesscxx::Position::Params& { return params_; }
+  auto position() const -> const chesscxx::Position& { return position_; }
 
  private:
   std::string raw_;
-  chesskit::Position::Params params_;
-  chesskit::Position position_;
+  chesscxx::Position::Params params_;
+  chesscxx::Position position_;
 };
 
 template <>
@@ -68,18 +68,18 @@ class InvalidParamsFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    params_ = chesskit::parse<chesskit::Position::Params>(raw).value();
+    params_ = chesscxx::parse<chesscxx::Position::Params>(raw).value();
   }
-  void set_error(chesskit::PositionError error) { error_ = error; }
+  void set_error(chesscxx::PositionError error) { error_ = error; }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto params() const -> const chesskit::Position::Params& { return params_; }
-  auto error() const -> const chesskit::PositionError& { return error_; }
+  auto params() const -> const chesscxx::Position::Params& { return params_; }
+  auto error() const -> const chesscxx::PositionError& { return error_; }
 
  private:
   std::string raw_;
-  chesskit::Position::Params params_;
-  chesskit::PositionError error_{};
+  chesscxx::Position::Params params_;
+  chesscxx::PositionError error_{};
 };
 
 template <>
@@ -87,7 +87,7 @@ struct YAML::convert<InvalidParamsFixture> {
   static auto decode(const Node& node, InvalidParamsFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
-    auto error = magic_enum::enum_cast<chesskit::PositionError>(
+    auto error = magic_enum::enum_cast<chesscxx::PositionError>(
         node[1].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
@@ -99,16 +99,16 @@ struct YAML::convert<InvalidParamsFixture> {
 class InvalidFixture {
  public:
   void set_input(std::string_view raw) { raw_ = raw; }
-  void set_error(chesskit::ParseError error) { error_ = error; }
+  void set_error(chesscxx::ParseError error) { error_ = error; }
 
   [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
-  [[nodiscard]] auto error() const -> const chesskit::ParseError& {
+  [[nodiscard]] auto error() const -> const chesscxx::ParseError& {
     return error_;
   }
 
  private:
   std::string raw_;
-  chesskit::ParseError error_{};
+  chesscxx::ParseError error_{};
 };
 
 template <>
@@ -117,7 +117,7 @@ struct YAML::convert<InvalidFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     auto error =
-        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>());
+        magic_enum::enum_cast<chesscxx::ParseError>(node[1].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
 
@@ -139,7 +139,7 @@ auto GetValidInputs() {
 }
 
 auto BuildValidInputPairs() {
-  return chesskit::testing::make_distinct_pairs(GetValidInputs());
+  return chesscxx::testing::make_distinct_pairs(GetValidInputs());
 }
 
 auto GetRepetitionInputs() {
@@ -147,7 +147,7 @@ auto GetRepetitionInputs() {
 }
 
 auto BuildRepetitionInputPairs() {
-  return chesskit::testing::make_distinct_pairs(GetRepetitionInputs());
+  return chesscxx::testing::make_distinct_pairs(GetRepetitionInputs());
 }
 
 auto GetNoLegalEnPassantInputs() {
@@ -202,13 +202,13 @@ INSTANTIATE_TEST_SUITE_P(PositionTest, InvalidInputSuite,
 
 TEST_P(ValidInputSuite, ParsesSuccessfully) {
   const auto& fen = GetParam().raw();
-  auto position = chesskit::parse<chesskit::Position>(fen);
+  auto position = chesscxx::parse<chesscxx::Position>(fen);
   ASSERT_TRUE(position);
 }
 
 TEST_P(ValidInputSuite, ConstructsFromParamsSuccessfully) {
   const auto& params = GetParam().params();
-  auto position = chesskit::Position::fromParams(params);
+  auto position = chesscxx::Position::fromParams(params);
   ASSERT_TRUE(position);
   EXPECT_EQ(position->piecePlacement(), params.piece_placement);
   EXPECT_EQ(position->activeColor(), params.active_color);
@@ -228,13 +228,13 @@ TEST_P(ValidInputSuite, ComparesEqual) {
 TEST_P(ValidInputSuite, ComparesRepetitionEqual) {
   auto lhs = GetParam().position();
   auto rhs = GetParam().position();
-  EXPECT_TRUE(chesskit::RepetitionEqual{}(lhs, lhs));
-  EXPECT_TRUE(chesskit::RepetitionEqual{}(lhs, rhs));
+  EXPECT_TRUE(chesscxx::RepetitionEqual{}(lhs, lhs));
+  EXPECT_TRUE(chesscxx::RepetitionEqual{}(lhs, rhs));
 }
 
 TEST_P(ValidInputSuite, RoundTripConversionIsSuccessful) {
   const auto& position = GetParam().position();
-  EXPECT_EQ(position, chesskit::parse<chesskit::Position>(
+  EXPECT_EQ(position, chesscxx::parse<chesscxx::Position>(
                           std::format("{:fen}", position)));
 }
 
@@ -264,10 +264,10 @@ TEST_P(LegalEnPassantInputSuite, ReturnsNonNullLegalEnPassant) {
 TEST_P(NoLegalEnPassantInputSuite, IsEquivalentWhenEnPassantIsCleared) {
   const auto& params = GetParam().params();
 
-  auto with_en_passant = chesskit::Position::fromParams(params);
+  auto with_en_passant = chesscxx::Position::fromParams(params);
   auto new_params = params;
   new_params.en_passant_target_square = std::nullopt;
-  auto without_en_passant = chesskit::Position::fromParams(new_params);
+  auto without_en_passant = chesscxx::Position::fromParams(new_params);
 
   ASSERT_TRUE(with_en_passant);
   ASSERT_TRUE(without_en_passant);
@@ -277,9 +277,9 @@ TEST_P(NoLegalEnPassantInputSuite, IsEquivalentWhenEnPassantIsCleared) {
   EXPECT_EQ(with_en_passant->legalEnPassantTargetSquare(),
             without_en_passant->legalEnPassantTargetSquare());
   EXPECT_TRUE(
-      chesskit::RepetitionEqual{}(*with_en_passant, *without_en_passant));
-  EXPECT_EQ(chesskit::RepetitionHash{}(*with_en_passant),
-            chesskit::RepetitionHash{}(*without_en_passant));
+      chesscxx::RepetitionEqual{}(*with_en_passant, *without_en_passant));
+  EXPECT_EQ(chesscxx::RepetitionHash{}(*with_en_passant),
+            chesscxx::RepetitionHash{}(*without_en_passant));
   EXPECT_EQ(std::format("{:rep}", *with_en_passant),
             std::format("{:rep}", *without_en_passant));
 }
@@ -287,10 +287,10 @@ TEST_P(NoLegalEnPassantInputSuite, IsEquivalentWhenEnPassantIsCleared) {
 TEST_P(LegalEnPassantInputSuite, IsDifferentWhenEnPassantIsCleared) {
   const auto& params = GetParam().params();
 
-  auto with_en_passant = chesskit::Position::fromParams(params);
+  auto with_en_passant = chesscxx::Position::fromParams(params);
   auto new_params = params;
   new_params.en_passant_target_square = std::nullopt;
-  auto without_en_passant = chesskit::Position::fromParams(new_params);
+  auto without_en_passant = chesscxx::Position::fromParams(new_params);
 
   ASSERT_TRUE(with_en_passant);
   ASSERT_TRUE(without_en_passant);
@@ -300,10 +300,10 @@ TEST_P(LegalEnPassantInputSuite, IsDifferentWhenEnPassantIsCleared) {
   EXPECT_NE(with_en_passant->legalEnPassantTargetSquare(),
             without_en_passant->legalEnPassantTargetSquare());
   EXPECT_FALSE(
-      chesskit::RepetitionEqual{}(*with_en_passant, *without_en_passant));
+      chesscxx::RepetitionEqual{}(*with_en_passant, *without_en_passant));
   // These hashes may collide but are likely different
-  EXPECT_NE(chesskit::RepetitionHash{}(*with_en_passant),
-            chesskit::RepetitionHash{}(*without_en_passant));
+  EXPECT_NE(chesscxx::RepetitionHash{}(*with_en_passant),
+            chesscxx::RepetitionHash{}(*without_en_passant));
   EXPECT_NE(std::format("{:rep}", *with_en_passant),
             std::format("{:rep}", *without_en_passant));
 }
@@ -315,29 +315,29 @@ TEST_P(ValidInputPairSuite, ComparesUnequal) {
 
 TEST_P(RepetitionInputPairSuite, ComparesRepetitionUnequal) {
   const auto& [lhs, rhs] = GetParam();
-  EXPECT_FALSE(chesskit::RepetitionEqual{}(lhs.position(), rhs.position()));
+  EXPECT_FALSE(chesscxx::RepetitionEqual{}(lhs.position(), rhs.position()));
 }
 
 TEST_P(InvalidParamsSuite, FromParamsReturnsCorrectError) {
   const auto& fixture = GetParam();
-  EXPECT_EQ(chesskit::Position::fromParams(fixture.params()).error(),
+  EXPECT_EQ(chesscxx::Position::fromParams(fixture.params()).error(),
             fixture.error());
 }
 
 TEST_P(InvalidParamsSuite, ParseReturnsCorrectError) {
   const auto& fixture = GetParam();
-  EXPECT_EQ(chesskit::parse<chesskit::Position>(fixture.raw()).error(),
-            chesskit::ParseError::kInvalidPosition);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Position>(fixture.raw()).error(),
+            chesscxx::ParseError::kInvalidPosition);
 }
 
 TEST_P(InvalidInputSuite, ParseHandlesInvalidInputCorrectly) {
   const auto& fixture = GetParam();
-  EXPECT_EQ(chesskit::parse<chesskit::Position>(fixture.raw()).error(),
+  EXPECT_EQ(chesscxx::parse<chesscxx::Position>(fixture.raw()).error(),
             fixture.error());
 }
 
 TEST(PositionParamsTest, DefaultConstructionCreatesDefaultStartingPosition) {
-  chesskit::Position::Params const params;
+  chesscxx::Position::Params const params;
   auto expected = GetDefault().params();
 
   EXPECT_EQ(params.piece_placement, expected.piece_placement);
@@ -349,7 +349,7 @@ TEST(PositionParamsTest, DefaultConstructionCreatesDefaultStartingPosition) {
 }
 
 TEST(PositionTest, DefaultConstructionCreatesDefaultStartingPosition) {
-  chesskit::Position const position;
+  chesscxx::Position const position;
   auto expected = GetDefault().params();
 
   EXPECT_EQ(position.piecePlacement(), expected.piece_placement);
@@ -365,11 +365,11 @@ TEST(PositionTest, DefaultConstructionCreatesDefaultStartingPosition) {
 TEST(PositionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<std::size_t, std::vector<chesskit::Position>> hash_counter;
+  std::unordered_map<std::size_t, std::vector<chesscxx::Position>> hash_counter;
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();
-    auto hash = std::hash<chesskit::Position>{}(position);
+    auto hash = std::hash<chesscxx::Position>{}(position);
     hash_counter[hash].push_back(position);
     auto collisions = hash_counter[hash].size();
     EXPECT_LE(collisions, kMaxCollisions)
@@ -380,11 +380,11 @@ TEST(PositionTest, HashProducesFewCollisions) {
 TEST(PositionRepetitionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<std::size_t, std::vector<chesskit::Position>> hash_counter;
+  std::unordered_map<std::size_t, std::vector<chesscxx::Position>> hash_counter;
 
   std::ranges::for_each(GetRepetitionInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();
-    auto hash = chesskit::RepetitionHash{}(position);
+    auto hash = chesscxx::RepetitionHash{}(position);
     hash_counter[hash].push_back(position);
     auto collisions = hash_counter[hash].size();
     EXPECT_LE(collisions, kMaxCollisions)
@@ -428,17 +428,17 @@ TEST(PositionTest, FormatComplexInputCorrectly) {
 }
 
 TEST(PositionTest, ParseComplexInputCorrectly) {
-  using enum chesskit::Color;
-  using enum chesskit::Rank;
-  using enum chesskit::File;
-  using chesskit::Square, chesskit::CastlingRights;
+  using enum chesscxx::Color;
+  using enum chesscxx::Rank;
+  using enum chesscxx::File;
+  using chesscxx::Square, chesscxx::CastlingRights;
 
-  auto expected_pp = chesskit::parse<chesskit::PiecePlacement>(
+  auto expected_pp = chesscxx::parse<chesscxx::PiecePlacement>(
       "r2qk2Q/pppppppp/1nb1Pbnr/8/R2Pp3/8/8/1NBQKBNR");
   ASSERT_TRUE(expected_pp);
 
   auto parsed_position =
-      chesskit::parse<chesskit::Position>(GetComplexInput().raw());
+      chesscxx::parse<chesscxx::Position>(GetComplexInput().raw());
   ASSERT_TRUE(parsed_position);
 
   EXPECT_EQ(parsed_position->piecePlacement(), expected_pp);
@@ -451,7 +451,7 @@ TEST(PositionTest, ParseComplexInputCorrectly) {
 
 TEST(PositionTest, FormatProducesUniqueStrings) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::Position>>;
+      std::unordered_map<std::string, std::vector<chesscxx::Position>>;
   CollisionMap fmt_collisions;
   CollisionMap ascii_fmt_collisions;
   CollisionMap lists_fmt_collisions;
@@ -476,7 +476,7 @@ TEST(PositionTest, FormatProducesUniqueStrings) {
 
 TEST(PositionRepetitionTest, FormatProducesUniqueStrings) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::Position>>;
+      std::unordered_map<std::string, std::vector<chesscxx::Position>>;
   CollisionMap rep_fmt_collisions;
 
   auto assert_unique_insertion = [](auto& map, const auto& key,
@@ -495,68 +495,68 @@ TEST(PositionRepetitionTest, FormatProducesUniqueStrings) {
 
 TEST(PositionRepetitionTest, ConsiderPiecePlacement) {
   auto new_pp =
-      chesskit::parse<chesskit::PiecePlacement>("r3k2r/8/8/8/8/8/8/R3K2R");
+      chesscxx::parse<chesscxx::PiecePlacement>("r3k2r/8/8/8/8/8/8/R3K2R");
   ASSERT_TRUE(new_pp);
 
-  chesskit::Position default_position;
-  auto diff_piece_placement = chesskit::Position::fromParams({
+  chesscxx::Position default_position;
+  auto diff_piece_placement = chesscxx::Position::fromParams({
       .piece_placement = new_pp.value(),
   });
 
   ASSERT_TRUE(diff_piece_placement);
   EXPECT_FALSE(
-      chesskit::RepetitionEqual{}(default_position, *diff_piece_placement));
+      chesscxx::RepetitionEqual{}(default_position, *diff_piece_placement));
   // These hashes may collide but are likely different
-  EXPECT_NE(chesskit::RepetitionHash{}(default_position),
-            chesskit::RepetitionHash{}(*diff_piece_placement));
+  EXPECT_NE(chesscxx::RepetitionHash{}(default_position),
+            chesscxx::RepetitionHash{}(*diff_piece_placement));
   EXPECT_NE(std::format("{:rep}", default_position),
             std::format("{:rep}", *diff_piece_placement));
 }
 
 TEST(PositionRepetitionTest, ConsiderColor) {
-  chesskit::Position default_position;
-  auto diff_active_color = chesskit::Position::fromParams({
-      .active_color = chesskit::Color::kBlack,
+  chesscxx::Position default_position;
+  auto diff_active_color = chesscxx::Position::fromParams({
+      .active_color = chesscxx::Color::kBlack,
   });
 
   ASSERT_TRUE(diff_active_color);
   EXPECT_FALSE(
-      chesskit::RepetitionEqual{}(default_position, *diff_active_color));
+      chesscxx::RepetitionEqual{}(default_position, *diff_active_color));
   // These hashes may collide but are likely different
-  EXPECT_NE(chesskit::RepetitionHash{}(default_position),
-            chesskit::RepetitionHash{}(*diff_active_color));
+  EXPECT_NE(chesscxx::RepetitionHash{}(default_position),
+            chesscxx::RepetitionHash{}(*diff_active_color));
   EXPECT_NE(std::format("{:rep}", default_position),
             std::format("{:rep}", *diff_active_color));
 }
 
 TEST(PositionRepetitionTest, ConsiderCastlingRights) {
-  chesskit::Position default_position;
-  auto diff_castling_rights = chesskit::Position::fromParams({
-      .castling_rights = chesskit::CastlingRights(0),
+  chesscxx::Position default_position;
+  auto diff_castling_rights = chesscxx::Position::fromParams({
+      .castling_rights = chesscxx::CastlingRights(0),
   });
 
   ASSERT_TRUE(diff_castling_rights);
   EXPECT_FALSE(
-      chesskit::RepetitionEqual{}(default_position, *diff_castling_rights));
+      chesscxx::RepetitionEqual{}(default_position, *diff_castling_rights));
   // These hashes may collide but are likely different
-  EXPECT_NE(chesskit::RepetitionHash{}(default_position),
-            chesskit::RepetitionHash{}(*diff_castling_rights));
+  EXPECT_NE(chesscxx::RepetitionHash{}(default_position),
+            chesscxx::RepetitionHash{}(*diff_castling_rights));
   EXPECT_NE(std::format("{:rep}", default_position),
             std::format("{:rep}", *diff_castling_rights));
 }
 
 TEST(PositionRepetitionTest, IgnoresMoveCounters) {
-  chesskit::Position default_position;
-  auto diff_move_counters = chesskit::Position::fromParams({
+  chesscxx::Position default_position;
+  auto diff_move_counters = chesscxx::Position::fromParams({
       .halfmove_clock = 2,
       .fullmove_number = 2,
   });
 
   ASSERT_TRUE(diff_move_counters);
   EXPECT_TRUE(
-      chesskit::RepetitionEqual{}(default_position, *diff_move_counters));
-  EXPECT_EQ(chesskit::RepetitionHash{}(default_position),
-            chesskit::RepetitionHash{}(*diff_move_counters));
+      chesscxx::RepetitionEqual{}(default_position, *diff_move_counters));
+  EXPECT_EQ(chesscxx::RepetitionHash{}(default_position),
+            chesscxx::RepetitionHash{}(*diff_move_counters));
   EXPECT_EQ(std::format("{:rep}", default_position),
             std::format("{:rep}", *diff_move_counters));
 }

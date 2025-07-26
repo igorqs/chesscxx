@@ -1,6 +1,6 @@
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece_type.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece_type.h>
 #include <gtest/gtest.h>
 
 #include <array>
@@ -13,10 +13,10 @@ struct PortugueseUppercase {};
 struct PortugueseLowercase {};
 
 template <>
-class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
+class chesscxx::Parser<chesscxx::PieceType, const char*, PortugueseUppercase> {
  public:
   static auto parse(const char* begin, const char* end)
-      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+      -> std::expected<ParseResult<chesscxx::PieceType, const char*>,
                        ParseError> {
     static constexpr std::string_view kAllowed = "PCBTDR";
 
@@ -28,16 +28,16 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesscxx::PieceType>(index),
                        .ptr = std::next(begin)};
   }
 };
 
 template <>
-class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
+class chesscxx::Parser<chesscxx::PieceType, const char*, PortugueseLowercase> {
  public:
   static auto parse(const char* begin, const char* end)
-      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+      -> std::expected<ParseResult<chesscxx::PieceType, const char*>,
                        ParseError> {
     static constexpr std::string_view kAllowed = "pcbtdr";
 
@@ -49,7 +49,7 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesscxx::PieceType>(index),
                        .ptr = std::next(begin)};
   }
 };
@@ -62,8 +62,8 @@ static constexpr auto kInputsSize = static_cast<int>(kLowercaseInputs.size());
 static_assert(kLowercaseInputs.size() == kUppercaseInputs.size());
 
 TEST(ParseTest, ParseFromHandlesValidInputCorrectly) {
-  using chesskit::parseFrom;
-  using chesskit::PieceType;
+  using chesscxx::parseFrom;
+  using chesscxx::PieceType;
 
   for (int i = 0; i < kInputsSize; i++) {
     std::string_view input = kLowercaseInputs.at(i);
@@ -81,9 +81,9 @@ TEST(ParseTest, ParseFromHandlesValidInputCorrectly) {
 }
 
 TEST(ParseTest, ParseFromHandlesExtraCharactersSuccessfully) {
-  using chesskit::ParseError;
-  using chesskit::parseFrom;
-  using chesskit::PieceType;
+  using chesscxx::ParseError;
+  using chesscxx::parseFrom;
+  using chesscxx::PieceType;
 
   std::string_view input = "p ";
   auto result =
@@ -101,9 +101,9 @@ TEST(ParseTest, ParseFromHandlesExtraCharactersSuccessfully) {
 }
 
 TEST(ParseTest, ParseFromFailsIfParserFails) {
-  using chesskit::ParseError;
-  using chesskit::parseFrom;
-  using chesskit::PieceType;
+  using chesscxx::ParseError;
+  using chesscxx::parseFrom;
+  using chesscxx::PieceType;
 
   std::string_view const input = "x";
   auto result =
@@ -116,8 +116,8 @@ TEST(ParseTest, ParseFromFailsIfParserFails) {
 }
 
 TEST(ParseTest, ParseHandlesValidInputCorrectly) {
-  using chesskit::parse;
-  using chesskit::PieceType;
+  using chesscxx::parse;
+  using chesscxx::PieceType;
 
   for (int i = 0; i < kInputsSize; i++) {
     std::string_view input = kLowercaseInputs.at(i);
@@ -131,9 +131,9 @@ TEST(ParseTest, ParseHandlesValidInputCorrectly) {
 }
 
 TEST(ParseTest, ParseFailsWithUnexpectedCharacters) {
-  using chesskit::parse;
-  using chesskit::ParseError;
-  using chesskit::PieceType;
+  using chesscxx::parse;
+  using chesscxx::ParseError;
+  using chesscxx::PieceType;
 
   std::string_view input = "p ";
   auto result = parse<PieceType>(input, PortugueseLowercase{});
@@ -145,9 +145,9 @@ TEST(ParseTest, ParseFailsWithUnexpectedCharacters) {
 }
 
 TEST(ParseTest, ParseFailsIfParserFails) {
-  using chesskit::parse;
-  using chesskit::ParseError;
-  using chesskit::PieceType;
+  using chesscxx::parse;
+  using chesscxx::ParseError;
+  using chesscxx::PieceType;
 
   std::string_view const input = "x";
   auto result = parse<PieceType>(input, PortugueseLowercase{});

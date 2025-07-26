@@ -1,7 +1,7 @@
 DrawReason
 ==========
 
-.. doxygenenum:: chesskit::DrawReason
+.. doxygenenum:: chesscxx::DrawReason
 
 Helper classes
 --------------

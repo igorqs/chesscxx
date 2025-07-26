@@ -1,7 +1,7 @@
 CheckIndicator
 ==============
 
-.. doxygenenum:: chesskit::CheckIndicator
+.. doxygenenum:: chesscxx::CheckIndicator
 
 Helper classes
 --------------

@@ -1,7 +1,7 @@
 UciMove
 =======
 
-.. doxygenstruct:: chesskit::UciMove
+.. doxygenstruct:: chesscxx::UciMove
    :members:
    :undoc-members:
 

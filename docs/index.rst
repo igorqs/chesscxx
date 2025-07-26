@@ -1,4 +1,4 @@
-ChessKit Documentation
+chesscxx Documentation
 ======================
 
 Overview goes here
@@ -9,5 +9,5 @@ Overview goes here
 
    getting_started/index
    api_reference/index
-   contributing_to_chesskit/index
+   contributing_to_chesscxx/index
    license/index

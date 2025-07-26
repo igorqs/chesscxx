@@ -1,8 +1,8 @@
-#include <chesskit/castling_rights.h>
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
-#include <chesskit/piece_placement.h>
-#include <chesskit/position.h>
+#include <chesscxx/castling_rights.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece_placement.h>
+#include <chesscxx/position.h>
 
 #include <cassert>
 #include <optional>
@@ -19,25 +19,25 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_position = chesskit::parse<chesskit::Position>(str);
+  auto parsed_position = chesscxx::parse<chesscxx::Position>(str);
   printErrorOrValue(parsed_position);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Position position;
+  chesscxx::Position position;
   std::println("{}\n", position);
   std::println("{:fen}\n", position);
   std::println("{:ascii}\n", position);
   std::println("{:lists}\n", position);
   std::println("{:rep}\n", position);
 
-  assert(position.piecePlacement() == chesskit::PiecePlacement{});
-  assert(position.activeColor() == chesskit::Color::kWhite);
+  assert(position.piecePlacement() == chesscxx::PiecePlacement{});
+  assert(position.activeColor() == chesscxx::Color::kWhite);
   assert(position.enPassantTargetSquare() == std::nullopt);
   assert(position.halfmoveClock() == 0);
   assert(position.fullmoveNumber() == 1);
-  assert(position.castlingRights() == chesskit::CastlingRights{});
+  assert(position.castlingRights() == chesscxx::CastlingRights{});
 
   parseAndPrint("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   parseAndPrint("8/8/8/8/8/8/8/8 w KQkq - 0 1");

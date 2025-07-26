@@ -1,9 +1,9 @@
-#include <chesskit/castling_side.h>
+#include <chesscxx/castling_side.h>
 
 #include <print>
 
 auto main() -> int {
-  chesskit::CastlingSide kingside = chesskit::CastlingSide::kKingside;
-  chesskit::CastlingSide queenside = chesskit::CastlingSide::kQueenside;
+  chesscxx::CastlingSide kingside = chesscxx::CastlingSide::kKingside;
+  chesscxx::CastlingSide queenside = chesscxx::CastlingSide::kQueenside;
   std::println("{} {}", kingside, queenside);
 }

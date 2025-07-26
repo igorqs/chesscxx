@@ -1,6 +1,6 @@
-#include <chesskit/game_result.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/game_result.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 #include <gtest/gtest.h>
 
 #include <array>
@@ -11,24 +11,24 @@
 #include <tuple>
 
 TEST(GameResultTest, DefaultConstructionResultsInValidGameResult) {
-  chesskit::GameResult const game_result{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::GameResult>(game_result));
+  chesscxx::GameResult const game_result{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::GameResult>(game_result));
 }
 
 TEST(GameResultTest, RoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::GameResult>(
-      [](chesskit::GameResult game_result) {
-        EXPECT_EQ(game_result, chesskit::parse<chesskit::GameResult>(
+  magic_enum::enum_for_each<chesscxx::GameResult>(
+      [](chesscxx::GameResult game_result) {
+        EXPECT_EQ(game_result, chesscxx::parse<chesscxx::GameResult>(
                                    std::format("{:c}", game_result)));
       });
 }
 
 TEST(GameResultTest, FormatProducesExpectedOutput) {
-  using chesskit::GameResult;
+  using chesscxx::GameResult;
 
   constexpr std::array<
-      std::tuple<chesskit::GameResult, std::string_view, std::string_view>,
-      magic_enum::enum_count<chesskit::GameResult>()>
+      std::tuple<chesscxx::GameResult, std::string_view, std::string_view>,
+      magic_enum::enum_count<chesscxx::GameResult>()>
       kFixtures = {{
           {GameResult::kBlackWins, "0-1", "black wins"},
           {GameResult::kWhiteWins, "1-0", "white wins"},
@@ -43,10 +43,10 @@ TEST(GameResultTest, FormatProducesExpectedOutput) {
 }
 
 TEST(GameResultTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::GameResult>("1").error(),
-            chesskit::ParseError::kInvalidGameResult);
-  EXPECT_EQ(chesskit::parse<chesskit::GameResult>("0-0").error(),
-            chesskit::ParseError::kInvalidGameResult);
-  EXPECT_EQ(chesskit::parse<chesskit::GameResult>("1-0 ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::GameResult>("1").error(),
+            chesscxx::ParseError::kInvalidGameResult);
+  EXPECT_EQ(chesscxx::parse<chesscxx::GameResult>("0-0").error(),
+            chesscxx::ParseError::kInvalidGameResult);
+  EXPECT_EQ(chesscxx::parse<chesscxx::GameResult>("1-0 ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

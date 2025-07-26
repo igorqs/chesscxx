@@ -1,9 +1,9 @@
-#ifndef CHESSKIT_TESTS_TEST_HELPER_H_
-#define CHESSKIT_TESTS_TEST_HELPER_H_
+#ifndef CHESSCXX_TESTS_TEST_HELPER_H_
+#define CHESSCXX_TESTS_TEST_HELPER_H_
 
-#include <chesskit/formatter/base_formatter.h>
-#include <chesskit/hash/internal/hash_combine.h>
-#include <chesskit/san_move.h>
+#include <chesscxx/formatter/base_formatter.h>
+#include <chesscxx/hash/internal/hash_combine.h>
+#include <chesscxx/san_move.h>
 
 #include <algorithm>
 #include <array>
@@ -19,24 +19,24 @@
 #include <vector>
 
 template <>
-struct std::hash<chesskit::SanCastlingMove> {
-  auto operator()(const chesskit::SanCastlingMove& move) const -> size_t {
-    return chesskit::internal::hashCombine(move.side, move.check_indicator);
+struct std::hash<chesscxx::SanCastlingMove> {
+  auto operator()(const chesscxx::SanCastlingMove& move) const -> size_t {
+    return chesscxx::internal::hashCombine(move.side, move.check_indicator);
   };
 };
 
 template <>
-struct std::hash<chesskit::SanNormalMove> {
-  auto operator()(const chesskit::SanNormalMove& move) const -> size_t {
-    return chesskit::internal::hashCombine(
+struct std::hash<chesscxx::SanNormalMove> {
+  auto operator()(const chesscxx::SanNormalMove& move) const -> size_t {
+    return chesscxx::internal::hashCombine(
         move.piece_type, move.origin.file, move.origin.rank, move.is_capture,
         move.destination, move.promotion, move.check_indicator);
   };
 };
 
-namespace chesskit {
+namespace chesscxx {
 template <typename T>
-  requires std::is_base_of_v<chesskit::internal::BaseFormatter,
+  requires std::is_base_of_v<chesscxx::internal::BaseFormatter,
                              std::formatter<T>>
 inline void PrintTo(const T& obj, std::ostream* output_stream) {
   *output_stream << std::format("{}", obj);
@@ -93,6 +93,6 @@ constexpr auto make_distinct_pairs(const Range& range) {
   return pairs;
 }
 }  // namespace testing
-}  // namespace chesskit
+}  // namespace chesscxx
 
-#endif  // CHESSKIT_TESTS_TEST_HELPER_H_
+#endif  // CHESSCXX_TESTS_TEST_HELPER_H_

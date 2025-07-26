@@ -1,7 +1,7 @@
 parse()
 =======
 
-.. doxygenfunction:: chesskit::parse
+.. doxygenfunction:: chesscxx::parse
 
 Examples
 --------

@@ -1,16 +1,16 @@
-#include <chesskit/draw_reason.h>
-#include <chesskit/game.h>
-#include <chesskit/game_result.h>
-#include <chesskit/parse.h>
-#include <chesskit/san_move.h>
+#include <chesscxx/draw_reason.h>
+#include <chesscxx/game.h>
+#include <chesscxx/game_result.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/san_move.h>
 
 #include <cassert>
 #include <print>
 #include <string_view>
 
 namespace {
-auto parseSanMove(std::string_view str) -> chesskit::SanMove {
-  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+auto parseSanMove(std::string_view str) -> chesscxx::SanMove {
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
   assert(parsed_san_move);
   return parsed_san_move.value();
 }
@@ -24,7 +24,7 @@ void move(auto& game, std::string_view str) {
 }  // namespace
 
 auto main() -> int {
-  chesskit::Game game;
+  chesscxx::Game game;
   printRepetition(game);
 
   move(game, "Nc3");
@@ -53,6 +53,6 @@ auto main() -> int {
   move(game, "Nb8");
   printRepetition(game);
 
-  assert(game.result() == chesskit::GameResult::kDraw);
-  assert(game.drawReason() == chesskit::DrawReason::kThreefoldRepetition);
+  assert(game.result() == chesscxx::GameResult::kDraw);
+  assert(game.drawReason() == chesscxx::DrawReason::kThreefoldRepetition);
 }

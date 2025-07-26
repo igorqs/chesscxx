@@ -1,11 +1,11 @@
-#include <chesskit/piece_type.h>
+#include <chesscxx/piece_type.h>
 
 #include <optional>
 #include <print>
 
 auto main() -> int {
-  std::optional<chesskit::PieceType> empty;
-  std::optional<chesskit::PieceType> rook = chesskit::PieceType::kRook;
+  std::optional<chesscxx::PieceType> empty;
+  std::optional<chesscxx::PieceType> rook = chesscxx::PieceType::kRook;
 
   std::println(R"("{}" "{}")", empty, rook);
   std::println(R"("{:?foo}" "{:?foo}")", empty, rook);

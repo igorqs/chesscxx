@@ -1,7 +1,7 @@
 Game
 ====
 
-.. doxygenclass:: chesskit::Game
+.. doxygenclass:: chesscxx::Game
    :members:
    :undoc-members:
 

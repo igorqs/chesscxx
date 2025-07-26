@@ -1,7 +1,7 @@
-#include <chesskit/game.h>
-#include <chesskit/move_error.h>
-#include <chesskit/parse.h>
-#include <chesskit/san_move.h>
+#include <chesscxx/game.h>
+#include <chesscxx/move_error.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/san_move.h>
 
 #include <cassert>
 #include <print>
@@ -9,12 +9,12 @@
 
 namespace {
 auto parseSan(std::string_view str) {
-  auto parsed_move = chesskit::parse<chesskit::SanMove>(str);
+  auto parsed_move = chesscxx::parse<chesscxx::SanMove>(str);
   assert(parsed_move);
   return parsed_move.value();
 }
 
-void moveAndPrint(chesskit::Game& game, const auto& move) {
+void moveAndPrint(chesscxx::Game& game, const auto& move) {
   auto move_result = game.move(move);
   if (move_result) {
     std::println("{} -> {:fen}", move, game);
@@ -25,10 +25,10 @@ void moveAndPrint(chesskit::Game& game, const auto& move) {
 }  // namespace
 
 auto main() -> int {
-  std::println("{}", chesskit::MoveError::kMissingPromotionPiece);
-  std::println("{}\n", chesskit::MoveError::kKingOrRookMoved);
+  std::println("{}", chesscxx::MoveError::kMissingPromotionPiece);
+  std::println("{}\n", chesscxx::MoveError::kKingOrRookMoved);
 
-  chesskit::Game game;
+  chesscxx::Game game;
   std::println("{:fen}\n", game);
 
   moveAndPrint(game, parseSan("e5"));

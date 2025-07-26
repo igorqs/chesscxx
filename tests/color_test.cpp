@@ -1,6 +1,6 @@
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 #include <gtest/gtest.h>
 
 #include <array>
@@ -11,29 +11,29 @@
 #include <tuple>
 
 TEST(ColorTest, DefaultConstructionResultsInValidColor) {
-  chesskit::Color const color{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::Color>(color));
+  chesscxx::Color const color{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::Color>(color));
 }
 
 TEST(ColorTest, RoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::Color>([](chesskit::Color color) {
+  magic_enum::enum_for_each<chesscxx::Color>([](chesscxx::Color color) {
     EXPECT_EQ(color,
-              chesskit::parse<chesskit::Color>(std::format("{:c}", color)));
+              chesscxx::parse<chesscxx::Color>(std::format("{:c}", color)));
   });
 }
 
 TEST(ColorTest, LogicalNotWorksCorrectly) {
-  using chesskit::Color;
+  using chesscxx::Color;
   EXPECT_EQ(!Color::kBlack, Color::kWhite);
   EXPECT_EQ(!Color::kWhite, Color::kBlack);
 }
 
 TEST(ColorTest, FormatProducesExpectedOutput) {
-  using chesskit::Color;
+  using chesscxx::Color;
 
   constexpr std::array<
-      std::tuple<chesskit::Color, std::string_view, std::string_view>,
-      magic_enum::enum_count<chesskit::Color>()>
+      std::tuple<chesscxx::Color, std::string_view, std::string_view>,
+      magic_enum::enum_count<chesscxx::Color>()>
       kFixtures = {{
           {Color::kWhite, "w", "white"},
           {Color::kBlack, "b", "black"},
@@ -47,8 +47,8 @@ TEST(ColorTest, FormatProducesExpectedOutput) {
 }
 
 TEST(ColorTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::Color>("p").error(),
-            chesskit::ParseError::kInvalidColor);
-  EXPECT_EQ(chesskit::parse<chesskit::Color>("w ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Color>("p").error(),
+            chesscxx::ParseError::kInvalidColor);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Color>("w ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

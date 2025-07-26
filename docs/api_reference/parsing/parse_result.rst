@@ -1,7 +1,7 @@
 ParseResult
 ===========
 
-.. doxygenstruct:: chesskit::ParseResult
+.. doxygenstruct:: chesscxx::ParseResult
    :members:
 
 Examples

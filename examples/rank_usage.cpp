@@ -1,5 +1,5 @@
-#include <chesskit/parse.h>
-#include <chesskit/rank.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/rank.h>
 
 #include <print>
 #include <string_view>
@@ -14,13 +14,13 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_rank = chesskit::parse<chesskit::Rank>(str);
+  auto parsed_rank = chesscxx::parse<chesscxx::Rank>(str);
   printErrorOrValue(parsed_rank);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Rank rank = chesskit::Rank::k4;
+  chesscxx::Rank rank = chesscxx::Rank::k4;
   std::println("{}", rank);
 
   parseAndPrint("8");

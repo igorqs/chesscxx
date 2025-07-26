@@ -1,9 +1,9 @@
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/piece_type.h>
-#include <chesskit/rank.h>
-#include <chesskit/square.h>
-#include <chesskit/uci_move.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece_type.h>
+#include <chesscxx/rank.h>
+#include <chesscxx/square.h>
+#include <chesscxx/uci_move.h>
 
 #include <print>
 #include <string_view>
@@ -18,22 +18,22 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_uci_move = chesskit::parse<chesskit::UciMove>(str);
+  auto parsed_uci_move = chesscxx::parse<chesscxx::UciMove>(str);
   printErrorOrValue(parsed_uci_move);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::UciMove uci = {
-      .origin = chesskit::Square(chesskit::File::kE, chesskit::Rank::k2),
-      .destination = chesskit::Square(chesskit::File::kE, chesskit::Rank::k4),
+  chesscxx::UciMove uci = {
+      .origin = chesscxx::Square(chesscxx::File::kE, chesscxx::Rank::k2),
+      .destination = chesscxx::Square(chesscxx::File::kE, chesscxx::Rank::k4),
   };
   std::println("{}", uci);
 
   uci = {
-      .origin = chesskit::Square(chesskit::File::kA, chesskit::Rank::k7),
-      .destination = chesskit::Square(chesskit::File::kA, chesskit::Rank::k8),
-      .promotion = chesskit::PromotablePieceType::kQueen,
+      .origin = chesscxx::Square(chesscxx::File::kA, chesscxx::Rank::k7),
+      .destination = chesscxx::Square(chesscxx::File::kA, chesscxx::Rank::k8),
+      .promotion = chesscxx::PromotablePieceType::kQueen,
   };
   std::println("{}", uci);
 

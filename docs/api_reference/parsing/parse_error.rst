@@ -1,7 +1,7 @@
 ParseError
 ==========
 
-.. doxygenenum:: chesskit::ParseError
+.. doxygenenum:: chesscxx::ParseError
 
 Helper classes
 --------------

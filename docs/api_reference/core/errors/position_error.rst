@@ -1,7 +1,7 @@
 PositionError
 =============
 
-.. doxygenenum:: chesskit::PositionError
+.. doxygenenum:: chesscxx::PositionError
 
 Helper classes
 --------------

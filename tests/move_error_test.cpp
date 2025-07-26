@@ -1,4 +1,4 @@
-#include <chesskit/move_error.h>
+#include <chesscxx/move_error.h>
 #include <gtest/gtest.h>
 
 #include <format>
@@ -7,13 +7,13 @@
 #include <unordered_set>
 
 TEST(MoveErrorTest, DefaultConstructionResultsInValidMoveError) {
-  chesskit::MoveError const move_error{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::MoveError>(move_error));
+  chesscxx::MoveError const move_error{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::MoveError>(move_error));
 }
 
 TEST(MoveErrorTest, FormatProducesNonEmptyStrings) {
-  magic_enum::enum_for_each<chesskit::MoveError>(
-      [](chesskit::MoveError move_error) {
+  magic_enum::enum_for_each<chesscxx::MoveError>(
+      [](chesscxx::MoveError move_error) {
         EXPECT_FALSE(std::format("{}", move_error).empty());
       });
 }
@@ -21,8 +21,8 @@ TEST(MoveErrorTest, FormatProducesNonEmptyStrings) {
 TEST(MoveErrorTest, FormatProducesUniqueStrings) {
   std::unordered_set<std::string> fmt_strings;
 
-  magic_enum::enum_for_each<chesskit::MoveError>(
-      [&](chesskit::MoveError move_error) {
+  magic_enum::enum_for_each<chesscxx::MoveError>(
+      [&](chesscxx::MoveError move_error) {
         EXPECT_TRUE(fmt_strings.insert(std::format("{}", move_error)).second);
       });
 }

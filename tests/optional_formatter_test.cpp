@@ -1,4 +1,4 @@
-#include <chesskit/formatter/base_formatter.h>
+#include <chesscxx/formatter/base_formatter.h>
 #include <gtest/gtest.h>
 
 #include <format>
@@ -10,7 +10,7 @@ struct Point {
 };
 
 template <>
-struct std::formatter<Point> : chesskit::internal::BaseFormatter {
+struct std::formatter<Point> : chesscxx::internal::BaseFormatter {
   bool compact = false;
 
   constexpr auto parse(auto& ctx) {

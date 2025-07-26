@@ -1,8 +1,8 @@
-#include <chesskit/parse.h>
-#include <chesskit/piece.h>
-#include <chesskit/piece_placement.h>
-#include <chesskit/piece_placement_error.h>
-#include <chesskit/square.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece.h>
+#include <chesscxx/piece_placement.h>
+#include <chesscxx/piece_placement_error.h>
+#include <chesscxx/square.h>
 
 #include <cassert>
 #include <optional>
@@ -11,23 +11,23 @@
 
 namespace {
 auto parseSquare(std::string_view str) {
-  auto parsed_square = chesskit::parse<chesskit::Square>(str);
+  auto parsed_square = chesscxx::parse<chesscxx::Square>(str);
   assert(parsed_square);
   return parsed_square.value();
 }
 
 auto parsePiece(std::string_view str) {
-  auto parsed_piece = chesskit::parse<chesskit::Piece>(str);
+  auto parsed_piece = chesscxx::parse<chesscxx::Piece>(str);
   assert(parsed_piece);
   return parsed_piece.value();
 }
 
 void setPiece(auto& array, const auto& square, const auto& piece) {
-  array.at(chesskit::index(square)) = piece;
+  array.at(chesscxx::index(square)) = piece;
 }
 
 void clearSquare(auto& array, const auto& square) {
-  array.at(chesskit::index(square)) = std::nullopt;
+  array.at(chesscxx::index(square)) = std::nullopt;
 }
 
 void printErrorOrValue(const auto& piece_placement) {
@@ -39,16 +39,16 @@ void printErrorOrValue(const auto& piece_placement) {
 }
 
 void createPiecePlacementAndPrint(const auto& piece_array) {
-  auto piece_placement = chesskit::PiecePlacement::fromPieceArray(piece_array);
+  auto piece_placement = chesscxx::PiecePlacement::fromPieceArray(piece_array);
   printErrorOrValue(piece_placement);
 }
 }  // namespace
 
 auto main() -> int {
-  std::println("{}", chesskit::PiecePlacementError::kMissingKing);
-  std::println("{}\n", chesskit::PiecePlacementError::kPawnOnBackRank);
+  std::println("{}", chesscxx::PiecePlacementError::kMissingKing);
+  std::println("{}\n", chesscxx::PiecePlacementError::kPawnOnBackRank);
 
-  chesskit::PiecePlacement::PieceArray array;
+  chesscxx::PiecePlacement::PieceArray array;
   createPiecePlacementAndPrint(array);
 
   setPiece(array, parseSquare("a8"), parsePiece("K"));  // white king

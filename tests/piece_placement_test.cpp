@@ -1,11 +1,11 @@
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece.h>
-#include <chesskit/piece_placement.h>
-#include <chesskit/piece_placement_error.h>
-#include <chesskit/piece_type.h>
-#include <chesskit/square.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece.h>
+#include <chesscxx/piece_placement.h>
+#include <chesscxx/piece_placement_error.h>
+#include <chesscxx/piece_type.h>
+#include <chesscxx/square.h>
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
 
@@ -25,7 +25,7 @@
 
 #include "test_helper.h"
 
-namespace chesskit {
+namespace chesscxx {
 template <>
 class Parser<PiecePlacement::PieceArray, const char*, parse_as::Default> {
  public:
@@ -35,28 +35,28 @@ class Parser<PiecePlacement::PieceArray, const char*, parse_as::Default> {
     return internal::parsePieceArray(begin, end);
   }
 };
-}  // namespace chesskit
+}  // namespace chesscxx
 
 class ValidFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
     piece_array_ =
-        chesskit::parse<chesskit::PiecePlacement::PieceArray>(raw).value();
-    piece_placement_ = chesskit::parse<chesskit::PiecePlacement>(raw).value();
+        chesscxx::parse<chesscxx::PiecePlacement::PieceArray>(raw).value();
+    piece_placement_ = chesscxx::parse<chesscxx::PiecePlacement>(raw).value();
   }
   auto raw() const -> const std::string& { return raw_; }
-  auto piece_array() const -> const chesskit::PiecePlacement::PieceArray& {
+  auto piece_array() const -> const chesscxx::PiecePlacement::PieceArray& {
     return piece_array_;
   }
-  auto piece_placement() const -> const chesskit::PiecePlacement& {
+  auto piece_placement() const -> const chesscxx::PiecePlacement& {
     return piece_placement_;
   }
 
  private:
   std::string raw_;
-  chesskit::PiecePlacement::PieceArray piece_array_;
-  chesskit::PiecePlacement piece_placement_;
+  chesscxx::PiecePlacement::PieceArray piece_array_;
+  chesscxx::PiecePlacement piece_placement_;
 };
 
 template <>
@@ -72,22 +72,22 @@ class InvalidPieceArrayFixture {
   void set_input(std::string_view raw) {
     raw_ = raw;
     piece_array_ =
-        chesskit::parse<chesskit::PiecePlacement::PieceArray>(raw).value();
+        chesscxx::parse<chesscxx::PiecePlacement::PieceArray>(raw).value();
   }
-  void set_error(chesskit::PiecePlacementError error) { error_ = error; }
+  void set_error(chesscxx::PiecePlacementError error) { error_ = error; }
   [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
   [[nodiscard]] auto piece_array() const
-      -> const chesskit::PiecePlacement::PieceArray& {
+      -> const chesscxx::PiecePlacement::PieceArray& {
     return piece_array_;
   }
-  [[nodiscard]] auto error() const -> const chesskit::PiecePlacementError& {
+  [[nodiscard]] auto error() const -> const chesscxx::PiecePlacementError& {
     return error_;
   }
 
  private:
   std::string raw_;
-  chesskit::PiecePlacement::PieceArray piece_array_;
-  chesskit::PiecePlacementError error_{};
+  chesscxx::PiecePlacement::PieceArray piece_array_;
+  chesscxx::PiecePlacementError error_{};
 };
 
 template <>
@@ -95,7 +95,7 @@ struct YAML::convert<InvalidPieceArrayFixture> {
   static auto decode(const Node& node, InvalidPieceArrayFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
 
-    auto error = magic_enum::enum_cast<chesskit::PiecePlacementError>(
+    auto error = magic_enum::enum_cast<chesscxx::PiecePlacementError>(
         node[1].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
@@ -107,15 +107,15 @@ struct YAML::convert<InvalidPieceArrayFixture> {
 class InvalidFixture {
  public:
   void set_input(std::string_view raw) { raw_ = raw; }
-  void set_error(chesskit::ParseError error) { error_ = error; }
+  void set_error(chesscxx::ParseError error) { error_ = error; }
   [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
-  [[nodiscard]] auto error() const -> const chesskit::ParseError& {
+  [[nodiscard]] auto error() const -> const chesscxx::ParseError& {
     return error_;
   }
 
  private:
   std::string raw_;
-  chesskit::ParseError error_{};
+  chesscxx::ParseError error_{};
 };
 
 template <>
@@ -123,7 +123,7 @@ struct YAML::convert<InvalidFixture> {
   static auto decode(const Node& node, InvalidFixture& rhs) -> bool {
     rhs.set_input(node[0].as<std::string>());
     auto error =
-        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>());
+        magic_enum::enum_cast<chesscxx::ParseError>(node[1].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
 
@@ -145,7 +145,7 @@ auto GetValidInputs() {
 }
 
 auto BuildValidInputPairs() {
-  return chesskit::testing::make_distinct_pairs(GetValidInputs());
+  return chesscxx::testing::make_distinct_pairs(GetValidInputs());
 }
 
 auto GetInvalidPieceArrayInputs() {
@@ -179,13 +179,13 @@ INSTANTIATE_TEST_SUITE_P(PiecePlacementTest, InvalidInputSuite,
 
 TEST_P(ValidInputSuite, ParsesSuccessfully) {
   const auto& fen = GetParam().raw();
-  auto parsed_pp = chesskit::parse<chesskit::PiecePlacement>(fen);
+  auto parsed_pp = chesscxx::parse<chesscxx::PiecePlacement>(fen);
   ASSERT_TRUE(parsed_pp);
 }
 
 TEST_P(ValidInputSuite, ConstructsFromPieceArraySuccessfully) {
   const auto& array = GetParam().piece_array();
-  auto piece_placement = chesskit::PiecePlacement::fromPieceArray(array);
+  auto piece_placement = chesscxx::PiecePlacement::fromPieceArray(array);
   ASSERT_TRUE(piece_placement);
   EXPECT_EQ(piece_placement->pieceArray(), array);
 }
@@ -199,28 +199,28 @@ TEST_P(ValidInputSuite, ComparesEqual) {
 
 TEST_P(ValidInputSuite, PieceArrayAndPieceLocationsAreConsistent) {
   const auto& piece_placement = GetParam().piece_placement();
-  std::bitset<chesskit::kNumSquares> seen;
+  std::bitset<chesscxx::kNumSquares> seen;
 
   for (const auto& [color, locationsByPieceType] :
        piece_placement.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
-      for (const chesskit::Square& location : locations) {
-        chesskit::Piece const piece = {.type = type, .color = color};
-        auto location_index = chesskit::index(location);
+      for (const chesscxx::Square& location : locations) {
+        chesscxx::Piece const piece = {.type = type, .color = color};
+        auto location_index = chesscxx::index(location);
         seen.set(location_index);
         EXPECT_EQ(piece_placement.pieceArray().at(location_index), piece);
       }
     }
   }
 
-  for (size_t i = 0; i < chesskit::kNumSquares; i++) {
+  for (size_t i = 0; i < chesscxx::kNumSquares; i++) {
     if (!seen[i]) EXPECT_EQ(piece_placement.pieceArray().at(i), std::nullopt);
   }
 }
 
 TEST_P(ValidInputSuite, RoundTripConversionIsSuccessful) {
   const auto& piece_placement = GetParam().piece_placement();
-  EXPECT_EQ(piece_placement, chesskit::parse<chesskit::PiecePlacement>(
+  EXPECT_EQ(piece_placement, chesscxx::parse<chesscxx::PiecePlacement>(
                                  std::format("{:fen}", piece_placement)));
 }
 
@@ -240,24 +240,24 @@ TEST_P(ValidInputPairSuite, ComparesUnequal) {
 TEST_P(InvalidPieceArraySuite, FromPieceArrayReturnsCorrectError) {
   const auto& fixture = GetParam();
   EXPECT_EQ(
-      chesskit::PiecePlacement::fromPieceArray(fixture.piece_array()).error(),
+      chesscxx::PiecePlacement::fromPieceArray(fixture.piece_array()).error(),
       fixture.error());
 }
 
 TEST_P(InvalidPieceArraySuite, ParseReturnsCorrectError) {
   const auto& fen = GetParam().raw();
-  EXPECT_EQ(chesskit::parse<chesskit::PiecePlacement>(fen).error(),
-            chesskit::ParseError::kInvalidPiecePlacement);
+  EXPECT_EQ(chesscxx::parse<chesscxx::PiecePlacement>(fen).error(),
+            chesscxx::ParseError::kInvalidPiecePlacement);
 }
 
 TEST_P(InvalidInputSuite, ParseHandlesInvalidInputCorrectly) {
   const auto& fixture = GetParam();
-  EXPECT_EQ(chesskit::parse<chesskit::PiecePlacement>(fixture.raw()).error(),
+  EXPECT_EQ(chesscxx::parse<chesscxx::PiecePlacement>(fixture.raw()).error(),
             fixture.error());
 }
 
 TEST(PiecePlacementTest, DefaultConstructionCreatesDefaultPieceArray) {
-  chesskit::PiecePlacement const piece_placement;
+  chesscxx::PiecePlacement const piece_placement;
   EXPECT_EQ(GetDefault().piece_array(), piece_placement.pieceArray());
 }
 
@@ -285,9 +285,9 @@ TEST(PiecePlacementTest, FormatComplexInputCorrectly) {
 }
 
 TEST(PiecePlacementTest, ParseComplexInputCorrectly) {
-  using enum chesskit::PieceType;
-  using enum chesskit::Color;
-  using chesskit::Piece;
+  using enum chesscxx::PieceType;
+  using enum chesscxx::Color;
+  using chesscxx::Piece;
 
   static constexpr auto kWRook = Piece(kRook, kWhite);
   static constexpr auto kWKnight = Piece(kKnight, kWhite);
@@ -322,7 +322,7 @@ TEST(PiecePlacementTest, ParseComplexInputCorrectly) {
       kEmpty, kWKnight, kWBishop, kWQueen, kWKing, kWBishop, kWKnight, kWRook};
 
   auto parsed_pp =
-      chesskit::parse<chesskit::PiecePlacement>(GetComplexInput().raw());
+      chesscxx::parse<chesscxx::PiecePlacement>(GetComplexInput().raw());
   ASSERT_TRUE(parsed_pp);
   EXPECT_EQ(parsed_pp->pieceArray(), kExpectedBoard);
 }
@@ -330,12 +330,12 @@ TEST(PiecePlacementTest, ParseComplexInputCorrectly) {
 TEST(PiecePlacementTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<size_t, std::vector<chesskit::PiecePlacement>>
+  std::unordered_map<size_t, std::vector<chesscxx::PiecePlacement>>
       hash_counter;
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
     const auto& piece_placement = fixture.piece_placement();
-    auto hash = std::hash<chesskit::PiecePlacement>{}(piece_placement);
+    auto hash = std::hash<chesscxx::PiecePlacement>{}(piece_placement);
     hash_counter[hash].push_back(piece_placement);
     auto collisions = hash_counter[hash].size();
     EXPECT_LE(collisions, kMaxCollisions) << std::format(
@@ -345,20 +345,20 @@ TEST(PiecePlacementTest, HashProducesFewCollisions) {
 
 TEST(PiecePlacementTest, HashProducesExpectedCollision) {
   auto lhs_pp =
-      chesskit::parse<chesskit::PiecePlacement>("1RB1k3/8/8/8/8/8/8/4K3");
+      chesscxx::parse<chesscxx::PiecePlacement>("1RB1k3/8/8/8/8/8/8/4K3");
   auto rhs_pp =
-      chesskit::parse<chesskit::PiecePlacement>("1rN1k3/8/8/8/8/8/8/4K3");
+      chesscxx::parse<chesscxx::PiecePlacement>("1rN1k3/8/8/8/8/8/8/4K3");
   ASSERT_TRUE(lhs_pp);
   ASSERT_TRUE(rhs_pp);
   EXPECT_NE(*lhs_pp, *rhs_pp);
-  EXPECT_EQ(std::hash<chesskit::PiecePlacement>{}(*lhs_pp),
-            std::hash<chesskit::PiecePlacement>{}(*rhs_pp))
+  EXPECT_EQ(std::hash<chesscxx::PiecePlacement>{}(*lhs_pp),
+            std::hash<chesscxx::PiecePlacement>{}(*rhs_pp))
       << std::format("lhs_pp:{} rhs_pp{}", *lhs_pp, *rhs_pp);
 }
 
 TEST(PiecePlacementTest, FormatProducesUniqueStrings) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::PiecePlacement>>;
+      std::unordered_map<std::string, std::vector<chesscxx::PiecePlacement>>;
   CollisionMap fmt_collisions;
   CollisionMap ascii_fmt_collisions;
   CollisionMap lists_fmt_collisions;

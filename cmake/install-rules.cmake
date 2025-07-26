@@ -1,6 +1,6 @@
 if(PROJECT_IS_TOP_LEVEL)
   set(
-    CMAKE_INSTALL_INCLUDEDIR "include/chesskit-${PROJECT_VERSION}"
+    CMAKE_INSTALL_INCLUDEDIR "include/chesscxx-${PROJECT_VERSION}"
     CACHE STRING ""
   )
   set_property(CACHE CMAKE_INSTALL_INCLUDEDIR PROPERTY TYPE PATH)
@@ -13,17 +13,17 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
 # find_package(<package>) call for consumers to find this project
-set(package chesskit)
+set(package chesscxx)
 
 install(
   DIRECTORY include/
   DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-  COMPONENT chesskit_Development
+  COMPONENT chesscxx_Development
 )
 
 install(
-  TARGETS chesskit_chesskit
-  EXPORT chesskitTargets
+  TARGETS chesscxx_chesscxx
+  EXPORT chesscxxTargets
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
 
@@ -35,30 +35,30 @@ write_basic_package_version_file(
 
 # Allow package maintainers to freely override the path for the configs
 set(
-  chesskit_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/${package}"
+  chesscxx_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/${package}"
   CACHE STRING "CMake package config location relative to the install prefix"
 )
-set_property(CACHE chesskit_INSTALL_CMAKEDIR PROPERTY TYPE PATH)
-mark_as_advanced(chesskit_INSTALL_CMAKEDIR)
+set_property(CACHE chesscxx_INSTALL_CMAKEDIR PROPERTY TYPE PATH)
+mark_as_advanced(chesscxx_INSTALL_CMAKEDIR)
 
 install(
   FILES cmake/install-config.cmake
-  DESTINATION "${chesskit_INSTALL_CMAKEDIR}"
+  DESTINATION "${chesscxx_INSTALL_CMAKEDIR}"
   RENAME "${package}Config.cmake"
-  COMPONENT chesskit_Development
+  COMPONENT chesscxx_Development
 )
 
 install(
   FILES "${PROJECT_BINARY_DIR}/${package}ConfigVersion.cmake"
-  DESTINATION "${chesskit_INSTALL_CMAKEDIR}"
-  COMPONENT chesskit_Development
+  DESTINATION "${chesscxx_INSTALL_CMAKEDIR}"
+  COMPONENT chesscxx_Development
 )
 
 install(
-  EXPORT chesskitTargets
-  NAMESPACE chesskit::
-  DESTINATION "${chesskit_INSTALL_CMAKEDIR}"
-  COMPONENT chesskit_Development
+  EXPORT chesscxxTargets
+  NAMESPACE chesscxx::
+  DESTINATION "${chesscxx_INSTALL_CMAKEDIR}"
+  COMPONENT chesscxx_Development
 )
 
 if(PROJECT_IS_TOP_LEVEL)

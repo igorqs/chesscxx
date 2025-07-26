@@ -1,7 +1,7 @@
-#include <chesskit/parse.h>
-#include <chesskit/piece.h>
-#include <chesskit/piece_placement.h>
-#include <chesskit/square.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece.h>
+#include <chesscxx/piece_placement.h>
+#include <chesscxx/square.h>
 
 #include <bitset>
 #include <cassert>
@@ -20,33 +20,33 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_piece_placement = chesskit::parse<chesskit::PiecePlacement>(str);
+  auto parsed_piece_placement = chesscxx::parse<chesscxx::PiecePlacement>(str);
   printErrorOrValue(parsed_piece_placement);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::PiecePlacement piece_placement;
+  chesscxx::PiecePlacement piece_placement;
   std::println("{}\n", piece_placement);
   std::println("{:fen}\n", piece_placement);
   std::println("{:ascii}\n", piece_placement);
   std::println("{:lists}\n", piece_placement);
 
-  std::bitset<chesskit::kNumSquares> seen;
+  std::bitset<chesscxx::kNumSquares> seen;
 
   for (const auto& [color, locationsByPieceType] :
        piece_placement.pieceLocations()) {
     for (const auto& [type, locations] : locationsByPieceType) {
-      for (const chesskit::Square& location : locations) {
-        chesskit::Piece const piece = {.type = type, .color = color};
-        auto location_index = chesskit::index(location);
+      for (const chesscxx::Square& location : locations) {
+        chesscxx::Piece const piece = {.type = type, .color = color};
+        auto location_index = chesscxx::index(location);
         seen.set(location_index);
         assert(piece_placement.pieceArray().at(location_index) == piece);
       }
     }
   }
 
-  for (size_t i = 0; i < chesskit::kNumSquares; i++) {
+  for (size_t i = 0; i < chesscxx::kNumSquares; i++) {
     if (!seen[i]) assert(piece_placement.pieceArray().at(i) == std::nullopt);
   }
 

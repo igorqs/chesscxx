@@ -1,4 +1,4 @@
-#include <chesskit/position_error.h>
+#include <chesscxx/position_error.h>
 #include <gtest/gtest.h>
 
 #include <format>
@@ -7,13 +7,13 @@
 #include <unordered_set>
 
 TEST(PositionErrorTest, DefaultConstructionResultsInValidPositionError) {
-  chesskit::PositionError const error{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::PositionError>(error));
+  chesscxx::PositionError const error{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::PositionError>(error));
 }
 
 TEST(PositionErrorTest, FormatProducesNonEmptyStrings) {
-  magic_enum::enum_for_each<chesskit::PositionError>(
-      [](chesskit::PositionError position_error) {
+  magic_enum::enum_for_each<chesscxx::PositionError>(
+      [](chesscxx::PositionError position_error) {
         EXPECT_FALSE(std::format("{}", position_error).empty());
       });
 }
@@ -21,8 +21,8 @@ TEST(PositionErrorTest, FormatProducesNonEmptyStrings) {
 TEST(PositionErrorTest, FormatProducesUniqueStrings) {
   std::unordered_set<std::string> fmt_strings;
 
-  magic_enum::enum_for_each<chesskit::PositionError>(
-      [&](chesskit::PositionError position_error) {
+  magic_enum::enum_for_each<chesscxx::PositionError>(
+      [&](chesscxx::PositionError position_error) {
         EXPECT_TRUE(
             fmt_strings.insert(std::format("{}", position_error)).second);
       });

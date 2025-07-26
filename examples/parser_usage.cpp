@@ -1,6 +1,6 @@
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece_type.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece_type.h>
 
 #include <cassert>
 #include <expected>
@@ -12,10 +12,10 @@ struct PortugueseUppercase {};
 struct PortugueseLowercase {};
 
 template <>
-class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
+class chesscxx::Parser<chesscxx::PieceType, const char*, PortugueseUppercase> {
  public:
   static auto parse(const char* begin, const char* end)
-      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+      -> std::expected<ParseResult<chesscxx::PieceType, const char*>,
                        ParseError> {
     static constexpr std::string_view kAllowed = "PCBTDR";
 
@@ -27,16 +27,16 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseUppercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesscxx::PieceType>(index),
                        .ptr = std::next(begin)};
   }
 };
 
 template <>
-class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
+class chesscxx::Parser<chesscxx::PieceType, const char*, PortugueseLowercase> {
  public:
   static auto parse(const char* begin, const char* end)
-      -> std::expected<ParseResult<chesskit::PieceType, const char*>,
+      -> std::expected<ParseResult<chesscxx::PieceType, const char*>,
                        ParseError> {
     static constexpr std::string_view kAllowed = "pcbtdr";
 
@@ -48,14 +48,14 @@ class chesskit::Parser<chesskit::PieceType, const char*, PortugueseLowercase> {
       return std::unexpected(ParseError::kInvalidPieceType);
     }
 
-    return ParseResult{.parsed_value = static_cast<chesskit::PieceType>(index),
+    return ParseResult{.parsed_value = static_cast<chesscxx::PieceType>(index),
                        .ptr = std::next(begin)};
   }
 };
 
 namespace {
 void parsePortugueseAndPrint(std::string_view str, auto tag) {
-  auto piece_type = chesskit::parse<chesskit::PieceType>(str, tag);
+  auto piece_type = chesscxx::parse<chesscxx::PieceType>(str, tag);
   assert(piece_type);
 
   std::println("{}", piece_type.value());

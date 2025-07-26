@@ -1,7 +1,7 @@
 Color
 =====
 
-.. doxygenenum:: chesskit::Color
+.. doxygenenum:: chesscxx::Color
 
 Helper classes
 --------------

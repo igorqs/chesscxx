@@ -1,8 +1,8 @@
-#include <chesskit/game.h>
-#include <chesskit/game_result.h>
-#include <chesskit/parse.h>
-#include <chesskit/san_move.h>
-#include <chesskit/uci_move.h>
+#include <chesscxx/game.h>
+#include <chesscxx/game_result.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/san_move.h>
+#include <chesscxx/uci_move.h>
 
 #include <cassert>
 #include <optional>
@@ -10,21 +10,21 @@
 #include <string_view>
 
 namespace {
-auto parseUciMove(std::string_view str) -> chesskit::UciMove {
-  auto parsed_uci_move = chesskit::parse<chesskit::UciMove>(str);
+auto parseUciMove(std::string_view str) -> chesscxx::UciMove {
+  auto parsed_uci_move = chesscxx::parse<chesscxx::UciMove>(str);
   assert(parsed_uci_move);
   return parsed_uci_move.value();
 }
 
-auto parseSanMove(std::string_view str) -> chesskit::SanMove {
-  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+auto parseSanMove(std::string_view str) -> chesscxx::SanMove {
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
   assert(parsed_san_move);
   return parsed_san_move.value();
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Game game;
+  chesscxx::Game game;
   std::println("{}\n", game);
   std::println("{:pgn}\n", game);
   std::println("{:fen}\n", game);
@@ -50,7 +50,7 @@ auto main() -> int {
 
   assert(game.move(parseSanMove("Qh5f7")));
 
-  assert(game.result() == chesskit::GameResult::kWhiteWins);
+  assert(game.result() == chesscxx::GameResult::kWhiteWins);
 
   std::println("{}\n", game);
   std::println("{:pgn}\n", game);

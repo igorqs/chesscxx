@@ -1,7 +1,7 @@
 parseFrom()
 ===========
 
-.. doxygenfunction:: chesskit::parseFrom
+.. doxygenfunction:: chesscxx::parseFrom
 
 Examples
 --------

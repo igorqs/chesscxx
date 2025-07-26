@@ -1,7 +1,7 @@
 CastlingRights
 ==============
 
-.. doxygenclass:: chesskit::CastlingRights
+.. doxygenclass:: chesscxx::CastlingRights
    :members:
    :undoc-members:
 

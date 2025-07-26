@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.31)
 
-project(chesskitExamples CXX)
+project(chesscxxExamples CXX)
 
 #include(../cmake/folders.cmake)
 
 # ---- Dependencies ----
 
 if(PROJECT_IS_TOP_LEVEL)
-  find_package(chesskit REQUIRED)
+  find_package(chesscxx REQUIRED)
 endif()
 
 # ---- Examples ----
@@ -20,7 +20,7 @@ add_custom_target(copy_example_assets
 
 function(add_example NAME)
   add_executable("${NAME}" "${NAME}.cpp")
-  target_link_libraries("${NAME}" PRIVATE chesskit::chesskit)
+  target_link_libraries("${NAME}" PRIVATE chesscxx::chesscxx)
   target_compile_features("${NAME}" PRIVATE cxx_std_23)
 
   add_custom_target("run_${NAME}"

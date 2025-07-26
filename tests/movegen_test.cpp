@@ -1,12 +1,12 @@
-#include <chesskit/file.h>
-#include <chesskit/game.h>
-#include <chesskit/movegen.h>
-#include <chesskit/parse.h>
-#include <chesskit/piece_type.h>
-#include <chesskit/rank.h>
-#include <chesskit/san_move.h>
-#include <chesskit/square.h>
-#include <chesskit/uci_move.h>
+#include <chesscxx/file.h>
+#include <chesscxx/game.h>
+#include <chesscxx/movegen.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece_type.h>
+#include <chesscxx/rank.h>
+#include <chesscxx/san_move.h>
+#include <chesscxx/square.h>
+#include <chesscxx/uci_move.h>
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
 
@@ -19,49 +19,49 @@
 
 #include "test_helper.h"  // IWYU pragma: keep
 
-constexpr auto kAllOptPromotions = chesskit::testing::make_optional_enum_array<
-    chesskit::PromotablePieceType>();
+constexpr auto kAllOptPromotions = chesscxx::testing::make_optional_enum_array<
+    chesscxx::PromotablePieceType>();
 
 constexpr auto kAllSquares =
-    std::views::cartesian_product(magic_enum::enum_values<chesskit::Rank>(),
-                                  magic_enum::enum_values<chesskit::File>()) |
+    std::views::cartesian_product(magic_enum::enum_values<chesscxx::Rank>(),
+                                  magic_enum::enum_values<chesscxx::File>()) |
     std::views::transform([](const auto& product) {
       const auto& [rank, file] = product;
-      return chesskit::Square(file, rank);
+      return chesscxx::Square(file, rank);
     });
 
 constexpr auto kUciMoves =
     std::views::cartesian_product(kAllSquares, kAllSquares, kAllOptPromotions) |
     std::views::transform([](const auto& product) {
       const auto& [origin, destination, promotion] = product;
-      return chesskit::UciMove(origin, destination, promotion);
+      return chesscxx::UciMove(origin, destination, promotion);
     });
 
 class MovegenFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << std::format(
-        "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << std::format(
+        "{} {}", raw, chesscxx::parse<chesscxx::Game>(raw).error());
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
-  void add_san_move(chesskit::SanMove san_move) { san_moves_.insert(san_move); }
-  void add_uci_move(chesskit::UciMove uci_move) { uci_moves_.insert(uci_move); }
+  void add_san_move(chesscxx::SanMove san_move) { san_moves_.insert(san_move); }
+  void add_uci_move(chesscxx::UciMove uci_move) { uci_moves_.insert(uci_move); }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto san_moves() const -> const std::unordered_set<chesskit::SanMove>& {
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto san_moves() const -> const std::unordered_set<chesscxx::SanMove>& {
     return san_moves_;
   }
-  auto uci_moves() const -> const std::unordered_set<chesskit::UciMove>& {
+  auto uci_moves() const -> const std::unordered_set<chesscxx::UciMove>& {
     return uci_moves_;
   }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  std::unordered_set<chesskit::SanMove> san_moves_;
-  std::unordered_set<chesskit::UciMove> uci_moves_;
+  chesscxx::Game game_;
+  std::unordered_set<chesscxx::SanMove> san_moves_;
+  std::unordered_set<chesscxx::UciMove> uci_moves_;
 };
 
 template <>
@@ -71,13 +71,13 @@ struct YAML::convert<MovegenFixture> {
 
     for (const auto& san_node : node[1]) {
       rhs.add_san_move(
-          chesskit::parse<chesskit::SanMove>(san_node.as<std::string>())
+          chesscxx::parse<chesscxx::SanMove>(san_node.as<std::string>())
               .value());
     }
 
     for (const auto& uci_node : node[2]) {
       rhs.add_uci_move(
-          chesskit::parse<chesskit::UciMove>(uci_node.as<std::string>())
+          chesscxx::parse<chesscxx::UciMove>(uci_node.as<std::string>())
               .value());
     }
 
@@ -110,7 +110,7 @@ TEST_P(MovegenSuite, GenerateLegalMovesCorrectly) {
 
   auto san_moves = fixture.san_moves();
 
-  for (auto move : chesskit::legalSanMoves(fixture.game())) {
+  for (auto move : chesscxx::legalSanMoves(fixture.game())) {
     EXPECT_TRUE(san_moves.contains(move));
     san_moves.erase(move);
   }
@@ -119,7 +119,7 @@ TEST_P(MovegenSuite, GenerateLegalMovesCorrectly) {
 
   auto uci_moves = fixture.uci_moves();
 
-  for (auto move : chesskit::legalUciMoves(fixture.game())) {
+  for (auto move : chesscxx::legalUciMoves(fixture.game())) {
     EXPECT_TRUE(uci_moves.contains(move));
     uci_moves.erase(move);
   }
@@ -145,7 +145,7 @@ TEST_P(OverflowMovegenSuite, GenerateLegalMovesCorrectly) {
 
   auto san_moves = fixture.san_moves();
 
-  for (auto move : chesskit::legalSanMoves(fixture.game())) {
+  for (auto move : chesscxx::legalSanMoves(fixture.game())) {
     EXPECT_TRUE(san_moves.contains(move));
     san_moves.erase(move);
   }
@@ -154,7 +154,7 @@ TEST_P(OverflowMovegenSuite, GenerateLegalMovesCorrectly) {
 
   auto uci_moves = fixture.uci_moves();
 
-  for (auto move : chesskit::legalUciMoves(fixture.game())) {
+  for (auto move : chesscxx::legalUciMoves(fixture.game())) {
     EXPECT_TRUE(uci_moves.contains(move));
     uci_moves.erase(move);
   }

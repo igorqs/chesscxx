@@ -1,11 +1,11 @@
-#include <chesskit/castling_side.h>
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/partial_square.h>
-#include <chesskit/piece_type.h>
-#include <chesskit/rank.h>
-#include <chesskit/san_move.h>
-#include <chesskit/square.h>
+#include <chesscxx/castling_side.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/partial_square.h>
+#include <chesscxx/piece_type.h>
+#include <chesscxx/rank.h>
+#include <chesscxx/san_move.h>
+#include <chesscxx/square.h>
 
 #include <optional>
 #include <print>
@@ -21,21 +21,21 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_san_move = chesskit::parse<chesskit::SanMove>(str);
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanMove>(str);
   printErrorOrValue(parsed_san_move);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::SanMove san_move = chesskit::SanNormalMove{
-      .piece_type = chesskit::PieceType::kKing,
-      .origin = chesskit::PartialSquare(chesskit::File::kE, std::nullopt),
-      .destination = chesskit::Square(chesskit::File::kF, chesskit::Rank::k8),
+  chesscxx::SanMove san_move = chesscxx::SanNormalMove{
+      .piece_type = chesscxx::PieceType::kKing,
+      .origin = chesscxx::PartialSquare(chesscxx::File::kE, std::nullopt),
+      .destination = chesscxx::Square(chesscxx::File::kF, chesscxx::Rank::k8),
   };
   std::println("{}", san_move);
 
-  san_move = chesskit::SanCastlingMove{
-      .side = chesskit::CastlingSide::kKingside,
+  san_move = chesscxx::SanCastlingMove{
+      .side = chesscxx::CastlingSide::kKingside,
   };
   std::println("{}", san_move);
 

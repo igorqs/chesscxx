@@ -1,5 +1,5 @@
-#include <chesskit/parse.h>
-#include <chesskit/square.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/square.h>
 
 #include <cassert>
 #include <iterator>
@@ -10,7 +10,7 @@ auto main() -> int {
   std::string_view const input = "e4 extra input";
 
   auto result =
-      chesskit::parseFrom<chesskit::Square>(input.begin(), input.end());
+      chesscxx::parseFrom<chesscxx::Square>(input.begin(), input.end());
   assert(result);
 
   std::println("{}", result.value().parsed_value);

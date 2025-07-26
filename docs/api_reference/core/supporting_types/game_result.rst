@@ -1,7 +1,7 @@
 GameResult
 ==========
 
-.. doxygenenum:: chesskit::GameResult
+.. doxygenenum:: chesscxx::GameResult
 
 Helper classes
 --------------

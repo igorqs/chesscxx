@@ -1,7 +1,7 @@
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/partial_square.h>
-#include <chesskit/rank.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/partial_square.h>
+#include <chesscxx/rank.h>
 
 #include <optional>
 #include <print>
@@ -17,25 +17,25 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_partial_square = chesskit::parse<chesskit::PartialSquare>(str);
+  auto parsed_partial_square = chesscxx::parse<chesscxx::PartialSquare>(str);
   printErrorOrValue(parsed_partial_square);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::PartialSquare both{.file = chesskit::File::kA,
-                               .rank = chesskit::Rank::k8};
+  chesscxx::PartialSquare both{.file = chesscxx::File::kA,
+                               .rank = chesscxx::Rank::k8};
   std::println("\"{}\"", both);
 
-  chesskit::PartialSquare file_only{.file = chesskit::File::kA,
+  chesscxx::PartialSquare file_only{.file = chesscxx::File::kA,
                                     .rank = std::nullopt};
   std::println("\"{}\"", file_only);
 
-  chesskit::PartialSquare rank_only{.file = std::nullopt,
-                                    .rank = chesskit::Rank::k8};
+  chesscxx::PartialSquare rank_only{.file = std::nullopt,
+                                    .rank = chesscxx::Rank::k8};
   std::println("\"{}\"", rank_only);
 
-  chesskit::PartialSquare neither{.file = std::nullopt, .rank = std::nullopt};
+  chesscxx::PartialSquare neither{.file = std::nullopt, .rank = std::nullopt};
   std::println("\"{}\"", neither);
 
   parseAndPrint("e4");

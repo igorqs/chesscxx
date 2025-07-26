@@ -1,13 +1,13 @@
 Position
 ========
 
-.. doxygenclass:: chesskit::Position
+.. doxygenclass:: chesscxx::Position
    :members: Position, fromParams, operator==, piecePlacement, activeColor, enPassantTargetSquare, legalEnPassantTargetSquare, halfmoveClock, fullmoveNumber, castlingRights, kMinHalfmoveClock, kMaxHalfmoveClock, kMinFullmoveNumber, kMaxFullmoveNumber
 
 Nested Classes
 --------------
 
-.. doxygenstruct:: chesskit::Position::Params
+.. doxygenstruct:: chesscxx::Position::Params
    :members:
 
 Helper classes

@@ -16,11 +16,11 @@ configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
 
 file(MAKE_DIRECTORY ${DOXYGEN_OUTPUT_DIR})
 
-file(GLOB_RECURSE CHESSKIT_PUBLIC_HEADERS "${DOXYGEN_INPUT_DIR}/*.h")
+file(GLOB_RECURSE CHESSCXX_PUBLIC_HEADERS "${DOXYGEN_INPUT_DIR}/*.h")
 
 # Only regenerate Doxygen when the Doxyfile or public headers change
 add_custom_command(OUTPUT ${DOXYGEN_INDEX_FILE}
-                   DEPENDS ${CHESSKIT_PUBLIC_HEADERS}
+                   DEPENDS ${CHESSCXX_PUBLIC_HEADERS}
                    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE_OUT}
                    MAIN_DEPENDENCY ${DOXYFILE_OUT} ${DOXYFILE_IN}
                    COMMENT "Generating docs"
@@ -50,7 +50,7 @@ file(COPY ${OUT_FILES} DESTINATION ${DOCS_EXAMPLES_OUTPUTS_DIR})
 add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    COMMAND 
                      ${SPHINX_EXECUTABLE} -b html
-                     -Dbreathe_projects.ChessKit="${DOXYGEN_OUTPUT_DIR}/xml"
+                     -Dbreathe_projects.chesscxx="${DOXYGEN_OUTPUT_DIR}/xml"
                      ${SPHINX_SOURCE} ${SPHINX_BUILD}
                    WORKING_DIRECTORY ${WORKING_DIR}
                    DEPENDS

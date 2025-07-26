@@ -1,7 +1,7 @@
 Piece
 =====
 
-.. doxygenstruct:: chesskit::Piece
+.. doxygenstruct:: chesscxx::Piece
    :members:
    :undoc-members:
 

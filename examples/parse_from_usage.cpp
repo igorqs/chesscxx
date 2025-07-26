@@ -1,5 +1,5 @@
-#include <chesskit/game.h>
-#include <chesskit/parse.h>
+#include <chesscxx/game.h>
+#include <chesscxx/parse.h>
 
 #include <algorithm>
 #include <cassert>
@@ -28,7 +28,7 @@ auto main() -> int {
   std::string_view const str(buffer.begin(), rit.base());
 
   for (const auto *it = str.begin(); it != str.end();) {
-    auto result = chesskit::parseFrom<chesskit::Game>(it, str.end());
+    auto result = chesscxx::parseFrom<chesscxx::Game>(it, str.end());
     assert(result);
     std::println("{}", result->parsed_value);
     it = result->ptr;

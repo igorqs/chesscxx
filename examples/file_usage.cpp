@@ -1,5 +1,5 @@
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
 
 #include <print>
 #include <string_view>
@@ -14,13 +14,13 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_file = chesskit::parse<chesskit::File>(str);
+  auto parsed_file = chesscxx::parse<chesscxx::File>(str);
   printErrorOrValue(parsed_file);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::File file = chesskit::File::kE;
+  chesscxx::File file = chesscxx::File::kE;
   std::println("{}", file);
 
   parseAndPrint("a");

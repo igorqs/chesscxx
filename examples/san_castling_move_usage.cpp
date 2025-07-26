@@ -1,7 +1,7 @@
-#include <chesskit/castling_side.h>
-#include <chesskit/check_indicator.h>
-#include <chesskit/parse.h>
-#include <chesskit/san_move.h>
+#include <chesscxx/castling_side.h>
+#include <chesscxx/check_indicator.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/san_move.h>
 
 #include <print>
 #include <string_view>
@@ -16,20 +16,20 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_san_move = chesskit::parse<chesskit::SanCastlingMove>(str);
+  auto parsed_san_move = chesscxx::parse<chesscxx::SanCastlingMove>(str);
   printErrorOrValue(parsed_san_move);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::SanCastlingMove castling = {
-      .side = chesskit::CastlingSide::kKingside,
+  chesscxx::SanCastlingMove castling = {
+      .side = chesscxx::CastlingSide::kKingside,
   };
   std::println("{}", castling);
 
   castling = {
-      .side = chesskit::CastlingSide::kQueenside,
-      .check_indicator = chesskit::CheckIndicator::kCheck,
+      .side = chesscxx::CastlingSide::kQueenside,
+      .check_indicator = chesscxx::CheckIndicator::kCheck,
   };
   std::println("{}", castling);
 

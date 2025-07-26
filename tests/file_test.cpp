@@ -1,6 +1,6 @@
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 #include <gtest/gtest.h>
 
 #include <array>
@@ -12,30 +12,30 @@
 #include <tuple>
 
 TEST(FileTest, DefaultConstructionResultsInValidFile) {
-  chesskit::File const file{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::File>(file));
+  chesscxx::File const file{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::File>(file));
 }
 
 TEST(FileTest, KNumFilesMatchesEnumCount) {
-  EXPECT_EQ(chesskit::kNumFiles, magic_enum::enum_count<chesskit::File>());
+  EXPECT_EQ(chesscxx::kNumFiles, magic_enum::enum_count<chesscxx::File>());
 }
 
 TEST(FileTest, KNumFilesIsInBounds) {
-  EXPECT_GT(chesskit::kNumFiles, 0);
-  EXPECT_LE(std::bit_width(chesskit::kNumFiles), 4);
+  EXPECT_GT(chesscxx::kNumFiles, 0);
+  EXPECT_LE(std::bit_width(chesscxx::kNumFiles), 4);
 }
 
 TEST(FileTest, RoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::File>([](chesskit::File file) {
-    EXPECT_EQ(file, chesskit::parse<chesskit::File>(std::format("{}", file)));
+  magic_enum::enum_for_each<chesscxx::File>([](chesscxx::File file) {
+    EXPECT_EQ(file, chesscxx::parse<chesscxx::File>(std::format("{}", file)));
   });
 }
 
 TEST(FileTest, FormatProducesExpectedOutput) {
-  using chesskit::File;
+  using chesscxx::File;
 
-  constexpr std::array<std::tuple<chesskit::File, std::string_view>,
-                       chesskit::kNumFiles>
+  constexpr std::array<std::tuple<chesscxx::File, std::string_view>,
+                       chesscxx::kNumFiles>
       kFixtures = {{
           {File::kA, "a"},
           {File::kB, "b"},
@@ -53,8 +53,8 @@ TEST(FileTest, FormatProducesExpectedOutput) {
 }
 
 TEST(FileTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::File>("i").error(),
-            chesskit::ParseError::kInvalidFile);
-  EXPECT_EQ(chesskit::parse<chesskit::File>("a ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::File>("i").error(),
+            chesscxx::ParseError::kInvalidFile);
+  EXPECT_EQ(chesscxx::parse<chesscxx::File>("a ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

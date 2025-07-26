@@ -1,5 +1,5 @@
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
 
 #include <print>
 #include <string_view>
@@ -14,14 +14,14 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_color = chesskit::parse<chesskit::Color>(str);
+  auto parsed_color = chesscxx::parse<chesscxx::Color>(str);
   printErrorOrValue(parsed_color);
 }
 }  // namespace
 
 auto main() -> int {
-  chesskit::Color white = chesskit::Color::kWhite;
-  chesskit::Color black = chesskit::Color::kBlack;
+  chesscxx::Color white = chesscxx::Color::kWhite;
+  chesscxx::Color black = chesscxx::Color::kBlack;
   std::println("{} {}", white, black);
   std::println("{:v} {:v}", white, black);
   std::println("{:c} {:c}\n", white, black);

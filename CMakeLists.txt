@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.31)
 include(cmake/prelude.cmake)
 
 project(
-  chesskit
+  chesscxx
   VERSION 1.0.0
   DESCRIPTION "A modern C++23 chess library for parsing, formatting, move generation, and validation."
   LANGUAGES CXX
@@ -13,21 +13,21 @@ include(cmake/variables.cmake)
 
 # ---- Declare library ----
 
-add_library(chesskit_chesskit INTERFACE)
-add_library(chesskit::chesskit ALIAS chesskit_chesskit)
+add_library(chesscxx_chesscxx INTERFACE)
+add_library(chesscxx::chesscxx ALIAS chesscxx_chesscxx)
 
 set_property(
-  TARGET chesskit_chesskit PROPERTY
-  EXPORT_NAME chesskit
+  TARGET chesscxx_chesscxx PROPERTY
+  EXPORT_NAME chesscxx
 )
 
 target_include_directories(
-  chesskit_chesskit ${warning_guard}
+  chesscxx_chesscxx ${warning_guard}
   INTERFACE
   "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 )
 
-target_compile_features(chesskit_chesskit INTERFACE cxx_std_23)
+target_compile_features(chesscxx_chesscxx INTERFACE cxx_std_23)
 
 # ---- Install rules ----
 
@@ -38,7 +38,7 @@ endif()
 # ---- Examples ----
 
 if(PROJECT_IS_TOP_LEVEL)
-  option(BUILD_EXAMPLES "Build examples tree." "${chesskit_DEVELOPER_MODE}")
+  option(BUILD_EXAMPLES "Build examples tree." "${chesscxx_DEVELOPER_MODE}")
   if(BUILD_EXAMPLES)
     add_subdirectory(examples)
   endif()
@@ -46,12 +46,12 @@ endif()
 
 # ---- Developer mode ----
 
-if(NOT chesskit_DEVELOPER_MODE)
+if(NOT chesscxx_DEVELOPER_MODE)
   return()
 elseif(NOT PROJECT_IS_TOP_LEVEL)
   message(
     AUTHOR_WARNING
-    "Developer mode is intended for developers of chesskit"
+    "Developer mode is intended for developers of chesscxx"
   )
 endif()
 

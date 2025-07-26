@@ -1,8 +1,8 @@
-#include <chesskit/file.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/rank.h>
-#include <chesskit/square.h>
+#include <chesscxx/file.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/rank.h>
+#include <chesscxx/square.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -16,25 +16,25 @@
 #include <unordered_set>
 
 constexpr auto kAllSquares =
-    std::views::cartesian_product(magic_enum::enum_values<chesskit::Rank>(),
-                                  magic_enum::enum_values<chesskit::File>()) |
+    std::views::cartesian_product(magic_enum::enum_values<chesscxx::Rank>(),
+                                  magic_enum::enum_values<chesscxx::File>()) |
     std::views::transform([](const auto& product) {
       const auto& [rank, file] = product;
-      return chesskit::Square(file, rank);
+      return chesscxx::Square(file, rank);
     });
 
 TEST(SquareTest, DefaultConstructionIndexIsEqualZero) {
-  chesskit::Square const square;
-  EXPECT_EQ(chesskit::index(square), 0);
+  chesscxx::Square const square;
+  EXPECT_EQ(chesscxx::index(square), 0);
 }
 
 TEST(SquareTest, KNumSquaresMatchesCartesianProductCount) {
-  EXPECT_EQ(chesskit::kNumSquares, kAllSquares.size());
+  EXPECT_EQ(chesscxx::kNumSquares, kAllSquares.size());
 }
 
 TEST(SquareTest, KNumSquaresIsInBounds) {
-  EXPECT_GT(chesskit::kNumSquares, 0);
-  EXPECT_LE(chesskit::kNumSquares, std::numeric_limits<uint8_t>::max());
+  EXPECT_GT(chesscxx::kNumSquares, 0);
+  EXPECT_LE(chesscxx::kNumSquares, std::numeric_limits<uint8_t>::max());
 }
 
 TEST(SquareTest, ComparesEqualValuesSuccessfully) {
@@ -56,7 +56,7 @@ TEST(SquareTest, IndexOrderIsRowMajor) {
   size_t expected_index = 0;
 
   std::ranges::for_each(kAllSquares, [&](const auto& square) {
-    EXPECT_EQ(chesskit::index(square), expected_index++);
+    EXPECT_EQ(chesscxx::index(square), expected_index++);
   });
 }
 
@@ -64,14 +64,14 @@ TEST(SquareTest, HashProducesUniqueValues) {
   std::unordered_set<size_t> hashes;
 
   std::ranges::for_each(kAllSquares, [&](const auto& square) {
-    EXPECT_TRUE(hashes.insert(std::hash<chesskit::Square>{}(square)).second);
+    EXPECT_TRUE(hashes.insert(std::hash<chesscxx::Square>{}(square)).second);
   });
 }
 
 TEST(SquareTest, RoundTripConversionIsSuccessful) {
   std::ranges::for_each(kAllSquares, [](const auto& square) {
     EXPECT_EQ(square,
-              chesskit::parse<chesskit::Square>(std::format("{}", square)));
+              chesscxx::parse<chesscxx::Square>(std::format("{}", square)));
   });
 }
 
@@ -82,9 +82,9 @@ TEST(SquareTest, FormatProducesNonEmptyStrings) {
 }
 
 TEST(SquareTest, FormatProducesExpectedOutput) {
-  using chesskit::File;
-  using chesskit::Rank;
-  using chesskit::Square;
+  using chesscxx::File;
+  using chesscxx::Rank;
+  using chesscxx::Square;
   EXPECT_EQ(std::format("{}", Square(File::kA, Rank::k1)), "a1");
   EXPECT_EQ(std::format("{}", Square(File::kA, Rank::k8)), "a8");
   EXPECT_EQ(std::format("{}", Square(File::kH, Rank::k1)), "h1");
@@ -94,10 +94,10 @@ TEST(SquareTest, FormatProducesExpectedOutput) {
 }
 
 TEST(SquareTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::Square>("x4").error(),
-            chesskit::ParseError::kInvalidFile);
-  EXPECT_EQ(chesskit::parse<chesskit::Square>("ex").error(),
-            chesskit::ParseError::kInvalidRank);
-  EXPECT_EQ(chesskit::parse<chesskit::Square>("e4 ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Square>("x4").error(),
+            chesscxx::ParseError::kInvalidFile);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Square>("ex").error(),
+            chesscxx::ParseError::kInvalidRank);
+  EXPECT_EQ(chesscxx::parse<chesscxx::Square>("e4 ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

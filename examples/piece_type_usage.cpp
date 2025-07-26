@@ -1,5 +1,5 @@
-#include <chesskit/parse.h>
-#include <chesskit/piece_type.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/piece_type.h>
 
 #include <print>
 #include <string_view>
@@ -14,24 +14,24 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAsUppercaseAndPrint(std::string_view str) {
-  auto parsed_piece_type = chesskit::parse<chesskit::PieceType>(
-      str, chesskit::parse_as::Uppercase{});
+  auto parsed_piece_type = chesscxx::parse<chesscxx::PieceType>(
+      str, chesscxx::parse_as::Uppercase{});
 
   auto parsed_promotable_piece_type =
-      chesskit::parse<chesskit::PromotablePieceType>(
-          str, chesskit::parse_as::Uppercase{});
+      chesscxx::parse<chesscxx::PromotablePieceType>(
+          str, chesscxx::parse_as::Uppercase{});
 
   printErrorOrValue(parsed_piece_type);
   printErrorOrValue(parsed_promotable_piece_type);
 }
 
 void parseAsLowercaseAndPrint(std::string_view str) {
-  auto parsed_piece_type = chesskit::parse<chesskit::PieceType>(
-      str, chesskit::parse_as::Lowercase{});
+  auto parsed_piece_type = chesscxx::parse<chesscxx::PieceType>(
+      str, chesscxx::parse_as::Lowercase{});
 
   auto parsed_promotable_piece_type =
-      chesskit::parse<chesskit::PromotablePieceType>(
-          str, chesskit::parse_as::Lowercase{});
+      chesscxx::parse<chesscxx::PromotablePieceType>(
+          str, chesscxx::parse_as::Lowercase{});
 
   printErrorOrValue(parsed_piece_type);
   printErrorOrValue(parsed_promotable_piece_type);
@@ -39,17 +39,17 @@ void parseAsLowercaseAndPrint(std::string_view str) {
 }  // namespace
 
 auto main() -> int {
-  chesskit::PieceType piece_type = chesskit::PieceType::kQueen;
+  chesscxx::PieceType piece_type = chesscxx::PieceType::kQueen;
 
-  chesskit::PromotablePieceType promotable_piece_type =
-      chesskit::PromotablePieceType::kQueen;
+  chesscxx::PromotablePieceType promotable_piece_type =
+      chesscxx::PromotablePieceType::kQueen;
 
   std::println("{} {}", piece_type, promotable_piece_type);
   std::println("{:v} {:v}", piece_type, promotable_piece_type);
   std::println("{:u} {:u}", piece_type, promotable_piece_type);
   std::println("{:l} {:l}\n", piece_type, promotable_piece_type);
 
-  chesskit::PieceType cast = chesskit::toPieceType(promotable_piece_type);
+  chesscxx::PieceType cast = chesscxx::toPieceType(promotable_piece_type);
   std::println("{}\n", cast);
 
   parseAsUppercaseAndPrint("R");

@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'ChessKit'
+project = 'chesscxx'
 copyright = '2025, igorqs'
 author = 'igorqs'
 
@@ -26,4 +26,4 @@ html_show_sourcelink = False
 html_theme = 'furo'
 
 # Breathe Configuration
-breathe_default_project = "ChessKit"
+breathe_default_project = "chesscxx"

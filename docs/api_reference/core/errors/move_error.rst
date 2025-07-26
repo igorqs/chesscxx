@@ -1,7 +1,7 @@
 MoveError
 =========
 
-.. doxygenenum:: chesskit::MoveError
+.. doxygenenum:: chesscxx::MoveError
 
 Helper classes
 --------------

@@ -1,5 +1,5 @@
-#include <chesskit/castling_rights.h>
-#include <chesskit/parse.h>
+#include <chesscxx/castling_rights.h>
+#include <chesscxx/parse.h>
 
 #include <print>
 #include <string_view>
@@ -14,7 +14,7 @@ void printErrorOrValue(auto parsed_value) {
 }
 
 void parseAndPrint(std::string_view str) {
-  auto parsed_castling_rights = chesskit::parse<chesskit::CastlingRights>(str);
+  auto parsed_castling_rights = chesscxx::parse<chesscxx::CastlingRights>(str);
   printErrorOrValue(parsed_castling_rights);
 }
 }  // namespace

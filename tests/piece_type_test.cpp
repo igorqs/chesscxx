@@ -1,6 +1,6 @@
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/piece_type.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/piece_type.h>
 #include <gtest/gtest.h>
 
 #include <format>
@@ -8,60 +8,60 @@
 #include <magic_enum/magic_enum_utility.hpp>
 
 TEST(PieceTypeCastingTest, ResultsInValidPiece) {
-  magic_enum::enum_for_each<chesskit::PromotablePieceType>(
-      [](chesskit::PromotablePieceType promotion) {
-        EXPECT_TRUE(magic_enum::enum_contains<chesskit::PieceType>(
-            chesskit::toPieceType(promotion)));
+  magic_enum::enum_for_each<chesscxx::PromotablePieceType>(
+      [](chesscxx::PromotablePieceType promotion) {
+        EXPECT_TRUE(magic_enum::enum_contains<chesscxx::PieceType>(
+            chesscxx::toPieceType(promotion)));
       });
 }
 
 TEST(PieceTypeCastingTest, UpperRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PromotablePieceType>(
-      [](chesskit::PromotablePieceType promotion) {
+  magic_enum::enum_for_each<chesscxx::PromotablePieceType>(
+      [](chesscxx::PromotablePieceType promotion) {
         EXPECT_EQ(promotion,
-                  chesskit::parse<chesskit::PromotablePieceType>(
-                      std::format("{:u}", chesskit::toPieceType(promotion)),
-                      chesskit::parse_as::Uppercase{}));
+                  chesscxx::parse<chesscxx::PromotablePieceType>(
+                      std::format("{:u}", chesscxx::toPieceType(promotion)),
+                      chesscxx::parse_as::Uppercase{}));
       });
 }
 
 TEST(PieceTypeCastingTest, LowerRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PromotablePieceType>(
-      [](chesskit::PromotablePieceType promotion) {
+  magic_enum::enum_for_each<chesscxx::PromotablePieceType>(
+      [](chesscxx::PromotablePieceType promotion) {
         EXPECT_EQ(promotion,
-                  chesskit::parse<chesskit::PromotablePieceType>(
-                      std::format("{:l}", chesskit::toPieceType(promotion)),
-                      chesskit::parse_as::Lowercase{}));
+                  chesscxx::parse<chesscxx::PromotablePieceType>(
+                      std::format("{:l}", chesscxx::toPieceType(promotion)),
+                      chesscxx::parse_as::Lowercase{}));
       });
 }
 
 // PieceType
 
 TEST(PieceTypeTest, DefaultConstructionResultsInValidPieceType) {
-  chesskit::PieceType const piece_type{};
-  EXPECT_TRUE(magic_enum::enum_contains<chesskit::PieceType>(piece_type));
+  chesscxx::PieceType const piece_type{};
+  EXPECT_TRUE(magic_enum::enum_contains<chesscxx::PieceType>(piece_type));
 }
 
 TEST(PieceTypeTest, UpperRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PieceType>(
-      [](chesskit::PieceType piece_type) {
-        EXPECT_EQ(piece_type, chesskit::parse<chesskit::PieceType>(
+  magic_enum::enum_for_each<chesscxx::PieceType>(
+      [](chesscxx::PieceType piece_type) {
+        EXPECT_EQ(piece_type, chesscxx::parse<chesscxx::PieceType>(
                                   std::format("{:u}", piece_type),
-                                  chesskit::parse_as::Uppercase{}));
+                                  chesscxx::parse_as::Uppercase{}));
       });
 }
 
 TEST(PieceTypeTest, LowerRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PieceType>(
-      [](chesskit::PieceType piece_type) {
-        EXPECT_EQ(piece_type, chesskit::parse<chesskit::PieceType>(
+  magic_enum::enum_for_each<chesscxx::PieceType>(
+      [](chesscxx::PieceType piece_type) {
+        EXPECT_EQ(piece_type, chesscxx::parse<chesscxx::PieceType>(
                                   std::format("{:l}", piece_type),
-                                  chesskit::parse_as::Lowercase{}));
+                                  chesscxx::parse_as::Lowercase{}));
       });
 }
 
 TEST(PieceTypeTest, FormatProducesExpectedOutput) {
-  using chesskit::PieceType;
+  using chesscxx::PieceType;
   EXPECT_EQ(std::format("{}", PieceType::kPawn), "pawn");
   EXPECT_EQ(std::format("{}", PieceType::kRook), "rook");
   EXPECT_EQ(std::format("{}", PieceType::kBishop), "bishop");
@@ -89,54 +89,54 @@ TEST(PieceTypeTest, FormatProducesExpectedOutput) {
 }
 
 TEST(PieceTypeTest, ParseUpperHandlesInvalidInputCorrectly) {
-  using chesskit::parse_as::Uppercase;
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("k", Uppercase{}).error(),
-            chesskit::ParseError::kInvalidPieceType);
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("L", Uppercase{}).error(),
-            chesskit::ParseError::kInvalidPieceType);
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("K ", Uppercase{}).error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  using chesscxx::parse_as::Uppercase;
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("k", Uppercase{}).error(),
+            chesscxx::ParseError::kInvalidPieceType);
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("L", Uppercase{}).error(),
+            chesscxx::ParseError::kInvalidPieceType);
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("K ", Uppercase{}).error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }
 
 TEST(PieceTypeTest, ParseLowerHandlesInvalidInputCorrectly) {
-  using chesskit::parse_as::Lowercase;
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("K", Lowercase{}).error(),
-            chesskit::ParseError::kInvalidPieceType);
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("l", Lowercase{}).error(),
-            chesskit::ParseError::kInvalidPieceType);
-  EXPECT_EQ(chesskit::parse<chesskit::PieceType>("k ", Lowercase{}).error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  using chesscxx::parse_as::Lowercase;
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("K", Lowercase{}).error(),
+            chesscxx::ParseError::kInvalidPieceType);
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("l", Lowercase{}).error(),
+            chesscxx::ParseError::kInvalidPieceType);
+  EXPECT_EQ(chesscxx::parse<chesscxx::PieceType>("k ", Lowercase{}).error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }
 
 // PromotablePieceType
 
 TEST(PromotablePieceTypeTest,
      DefaultConstructionResultsInValidPromotablePieceType) {
-  chesskit::PromotablePieceType const promotion{};
+  chesscxx::PromotablePieceType const promotion{};
   EXPECT_TRUE(
-      magic_enum::enum_contains<chesskit::PromotablePieceType>(promotion));
+      magic_enum::enum_contains<chesscxx::PromotablePieceType>(promotion));
 }
 
 TEST(PromotablePieceTypeTest, UpperRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PromotablePieceType>(
-      [](chesskit::PromotablePieceType promotion) {
-        EXPECT_EQ(promotion, chesskit::parse<chesskit::PromotablePieceType>(
+  magic_enum::enum_for_each<chesscxx::PromotablePieceType>(
+      [](chesscxx::PromotablePieceType promotion) {
+        EXPECT_EQ(promotion, chesscxx::parse<chesscxx::PromotablePieceType>(
                                  std::format("{:u}", promotion),
-                                 chesskit::parse_as::Uppercase{}));
+                                 chesscxx::parse_as::Uppercase{}));
       });
 }
 
 TEST(PromotablePieceTypeTest, LowerRoundTripConversionIsSuccessful) {
-  magic_enum::enum_for_each<chesskit::PromotablePieceType>(
-      [](chesskit::PromotablePieceType promotion) {
-        EXPECT_EQ(promotion, chesskit::parse<chesskit::PromotablePieceType>(
+  magic_enum::enum_for_each<chesscxx::PromotablePieceType>(
+      [](chesscxx::PromotablePieceType promotion) {
+        EXPECT_EQ(promotion, chesscxx::parse<chesscxx::PromotablePieceType>(
                                  std::format("{:l}", promotion),
-                                 chesskit::parse_as::Lowercase{}));
+                                 chesscxx::parse_as::Lowercase{}));
       });
 }
 
 TEST(PromotablePieceTypeTest, FormatProducesExpectedOutput) {
-  using chesskit::PromotablePieceType;
+  using chesscxx::PromotablePieceType;
   EXPECT_EQ(std::format("{}", PromotablePieceType::kRook), "rook");
   EXPECT_EQ(std::format("{}", PromotablePieceType::kBishop), "bishop");
   EXPECT_EQ(std::format("{}", PromotablePieceType::kKnight), "knight");
@@ -156,39 +156,39 @@ TEST(PromotablePieceTypeTest, FormatProducesExpectedOutput) {
 }
 
 TEST(PromotablePieceTypeTest, ParseUpperHandlesInvalidInputCorrectly) {
-  using chesskit::parse_as::Uppercase;
+  using chesscxx::parse_as::Uppercase;
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("P", Uppercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("P", Uppercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("K", Uppercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("K", Uppercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("n", Uppercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("n", Uppercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("L", Uppercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("L", Uppercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("N ", Uppercase{}).error(),
-      chesskit::ParseError::kExpectingEndOfString);
+      chesscxx::parse<chesscxx::PromotablePieceType>("N ", Uppercase{}).error(),
+      chesscxx::ParseError::kExpectingEndOfString);
 }
 
 TEST(PromotablePieceTypeTest, ParseLowerHandlesInvalidInputCorrectly) {
-  using chesskit::parse_as::Lowercase;
+  using chesscxx::parse_as::Lowercase;
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("p", Lowercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("p", Lowercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("k", Lowercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("k", Lowercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("N", Lowercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("N", Lowercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("l", Lowercase{}).error(),
-      chesskit::ParseError::kInvalidPromotablePieceType);
+      chesscxx::parse<chesscxx::PromotablePieceType>("l", Lowercase{}).error(),
+      chesscxx::ParseError::kInvalidPromotablePieceType);
   EXPECT_EQ(
-      chesskit::parse<chesskit::PromotablePieceType>("n ", Lowercase{}).error(),
-      chesskit::ParseError::kExpectingEndOfString);
+      chesscxx::parse<chesscxx::PromotablePieceType>("n ", Lowercase{}).error(),
+      chesscxx::ParseError::kExpectingEndOfString);
 }

@@ -1,8 +1,8 @@
-#include <chesskit/castling_rights.h>
-#include <chesskit/castling_side.h>
-#include <chesskit/color.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
+#include <chesscxx/castling_rights.h>
+#include <chesscxx/castling_side.h>
+#include <chesscxx/color.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -14,25 +14,25 @@
 #include <ranges>
 #include <unordered_set>
 
-constexpr auto kAll = chesskit::CastlingRights{};
-constexpr auto kNone = chesskit::CastlingRights{0};
+constexpr auto kAll = chesscxx::CastlingRights{};
+constexpr auto kNone = chesscxx::CastlingRights{0};
 
 static constexpr int kMaxBitset =
-    (1U << chesskit::CastlingRights::kNumCastlingRights);
+    (1U << chesscxx::CastlingRights::kNumCastlingRights);
 
 constexpr static auto kAllCastlingRights =
     std::views::iota(0, kMaxBitset) | std::views::transform([](auto bits) {
-      return chesskit::CastlingRights(bits);
+      return chesscxx::CastlingRights(bits);
     });
 
 TEST(CastlingRightsTest, DefaultConstructionInitializeWithAllCastlingEnabled) {
-  chesskit::CastlingRights const rights;
+  chesscxx::CastlingRights const rights;
   EXPECT_TRUE(rights.all());
 }
 
 TEST(CastlingRightsTest, BitsetConstructionInitializeRawBitsCorrectly) {
   std::ranges::for_each(std::views::iota(0, kMaxBitset), [](auto bits) {
-    EXPECT_EQ(chesskit::CastlingRights(bits).toBitset(), bits);
+    EXPECT_EQ(chesscxx::CastlingRights(bits).toBitset(), bits);
   });
 }
 
@@ -56,11 +56,11 @@ TEST(CastlingRightsTest, CanCastleMatchesBitset) {
   using magic_enum::enum_for_each;
 
   std::ranges::for_each(kAllCastlingRights, [](auto rights) {
-    std::bitset<chesskit::CastlingRights::kNumCastlingRights> bits;
+    std::bitset<chesscxx::CastlingRights::kNumCastlingRights> bits;
     int bit_index = 0;
 
-    enum_for_each<chesskit::Color>([&](chesskit::Color color) {
-      enum_for_each<chesskit::CastlingSide>([&](chesskit::CastlingSide side) {
+    enum_for_each<chesscxx::Color>([&](chesscxx::Color color) {
+      enum_for_each<chesscxx::CastlingSide>([&](chesscxx::CastlingSide side) {
         bits.set(bit_index++, rights.canCastle(side, color));
       });
     });
@@ -90,15 +90,15 @@ TEST(CastlingRightsTest, NoneReturnsTrueOnlyWhenNoRightsSet) {
 TEST(CastlingRightsTest, EnableHandlesBySideAndColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color enabled_color) {
-    enum_for_each<chesskit::CastlingSide>(
-        [&](chesskit::CastlingSide enabled_side) {
+  enum_for_each<chesscxx::Color>([&](chesscxx::Color enabled_color) {
+    enum_for_each<chesscxx::CastlingSide>(
+        [&](chesscxx::CastlingSide enabled_side) {
           auto rights = kNone;
           rights.enable(enabled_side, enabled_color);
 
-          enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
-            enum_for_each<chesskit::CastlingSide>(
-                [&](chesskit::CastlingSide test_side) {
+          enum_for_each<chesscxx::Color>([&](chesscxx::Color test_color) {
+            enum_for_each<chesscxx::CastlingSide>(
+                [&](chesscxx::CastlingSide test_side) {
                   bool const expected = (test_color == enabled_color &&
                                          test_side == enabled_side);
                   EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
@@ -111,13 +111,13 @@ TEST(CastlingRightsTest, EnableHandlesBySideAndColorCorrectly) {
 TEST(CastlingRightsTest, EnableHandlesByColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color enabled_color) {
+  enum_for_each<chesscxx::Color>([&](chesscxx::Color enabled_color) {
     auto rights = kNone;
     rights.enable(enabled_color);
 
-    enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
-      enum_for_each<chesskit::CastlingSide>(
-          [&](chesskit::CastlingSide test_side) {
+    enum_for_each<chesscxx::Color>([&](chesscxx::Color test_color) {
+      enum_for_each<chesscxx::CastlingSide>(
+          [&](chesscxx::CastlingSide test_side) {
             bool const expected = (test_color == enabled_color);
             EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
           });
@@ -134,15 +134,15 @@ TEST(CastlingRightsTest, EnableHandlesAllCorrectly) {
 TEST(CastlingRightsTest, DisableHandlesBySideAndColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color disabled_color) {
-    enum_for_each<chesskit::CastlingSide>(
-        [&](chesskit::CastlingSide disabled_side) {
+  enum_for_each<chesscxx::Color>([&](chesscxx::Color disabled_color) {
+    enum_for_each<chesscxx::CastlingSide>(
+        [&](chesscxx::CastlingSide disabled_side) {
           auto rights = kAll;
           rights.disable(disabled_side, disabled_color);
 
-          enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
-            enum_for_each<chesskit::CastlingSide>(
-                [&](chesskit::CastlingSide test_side) {
+          enum_for_each<chesscxx::Color>([&](chesscxx::Color test_color) {
+            enum_for_each<chesscxx::CastlingSide>(
+                [&](chesscxx::CastlingSide test_side) {
                   bool const expected = (test_color != disabled_color ||
                                          test_side != disabled_side);
                   EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
@@ -155,13 +155,13 @@ TEST(CastlingRightsTest, DisableHandlesBySideAndColorCorrectly) {
 TEST(CastlingRightsTest, DisableHandlesByColorCorrectly) {
   using magic_enum::enum_for_each;
 
-  enum_for_each<chesskit::Color>([&](chesskit::Color disabled_color) {
+  enum_for_each<chesscxx::Color>([&](chesscxx::Color disabled_color) {
     auto rights = kAll;
     rights.disable(disabled_color);
 
-    enum_for_each<chesskit::Color>([&](chesskit::Color test_color) {
-      enum_for_each<chesskit::CastlingSide>(
-          [&](chesskit::CastlingSide test_side) {
+    enum_for_each<chesscxx::Color>([&](chesscxx::Color test_color) {
+      enum_for_each<chesscxx::CastlingSide>(
+          [&](chesscxx::CastlingSide test_side) {
             bool const expected = (test_color != disabled_color);
             EXPECT_EQ(rights.canCastle(test_side, test_color), expected);
           });
@@ -180,13 +180,13 @@ TEST(CastlingRightsTest, HashProducesUniqueValues) {
 
   std::ranges::for_each(kAllCastlingRights, [&](const auto& rights) {
     EXPECT_TRUE(
-        hashes.insert(std::hash<chesskit::CastlingRights>{}(rights)).second);
+        hashes.insert(std::hash<chesscxx::CastlingRights>{}(rights)).second);
   });
 }
 
 TEST(CastlingRightsTest, RoundTripConversionIsSuccessful) {
   std::ranges::for_each(kAllCastlingRights, [](const auto& rights) {
-    EXPECT_EQ(rights, chesskit::parse<chesskit::CastlingRights>(
+    EXPECT_EQ(rights, chesscxx::parse<chesscxx::CastlingRights>(
                           std::format("{}", rights)));
   });
 }
@@ -198,7 +198,7 @@ TEST(CastlingRightsTest, FormatProducesNonEmptyStrings) {
 }
 
 TEST(CastlingRightsTest, FormatProducesExpectedOutput) {
-  using chesskit::CastlingRights;
+  using chesscxx::CastlingRights;
   EXPECT_EQ(std::format("{}", kNone), "-");
   EXPECT_EQ(std::format("{}", kAll), "KQkq");
   EXPECT_EQ(std::format("{}", CastlingRights(0b0111)), "KQk");
@@ -210,12 +210,12 @@ TEST(CastlingRightsTest, FormatProducesExpectedOutput) {
 }
 
 TEST(CastlingRightsTest, ParseHandlesInvalidInputCorrectly) {
-  EXPECT_EQ(chesskit::parse<chesskit::CastlingRights>("x").error(),
-            chesskit::ParseError::kInvalidCastlingAvailability);
-  EXPECT_EQ(chesskit::parse<chesskit::CastlingRights>("").error(),
-            chesskit::ParseError::kInvalidCastlingAvailability);
-  EXPECT_EQ(chesskit::parse<chesskit::CastlingRights>("qkQK").error(),
-            chesskit::ParseError::kExpectingEndOfString);
-  EXPECT_EQ(chesskit::parse<chesskit::CastlingRights>("QQQ").error(),
-            chesskit::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CastlingRights>("x").error(),
+            chesscxx::ParseError::kInvalidCastlingAvailability);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CastlingRights>("").error(),
+            chesscxx::ParseError::kInvalidCastlingAvailability);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CastlingRights>("qkQK").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
+  EXPECT_EQ(chesscxx::parse<chesscxx::CastlingRights>("QQQ").error(),
+            chesscxx::ParseError::kExpectingEndOfString);
 }

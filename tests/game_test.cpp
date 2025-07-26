@@ -1,12 +1,12 @@
-#include <chesskit/draw_reason.h>
-#include <chesskit/game.h>
-#include <chesskit/game_result.h>
-#include <chesskit/move_error.h>
-#include <chesskit/parse.h>
-#include <chesskit/parse_error.h>
-#include <chesskit/position.h>
-#include <chesskit/san_move.h>
-#include <chesskit/uci_move.h>
+#include <chesscxx/draw_reason.h>
+#include <chesscxx/game.h>
+#include <chesscxx/game_result.h>
+#include <chesscxx/move_error.h>
+#include <chesscxx/parse.h>
+#include <chesscxx/parse_error.h>
+#include <chesscxx/position.h>
+#include <chesscxx/san_move.h>
+#include <chesscxx/uci_move.h>
 #include <gtest/gtest.h>
 #include <yaml-cpp/yaml.h>
 
@@ -27,13 +27,13 @@
 
 class GameEqualityFixture {
  public:
-  void add_game(const chesskit::Game& game) { games_.push_back(game); }
-  [[nodiscard]] auto games() const -> const std::vector<chesskit::Game>& {
+  void add_game(const chesscxx::Game& game) { games_.push_back(game); }
+  [[nodiscard]] auto games() const -> const std::vector<chesscxx::Game>& {
     return games_;
   }
 
  private:
-  std::vector<chesskit::Game> games_;
+  std::vector<chesscxx::Game> games_;
 };
 
 template <>
@@ -41,7 +41,7 @@ struct YAML::convert<GameEqualityFixture> {
   static auto decode(const Node& node, GameEqualityFixture& rhs) -> bool {
     for (const auto& game : node) {
       rhs.add_game(
-          chesskit::parse<chesskit::Game>(game.as<std::string>()).value());
+          chesscxx::parse<chesscxx::Game>(game.as<std::string>()).value());
     }
 
     return true;
@@ -52,16 +52,16 @@ class PositionFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    position_ = chesskit::parse<chesskit::Position>(raw).value();
+    position_ = chesscxx::parse<chesscxx::Position>(raw).value();
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto position() const -> const chesskit::Position& { return position_; }
+  auto position() const -> const chesscxx::Position& { return position_; }
 
  private:
   std::string raw_;
-  chesskit::Position::Params params_;
-  chesskit::Position position_;
+  chesscxx::Position::Params params_;
+  chesscxx::Position position_;
 };
 
 template <>
@@ -76,30 +76,30 @@ class OutcomeFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << raw;
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << raw;
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
-  void set_result(std::optional<chesskit::GameResult> result) {
+  void set_result(std::optional<chesscxx::GameResult> result) {
     result_ = result;
   }
-  void set_draw_reason(std::optional<chesskit::DrawReason> draw_reason) {
+  void set_draw_reason(std::optional<chesscxx::DrawReason> draw_reason) {
     draw_reason_ = draw_reason;
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto result() const -> const std::optional<chesskit::GameResult>& {
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto result() const -> const std::optional<chesscxx::GameResult>& {
     return result_;
   }
-  auto draw_reason() const -> const std::optional<chesskit::DrawReason>& {
+  auto draw_reason() const -> const std::optional<chesscxx::DrawReason>& {
     return draw_reason_;
   }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  std::optional<chesskit::GameResult> result_;
-  std::optional<chesskit::DrawReason> draw_reason_;
+  chesscxx::Game game_;
+  std::optional<chesscxx::GameResult> result_;
+  std::optional<chesscxx::DrawReason> draw_reason_;
 };
 
 template <>
@@ -108,12 +108,12 @@ struct YAML::convert<OutcomeFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     if (!node[1].IsNull()) {
-      rhs.set_result(magic_enum::enum_cast<chesskit::GameResult>(
+      rhs.set_result(magic_enum::enum_cast<chesscxx::GameResult>(
           node[1].as<std::string>()));
     }
 
     if (!node[2].IsNull()) {
-      rhs.set_draw_reason(magic_enum::enum_cast<chesskit::DrawReason>(
+      rhs.set_draw_reason(magic_enum::enum_cast<chesscxx::DrawReason>(
           node[2].as<std::string>()));
     }
 
@@ -125,31 +125,31 @@ class MoveFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << std::format(
-        "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << std::format(
+        "{} {}", raw, chesscxx::parse<chesscxx::Game>(raw).error());
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
-  void add_san_move(chesskit::SanMove san_move) {
+  void add_san_move(chesscxx::SanMove san_move) {
     san_moves_.push_back(san_move);
   }
-  void add_uci_move(chesskit::UciMove uci_move) {
+  void add_uci_move(chesscxx::UciMove uci_move) {
     uci_moves_.push_back(uci_move);
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto san_moves() const -> const std::vector<chesskit::SanMove>& {
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto san_moves() const -> const std::vector<chesscxx::SanMove>& {
     return san_moves_;
   }
-  auto uci_moves() const -> const std::vector<chesskit::UciMove>& {
+  auto uci_moves() const -> const std::vector<chesscxx::UciMove>& {
     return uci_moves_;
   }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  std::vector<chesskit::SanMove> san_moves_;
-  std::vector<chesskit::UciMove> uci_moves_;
+  chesscxx::Game game_;
+  std::vector<chesscxx::SanMove> san_moves_;
+  std::vector<chesscxx::UciMove> uci_moves_;
 };
 
 template <>
@@ -159,13 +159,13 @@ struct YAML::convert<MoveFixture> {
 
     for (const auto& san_node : node[1]) {
       rhs.add_san_move(
-          chesskit::parse<chesskit::SanMove>(san_node.as<std::string>())
+          chesscxx::parse<chesscxx::SanMove>(san_node.as<std::string>())
               .value());
     }
 
     for (const auto& uci_node : node[2]) {
       rhs.add_uci_move(
-          chesskit::parse<chesskit::UciMove>(uci_node.as<std::string>())
+          chesscxx::parse<chesscxx::UciMove>(uci_node.as<std::string>())
               .value());
     }
 
@@ -177,26 +177,26 @@ class RepetitionTrackerFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << std::format(
-        "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << std::format(
+        "{} {}", raw, chesscxx::parse<chesscxx::Game>(raw).error());
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
-  void add_repetition(const chesskit::Position& position, int counter,
+  void add_repetition(const chesscxx::Position& position, int counter,
                       int undo_counter) {
     repetitions_.emplace_back(position, counter, undo_counter);
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
   auto repetitions()
-      -> const std::vector<std::tuple<chesskit::Position, int, int>>& {
+      -> const std::vector<std::tuple<chesscxx::Position, int, int>>& {
     return repetitions_;
   };
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  std::vector<std::tuple<chesskit::Position, int, int>> repetitions_;
+  chesscxx::Game game_;
+  std::vector<std::tuple<chesscxx::Position, int, int>> repetitions_;
 };
 
 template <>
@@ -206,7 +206,7 @@ struct YAML::convert<RepetitionTrackerFixture> {
 
     for (const auto& repetition : node[1]) {
       auto position =
-          chesskit::parse<chesskit::Position>(repetition[0].as<std::string>())
+          chesscxx::parse<chesscxx::Position>(repetition[0].as<std::string>())
               .value();
       auto quantity = repetition[1].as<int>();
       auto undo_quantity = repetition[2].as<int>();
@@ -221,27 +221,27 @@ class SanMoveErrorFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}))
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}))
         << std::format(
                "{} {}", raw,
-               chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{})
+               chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{})
                    .error());
     game_ =
-        chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}).value();
+        chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}).value();
   }
-  void set_move(chesskit::SanMove move) { move_ = move; }
-  void set_error(chesskit::MoveError error) { error_ = error; }
+  void set_move(chesscxx::SanMove move) { move_ = move; }
+  void set_error(chesscxx::MoveError error) { error_ = error; }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto move() const -> const chesskit::SanMove& { return move_; }
-  auto error() const -> const chesskit::MoveError& { return error_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto move() const -> const chesscxx::SanMove& { return move_; }
+  auto error() const -> const chesscxx::MoveError& { return error_; }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  chesskit::SanMove move_;
-  chesskit::MoveError error_{};
+  chesscxx::Game game_;
+  chesscxx::SanMove move_;
+  chesscxx::MoveError error_{};
 };
 
 template <>
@@ -250,10 +250,10 @@ struct YAML::convert<SanMoveErrorFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_move(
-        chesskit::parse<chesskit::SanMove>(node[1].as<std::string>()).value());
+        chesscxx::parse<chesscxx::SanMove>(node[1].as<std::string>()).value());
 
     auto error =
-        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>());
+        magic_enum::enum_cast<chesscxx::MoveError>(node[2].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
 
@@ -265,27 +265,27 @@ class UciMoveErrorFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}))
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}))
         << std::format(
                "{} {}", raw,
-               chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{})
+               chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{})
                    .error());
     game_ =
-        chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}).value();
+        chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}).value();
   }
-  void set_move(chesskit::UciMove move) { move_ = move; }
-  void set_error(chesskit::MoveError error) { error_ = error; }
+  void set_move(chesscxx::UciMove move) { move_ = move; }
+  void set_error(chesscxx::MoveError error) { error_ = error; }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto move() const -> const chesskit::UciMove& { return move_; }
-  auto error() const -> const chesskit::MoveError& { return error_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto move() const -> const chesscxx::UciMove& { return move_; }
+  auto error() const -> const chesscxx::MoveError& { return error_; }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  chesskit::UciMove move_;
-  chesskit::MoveError error_{};
+  chesscxx::Game game_;
+  chesscxx::UciMove move_;
+  chesscxx::MoveError error_{};
 };
 
 template <>
@@ -294,10 +294,10 @@ struct YAML::convert<UciMoveErrorFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_move(
-        chesskit::parse<chesskit::UciMove>(node[1].as<std::string>()).value());
+        chesscxx::parse<chesscxx::UciMove>(node[1].as<std::string>()).value());
 
     auto error =
-        magic_enum::enum_cast<chesskit::MoveError>(node[2].as<std::string>());
+        magic_enum::enum_cast<chesscxx::MoveError>(node[2].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
 
@@ -309,34 +309,34 @@ class ValidMoveFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}))
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}))
         << std::format(
                "{} {}", raw,
-               chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{})
+               chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{})
                    .error());
     game_ =
-        chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}).value();
+        chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}).value();
   }
-  void set_uci_move(chesskit::UciMove move) { uci_move_ = move; }
-  void set_san_move(chesskit::SanMove move) { san_move_ = move; }
-  void set_final_position(chesskit::Position position) {
+  void set_uci_move(chesscxx::UciMove move) { uci_move_ = move; }
+  void set_san_move(chesscxx::SanMove move) { san_move_ = move; }
+  void set_final_position(chesscxx::Position position) {
     final_position_ = std::move(position);
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
-  auto san_move() const -> const chesskit::SanMove& { return san_move_; }
-  auto uci_move() const -> const chesskit::UciMove& { return uci_move_; }
-  auto final_position() const -> const chesskit::Position& {
+  auto game() const -> const chesscxx::Game& { return game_; }
+  auto san_move() const -> const chesscxx::SanMove& { return san_move_; }
+  auto uci_move() const -> const chesscxx::UciMove& { return uci_move_; }
+  auto final_position() const -> const chesscxx::Position& {
     return final_position_;
   }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
-  chesskit::UciMove uci_move_;
-  chesskit::SanMove san_move_;
-  chesskit::Position final_position_;
+  chesscxx::Game game_;
+  chesscxx::UciMove uci_move_;
+  chesscxx::SanMove san_move_;
+  chesscxx::Position final_position_;
 };
 
 template <>
@@ -345,13 +345,13 @@ struct YAML::convert<ValidMoveFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     rhs.set_san_move(
-        chesskit::parse<chesskit::SanMove>(node[1].as<std::string>()).value());
+        chesscxx::parse<chesscxx::SanMove>(node[1].as<std::string>()).value());
 
     rhs.set_uci_move(
-        chesskit::parse<chesskit::UciMove>(node[2].as<std::string>()).value());
+        chesscxx::parse<chesscxx::UciMove>(node[2].as<std::string>()).value());
 
     rhs.set_final_position(
-        chesskit::parse<chesskit::Position>(node[3].as<std::string>()).value());
+        chesscxx::parse<chesscxx::Position>(node[3].as<std::string>()).value());
 
     return true;
   }
@@ -361,17 +361,17 @@ class GameFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << std::format(
-        "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << std::format(
+        "{} {}", raw, chesscxx::parse<chesscxx::Game>(raw).error());
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
 
  private:
   std::string raw_;
-  chesskit::Game game_;
+  chesscxx::Game game_;
 };
 
 template <>
@@ -386,9 +386,9 @@ class FormatFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw)) << std::format(
-        "{} {}", raw, chesskit::parse<chesskit::Game>(raw).error());
-    game_ = chesskit::parse<chesskit::Game>(raw).value();
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw)) << std::format(
+        "{} {}", raw, chesscxx::parse<chesscxx::Game>(raw).error());
+    game_ = chesscxx::parse<chesscxx::Game>(raw).value();
   }
   void set_default(std::string_view default_fmt) { default_fmt_ = default_fmt; }
   void set_pgn(std::string_view pgn) { pgn_ = pgn; }
@@ -398,7 +398,7 @@ class FormatFixture {
   void set_rep(std::string_view rep) { rep_ = rep; }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
   auto default_fmt() -> const std::string& { return default_fmt_; }
   auto pgn() -> const std::string& { return pgn_; }
   auto fen() -> const std::string& { return fen_; }
@@ -408,7 +408,7 @@ class FormatFixture {
 
  private:
   std::string raw_;
-  chesskit::Game game_;
+  chesscxx::Game game_;
   std::string default_fmt_;
   std::string pgn_;
   std::string fen_;
@@ -436,13 +436,13 @@ class FenFormatFixture {
  public:
   void set_input(std::string_view raw) {
     raw_ = raw;
-    ASSERT_TRUE(chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}))
+    ASSERT_TRUE(chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}))
         << std::format(
                "{} {}", raw,
-               chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{})
+               chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{})
                    .error());
     game_ =
-        chesskit::parse<chesskit::Game>(raw, chesskit::parse_as::Fen{}).value();
+        chesscxx::parse<chesscxx::Game>(raw, chesscxx::parse_as::Fen{}).value();
   }
   void set_default(std::string_view default_fmt) { default_fmt_ = default_fmt; }
   void set_pgn(std::string_view pgn) { pgn_ = pgn; }
@@ -452,7 +452,7 @@ class FenFormatFixture {
   void set_rep(std::string_view rep) { rep_ = rep; }
 
   auto raw() const -> const std::string& { return raw_; }
-  auto game() const -> const chesskit::Game& { return game_; }
+  auto game() const -> const chesscxx::Game& { return game_; }
   auto default_fmt() -> const std::string& { return default_fmt_; }
   auto pgn() -> const std::string& { return pgn_; }
   auto fen() -> const std::string& { return fen_; }
@@ -462,7 +462,7 @@ class FenFormatFixture {
 
  private:
   std::string raw_;
-  chesskit::Game game_;
+  chesscxx::Game game_;
   std::string default_fmt_;
   std::string pgn_;
   std::string fen_;
@@ -489,16 +489,16 @@ struct YAML::convert<FenFormatFixture> {
 class InvalidFixture {
  public:
   void set_input(std::string_view raw) { raw_ = raw; }
-  void set_error(chesskit::ParseError error) { error_ = error; }
+  void set_error(chesscxx::ParseError error) { error_ = error; }
 
   [[nodiscard]] auto raw() const -> const std::string& { return raw_; }
-  [[nodiscard]] auto error() const -> const chesskit::ParseError& {
+  [[nodiscard]] auto error() const -> const chesscxx::ParseError& {
     return error_;
   }
 
  private:
   std::string raw_;
-  chesskit::ParseError error_{};
+  chesscxx::ParseError error_{};
 };
 
 template <>
@@ -507,7 +507,7 @@ struct YAML::convert<InvalidFixture> {
     rhs.set_input(node[0].as<std::string>());
 
     auto error =
-        magic_enum::enum_cast<chesskit::ParseError>(node[1].as<std::string>());
+        magic_enum::enum_cast<chesscxx::ParseError>(node[1].as<std::string>());
     if (!error.has_value()) return false;
     rhs.set_error(*error);
 
@@ -565,7 +565,7 @@ auto GetUniqueRepetitionTrackerFixtures() {
 }
 
 auto BuildGameEqualityFixturePairs() {
-  return chesskit::testing::make_distinct_pairs(GetGameEqualityFixtures());
+  return chesscxx::testing::make_distinct_pairs(GetGameEqualityFixtures());
 }
 
 auto GetFormatFixtures() {
@@ -649,8 +649,8 @@ TEST_P(GameEqualitySuite, ComparesEqual) {
   for (const auto& lhs : games) {
     for (const auto& rhs : games) {
       EXPECT_EQ(lhs, rhs);
-      EXPECT_EQ(std::hash<chesskit::Game>{}(lhs),
-                std::hash<chesskit::Game>{}(rhs));
+      EXPECT_EQ(std::hash<chesscxx::Game>{}(lhs),
+                std::hash<chesscxx::Game>{}(rhs));
     }
   }
 }
@@ -681,8 +681,8 @@ TEST_P(RepetitionTrackerSuite, BuildRepetitionTrackerCorrectly) {
   auto fixture = GetParam();
   const auto& game = fixture.game();
 
-  std::unordered_set<chesskit::Position, chesskit::RepetitionHash,
-                     chesskit::RepetitionEqual>
+  std::unordered_set<chesscxx::Position, chesscxx::RepetitionHash,
+                     chesscxx::RepetitionEqual>
       seen;
 
   for (const auto& [position, expected, ignore] : fixture.repetitions()) {
@@ -701,8 +701,8 @@ TEST_P(RepetitionTrackerSuite, BuildRepetitionTrackerCorrectlyAfterUndo) {
   auto game = fixture.game();
   game.undoMove();
 
-  std::unordered_set<chesskit::Position, chesskit::RepetitionHash,
-                     chesskit::RepetitionEqual>
+  std::unordered_set<chesscxx::Position, chesscxx::RepetitionHash,
+                     chesscxx::RepetitionEqual>
       seen;
 
   for (const auto& [position, ignore, expected] : fixture.repetitions()) {
@@ -717,7 +717,7 @@ TEST_P(RepetitionTrackerSuite, BuildRepetitionTrackerCorrectlyAfterUndo) {
 }
 
 TEST_P(RepetitionTrackerSuite, UndoAllMovesCorrectly) {
-  auto game = chesskit::Game();
+  auto game = chesscxx::Game();
 
   while (game.currentPosition() != game.initialPosition()) game.undoMove();
 
@@ -729,7 +729,7 @@ TEST_P(RepetitionTrackerSuite, UndoAllMovesCorrectly) {
 }
 
 TEST_P(RepetitionTrackerSuite, ResetCorrectly) {
-  auto game = chesskit::Game();
+  auto game = chesscxx::Game();
 
   game.reset();
 
@@ -742,7 +742,7 @@ TEST_P(RepetitionTrackerSuite, ResetCorrectly) {
 
 TEST_P(PositionSuite, ConstructFromInitialPositionCorrectly) {
   auto position = GetParam().position();
-  auto game = chesskit::Game(position);
+  auto game = chesscxx::Game(position);
   EXPECT_EQ(game.initialPosition(), game.currentPosition());
   EXPECT_EQ(game.initialPosition(), position);
   EXPECT_FALSE(game.startsFromDefaultPosition());
@@ -833,25 +833,25 @@ TEST_P(FenFormatSuite, FormatProducesExpectOutput) {
 TEST_P(InvalidFenInputSuite, ParseHandlesInvalidInputCorrectly) {
   const auto& fixture = GetParam();
   auto result =
-      chesskit::parse<chesskit::Game>(fixture.raw(), chesskit::parse_as::Fen{});
+      chesscxx::parse<chesscxx::Game>(fixture.raw(), chesscxx::parse_as::Fen{});
   EXPECT_EQ(result.error(), fixture.error());
 }
 
 TEST_P(InvalidPgnInputSuite, ParseHandlesInvalidInputCorrectly) {
   const auto& fixture = GetParam();
   auto result =
-      chesskit::parse<chesskit::Game>(fixture.raw(), chesskit::parse_as::Pgn{});
+      chesscxx::parse<chesscxx::Game>(fixture.raw(), chesscxx::parse_as::Pgn{});
   ASSERT_FALSE(result.has_value());
   EXPECT_EQ(result.error(), fixture.error());
 
-  auto default_result = chesskit::parse<chesskit::Game>(fixture.raw());
+  auto default_result = chesscxx::parse<chesscxx::Game>(fixture.raw());
   ASSERT_FALSE(default_result.has_value());
   EXPECT_EQ(default_result.error(), fixture.error());
 }
 
 TEST(GameTest, FormatProducesUniqueStrings) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::Game>>;
+      std::unordered_map<std::string, std::vector<chesscxx::Game>>;
   CollisionMap fmt_collisions;
   CollisionMap pgn_fmt_collisions;
 
@@ -871,7 +871,7 @@ TEST(GameTest, FormatProducesUniqueStrings) {
 
 TEST(GameTest, FormatProducesUniqueStringsForUniqueFinalPosition) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::Game>>;
+      std::unordered_map<std::string, std::vector<chesscxx::Game>>;
   CollisionMap fen_fmt_collisions;
   CollisionMap ascii_fmt_collisions;
   CollisionMap lists_fmt_collisions;
@@ -896,7 +896,7 @@ TEST(GameTest, FormatProducesUniqueStringsForUniqueFinalPosition) {
 
 TEST(GameTest, FormatProducesUniqueStringsForUniqueRepetitionTracker) {
   using CollisionMap =
-      std::unordered_map<std::string, std::vector<chesskit::Game>>;
+      std::unordered_map<std::string, std::vector<chesscxx::Game>>;
   CollisionMap rep_fmt_collisions;
 
   auto assert_unique_insertion = [](auto& map, const auto& key,
@@ -916,11 +916,11 @@ TEST(GameTest, FormatProducesUniqueStringsForUniqueRepetitionTracker) {
 TEST(GameTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<size_t, std::vector<chesskit::Game>> hash_counter;
+  std::unordered_map<size_t, std::vector<chesscxx::Game>> hash_counter;
 
   std::ranges::for_each(GetGameEqualityFixtures(), [&](const auto& fixture) {
     const auto& game = fixture.games().front();
-    auto hash = std::hash<chesskit::Game>{}(game);
+    auto hash = std::hash<chesscxx::Game>{}(game);
     hash_counter[hash].push_back(game);
     auto collisions = hash_counter[hash].size();
     EXPECT_LE(collisions, kMaxCollisions)
@@ -929,7 +929,7 @@ TEST(GameTest, HashProducesFewCollisions) {
 }
 
 TEST(GameTest, UndoMoveCorrectlyForDefaultGame) {
-  auto game = chesskit::Game();
+  auto game = chesscxx::Game();
 
   EXPECT_EQ(game.currentPosition(), game.initialPosition());
   EXPECT_TRUE(game.sanMoves().empty());
@@ -946,7 +946,7 @@ TEST(GameTest, UndoMoveCorrectlyForDefaultGame) {
 }
 
 TEST(GameTest, ResetCorrectlyForDefaultGame) {
-  auto game = chesskit::Game();
+  auto game = chesscxx::Game();
 
   EXPECT_EQ(game.currentPosition(), game.initialPosition());
   EXPECT_TRUE(game.sanMoves().empty());
@@ -963,8 +963,8 @@ TEST(GameTest, ResetCorrectlyForDefaultGame) {
 }
 
 TEST(GameTest, DefaultConstructionResultsInDefaultsGame) {
-  chesskit::Game const game;
-  chesskit::Position const default_position;
+  chesscxx::Game const game;
+  chesscxx::Position const default_position;
 
   EXPECT_EQ(game.initialPosition(), game.currentPosition());
   EXPECT_EQ(game.initialPosition(), default_position);
@@ -988,8 +988,8 @@ TEST(GameTest, DefaultConstructionResultsInDefaultsGame) {
 }
 
 TEST(GameTest, ConstructFromInitialPositionCorrectly) {
-  chesskit::Position const default_position;
-  chesskit::Game const game(default_position);
+  chesscxx::Position const default_position;
+  chesscxx::Game const game(default_position);
 
   EXPECT_EQ(game.initialPosition(), game.currentPosition());
   EXPECT_EQ(game.initialPosition(), default_position);
