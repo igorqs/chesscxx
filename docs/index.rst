@@ -1,4 +1,4 @@
-chesscxx Documentation
+chesscxx documentation
 ======================
 
 Overview goes here

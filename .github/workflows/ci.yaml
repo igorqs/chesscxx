@@ -1,0 +1,31 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+    - master
+
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with: { python-version: "3.12" }
+
+    - name: Install codespell
+      run: pip3 install codespell
+
+    - name: Lint
+      run: cmake -D FORMAT_COMMAND=clang-format -P cmake/lint.cmake
+
+    - name: Spell check
+      if: always()
+      run: cmake -P cmake/spell.cmake
+
