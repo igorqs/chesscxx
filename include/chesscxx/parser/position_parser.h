@@ -6,6 +6,7 @@
 #include <charconv>
 #include <cstdint>
 #include <expected>
+#include <iterator>
 #include <system_error>
 
 #include "../castling_rights.h"

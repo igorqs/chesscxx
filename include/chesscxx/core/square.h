@@ -34,7 +34,7 @@ constexpr auto Square::operator==(const Square&) const -> bool = default;
 /// @{
 
 /// @brief Computes the linear index of a square on the chessboard.
-constexpr auto index(const Square& square) -> std::size_t {
+constexpr auto index(const Square& square) -> size_t {
   return ((internal::index(square.rank) * kNumFiles)) +
          internal::index(square.file);
 }

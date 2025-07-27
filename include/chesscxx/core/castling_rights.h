@@ -108,8 +108,8 @@ class CastlingRights {
 
   static constexpr auto index(const CastlingSide& side, const Color& color)
       -> uint8_t {
-    uint const side_index = (side == CastlingSide::kKingside) ? 0 : 1;
-    uint const color_index = (color == Color::kWhite) ? 0 : 1;
+    auto const side_index = (side == CastlingSide::kKingside) ? 0U : 1U;
+    auto const color_index = (color == Color::kWhite) ? 0U : 1U;
 
     return (color_index << 1U) | side_index;
   }

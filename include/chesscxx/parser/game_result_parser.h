@@ -4,7 +4,9 @@
 // IWYU pragma: private, include "../game_result.h"
 
 #include <array>
+#include <cstddef>
 #include <expected>
+#include <iterator>
 #include <string_view>
 #include <utility>
 

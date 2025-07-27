@@ -4,6 +4,7 @@
 // IWYU pragma: private, include "../san_move.h"
 
 #include <expected>
+#include <iterator>
 #include <optional>
 #include <string_view>
 

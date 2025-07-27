@@ -20,8 +20,8 @@ struct std::hash<chesscxx::UciMove> {
   auto operator()(const chesscxx::UciMove& uci) const -> size_t {
     constexpr uint8_t kMaxSquareValue = chesscxx::kNumSquares - 1;
 
-    constexpr uint kWidth = std::bit_width(kMaxSquareValue);
-    constexpr uint kDoubleWidth = kWidth << 1U;
+    constexpr uint8_t kWidth = std::bit_width(kMaxSquareValue);
+    constexpr uint8_t kDoubleWidth = kWidth << 1U;
     using PromotionT = std::optional<chesscxx::PromotablePieceType>;
 
     return (std::hash<PromotionT>{}(uci.promotion) << kDoubleWidth) |

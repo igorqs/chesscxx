@@ -6,6 +6,7 @@
 #include <array>
 #include <cstddef>
 #include <format>
+#include <iterator>
 #include <ranges>
 #include <string_view>
 
@@ -48,7 +49,7 @@ struct std::formatter<chesscxx::PiecePlacement>
                   chesscxx::internal::FenSpec /*unused*/) const {
     auto out = ctx.out();
 
-    for (std::size_t rank = 0; rank < chesscxx::kNumRanks; ++rank) {
+    for (size_t rank = 0; rank < chesscxx::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '/';
       const auto* begin =
           piece_placement.pieceArray().begin() + ((rank * chesscxx::kNumFiles));
@@ -63,7 +64,7 @@ struct std::formatter<chesscxx::PiecePlacement>
                   chesscxx::internal::AsciiSpec /*unused*/) const {
     auto out = ctx.out();
 
-    for (std::size_t rank = 0; rank < chesscxx::kNumRanks; ++rank) {
+    for (size_t rank = 0; rank < chesscxx::kNumRanks; ++rank) {
       if (rank != 0) *out++ = '\n';
       const auto* begin =
           piece_placement.pieceArray().begin() + ((rank * chesscxx::kNumFiles));

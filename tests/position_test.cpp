@@ -365,7 +365,7 @@ TEST(PositionTest, DefaultConstructionCreatesDefaultStartingPosition) {
 TEST(PositionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<std::size_t, std::vector<chesscxx::Position>> hash_counter;
+  std::unordered_map<size_t, std::vector<chesscxx::Position>> hash_counter;
 
   std::ranges::for_each(GetValidInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();
@@ -380,7 +380,7 @@ TEST(PositionTest, HashProducesFewCollisions) {
 TEST(PositionRepetitionTest, HashProducesFewCollisions) {
   // Adjust based on expectations for the test set.
   constexpr int kMaxCollisions = 1;
-  std::unordered_map<std::size_t, std::vector<chesscxx::Position>> hash_counter;
+  std::unordered_map<size_t, std::vector<chesscxx::Position>> hash_counter;
 
   std::ranges::for_each(GetRepetitionInputs(), [&](const auto& fixture) {
     const auto& position = fixture.position();

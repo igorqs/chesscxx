@@ -5,6 +5,7 @@
 #include <generator>
 #include <optional>
 #include <ranges>
+#include <utility>
 
 #include "../../color.h"
 #include "../../core/internal/piece_placement_piece_at.h"

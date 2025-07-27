@@ -4,8 +4,10 @@
 // IWYU pragma: private, include "../game.h"
 
 #include <algorithm>
+#include <array>
 #include <cctype>
 #include <expected>
+#include <iterator>
 #include <optional>
 #include <string_view>
 

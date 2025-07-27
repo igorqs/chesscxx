@@ -14,7 +14,6 @@ add_custom_target(
     COMMAND "${CMAKE_COMMAND}"
     -D "IWYU_COMMAND=${IWYU_COMMAND}"
     -D "PATTERNS=${IWYU_PATTERNS}"
-    -D "CACHE_FILE=${PROJECT_BINARY_DIR}/iwyu/processed_files.txt"
     -P "${PROJECT_SOURCE_DIR}/cmake/iwyu.cmake"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     COMMENT "Checking IWYU"
@@ -26,15 +25,9 @@ add_custom_target(
     COMMAND "${CMAKE_COMMAND}"
     -D "IWYU_COMMAND=${IWYU_COMMAND}"
     -D "PATTERNS=${IWYU_PATTERNS}"
-    -D "CACHE_FILE=${PROJECT_BINARY_DIR}/iwyu/processed_files.txt"
     -D FIX=YES
     -P "${PROJECT_SOURCE_DIR}/cmake/iwyu.cmake"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     COMMENT "Fixing IWYU errors"
     VERBATIM
-)
-
-add_custom_target(iwyu-clear
-  COMMAND ${CMAKE_COMMAND} -E remove -f "${CMAKE_BINARY_DIR}/iwyu/processed_files.txt"
-  COMMENT "Clearing IWYU cache"
 )
