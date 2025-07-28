@@ -40,6 +40,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install clang-tidy-19
+      run: sudo apt-get update -q
+        && sudo apt-get install clang-tidy-19 -q -y
+
     - name: IWYU check
       run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
 
