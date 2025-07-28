@@ -41,5 +41,5 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: IWYU check
-      run: cmake -P cmake/iwyu.cmake
+      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
 
