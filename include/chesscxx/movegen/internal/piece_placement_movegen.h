@@ -94,12 +94,12 @@ inline auto pseudoLegalKingMoves(PiecePlacement piece_placement, Square square,
                                     squaresWithout(piece_placement, color));
 }
 
-inline auto pseudoLegalPawnPushs(PiecePlacement piece_placement, Square square,
+inline auto pseudoLegalPawnPushs(PiecePlacement piece_placement, Square origin,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
-      pawnSlidingMove(square, color) |
-      std::views::take_while([piece_placement](const Square& square) {
-        return !hasPieceAt(piece_placement, square);
+      pawnSlidingMove(origin, color) |
+      std::views::take_while([piece_placement](const Square& destination) {
+        return !hasPieceAt(piece_placement, destination);
       }));
 }
 
@@ -121,11 +121,11 @@ inline auto pseudoLegalRookMoves(PiecePlacement piece_placement, Square square,
                                  Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
-      std::views::transform([piece_placement, square,
-                             color](std::generator<Square> sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), piece_placement,
-                                       color);
-      }) |
+      std::views::transform(
+          [piece_placement, color](std::generator<Square> sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move),
+                                           piece_placement, color);
+          }) |
       std::views::join);
 }
 
@@ -134,11 +134,11 @@ inline auto pseudoLegalBishopMoves(PiecePlacement piece_placement,
     -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
-      std::views::transform([piece_placement, square,
-                             color](std::generator<Square> sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), piece_placement,
-                                       color);
-      }) |
+      std::views::transform(
+          [piece_placement, color](std::generator<Square> sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move),
+                                           piece_placement, color);
+          }) |
       std::views::join);
 }
 
@@ -146,11 +146,11 @@ inline auto pseudoLegalQueenMoves(PiecePlacement piece_placement, Square square,
                                   Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |
-      std::views::transform([piece_placement, square,
-                             color](std::generator<Square> sliding_move) {
-        return takeWhileEmptyOrCapture(std::move(sliding_move), piece_placement,
-                                       color);
-      }) |
+      std::views::transform(
+          [piece_placement, color](std::generator<Square> sliding_move) {
+            return takeWhileEmptyOrCapture(std::move(sliding_move),
+                                           piece_placement, color);
+          }) |
       std::views::join);
 }
 

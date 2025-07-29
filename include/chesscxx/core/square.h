@@ -4,7 +4,6 @@
 // IWYU pragma: private, include "../square.h"
 
 #include <cstddef>
-#include <cstdint>
 
 #include "../file.h"
 #include "../rank.h"
@@ -35,7 +34,7 @@ constexpr auto Square::operator==(const Square&) const -> bool = default;
 
 /// @brief Computes the linear index of a square on the chessboard.
 constexpr auto index(const Square& square) -> size_t {
-  return ((internal::index(square.rank) * kNumFiles)) +
+  return (internal::index(square.rank) * kNumFiles) +
          internal::index(square.file);
 }
 
@@ -45,7 +44,7 @@ constexpr auto index(const Square& square) -> size_t {
 /// @{
 
 /// @brief The total number of squares on a chessboard.
-inline constexpr uint8_t kNumSquares = kNumRanks * kNumFiles;
+inline constexpr size_t kNumSquares = kNumRanks * kNumFiles;
 
 /// @}
 

@@ -22,7 +22,7 @@ template <>
 struct std::hash<chesscxx::SanCastlingMove> {
   auto operator()(const chesscxx::SanCastlingMove& move) const -> size_t {
     return chesscxx::internal::hashCombine(move.side, move.check_indicator);
-  };
+  }
 };
 
 template <>
@@ -31,7 +31,7 @@ struct std::hash<chesscxx::SanNormalMove> {
     return chesscxx::internal::hashCombine(
         move.piece_type, move.origin.file, move.origin.rank, move.is_capture,
         move.destination, move.promotion, move.check_indicator);
-  };
+  }
 };
 
 namespace chesscxx {

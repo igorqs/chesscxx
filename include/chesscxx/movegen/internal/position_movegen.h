@@ -23,13 +23,13 @@
 
 namespace chesscxx::internal {
 
-inline auto pseudoLegalPawnCaptures(Position position, Square square,
+inline auto pseudoLegalPawnCaptures(Position position, Square origin,
                                     Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
-      pawnCaptures(square, color) |
-      std::views::filter([position, color](const Square& square) {
-        return hasPieceAt(position.piecePlacement(), square, !color) ||
-               square == position.enPassantTargetSquare();
+      pawnCaptures(origin, color) |
+      std::views::filter([position, color](const Square& destination) {
+        return hasPieceAt(position.piecePlacement(), destination, !color) ||
+               destination == position.enPassantTargetSquare();
       }));
 }
 

@@ -16,7 +16,7 @@ struct std::hash<chesscxx::CastlingRights> {
   auto operator()(const chesscxx::CastlingRights& rights) const -> size_t {
     using T = std::bitset<chesscxx::CastlingRights::kNumCastlingRights>;
     return std::hash<T>{}(rights.toBitset());
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_CASTLING_RIGHTS_HASH_H_

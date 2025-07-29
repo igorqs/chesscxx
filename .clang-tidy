@@ -7,10 +7,13 @@ Checks: >
   -llvm-include-order,
   -llvmlibc-*,
   -misc-non-private-member-variables-in-classes,
-  -modernize-use-constraints,
   -readability-braces-around-statements,
-  -hicpp-braces-around-statements
-WarningsAsErrors: '*,-bugprone-exception-escape,-cert-dcl58-cpp'
+  -hicpp-braces-around-statements,
+  -modernize-use-constraints,
+  -bugprone-exception-escape,
+  -cert-dcl58-cpp,
+  -readability-redundant-member-init
+WarningsAsErrors: '*'
 CheckOptions:
   - { key: misc-include-cleaner.IgnoreHeaders,                         value: 'yaml-cpp/.*' }
   - { key: readability-identifier-naming.ClassCase,                    value: CamelCase  }

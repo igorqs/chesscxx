@@ -36,7 +36,7 @@ constexpr auto parseFrom(InputIt begin, InputIt end,
                          Tag /*tag*/ = parse_as::Default{})
     -> std::expected<ParseResult<T, InputIt>, ParseError> {
   return Parser<T, InputIt, Tag>{}.parse(begin, end);
-};
+}
 
 /// @brief Parses an object of type T from a string view, expecting the entire
 /// string to be consumed.

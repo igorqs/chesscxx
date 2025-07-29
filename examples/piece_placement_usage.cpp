@@ -4,13 +4,16 @@
 #include <chesscxx/square.h>
 
 #include <bitset>
-#include <cassert>
 #include <cstddef>
+#include <cstdlib>
 #include <optional>
 #include <print>
 #include <string_view>
 
 namespace {
+void verify(bool check) {
+  if (!check) std::abort();
+}
 void printErrorOrValue(auto parsed_value) {
   if (parsed_value) {
     std::println("{}", parsed_value.value());
@@ -41,13 +44,13 @@ auto main() -> int {
         chesscxx::Piece const piece = {.type = type, .color = color};
         auto location_index = chesscxx::index(location);
         seen.set(location_index);
-        assert(piece_placement.pieceArray().at(location_index) == piece);
+        verify(piece_placement.pieceArray().at(location_index) == piece);
       }
     }
   }
 
   for (size_t i = 0; i < chesscxx::kNumSquares; i++) {
-    if (!seen[i]) assert(piece_placement.pieceArray().at(i) == std::nullopt);
+    if (!seen[i]) verify(piece_placement.pieceArray().at(i) == std::nullopt);
   }
 
   parseAndPrint("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");

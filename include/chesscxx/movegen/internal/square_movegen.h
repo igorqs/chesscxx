@@ -45,9 +45,8 @@ inline auto diagonalProjection(const Square& square, const Square& corner)
   }
 
   auto projection = shiftSquare(square, offset);
-  if (projection) return *projection;
-
-  std::unreachable();
+  if (!projection) std::unreachable();
+  return *projection;
 }
 
 inline auto isOrthogonal(const SquareOffset& offset) -> bool {
@@ -136,6 +135,8 @@ inline auto pawnReverseSlidingMove(Square square, Color color)
     co_yield std::ranges::elements_of(
         traversedSquares(square, *source, Origin::kSkip));
   }
+
+  co_return;
 }
 
 inline auto pawnSlidingMove(Square square, Color color)
@@ -144,6 +145,8 @@ inline auto pawnSlidingMove(Square square, Color color)
     co_yield std::ranges::elements_of(
         traversedSquares(square, *destination, Origin::kSkip));
   }
+
+  co_return;
 }
 
 inline auto kingMoves(Square square) -> std::generator<Square> {

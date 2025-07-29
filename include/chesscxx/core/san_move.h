@@ -22,7 +22,7 @@ struct SanCastlingMove {
   /// @brief The side of the castling move.
   CastlingSide side{};
   /// @brief Indicates whether the move gives check or checkmate.
-  std::optional<CheckIndicator> check_indicator;
+  std::optional<CheckIndicator> check_indicator = std::nullopt;
 };
 
 /// @brief Represents a normal (non-castling) chess move in Standard Algebraic
@@ -32,15 +32,15 @@ struct SanNormalMove {
   PieceType piece_type{};
   /// @brief The origin square of the move, which may be fully specified,
   /// partially specified (by file or rank), or unspecified.
-  PartialSquare origin;
+  PartialSquare origin{};
   /// @brief True if the move captures an opponent's piece.
   bool is_capture = false;
   /// @brief The destination square of the move.
   Square destination;
   /// @brief Optional promotion piece type.
-  std::optional<PromotablePieceType> promotion;
+  std::optional<PromotablePieceType> promotion = std::nullopt;
   /// @brief Indicates whether the move gives check or checkmate.
-  std::optional<CheckIndicator> check_indicator;
+  std::optional<CheckIndicator> check_indicator = std::nullopt;
 };
 
 /// @brief A variant representing either a normal move or a castling move in SAN

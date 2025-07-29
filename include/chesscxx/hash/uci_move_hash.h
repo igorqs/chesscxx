@@ -27,7 +27,7 @@ struct std::hash<chesscxx::UciMove> {
     return (std::hash<PromotionT>{}(uci.promotion) << kDoubleWidth) |
            (chesscxx::index(uci.origin) << kWidth) |
            chesscxx::index(uci.destination);
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_UCI_MOVE_HASH_H_

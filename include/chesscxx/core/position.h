@@ -53,13 +53,13 @@ class Position {
   /// @brief Encapsulates the parameters required to construct a Position.
   struct Params {
     /// The layout of pieces on the board.
-    PiecePlacement piece_placement;
+    PiecePlacement piece_placement{};
     /// The side to move next.
     Color active_color = Color::kWhite;
     /// Castling rights available to both players.
-    CastlingRights castling_rights;
+    CastlingRights castling_rights{};
     /// Target square for en passant, if applicable.
-    std::optional<Square> en_passant_target_square;
+    std::optional<Square> en_passant_target_square = std::nullopt;
     /// Number of halfmoves since the last capture or pawn move.
     uint32_t halfmove_clock = kMinHalfmoveClock;
     /// Number of full moves in the game.
@@ -94,7 +94,7 @@ class Position {
     if (auto error = position.validationError()) return std::unexpected(*error);
 
     return position;
-  };
+  }
 
   /// @}
 
@@ -224,7 +224,7 @@ class Position {
   PiecePlacement piece_placement_;
   Color active_color_ = Color::kWhite;
   CastlingRights castling_rights_;
-  std::optional<File> en_passant_file_;
+  std::optional<File> en_passant_file_ = std::nullopt;
   uint32_t halfmove_clock_ = kMinHalfmoveClock;
   uint32_t fullmove_number_ = kMinFullmoveNumber;
 };

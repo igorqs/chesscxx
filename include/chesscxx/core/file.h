@@ -3,6 +3,7 @@
 
 // IWYU pragma: private, include "../file.h"
 
+#include <cstddef>
 #include <cstdint>
 
 namespace chesscxx {
@@ -22,7 +23,7 @@ enum class File : uint8_t {
 /// @{
 
 /// @brief The number of files (columns) on a chessboard.
-inline constexpr uint8_t kNumFiles = 8;
+inline constexpr size_t kNumFiles = 8;
 
 // @}
 

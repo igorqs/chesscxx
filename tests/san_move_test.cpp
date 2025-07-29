@@ -12,7 +12,6 @@
 
 #include <algorithm>
 #include <array>
-#include <cassert>
 #include <format>
 #include <magic_enum/magic_enum.hpp>
 #include <optional>

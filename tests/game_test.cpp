@@ -191,7 +191,7 @@ class RepetitionTrackerFixture {
   auto repetitions()
       -> const std::vector<std::tuple<chesscxx::Position, int, int>>& {
     return repetitions_;
-  };
+  }
 
  private:
   std::string raw_;

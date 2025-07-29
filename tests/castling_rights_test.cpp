@@ -17,12 +17,13 @@
 constexpr auto kAll = chesscxx::CastlingRights{};
 constexpr auto kNone = chesscxx::CastlingRights{0};
 
-static constexpr int kMaxBitset =
+static constexpr size_t kMaxBitset =
     (1U << chesscxx::CastlingRights::kNumCastlingRights);
 
 constexpr static auto kAllCastlingRights =
-    std::views::iota(0, kMaxBitset) | std::views::transform([](auto bits) {
-      return chesscxx::CastlingRights(bits);
+    std::views::iota(0U, kMaxBitset) | std::views::transform([](auto bits) {
+      return chesscxx::CastlingRights(
+          std::bitset<chesscxx::CastlingRights::kNumCastlingRights>(bits));
     });
 
 TEST(CastlingRightsTest, DefaultConstructionInitializeWithAllCastlingEnabled) {
@@ -31,9 +32,9 @@ TEST(CastlingRightsTest, DefaultConstructionInitializeWithAllCastlingEnabled) {
 }
 
 TEST(CastlingRightsTest, BitsetConstructionInitializeRawBitsCorrectly) {
-  std::ranges::for_each(std::views::iota(0, kMaxBitset), [](auto bits) {
+  for (size_t bits = 0; bits < kMaxBitset; ++bits) {
     EXPECT_EQ(chesscxx::CastlingRights(bits).toBitset(), bits);
-  });
+  };
 }
 
 TEST(CastlingRightsTest, ComparesEqualValuesSuccessfully) {
@@ -57,7 +58,7 @@ TEST(CastlingRightsTest, CanCastleMatchesBitset) {
 
   std::ranges::for_each(kAllCastlingRights, [](auto rights) {
     std::bitset<chesscxx::CastlingRights::kNumCastlingRights> bits;
-    int bit_index = 0;
+    size_t bit_index = 0;
 
     enum_for_each<chesscxx::Color>([&](chesscxx::Color color) {
       enum_for_each<chesscxx::CastlingSide>([&](chesscxx::CastlingSide side) {

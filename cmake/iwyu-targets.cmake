@@ -7,8 +7,6 @@ set(
 
 set(IWYU_COMMAND clang-tidy CACHE STRING "IWYU checker to use")
 
-file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/iwyu")
-
 add_custom_target(
     iwyu-check
     COMMAND "${CMAKE_COMMAND}"

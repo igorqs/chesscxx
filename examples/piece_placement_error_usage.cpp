@@ -4,7 +4,7 @@
 #include <chesscxx/piece_placement_error.h>
 #include <chesscxx/square.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <optional>
 #include <print>
 #include <string_view>
@@ -12,13 +12,13 @@
 namespace {
 auto parseSquare(std::string_view str) {
   auto parsed_square = chesscxx::parse<chesscxx::Square>(str);
-  assert(parsed_square);
+  if (!parsed_square) std::abort();
   return parsed_square.value();
 }
 
 auto parsePiece(std::string_view str) {
   auto parsed_piece = chesscxx::parse<chesscxx::Piece>(str);
-  assert(parsed_piece);
+  if (!parsed_piece) std::abort();
   return parsed_piece.value();
 }
 

@@ -35,11 +35,11 @@ template <typename T>
 struct std::formatter<std::optional<T>> {
   template <typename ParseContext>
   constexpr auto parse(ParseContext& ctx) {
-    auto ptr = ctx.begin();
     const auto end = ctx.end();
 
     auto is_end = [&end](const auto& ptr) { return ptr == end || *ptr == '}'; };
 
+    auto ptr = ctx.begin();
     if (is_end(ptr)) return ptr;
 
     if (*ptr == '?') {

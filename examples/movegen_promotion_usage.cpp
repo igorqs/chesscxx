@@ -2,15 +2,18 @@
 #include <chesscxx/movegen.h>
 #include <chesscxx/parse.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <print>
 #include <string_view>
 
 namespace {
+void verify(const auto& check) {
+  if (!static_cast<bool>(check)) std::abort();
+}
 auto parseFen(std::string_view str) -> chesscxx::Game {
   auto parsed_game =
       chesscxx::parse<chesscxx::Game>(str, chesscxx::parse_as::Fen{});
-  assert(parsed_game);
+  verify(parsed_game);
 
   return parsed_game.value();
 }

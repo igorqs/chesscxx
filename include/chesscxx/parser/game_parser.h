@@ -274,7 +274,7 @@ class Parser<Game, const char*, parse_as::Pgn> {
     return isLeftBrace(input) || isLeftParenthesis(input) ||
            isSemicolon(input) || isDollarSign(input) || isPeriod(input) ||
            isMoveAnnotation(input) || isDigit(input) || isAnySpace(input);
-  };
+  }
 
   static auto trimSymbolToken(const char* begin, const char* end) -> const
       char* {
@@ -303,25 +303,25 @@ class Parser<Game, const char*, parse_as::Pgn> {
     return ptr;
   }
 
-  static auto isAlpha(char input) -> bool { return std::isalpha(input) != 0; };
-  static auto isDigit(char input) -> bool { return std::isdigit(input) != 0; };
+  static auto isAlpha(char input) -> bool { return std::isalpha(input) != 0; }
+  static auto isDigit(char input) -> bool { return std::isdigit(input) != 0; }
   static auto isAnySpace(char input) -> bool {
     return std::isspace(input) != 0;
-  };
-  static auto isLeftBrace(char input) -> bool { return input == '{'; };
-  static auto isLeftParenthesis(char input) -> bool { return input == '('; };
-  static auto isSemicolon(char input) -> bool { return input == ';'; };
-  static auto isDollarSign(char input) -> bool { return input == '$'; };
-  static auto isPeriod(char input) -> bool { return input == '.'; };
+  }
+  static auto isLeftBrace(char input) -> bool { return input == '{'; }
+  static auto isLeftParenthesis(char input) -> bool { return input == '('; }
+  static auto isSemicolon(char input) -> bool { return input == ';'; }
+  static auto isDollarSign(char input) -> bool { return input == '$'; }
+  static auto isPeriod(char input) -> bool { return input == '.'; }
   static auto isMoveAnnotation(char input) -> bool {
     return input == '!' || input == '?';
-  };
-  static auto isLeftBracket(char input) -> bool { return input == '['; };
-  static auto isQuote(char input) -> bool { return input == '\"'; };
+  }
+  static auto isLeftBracket(char input) -> bool { return input == '['; }
+  static auto isQuote(char input) -> bool { return input == '\"'; }
   static auto isSymbolToken(char input) -> bool {
     constexpr static std::string_view kValid = "_+#=:-";
     return (kValid.contains(input) || isAlpha(input) || isDigit(input));
-  };
+  }
 };
 
 /// @ingroup GameHelpers

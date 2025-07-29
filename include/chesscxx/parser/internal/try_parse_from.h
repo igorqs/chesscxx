@@ -20,7 +20,7 @@ constexpr auto tryParseFrom(InputIt begin, InputIt end,
   }
 
   return ParseResult<std::optional<T>, InputIt>{std::nullopt, begin};
-};
+}
 
 }  // namespace chesscxx::internal
 

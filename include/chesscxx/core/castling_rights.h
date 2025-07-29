@@ -99,7 +99,7 @@ class CastlingRights {
   [[nodiscard]] auto toBitset() const
       -> const std::bitset<kNumCastlingRights>& {
     return castling_rights_;
-  };
+  }
 
   /// @}
 
@@ -107,7 +107,7 @@ class CastlingRights {
   static constexpr uint8_t kInitialValue = (1U << kNumCastlingRights) - 1;
 
   static constexpr auto index(const CastlingSide& side, const Color& color)
-      -> uint8_t {
+      -> size_t {
     auto const side_index = (side == CastlingSide::kKingside) ? 0U : 1U;
     auto const color_index = (color == Color::kWhite) ? 0U : 1U;
 

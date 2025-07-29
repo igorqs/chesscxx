@@ -225,6 +225,7 @@ class PositionModifier {
       CastlingMoveRecord move = {
           .side = side,
           .color = active_color,
+          .check_indicator = std::nullopt,
           .previous_castling_rights = castling_rights,
           .previous_en_passant_file = en_passant_file,
       };

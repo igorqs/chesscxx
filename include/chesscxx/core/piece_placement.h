@@ -5,12 +5,12 @@
 
 #include <algorithm>
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <expected>
 #include <optional>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 
 #include "../color.h"
 #include "../piece.h"
@@ -98,8 +98,11 @@ class PiecePlacement {
   constexpr explicit PiecePlacement(const PieceArray& piece_array) {
     for (uint8_t i = 0; i < kNumSquares; ++i) {
       auto square = internal::createSquareFromIndex(i);
-      assert(square.has_value());
-      updatePieceAt(*square, piece_array.at(i));
+      if (square.has_value()) {
+        updatePieceAt(*square, piece_array.at(i));
+      } else {
+        std::unreachable();
+      }
     }
   }
 

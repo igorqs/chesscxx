@@ -214,7 +214,9 @@ TEST_P(ValidInputSuite, PieceArrayAndPieceLocationsAreConsistent) {
   }
 
   for (size_t i = 0; i < chesscxx::kNumSquares; i++) {
-    if (!seen[i]) EXPECT_EQ(piece_placement.pieceArray().at(i), std::nullopt);
+    if (seen[i]) continue;
+
+    EXPECT_EQ(piece_placement.pieceArray().at(i), std::nullopt);
   }
 }
 

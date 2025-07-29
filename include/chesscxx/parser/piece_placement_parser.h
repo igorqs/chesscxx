@@ -3,11 +3,11 @@
 
 // IWYU pragma: private, include "../piece_placement.h"
 
-#include <cstdint>
 #include <expected>
 #include <iterator>
 #include <ranges>
 #include <string_view>
+#include <utility>
 
 #include "../core/piece_placement.h"
 #include "../file.h"
@@ -25,15 +25,17 @@ namespace internal {
 constexpr auto parsePieceArray(const char* begin, const char* end)
     -> std::expected<ParseResult<PiecePlacement::PieceArray, const char*>,
                      ParseError> {
-  auto to_char = [](uint8_t digit) -> unsigned char { return digit + '0'; };
-  auto from_char = [](char digit_char) -> uint8_t { return digit_char - '0'; };
+  auto to_char = [](size_t digit) -> char {
+    return static_cast<char>(digit + '0');
+  };
+  auto from_char = [](char digit_char) -> int { return digit_char - '0'; };
 
   PiecePlacement::PieceArray piece_array;
-  uint8_t piece_counter = 0;
+  size_t piece_counter = 0;
   std::string_view const str = std::string_view(begin, end);
 
   for (const auto& rank : str | std::views::split('/')) {
-    uint8_t missing_pieces = kNumFiles;
+    size_t missing_pieces = kNumFiles;
 
     for (const auto* it = rank.begin(); it < rank.end();) {
       if (missing_pieces == 0) {
@@ -41,8 +43,8 @@ constexpr auto parsePieceArray(const char* begin, const char* end)
       }
 
       if (*it >= '1' && *it <= to_char(missing_pieces)) {
-        missing_pieces -= from_char(*it);
-        piece_counter += from_char(*it);
+        missing_pieces -= static_cast<size_t>(from_char(*it));
+        piece_counter += static_cast<size_t>(from_char(*it));
         std::advance(it, 1);
         if (piece_counter == kNumSquares) {
           return ParseResult{.parsed_value = piece_array, .ptr = it};

@@ -47,7 +47,9 @@ TEST(SquareTest, ComparesDifferentValuesSuccessfully) {
 
   for (int const lhs : std::views::iota(0, kSize)) {
     for (int const rhs : std::views::iota(0, kSize)) {
-      if (lhs != rhs) EXPECT_NE(kAllSquares[lhs], kAllSquares[rhs]);
+      if (lhs != rhs) {
+        EXPECT_NE(kAllSquares[lhs], kAllSquares[rhs]);
+      }
     }
   }
 }

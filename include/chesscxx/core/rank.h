@@ -3,6 +3,7 @@
 
 // IWYU pragma: private, include "../rank.h"
 
+#include <cstddef>
 #include <cstdint>
 
 namespace chesscxx {
@@ -22,7 +23,7 @@ enum class Rank : uint8_t {
 /// @{
 
 /// @brief The number of ranks (rows) on a chessboard.
-inline constexpr uint8_t kNumRanks = 8;
+inline constexpr size_t kNumRanks = 8;
 
 /// @}
 

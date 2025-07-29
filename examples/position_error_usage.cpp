@@ -5,10 +5,14 @@
 #include <chesscxx/position.h>
 #include <chesscxx/position_error.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <print>
 
 namespace {
+void verify(bool check) {
+  if (!check) std::abort();
+}
+
 void printErrorOrValue(auto created_object) {
   if (created_object) {
     std::println("{}", created_object.value());
@@ -35,7 +39,7 @@ auto main() -> int {
 
   auto piece_placement =
       chesscxx::parse<chesscxx::PiecePlacement>("k7/1B6/8/8/8/8/8/7K");
-  assert(piece_placement);
+  verify(piece_placement.has_value());
   params.halfmove_clock = 0;
   params.piece_placement = piece_placement.value();
   createPositionAndPrint(params);

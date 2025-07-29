@@ -15,7 +15,7 @@ template <>
 struct std::hash<chesscxx::Piece> {
   auto operator()(const chesscxx::Piece& piece) const -> size_t {
     return chesscxx::internal::hashCombine(piece.type, piece.color);
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_PIECE_HASH_H_

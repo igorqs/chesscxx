@@ -2,7 +2,6 @@
 #include <chesscxx/parse.h>
 
 #include <algorithm>
-#include <cassert>
 #include <cctype>
 #include <fstream>
 #include <iostream>
@@ -14,7 +13,7 @@
 
 auto main() -> int {
   std::ifstream file("data/games.pgn", std::ios::binary);
-  assert(file);
+  if (!file) return 1;
 
   std::vector<char> buffer{std::istreambuf_iterator<char>{file},
                            std::istreambuf_iterator<char>{}};
@@ -29,8 +28,14 @@ auto main() -> int {
 
   for (const auto *it = str.begin(); it != str.end();) {
     auto result = chesscxx::parseFrom<chesscxx::Game>(it, str.end());
-    assert(result);
-    std::println("{}", result->parsed_value);
+    if (result) {
+      std::println("{}", result->parsed_value);
+    } else {
+      std::println(stderr, "{}", result.error());
+      return 1;
+    }
     it = result->ptr;
   }
+
+  return 0;
 }

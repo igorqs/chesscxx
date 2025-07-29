@@ -3,10 +3,13 @@
 #include <chesscxx/color.h>
 
 #include <bitset>
-#include <cassert>
+#include <cstdlib>
 #include <print>
 
 namespace {
+void verify(bool check) {
+  if (!check) std::abort();
+}
 void printCastlingRights(const auto& rights) {
   bool white_kingside = rights.canCastle(chesscxx::CastlingSide::kKingside,
                                          chesscxx::Color::kWhite);
@@ -36,7 +39,7 @@ auto main() -> int {
   bits.set(chesscxx::CastlingRights::kBlackKingside);
   bits.set(chesscxx::CastlingRights::kBlackQueenside);
   rights = chesscxx::CastlingRights(bits);
-  assert(rights.toBitset() == bits);
+  verify(rights.toBitset() == bits);
   printCastlingRights(rights);
 
   rights.enable(chesscxx::CastlingSide::kQueenside, chesscxx::Color::kWhite);

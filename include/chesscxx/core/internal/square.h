@@ -35,8 +35,15 @@ constexpr auto calculateOffset(const Square& lhs, const Square& rhs)
 
 constexpr auto shiftSquare(const Square& square, const SquareOffset& offset)
     -> std::optional<Square> {
-  auto new_file = toFile(index(square.file) + offset.file_offset);
-  auto new_rank = toRank(index(square.rank) + offset.rank_offset);
+  auto new_file_index = index(square.file) + offset.file_offset;
+  auto new_rank_index = index(square.rank) + offset.rank_offset;
+
+  if (new_file_index < 0 || new_rank_index < 0) {
+    return std::nullopt;
+  }
+
+  auto new_file = toFile(static_cast<uint8_t>(new_file_index));
+  auto new_rank = toRank(static_cast<uint8_t>(new_rank_index));
 
   if (!new_file || !new_rank) return std::nullopt;
 

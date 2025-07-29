@@ -14,7 +14,7 @@ template <>
 struct std::hash<chesscxx::Square> {
   auto operator()(const chesscxx::Square& square) const -> size_t {
     return chesscxx::index(square);
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_SQUARE_HASH_H_

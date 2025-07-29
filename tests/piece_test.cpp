@@ -40,7 +40,9 @@ TEST(PieceTest, ComparesDifferentValuesSuccessfully) {
 
   for (int const lhs : std::views::iota(0, kSize)) {
     for (int const rhs : std::views::iota(0, kSize)) {
-      if (lhs != rhs) EXPECT_NE(kAllPieces[lhs], kAllPieces[rhs]);
+      if (lhs != rhs) {
+        EXPECT_NE(kAllPieces[lhs], kAllPieces[rhs]);
+      }
     }
   }
 }

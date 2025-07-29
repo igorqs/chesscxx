@@ -1,7 +1,6 @@
 #include <chesscxx/parse.h>
 #include <chesscxx/square.h>
 
-#include <cassert>
 #include <iterator>
 #include <print>
 #include <string_view>
@@ -11,9 +10,9 @@ auto main() -> int {
 
   auto result =
       chesscxx::parseFrom<chesscxx::Square>(input.begin(), input.end());
-  assert(result);
+  if (!result) return 1;
 
   std::println("{}", result.value().parsed_value);
   std::println("{}", result.value().ptr);
-  assert(std::distance(input.begin(), result.value().ptr) == 2);
+  std::println("{}", std::distance(input.begin(), result.value().ptr) == 2);
 }

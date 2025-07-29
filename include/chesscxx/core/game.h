@@ -44,8 +44,8 @@ class Game {
   /// @brief Constructs a new game with a specified initial position.
   constexpr explicit Game(const Position& initial_position)
       : initial_position_(initial_position),
-        current_position_(initial_position),
-        is_default_start_(initial_position == Position{}) {
+        is_default_start_(initial_position == Position{}),
+        current_position_(initial_position) {
     updateRepetitionTracker();
   }
 
@@ -58,7 +58,7 @@ class Game {
   constexpr auto operator==(const Game& other) const -> bool {
     return initial_position_ == other.initial_position_ &&
            uci_move_history_ == other.uci_move_history_;
-  };
+  }
 
   /// @}
 
@@ -235,7 +235,7 @@ class Game {
   }
   auto lastMove() -> const internal::MoveRecord& {
     return move_history_.back();
-  };
+  }
 
   void clearRepetitionTracker() { repetition_tracker_.clear(); }
   void removePositionOccurrence() {

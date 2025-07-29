@@ -17,7 +17,7 @@ struct std::hash<chesscxx::Game> {
     return chesscxx::internal::hashCombine(
         game.initialPosition(),
         chesscxx::internal::hashCombineRange(game.uciMoves()));
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_GAME_HASH_H_

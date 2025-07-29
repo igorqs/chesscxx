@@ -4,7 +4,6 @@
 // IWYU pragma: private, include "../castling_rights.h"
 
 #include <format>
-#include <ranges>
 #include <string_view>
 
 #include "../core/castling_rights.h"
@@ -18,13 +17,14 @@ struct std::formatter<chesscxx::CastlingRights> : chesscxx::internal::NoSpec {
   auto format(const chesscxx::CastlingRights& rights, FmtContext& ctx) const {
     constexpr static std::string_view kCastlingSymbols = "KQkq";
     constexpr static auto kSize = static_cast<int>(kCastlingSymbols.size());
+    static_assert(kSize == chesscxx::CastlingRights::kNumCastlingRights);
 
     auto out = ctx.out();
 
     if (rights.none()) return *out++ = '-';
 
-    for (auto right : std::views::iota(0, kSize)) {
-      if (rights.toBitset().test(right)) *out++ = kCastlingSymbols[right];
+    for (size_t i = 0; i < kSize; ++i) {
+      if (rights.toBitset().test(i)) *out++ = kCastlingSymbols[i];
     }
 
     return out;

@@ -53,7 +53,7 @@ struct std::hash<chesscxx::Position> {
         chesscxx::internal::toOptionalFile(position.enPassantTargetSquare()),
         position.halfmoveClock(), position.fullmoveNumber(),
         position.castlingRights());
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_POSITION_HASH_H_

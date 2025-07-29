@@ -19,23 +19,23 @@
 namespace chesscxx::internal {
 
 struct CastlingMoveRecord {
-  CastlingSide side;
-  Color color;
-  std::optional<CheckIndicator> check_indicator;
+  CastlingSide side{};
+  Color color{};
+  std::optional<CheckIndicator> check_indicator = std::nullopt;
   CastlingRights previous_castling_rights;
-  std::optional<File> previous_en_passant_file;
+  std::optional<File> previous_en_passant_file = std::nullopt;
 };
 
 struct NormalMoveRecord {
-  PieceType piece_type;
-  PartialSquare partial_origin;
-  std::optional<PieceType> captured_piece_type;
-  bool is_en_passant_capture = false;
-  UciMove uci_move;
-  std::optional<CheckIndicator> check_indicator;
-  std::optional<CastlingRights> previous_castling_rights;
-  std::optional<File> previous_en_passant_file;
-  uint32_t previous_halfmove_clock;
+  PieceType piece_type{};
+  PartialSquare partial_origin{};
+  std::optional<PieceType> captured_piece_type = std::nullopt;
+  bool is_en_passant_capture{};
+  UciMove uci_move{};
+  std::optional<CheckIndicator> check_indicator = std::nullopt;
+  std::optional<CastlingRights> previous_castling_rights = std::nullopt;
+  std::optional<File> previous_en_passant_file = std::nullopt;
+  uint32_t previous_halfmove_clock{};
 };
 
 using MoveRecord = std::variant<NormalMoveRecord, CastlingMoveRecord>;

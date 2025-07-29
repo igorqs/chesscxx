@@ -6,7 +6,6 @@
 #include <bitset>
 #include <expected>
 #include <iterator>
-#include <ranges>
 #include <string_view>
 
 #include "../core/castling_rights.h"
@@ -39,9 +38,9 @@ class Parser<CastlingRights, const char*, parse_as::Default> {
                          .ptr = std::next(begin)};
     }
 
-    for (auto right : std::views::iota(0, kSize)) {
-      if (*begin == kCastlingSymbols[right]) {
-        bits.set(right);
+    for (size_t i = 0; i < kSize; ++i) {
+      if (*begin == kCastlingSymbols[i]) {
+        bits.set(i);
         std::advance(begin, 1);
       }
     }

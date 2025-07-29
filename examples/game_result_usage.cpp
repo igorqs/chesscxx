@@ -2,7 +2,6 @@
 #include <chesscxx/game_result.h>
 #include <chesscxx/parse.h>
 
-#include <cassert>
 #include <optional>
 #include <print>
 #include <string_view>
@@ -24,11 +23,11 @@ void parseAndPrint(std::string_view str) {
 void parseFenAndPrintGameResult(std::string_view str) {
   auto parsed_game =
       chesscxx::parse<chesscxx::Game>(str, chesscxx::parse_as::Fen{});
-  assert(parsed_game);
+  if (!parsed_game) return;
 
   std::optional<chesscxx::GameResult> game_result =
       parsed_game.value().result();
-  assert(game_result);
+  if (!game_result) return;
 
   std::println("{}", game_result.value());
 }

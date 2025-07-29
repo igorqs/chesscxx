@@ -16,7 +16,7 @@ struct std::hash<chesscxx::PiecePlacement> {
   auto operator()(const chesscxx::PiecePlacement& piece_placement) const
       -> size_t {
     return chesscxx::internal::hashCombineRange(piece_placement.pieceArray());
-  };
+  }
 };
 
 #endif  // CHESSCXX_INCLUDE_CHESSCXX_HASH_PIECE_PLACEMENT_HASH_H_

@@ -4,12 +4,16 @@
 #include <chesscxx/piece_placement.h>
 #include <chesscxx/position.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <optional>
 #include <print>
 #include <string_view>
 
 namespace {
+void verify(bool check) {
+  if (!check) std::abort();
+}
+
 void printErrorOrValue(auto parsed_value) {
   if (parsed_value) {
     std::println("{}", parsed_value.value());
@@ -32,12 +36,12 @@ auto main() -> int {
   std::println("{:lists}\n", position);
   std::println("{:rep}\n", position);
 
-  assert(position.piecePlacement() == chesscxx::PiecePlacement{});
-  assert(position.activeColor() == chesscxx::Color::kWhite);
-  assert(position.enPassantTargetSquare() == std::nullopt);
-  assert(position.halfmoveClock() == 0);
-  assert(position.fullmoveNumber() == 1);
-  assert(position.castlingRights() == chesscxx::CastlingRights{});
+  verify(position.piecePlacement() == chesscxx::PiecePlacement{});
+  verify(position.activeColor() == chesscxx::Color::kWhite);
+  verify(position.enPassantTargetSquare() == std::nullopt);
+  verify(position.halfmoveClock() == 0);
+  verify(position.fullmoveNumber() == 1);
+  verify(position.castlingRights() == chesscxx::CastlingRights{});
 
   parseAndPrint("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   parseAndPrint("8/8/8/8/8/8/8/8 w KQkq - 0 1");

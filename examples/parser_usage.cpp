@@ -2,7 +2,7 @@
 #include <chesscxx/parse_error.h>
 #include <chesscxx/piece_type.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <expected>
 #include <iterator>
 #include <print>
@@ -54,9 +54,12 @@ class chesscxx::Parser<chesscxx::PieceType, const char*, PortugueseLowercase> {
 };
 
 namespace {
+void verify(bool check) {
+  if (!check) std::abort();
+}
 void parsePortugueseAndPrint(std::string_view str, auto tag) {
   auto piece_type = chesscxx::parse<chesscxx::PieceType>(str, tag);
-  assert(piece_type);
+  verify(piece_type.has_value());
 
   std::println("{}", piece_type.value());
 }

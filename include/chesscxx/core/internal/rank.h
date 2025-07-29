@@ -12,7 +12,7 @@ constexpr auto index(const Rank& rank) -> uint8_t {
   return static_cast<uint8_t>(rank);
 }
 
-constexpr auto toRank(const uint8_t& index) -> std::optional<Rank> {
+constexpr auto toRank(uint8_t index) -> std::optional<Rank> {
   if (index >= kNumRanks) return std::nullopt;
 
   return static_cast<Rank>(index);

@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstdint>
 #include <expected>
 #include <iterator>
 #include <magic_enum/magic_enum.hpp>
@@ -65,7 +66,7 @@ TEST(ParseTest, ParseFromHandlesValidInputCorrectly) {
   using chesscxx::parseFrom;
   using chesscxx::PieceType;
 
-  for (int i = 0; i < kInputsSize; i++) {
+  for (uint8_t i = 0; i < kInputsSize; i++) {
     std::string_view input = kLowercaseInputs.at(i);
     auto result =
         parseFrom<PieceType>(input.begin(), input.end(), PortugueseLowercase{});
@@ -119,7 +120,7 @@ TEST(ParseTest, ParseHandlesValidInputCorrectly) {
   using chesscxx::parse;
   using chesscxx::PieceType;
 
-  for (int i = 0; i < kInputsSize; i++) {
+  for (uint8_t i = 0; i < kInputsSize; i++) {
     std::string_view input = kLowercaseInputs.at(i);
     auto result = parse<PieceType>(input, PortugueseLowercase{});
     EXPECT_EQ(result.value(), magic_enum::enum_cast<PieceType>(i));

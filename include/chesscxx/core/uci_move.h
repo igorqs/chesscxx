@@ -25,7 +25,7 @@ struct UciMove {
   /// @brief The destination square of the move.
   Square destination;
   /// @brief Optional promotion piece type.
-  std::optional<PromotablePieceType> promotion;
+  std::optional<PromotablePieceType> promotion = std::nullopt;
 };
 
 constexpr auto UciMove::operator==(const UciMove&) const -> bool = default;

@@ -3,14 +3,14 @@
 #include <chesscxx/parse.h>
 #include <chesscxx/san_move.h>
 
-#include <cassert>
+#include <cstdlib>
 #include <print>
 #include <string_view>
 
 namespace {
 auto parseSan(std::string_view str) {
   auto parsed_move = chesscxx::parse<chesscxx::SanMove>(str);
-  assert(parsed_move);
+  if (parsed_move) std::abort();
   return parsed_move.value();
 }
 
