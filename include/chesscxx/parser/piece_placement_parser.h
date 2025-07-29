@@ -3,11 +3,11 @@
 
 // IWYU pragma: private, include "../piece_placement.h"
 
+#include <cstddef>
 #include <expected>
 #include <iterator>
 #include <ranges>
 #include <string_view>
-#include <utility>
 
 #include "../core/piece_placement.h"
 #include "../file.h"

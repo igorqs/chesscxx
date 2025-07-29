@@ -3,6 +3,7 @@
 
 // IWYU pragma: private, include "../castling_rights.h"
 
+#include <cstddef>
 #include <format>
 #include <string_view>
 

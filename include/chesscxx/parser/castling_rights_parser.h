@@ -4,6 +4,7 @@
 // IWYU pragma: private, include "../castling_rights.h"
 
 #include <bitset>
+#include <cstddef>
 #include <expected>
 #include <iterator>
 #include <string_view>
