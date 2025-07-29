@@ -32,21 +32,6 @@ jobs:
     - name: Spell check
       run: cmake -P cmake/spell.cmake
 
-  iwyu:
-    needs: [lint]
-
-    runs-on: ubuntu-24.04
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install clang-tidy-19
-      run: sudo apt update -q
-        && sudo apt install clang-tidy-19 -q -y
-
-    - name: IWYU check
-      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
-
   test:
     needs: [lint]
 
@@ -87,3 +72,17 @@ jobs:
       working-directory: build
       run: ctest --output-on-failure --no-tests=error -C Release -j 2
 
+  iwyu:
+    needs: [test]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install clang-tidy-19
+      run: sudo apt update -q
+        && sudo apt install clang-tidy-19 -q -y
+
+    - name: IWYU check
+      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
