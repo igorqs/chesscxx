@@ -15,9 +15,10 @@ namespace chesscxx::internal {
 
 inline auto pseudoLegalEnPassantCaptures(Position position)
     -> std::generator<RawMove> {
-  if (!position.enPassantTargetSquare()) co_return;
+  const auto& en_passant_target_square = position.enPassantTargetSquare();
+  if (!en_passant_target_square) co_return;
 
-  auto target = *position.enPassantTargetSquare();
+  auto target = *en_passant_target_square;
 
   co_yield std::ranges::elements_of(
       pawnsAttacking(position.piecePlacement(), target,
