@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/draw_reason_usage.out
+.. literalinclude:: /../build/examples/draw_reason_usage.out
    :language: none

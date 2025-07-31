@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/game_result_usage.out
+.. literalinclude:: /../build/examples/game_result_usage.out
    :language: none

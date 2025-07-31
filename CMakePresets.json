@@ -2,7 +2,7 @@
   "version": 2,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 20,
+    "minor": 28,
     "patch": 0
   },
   "configurePresets": [
@@ -33,7 +33,7 @@
       "name": "cppcheck",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_CPPCHECK": "cppcheck;--inline-suppr;--check-level=exhaustive;--std=c++23"
+        "CMAKE_CXX_CPPCHECK": "cppcheck;--inline-suppr;--check-level=exhaustive"
       }
     },
     {

@@ -17,7 +17,7 @@ Full Game
 
 Output:
 
-.. literalinclude:: /examples_outputs/basic_full_game_usage.out
+.. literalinclude:: /../build/examples/basic_full_game_usage.out
    :language: none
 
 Using the Move Generator
@@ -28,7 +28,7 @@ Using the Move Generator
 
 Output:
 
-.. literalinclude:: /examples_outputs/movegen_promotion_usage.out
+.. literalinclude:: /../build/examples/movegen_promotion_usage.out
    :language: none
 
 Parsing PGN
@@ -39,7 +39,7 @@ Parsing PGN
 
 Output:
 
-.. literalinclude:: /examples_outputs/basic_pgn_usage.out
+.. literalinclude:: /../build/examples/basic_pgn_usage.out
    :language: none
 
 Parsing games from a file
@@ -50,7 +50,7 @@ Parsing games from a file
 
 .. tab:: Output:
 
-    .. literalinclude:: /examples_outputs/parse_from_usage.out
+    .. literalinclude:: /../build/examples/parse_from_usage.out
        :language: none
 
 .. tab:: Input file:

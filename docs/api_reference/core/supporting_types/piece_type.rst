@@ -24,5 +24,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/piece_type_usage.out
+.. literalinclude:: /../build/examples/piece_type_usage.out
    :language: none

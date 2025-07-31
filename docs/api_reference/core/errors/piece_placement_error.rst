@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/piece_placement_error_usage.out
+.. literalinclude:: /../build/examples/piece_placement_error_usage.out
    :language: none

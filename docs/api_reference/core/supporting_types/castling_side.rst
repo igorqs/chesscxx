@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/castling_side_usage.out
+.. literalinclude:: /../build/examples/castling_side_usage.out
    :language: none

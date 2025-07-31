@@ -12,5 +12,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/parse_result_usage.out
+.. literalinclude:: /../build/examples/parse_result_usage.out
    :language: none

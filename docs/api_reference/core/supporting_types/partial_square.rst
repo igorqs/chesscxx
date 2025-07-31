@@ -19,5 +19,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/partial_square_usage.out
+.. literalinclude:: /../build/examples/partial_square_usage.out
    :language: none

@@ -1,4 +1,5 @@
 .cache/
 CMakeUserPresets.json
 build/
-docs/examples_outputs/
+docker-build/
+prefix/

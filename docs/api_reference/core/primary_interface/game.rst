@@ -22,7 +22,7 @@ Full game
 
 Output:
 
-.. literalinclude:: /examples_outputs/game_usage.out
+.. literalinclude:: /../build/examples/game_usage.out
    :language: none
 
 General
@@ -33,7 +33,7 @@ General
 
 Output:
 
-.. literalinclude:: /examples_outputs/game_general_usage.out
+.. literalinclude:: /../build/examples/game_general_usage.out
    :language: none
 
 Repetition
@@ -44,7 +44,7 @@ Repetition
 
 Output:
 
-.. literalinclude:: /examples_outputs/game_repetition_usage.out
+.. literalinclude:: /../build/examples/game_repetition_usage.out
    :language: none
 
 Hashing
@@ -55,5 +55,5 @@ Hashing
 
 Output:
 
-.. literalinclude:: /examples_outputs/game_hash_usage.out
+.. literalinclude:: /../build/examples/game_hash_usage.out
    :language: none

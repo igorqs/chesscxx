@@ -42,5 +42,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/parser_usage.out
+.. literalinclude:: /../build/examples/parser_usage.out
    :language: none

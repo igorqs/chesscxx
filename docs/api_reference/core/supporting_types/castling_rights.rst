@@ -22,7 +22,7 @@ General
 
 Output:
 
-.. literalinclude:: /examples_outputs/castling_rights_usage.out
+.. literalinclude:: /../build/examples/castling_rights_usage.out
    :language: none
 
 Parsing
@@ -33,5 +33,5 @@ Parsing
 
 Output:
 
-.. literalinclude:: /examples_outputs/castling_rights_parse_usage.out
+.. literalinclude:: /../build/examples/castling_rights_parse_usage.out
    :language: none

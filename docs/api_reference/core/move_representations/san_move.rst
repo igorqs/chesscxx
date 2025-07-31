@@ -23,7 +23,7 @@ SanMove
 
 Output:
 
-.. literalinclude:: /examples_outputs/san_move_usage.out
+.. literalinclude:: /../build/examples/san_move_usage.out
    :language: none
 
 SanNormalMove
@@ -34,7 +34,7 @@ SanNormalMove
 
 Output:
 
-.. literalinclude:: /examples_outputs/san_normal_move_usage.out
+.. literalinclude:: /../build/examples/san_normal_move_usage.out
    :language: none
 
 SanCastlingMove
@@ -45,5 +45,5 @@ SanCastlingMove
 
 Output:
 
-.. literalinclude:: /examples_outputs/san_castling_move_usage.out
+.. literalinclude:: /../build/examples/san_castling_move_usage.out
    :language: none

@@ -15,7 +15,7 @@ Full game
 
 Output:
 
-.. literalinclude:: /examples_outputs/movegen_usage.out
+.. literalinclude:: /../build/examples/movegen_usage.out
    :language: none
 
 Castling
@@ -26,7 +26,7 @@ Castling
 
 Output:
 
-.. literalinclude:: /examples_outputs/movegen_castling_usage.out
+.. literalinclude:: /../build/examples/movegen_castling_usage.out
    :language: none
 
 Promotion
@@ -37,5 +37,5 @@ Promotion
 
 Output:
 
-.. literalinclude:: /examples_outputs/movegen_promotion_usage.out
+.. literalinclude:: /../build/examples/movegen_promotion_usage.out
    :language: none

@@ -77,5 +77,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/optional_formatter_usage.out
+.. literalinclude:: /../build/examples/optional_formatter_usage.out
    :language: none

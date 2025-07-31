@@ -19,5 +19,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/uci_move_usage.out
+.. literalinclude:: /../build/examples/uci_move_usage.out
    :language: none

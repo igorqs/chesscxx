@@ -23,5 +23,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/color_usage.out
+.. literalinclude:: /../build/examples/color_usage.out
    :language: none

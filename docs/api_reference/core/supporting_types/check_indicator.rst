@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/check_indicator_usage.out
+.. literalinclude:: /../build/examples/check_indicator_usage.out
    :language: none

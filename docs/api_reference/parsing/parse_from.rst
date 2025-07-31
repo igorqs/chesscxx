@@ -14,7 +14,7 @@ Basic example
 
 Output:
 
-.. literalinclude:: /examples_outputs/parse_result_usage.out
+.. literalinclude:: /../build/examples/parse_result_usage.out
    :language: none
 
 Parsing games from a file
@@ -25,7 +25,7 @@ Parsing games from a file
 
 .. tab:: Output:
 
-    .. literalinclude:: /examples_outputs/parse_from_usage.out
+    .. literalinclude:: /../build/examples/parse_from_usage.out
        :language: none
 
 .. tab:: Input file:

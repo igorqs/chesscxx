@@ -23,5 +23,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/rank_usage.out
+.. literalinclude:: /../build/examples/rank_usage.out
    :language: none

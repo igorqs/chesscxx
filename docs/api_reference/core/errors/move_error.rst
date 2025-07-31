@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/move_error_usage.out
+.. literalinclude:: /../build/examples/move_error_usage.out
    :language: none

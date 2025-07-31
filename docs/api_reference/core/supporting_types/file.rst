@@ -23,5 +23,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/file_usage.out
+.. literalinclude:: /../build/examples/file_usage.out
    :language: none

@@ -27,7 +27,7 @@ General
 
 Output:
 
-.. literalinclude:: /examples_outputs/position_usage.out
+.. literalinclude:: /../build/examples/position_usage.out
    :language: none
 
 Creating from Params
@@ -38,7 +38,7 @@ Creating from Params
 
 Output:
 
-.. literalinclude:: /examples_outputs/position_error_usage.out
+.. literalinclude:: /../build/examples/position_error_usage.out
    :language: none
 
 Hashing
@@ -49,7 +49,7 @@ Hashing
 
 Output:
 
-.. literalinclude:: /examples_outputs/position_hash_usage.out
+.. literalinclude:: /../build/examples/position_hash_usage.out
    :language: none
 
 Legal en passant target square
@@ -60,5 +60,5 @@ Legal en passant target square
 
 Output:
 
-.. literalinclude:: /examples_outputs/position_legal_en_passant_usage.out
+.. literalinclude:: /../build/examples/position_legal_en_passant_usage.out
    :language: none

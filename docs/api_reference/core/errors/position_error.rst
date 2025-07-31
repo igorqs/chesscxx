@@ -17,5 +17,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/position_error_usage.out
+.. literalinclude:: /../build/examples/position_error_usage.out
    :language: none

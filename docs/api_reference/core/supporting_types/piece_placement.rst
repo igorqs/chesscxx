@@ -21,7 +21,7 @@ General
 
 Output:
 
-.. literalinclude:: /examples_outputs/piece_placement_usage.out
+.. literalinclude:: /../build/examples/piece_placement_usage.out
    :language: none
 
 Creating from PieceArray
@@ -32,5 +32,5 @@ Creating from PieceArray
 
 Output:
 
-.. literalinclude:: /examples_outputs/piece_placement_error_usage.out
+.. literalinclude:: /../build/examples/piece_placement_error_usage.out
    :language: none

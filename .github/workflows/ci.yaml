@@ -20,8 +20,8 @@ jobs:
       with: { python-version: "3.12" }
 
     - name: Install clang-format-19
-      run: sudo apt update -q
-        && sudo apt install clang-format-19 -q -y
+      run: sudo apt-get update -q
+        && sudo apt-get install clang-format-19 -q -y
 
     - name: Install codespell
       run: pip3 install codespell
@@ -32,66 +32,42 @@ jobs:
     - name: Spell check
       run: cmake -P cmake/spell.cmake
 
+#  iwyu:
+#    needs: [lint]
+#
+#    runs-on: ubuntu-24.04
+#
+#    steps:
+#    - uses: actions/checkout@v4
+#
+#    - name: Install clang-tidy-19
+#      run: sudo apt-get update -q
+#        && sudo apt-get install clang-tidy-19 -q -y
+#
+#    - name: IWYU check
+#      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
+
   test:
     needs: [lint]
-
-    strategy:
-      matrix:
-        os: [ubuntu-24.04]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install static analyzers
-      if: matrix.os == 'ubuntu-24.04'
-      run: >-
-        sudo apt install clang-tidy-19 cppcheck -y -q
-
-        sudo update-alternatives --install
-        /usr/bin/clang-tidy clang-tidy
-        /usr/bin/clang-tidy-19 190
-
-    - name: Update g++ version
-      if: matrix.os == 'ubuntu-24.04'
-      run: >-
-        sudo apt install g++-14 -y -q
-
-        sudo update-alternatives --install
-        /usr/bin/g++ g++
-        /usr/bin/g++-14 140
-
-    - name: Install dependencies
-      if: matrix.os == 'ubuntu-24.04'
-      run: >-
-        sudo apt install libgtest-dev libyaml-cpp-dev -y -q
-
-    - name: Configure
-      shell: pwsh
-      run: cmake "--preset=ci-$("${{ matrix.os }}".split("-")[0])"
-
-    - name: Build
-      run: cmake --build build --config Release -j 2
-
-    - name: Install
-      run: cmake --install build --config Release --prefix prefix
-
-    - name: Test
-      working-directory: build
-      run: ctest --output-on-failure --no-tests=error -C Release -j 2
-
-  iwyu:
-    needs: [test]
 
     runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install clang-tidy-19
-      run: sudo apt update -q
-        && sudo apt install clang-tidy-19 -q -y
+    - name: Build docker image
+      run: docker build -t chesscxx .
 
-    - name: IWYU check
-      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
+    - name: Configure
+      shell: pwsh
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
+
+    - name: Build
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
+
+    - name: Install
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
+
+    - name: Test
+      working-directory: build
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2

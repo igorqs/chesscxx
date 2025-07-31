@@ -31,5 +31,5 @@ Examples
 
 Output:
 
-.. literalinclude:: /examples_outputs/square_usage.out
+.. literalinclude:: /../build/examples/square_usage.out
    :language: none
