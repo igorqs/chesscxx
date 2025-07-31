@@ -56,10 +56,9 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build docker image
-      run: docker build -t chesscxx .
+      run: docker build -t chesscxx:latest .
 
     - name: Configure
-      shell: pwsh
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
 
     - name: Build
