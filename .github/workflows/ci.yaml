@@ -68,5 +68,4 @@ jobs:
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
 
     - name: Test
-      working-directory: build
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
