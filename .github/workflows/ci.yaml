@@ -55,20 +55,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build docker image
-      run: docker build -t chesscxx:latest .
-
-    - name: Configure
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
-
-    - name: Build
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
-
-    - name: Install
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
-
-    - name: Test
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Build and export
       uses: docker/build-push-action@v6
@@ -81,6 +69,18 @@ jobs:
       with:
         name: chesscxx
         path: ${{ runner.temp }}/chesscxx.tar
+
+    - name: Configure
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
+
+    - name: Build
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
+
+    - name: Install
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
+
+    - name: Test
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
 
     - name: Upload build directory
       uses: actions/upload-artifact@v4
