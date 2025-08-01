@@ -74,16 +74,19 @@ jobs:
       run: docker load --input ${{ runner.temp }}/chesscxx.tar
 
     - name: Configure
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
 
     - name: Build
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
 
     - name: Install
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
 
     - name: Test
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
+
+    - name: Fix executable permissions
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest chmod +x docker-build/*
 
     - name: Upload build directory
       uses: actions/upload-artifact@v4
@@ -130,7 +133,7 @@ jobs:
         path: docker-build
 
     - name: Generate examples outputs
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
+      run: docker run --rm -u $(id -u):$(id -g) -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
 
     - name: Build docs
       run: cmake "-DPROJECT_SOURCE_DIR=$PWD" "-DPROJECT_BINARY_DIR=$PWD/build" "-DEXAMPLES_BINARY_DIR=$PWD/docker-build" -P cmake/docs.cmake
