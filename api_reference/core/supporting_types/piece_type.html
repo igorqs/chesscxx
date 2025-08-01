@@ -1,0 +1,577 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Position" href="position.html" /><link rel="prev" title="PiecePlacement" href="piece_placement.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>PieceType - chesscxx documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">chesscxx  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  <span class="sidebar-brand-text">chesscxx  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../index.html">Core Components</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Core Components</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../primary_interface/game.html">Game</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../move_representations/san_move.html">SanMove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../move_representations/uci_move.html">UciMove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="castling_rights.html">CastlingRights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="castling_side.html">CastlingSide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_indicator.html">CheckIndicator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="color.html">Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="draw_reason.html">DrawReason</a></li>
+<li class="toctree-l3"><a class="reference internal" href="file.html">File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="game_result.html">GameResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="partial_square.html">PartialSquare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="piece.html">Piece</a></li>
+<li class="toctree-l3"><a class="reference internal" href="piece_placement.html">PiecePlacement</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">PieceType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="position.html">Position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rank.html">Rank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="square.html">Square</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/move_error.html">MoveError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/piece_placement_error.html">PiecePlacementError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/position_error.html">PositionError</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../parsing/index.html">Parsing</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Parsing</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parse.html">parse()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parse_from.html">parseFrom()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parse_result.html">ParseResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parse_as.html">parse_as</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parser.html">Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parsing/parse_error.html">ParseError</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../formatting/index.html">Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hashing/index.html">Hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../movegen/index.html">Move Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing_to_chesscxx/index.html">Contributing to chesscxx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license/index.html">License</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="piecetype">
+<h1>PieceType<a class="headerlink" href="#piecetype" title="Link to this heading">¶</a></h1>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv49PieceType">
+<span id="_CPPv39PieceType"></span><span id="_CPPv29PieceType"></span><span class="target" id="group__PieceType_1ga521f334af0d46e918b63278b4122d227"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PieceType</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><a class="headerlink" href="#_CPPv49PieceType" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Represents the type of a chess piece. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType5kPawnE">
+<span id="_CPPv3N9PieceType5kPawnE"></span><span id="_CPPv2N9PieceType5kPawnE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227a5187644c2338a06f6ac916ab31c64ea9"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kPawn</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType5kPawnE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType7kKnightE">
+<span id="_CPPv3N9PieceType7kKnightE"></span><span id="_CPPv2N9PieceType7kKnightE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227a69ac08d402267ebb8f8ed16252a29431"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kKnight</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType7kKnightE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType7kBishopE">
+<span id="_CPPv3N9PieceType7kBishopE"></span><span id="_CPPv2N9PieceType7kBishopE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227ac082ad689c95af3e260b698b6288104a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kBishop</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType7kBishopE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType5kRookE">
+<span id="_CPPv3N9PieceType5kRookE"></span><span id="_CPPv2N9PieceType5kRookE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227abdd7c9b6be196c66eb64f17ad5ed446f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kRook</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType5kRookE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType6kQueenE">
+<span id="_CPPv3N9PieceType6kQueenE"></span><span id="_CPPv2N9PieceType6kQueenE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227a29102b2d5303ff2b486596436e7b4030"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kQueen</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType6kQueenE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9PieceType5kKingE">
+<span id="_CPPv3N9PieceType5kKingE"></span><span id="_CPPv2N9PieceType5kKingE"></span><span class="target" id="group__PieceType_1gga521f334af0d46e918b63278b4122d227aace1f8d5899e0335f727b664001dd6b2"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kKing</span></span></span><a class="headerlink" href="#_CPPv4N9PieceType5kKingE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv419PromotablePieceType">
+<span id="_CPPv319PromotablePieceType"></span><span id="_CPPv219PromotablePieceType"></span><span class="target" id="group__PieceType_1ga65d3e41c4f075ccb9c161e8d3f528993"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PromotablePieceType</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><a class="headerlink" href="#_CPPv419PromotablePieceType" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Represents the types of pieces that a pawn can promote to. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N19PromotablePieceType7kKnightE">
+<span id="_CPPv3N19PromotablePieceType7kKnightE"></span><span id="_CPPv2N19PromotablePieceType7kKnightE"></span><span class="target" id="group__PieceType_1gga65d3e41c4f075ccb9c161e8d3f528993a69ac08d402267ebb8f8ed16252a29431"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kKnight</span></span></span><a class="headerlink" href="#_CPPv4N19PromotablePieceType7kKnightE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N19PromotablePieceType7kBishopE">
+<span id="_CPPv3N19PromotablePieceType7kBishopE"></span><span id="_CPPv2N19PromotablePieceType7kBishopE"></span><span class="target" id="group__PieceType_1gga65d3e41c4f075ccb9c161e8d3f528993ac082ad689c95af3e260b698b6288104a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kBishop</span></span></span><a class="headerlink" href="#_CPPv4N19PromotablePieceType7kBishopE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N19PromotablePieceType5kRookE">
+<span id="_CPPv3N19PromotablePieceType5kRookE"></span><span id="_CPPv2N19PromotablePieceType5kRookE"></span><span class="target" id="group__PieceType_1gga65d3e41c4f075ccb9c161e8d3f528993abdd7c9b6be196c66eb64f17ad5ed446f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kRook</span></span></span><a class="headerlink" href="#_CPPv4N19PromotablePieceType5kRookE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N19PromotablePieceType6kQueenE">
+<span id="_CPPv3N19PromotablePieceType6kQueenE"></span><span id="_CPPv2N19PromotablePieceType6kQueenE"></span><span class="target" id="group__PieceType_1gga65d3e41c4f075ccb9c161e8d3f528993a29102b2d5303ff2b486596436e7b4030"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kQueen</span></span></span><a class="headerlink" href="#_CPPv4N19PromotablePieceType6kQueenE" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<section id="helper-classes">
+<h2>Helper classes<a class="headerlink" href="#helper-classes" title="Link to this heading">¶</a></h2>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4IENSt9formatterIN8chesscxx9PieceTypeEEE">
+<span id="_CPPv3IENSt9formatterIN8chesscxx9PieceTypeEEE"></span><span id="_CPPv2IENSt9formatterIN8chesscxx9PieceTypeEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structstd_1_1formatter_3_01chesscxx_1_1PieceType_01_4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">formatter</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">PieceType</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">internal</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SpecDispatcher</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">internal</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VerboseSpec</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">internal</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">CompactUpperSpec</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">internal</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">CompactLowerSpec</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IENSt9formatterIN8chesscxx9PieceTypeEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_formatter.h&gt;</em></div>
+<p>formatting support for <a class="reference internal" href="#group__PieceType_1ga521f334af0d46e918b63278b4122d227"><span class="std std-ref">chesscxx::PieceType</span></a></p>
+<p>Subclassed by <a class="reference internal" href="#structstd_1_1formatter_3_01chesscxx_1_1PromotablePieceType_01_4"><span class="std std-ref">std::formatter&lt; chesscxx::PromotablePieceType &gt;</span></a></p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4IENSt9formatterIN8chesscxx19PromotablePieceTypeEEE">
+<span id="_CPPv3IENSt9formatterIN8chesscxx19PromotablePieceTypeEEE"></span><span id="_CPPv2IENSt9formatterIN8chesscxx19PromotablePieceTypeEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structstd_1_1formatter_3_01chesscxx_1_1PromotablePieceType_01_4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">formatter</span></span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">PromotablePieceType</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4IENSt9formatterIN8chesscxx9PieceTypeEEE" title="std::formatter&lt;chesscxx::PieceType&gt;"><span class="n"><span class="pre">formatter</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">chesscxx</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">PieceType</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IENSt9formatterIN8chesscxx19PromotablePieceTypeEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_formatter.h&gt;</em></div>
+<p>formatting support for <a class="reference internal" href="#group__PieceType_1ga65d3e41c4f075ccb9c161e8d3f528993"><span class="std std-ref">chesscxx::PromotablePieceType</span></a></p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9UppercaseEEE">
+<span id="_CPPv3IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9UppercaseEEE"></span><span id="_CPPv2IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9UppercaseEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classchesscxx_1_1Parser_3_01PieceType_00_01const_01char_01_5_00_01parse__as_1_1Uppercase_01_4"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parser</span></span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv49PieceType" title="PieceType"><span class="n"><span class="pre">PieceType</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_asE" title="chesscxx::parse_as"><span class="n"><span class="pre">parse_as</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_as9UppercaseE" title="chesscxx::parse_as::Uppercase"><span class="n"><span class="pre">Uppercase</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9UppercaseEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_parser.h&gt;</em></div>
+<p>uppercase parsing support for PieceType </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9LowercaseEEE">
+<span id="_CPPv3IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9LowercaseEEE"></span><span id="_CPPv2IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9LowercaseEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classchesscxx_1_1Parser_3_01PieceType_00_01const_01char_01_5_00_01parse__as_1_1Lowercase_01_4"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parser</span></span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv49PieceType" title="PieceType"><span class="n"><span class="pre">PieceType</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_asE" title="chesscxx::parse_as"><span class="n"><span class="pre">parse_as</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_as9LowercaseE" title="chesscxx::parse_as::Lowercase"><span class="n"><span class="pre">Lowercase</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9LowercaseEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_parser.h&gt;</em></div>
+<p>lowercase parsing support for PieceType </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9UppercaseEEE">
+<span id="_CPPv3IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9UppercaseEEE"></span><span id="_CPPv2IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9UppercaseEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classchesscxx_1_1Parser_3_01PromotablePieceType_00_01const_01char_01_5_00_01parse__as_1_1Uppercase_01_4"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parser</span></span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv419PromotablePieceType" title="PromotablePieceType"><span class="n"><span class="pre">PromotablePieceType</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_asE" title="chesscxx::parse_as"><span class="n"><span class="pre">parse_as</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_as9UppercaseE" title="chesscxx::parse_as::Uppercase"><span class="n"><span class="pre">Uppercase</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9UppercaseEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_parser.h&gt;</em></div>
+<p>uppercase parsing support for PromotablePieceType </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9LowercaseEEE">
+<span id="_CPPv3IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9LowercaseEEE"></span><span id="_CPPv2IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9LowercaseEEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classchesscxx_1_1Parser_3_01PromotablePieceType_00_01const_01char_01_5_00_01parse__as_1_1Lowercase_01_4"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parser</span></span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv419PromotablePieceType" title="PromotablePieceType"><span class="n"><span class="pre">PromotablePieceType</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_asE" title="chesscxx::parse_as"><span class="n"><span class="pre">parse_as</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../../parsing/parse_as.html#_CPPv4N8chesscxx8parse_as9LowercaseE" title="chesscxx::parse_as::Lowercase"><span class="n"><span class="pre">Lowercase</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9LowercaseEEE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;piece_type_parser.h&gt;</em></div>
+<p>lowercase parsing support for PromotablePieceType </p>
+</dd></dl>
+
+</section>
+<section id="non-member-functions">
+<h2>Non-member functions<a class="headerlink" href="#non-member-functions" title="Link to this heading">¶</a></h2>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv411toPieceTypeRK19PromotablePieceType">
+<span id="_CPPv311toPieceTypeRK19PromotablePieceType"></span><span id="_CPPv211toPieceTypeRK19PromotablePieceType"></span><span id="toPieceType__PromotablePieceTypeCRCE"></span><span class="target" id="group__PieceTypeNonMemberFunctions_1gaef2534fbbced795df4a2875cef71423d"></span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toPieceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv419PromotablePieceType" title="PromotablePieceType"><span class="n"><span class="pre">PromotablePieceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">promotion</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv49PieceType" title="PieceType"><span class="n"><span class="pre">PieceType</span></span></a><a class="headerlink" href="#_CPPv411toPieceTypeRK19PromotablePieceType" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Converts a PromotablePieceType to its corresponding PieceType. </p>
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chesscxx/parse.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chesscxx/piece_type.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;print&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="p">{</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">printErrorOrValue</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">parsed_value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">parsed_value</span><span class="p">.</span><span class="n">value</span><span class="p">());</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">parsed_value</span><span class="p">.</span><span class="n">error</span><span class="p">());</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">parseAsUppercaseAndPrint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_piece_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse</span><span class="o">&lt;</span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PieceType</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">      </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse_as</span><span class="o">::</span><span class="n">Uppercase</span><span class="p">{});</span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_promotable_piece_type</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse</span><span class="o">&lt;</span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PromotablePieceType</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">          </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse_as</span><span class="o">::</span><span class="n">Uppercase</span><span class="p">{});</span>
+
+<span class="w">  </span><span class="n">printErrorOrValue</span><span class="p">(</span><span class="n">parsed_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printErrorOrValue</span><span class="p">(</span><span class="n">parsed_promotable_piece_type</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">parseAsLowercaseAndPrint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_piece_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse</span><span class="o">&lt;</span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PieceType</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">      </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse_as</span><span class="o">::</span><span class="n">Lowercase</span><span class="p">{});</span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_promotable_piece_type</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse</span><span class="o">&lt;</span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PromotablePieceType</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">          </span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse_as</span><span class="o">::</span><span class="n">Lowercase</span><span class="p">{});</span>
+
+<span class="w">  </span><span class="n">printErrorOrValue</span><span class="p">(</span><span class="n">parsed_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printErrorOrValue</span><span class="p">(</span><span class="n">parsed_promotable_piece_type</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span><span class="w">  </span><span class="c1">// namespace</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PieceType</span><span class="w"> </span><span class="n">piece_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PieceType</span><span class="o">::</span><span class="n">kQueen</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PromotablePieceType</span><span class="w"> </span><span class="n">promotable_piece_type</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PromotablePieceType</span><span class="o">::</span><span class="n">kQueen</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{} {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">piece_type</span><span class="p">,</span><span class="w"> </span><span class="n">promotable_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{:v} {:v}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">piece_type</span><span class="p">,</span><span class="w"> </span><span class="n">promotable_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{:u} {:u}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">piece_type</span><span class="p">,</span><span class="w"> </span><span class="n">promotable_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{:l} {:l}</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">piece_type</span><span class="p">,</span><span class="w"> </span><span class="n">promotable_piece_type</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">PieceType</span><span class="w"> </span><span class="n">cast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">toPieceType</span><span class="p">(</span><span class="n">promotable_piece_type</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cast</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">parseAsUppercaseAndPrint</span><span class="p">(</span><span class="s">&quot;R&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">parseAsUppercaseAndPrint</span><span class="p">(</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">parseAsLowercaseAndPrint</span><span class="p">(</span><span class="s">&quot;R&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">parseAsLowercaseAndPrint</span><span class="p">(</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">parseAsUppercaseAndPrint</span><span class="p">(</span><span class="s">&quot;K&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="position.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Position</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="piece_placement.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">PiecePlacement</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, igorqs
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">PieceType</a><ul>
+<li><a class="reference internal" href="#_CPPv49PieceType"><code class="docutils literal notranslate"><span class="pre">PieceType</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N9PieceType5kPawnE"><code class="docutils literal notranslate"><span class="pre">kPawn</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N9PieceType7kKnightE"><code class="docutils literal notranslate"><span class="pre">kKnight</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N9PieceType7kBishopE"><code class="docutils literal notranslate"><span class="pre">kBishop</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N9PieceType5kRookE"><code class="docutils literal notranslate"><span class="pre">kRook</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N9PieceType6kQueenE"><code class="docutils literal notranslate"><span class="pre">kQueen</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N9PieceType5kKingE"><code class="docutils literal notranslate"><span class="pre">kKing</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv419PromotablePieceType"><code class="docutils literal notranslate"><span class="pre">PromotablePieceType</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N19PromotablePieceType7kKnightE"><code class="docutils literal notranslate"><span class="pre">kKnight</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N19PromotablePieceType7kBishopE"><code class="docutils literal notranslate"><span class="pre">kBishop</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N19PromotablePieceType5kRookE"><code class="docutils literal notranslate"><span class="pre">kRook</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N19PromotablePieceType6kQueenE"><code class="docutils literal notranslate"><span class="pre">kQueen</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#helper-classes">Helper classes</a><ul>
+<li><a class="reference internal" href="#_CPPv4IENSt9formatterIN8chesscxx9PieceTypeEEE"><code class="docutils literal notranslate"><span class="pre">std::formatter&lt;</span> <span class="pre">chesscxx::PieceType</span> <span class="pre">&gt;</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4IENSt9formatterIN8chesscxx19PromotablePieceTypeEEE"><code class="docutils literal notranslate"><span class="pre">std::formatter&lt;</span> <span class="pre">chesscxx::PromotablePieceType</span> <span class="pre">&gt;</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9UppercaseEEE"><code class="docutils literal notranslate"><span class="pre">chesscxx::Parser&lt;</span> <span class="pre">PieceType,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*,</span> <span class="pre">parse_as::Uppercase</span> <span class="pre">&gt;</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4IEN8chesscxx6ParserI9PieceTypePKcN8parse_as9LowercaseEEE"><code class="docutils literal notranslate"><span class="pre">chesscxx::Parser&lt;</span> <span class="pre">PieceType,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*,</span> <span class="pre">parse_as::Lowercase</span> <span class="pre">&gt;</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9UppercaseEEE"><code class="docutils literal notranslate"><span class="pre">chesscxx::Parser&lt;</span> <span class="pre">PromotablePieceType,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*,</span> <span class="pre">parse_as::Uppercase</span> <span class="pre">&gt;</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4IEN8chesscxx6ParserI19PromotablePieceTypePKcN8parse_as9LowercaseEEE"><code class="docutils literal notranslate"><span class="pre">chesscxx::Parser&lt;</span> <span class="pre">PromotablePieceType,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*,</span> <span class="pre">parse_as::Lowercase</span> <span class="pre">&gt;</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#non-member-functions">Non-member functions</a><ul>
+<li><a class="reference internal" href="#_CPPv411toPieceTypeRK19PromotablePieceType"><code class="docutils literal notranslate"><span class="pre">toPieceType()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=7f41d439"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/tabs.js?v=3ee01567"></script>
+    </body>
+</html>
