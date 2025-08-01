@@ -32,23 +32,23 @@ jobs:
     - name: Spell check
       run: cmake -P cmake/spell.cmake
 
-#  iwyu:
-#    needs: [lint]
-#
-#    runs-on: ubuntu-24.04
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - name: Install clang-tidy-19
-#      run: sudo apt-get update -q
-#        && sudo apt-get install clang-tidy-19 -q -y
-#
-#    - name: IWYU check
-#      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
+  iwyu:
+    needs: [lint]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install clang-tidy-19
+      run: sudo apt-get update -q
+        && sudo apt-get install clang-tidy-19 -q -y
+
+    - name: IWYU check
+      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
 
   test:
-    needs: [lint]
+    needs: [iwyu]
 
     runs-on: ubuntu-24.04
 
@@ -72,6 +72,12 @@ jobs:
 
     - name: Load Docker image
       run: docker load --input ${{ runner.temp }}/chesscxx.tar
+
+    - name: Cache docker-build directory
+      uses: actions/cache@v4
+      with:
+        path: docker-build
+        key: ${{ runner.os }}-docker-build-${{ hashFiles('examples/CMakeLists.txt', 'tests/CMakeLists.txt', 'CMakePresets.json', 'CMakeLists.txt', 'cmake/**') }}
 
     - name: Configure
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
@@ -131,9 +137,6 @@ jobs:
       with:
         name: build-dir
         path: docker-build
-
-#    - name: Generate examples outputs
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
 
     - name: Build docs
       run: cmake "-DPROJECT_SOURCE_DIR=$PWD" "-DPROJECT_BINARY_DIR=$PWD/build" "-DEXAMPLES_BINARY_DIR=$PWD/docker-build" -P cmake/docs.cmake
