@@ -70,6 +70,24 @@ jobs:
     - name: Test
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
 
+    - name: Build and export
+      uses: docker/build-push-action@v6
+      with:
+        tags: chesscxx:latest
+        outputs: type=docker,dest=${{ runner.temp }}/chesscxx.tar
+
+    - name: Upload Docker image
+      uses: actions/upload-artifact@v4
+      with:
+        name: chesscxx
+        path: ${{ runner.temp }}/chesscxx.tar
+
+    - name: Upload build directory
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-dir
+        path: docker-build
+
   docs:
     needs: [test]
 
@@ -92,6 +110,21 @@ jobs:
     - name: Install Doxygen
       run: sudo apt-get update -q
         && sudo apt-get install doxygen -q -y
+
+    - name: Download Docker image
+      uses: actions/download-artifact@v4
+      with:
+        name: chesscxx
+        path: ${{ runner.temp }}
+
+    - name: Load Docker image
+      run: docker load --input ${{ runner.temp }}/chesscxx.tar
+
+    - name: Download build directory
+      uses: actions/download-artifact@v4
+      with:
+        name: build-dir
+        path: docker-build
 
     - name: Generate examples outputs
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
