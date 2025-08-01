@@ -14,10 +14,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/uci_move_usage.cpp
+.. includeexamplesource:: uci_move_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/uci_move_usage.out
+.. includeexampleoutput:: uci_move_usage
    :language: none

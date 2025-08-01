@@ -18,10 +18,10 @@ Non-member constants
 Examples
 --------
 
-.. literalinclude:: /../examples/rank_usage.cpp
+.. includeexamplesource:: rank_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/rank_usage.out
+.. includeexampleoutput:: rank_usage
    :language: none

@@ -16,21 +16,21 @@ Examples
 General
 ~~~~~~~
 
-.. literalinclude:: /../examples/piece_placement_usage.cpp
+.. includeexamplesource:: piece_placement_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/piece_placement_usage.out
+.. includeexampleoutput:: piece_placement_usage
    :language: none
 
 Creating from PieceArray
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/piece_placement_error_usage.cpp
+.. includeexamplesource:: piece_placement_error_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/piece_placement_error_usage.out
+.. includeexampleoutput:: piece_placement_error_usage
    :language: none

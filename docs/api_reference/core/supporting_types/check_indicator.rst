@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/check_indicator_usage.cpp
+.. includeexamplesource:: check_indicator_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/check_indicator_usage.out
+.. includeexampleoutput:: check_indicator_usage
    :language: none

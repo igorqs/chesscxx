@@ -14,10 +14,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/piece_usage.cpp
+.. includeexamplesource:: piece_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/piece_usage.out
+.. includeexampleoutput:: piece_usage
    :language: none

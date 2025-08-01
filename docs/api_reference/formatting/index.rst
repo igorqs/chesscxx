@@ -72,10 +72,10 @@ std::formatter<std::optional<T>>
 Examples
 ~~~~~~~~
 
-.. literalinclude:: /../examples/optional_formatter_usage.cpp
+.. includeexamplesource:: optional_formatter_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/optional_formatter_usage.out
+.. includeexampleoutput:: optional_formatter_usage
    :language: none

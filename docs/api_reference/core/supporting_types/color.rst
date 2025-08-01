@@ -18,10 +18,10 @@ Non-member functions
 Examples
 --------
 
-.. literalinclude:: /../examples/color_usage.cpp
+.. includeexamplesource:: color_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/color_usage.out
+.. includeexampleoutput:: color_usage
    :language: none

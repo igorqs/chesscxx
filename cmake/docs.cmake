@@ -8,6 +8,8 @@ endmacro()
 
 default(DOXYGEN_EXECUTABLE doxygen)
 default(SPHINX_EXECUTABLE sphinx-build)
+default(EXAMPLES_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
+default(EXAMPLES_BINARY_DIR "${PROJECT_BINARY_DIR}")
 
 # ---- Doxygen ----
 
@@ -26,14 +28,14 @@ execute_process(COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE_OUT})
 
 set(SPHINX_SOURCE "${PROJECT_SOURCE_DIR}/docs")
 set(SPHINX_BUILD "${PROJECT_BINARY_DIR}/docs/sphinx")
-set(WORKING_DIR "${PROJECT_BINARY_DIR}/docs")
-
-message(SPHINX_SOURCE="${SPHINX_SOURCE}")
-message(SPHINX_BUILD="${SPHINX_BUILD}")
-message(WORKING_DIR="${WORKING_DIR}")
+file(RELATIVE_PATH EXAMPLES_RELATIVE_SOURCE_DIR "${SPHINX_SOURCE}" "${EXAMPLES_SOURCE_DIR}/examples")
+file(RELATIVE_PATH EXAMPLES_RELATIVE_BINARY_DIR "${SPHINX_SOURCE}" "${EXAMPLES_BINARY_DIR}/examples")
 
 execute_process(COMMAND 
+                  ${CMAKE_COMMAND} -E env 
+                    "EXAMPLES_RELATIVE_SOURCE_DIR=${EXAMPLES_RELATIVE_SOURCE_DIR}"
+                    "EXAMPLES_RELATIVE_BINARY_DIR=${EXAMPLES_RELATIVE_BINARY_DIR}"
                   ${SPHINX_EXECUTABLE} -b html
-                  -Dbreathe_projects.chesscxx=${DOXYGEN_OUTPUT_DIR}/xml
-                  ${SPHINX_SOURCE} ${SPHINX_BUILD}
-                WORKING_DIRECTORY ${WORKING_DIR})
+                    -Dbreathe_projects.chesscxx=${DOXYGEN_OUTPUT_DIR}/xml
+                    ${SPHINX_SOURCE} ${SPHINX_BUILD}
+                )

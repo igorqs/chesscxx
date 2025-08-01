@@ -17,21 +17,21 @@ Examples
 General
 ~~~~~~~
 
-.. literalinclude:: /../examples/castling_rights_usage.cpp
+.. includeexamplesource:: castling_rights_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/castling_rights_usage.out
+.. includeexampleoutput:: castling_rights_usage
    :language: none
 
 Parsing
 ~~~~~~~
 
-.. literalinclude:: /../examples/castling_rights_parse_usage.cpp
+.. includeexamplesource:: castling_rights_parse_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/castling_rights_parse_usage.out
+.. includeexampleoutput:: castling_rights_parse_usage
    :language: none

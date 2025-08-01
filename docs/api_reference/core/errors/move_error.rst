@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/move_error_usage.cpp
+.. includeexamplesource:: move_error_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/move_error_usage.out
+.. includeexampleoutput:: move_error_usage
    :language: none

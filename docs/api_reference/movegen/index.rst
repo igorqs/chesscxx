@@ -10,32 +10,32 @@ Examples
 Full game
 ~~~~~~~~~
 
-.. literalinclude:: /../examples/movegen_usage.cpp
+.. includeexamplesource:: movegen_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/movegen_usage.out
+.. includeexampleoutput:: movegen_usage
    :language: none
 
 Castling
 ~~~~~~~~
 
-.. literalinclude:: /../examples/movegen_castling_usage.cpp
+.. includeexamplesource:: movegen_castling_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/movegen_castling_usage.out
+.. includeexampleoutput:: movegen_castling_usage
    :language: none
 
 Promotion
 ~~~~~~~~~
 
-.. literalinclude:: /../examples/movegen_promotion_usage.cpp
+.. includeexamplesource:: movegen_promotion_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/movegen_promotion_usage.out
+.. includeexampleoutput:: movegen_promotion_usage
    :language: none

@@ -22,43 +22,43 @@ Examples
 General
 ~~~~~~~
 
-.. literalinclude:: /../examples/position_usage.cpp
+.. includeexamplesource:: position_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/position_usage.out
+.. includeexampleoutput:: position_usage
    :language: none
 
 Creating from Params
 ~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/position_error_usage.cpp
+.. includeexamplesource:: position_error_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/position_error_usage.out
+.. includeexampleoutput:: position_error_usage
    :language: none
 
 Hashing
 ~~~~~~~
 
-.. literalinclude:: /../examples/position_hash_usage.cpp
+.. includeexamplesource:: position_hash_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/position_hash_usage.out
+.. includeexampleoutput:: position_hash_usage
    :language: none
 
 Legal en passant target square
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/position_legal_en_passant_usage.cpp
+.. includeexamplesource:: position_legal_en_passant_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/position_legal_en_passant_usage.out
+.. includeexampleoutput:: position_legal_en_passant_usage
    :language: none

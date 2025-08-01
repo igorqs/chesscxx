@@ -14,10 +14,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/partial_square_usage.cpp
+.. includeexamplesource:: partial_square_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/partial_square_usage.out
+.. includeexampleoutput:: partial_square_usage
    :language: none

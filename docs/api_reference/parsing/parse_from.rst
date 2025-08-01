@@ -9,26 +9,26 @@ Examples
 Basic example
 ~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/parse_result_usage.cpp
+.. includeexamplesource:: parse_result_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/parse_result_usage.out
+.. includeexampleoutput:: parse_result_usage
    :language: none
 
 Parsing games from a file
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/parse_from_usage.cpp
+.. includeexamplesource:: parse_from_usage
    :language: cpp
 
 .. tab:: Output:
 
-    .. literalinclude:: /../build/examples/parse_from_usage.out
+    .. includeexampleoutput:: parse_from_usage
        :language: none
 
 .. tab:: Input file:
 
-    .. literalinclude:: /../examples/data/games.pgn
+    .. includeexamplesource:: data/games.pgn
        :language: none

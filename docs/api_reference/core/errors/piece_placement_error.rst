@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/piece_placement_error_usage.cpp
+.. includeexamplesource:: piece_placement_error_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/piece_placement_error_usage.out
+.. includeexampleoutput:: piece_placement_error_usage
    :language: none

@@ -12,48 +12,48 @@ Examples
 Full Game
 ~~~~~~~~~
 
-.. literalinclude:: /../examples/basic_full_game_usage.cpp
+.. includeexamplesource:: basic_full_game_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/basic_full_game_usage.out
+.. includeexampleoutput:: basic_full_game_usage
    :language: none
 
 Using the Move Generator
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/movegen_promotion_usage.cpp
+.. includeexamplesource:: movegen_promotion_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/movegen_promotion_usage.out
+.. includeexampleoutput:: movegen_promotion_usage
    :language: none
 
 Parsing PGN
 ~~~~~~~~~~~
 
-.. literalinclude:: /../examples/basic_pgn_usage.cpp
+.. includeexamplesource:: basic_pgn_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/basic_pgn_usage.out
+.. includeexampleoutput:: basic_pgn_usage
    :language: none
 
 Parsing games from a file
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: /../examples/parse_from_usage.cpp
+.. includeexamplesource:: parse_from_usage
    :language: cpp
 
 .. tab:: Output:
 
-    .. literalinclude:: /../build/examples/parse_from_usage.out
+    .. includeexampleoutput:: parse_from_usage
        :language: none
 
 .. tab:: Input file:
 
-    .. literalinclude:: /../examples/data/games.pgn
+    .. includeexamplesource:: data/games.pgn
        :language: none

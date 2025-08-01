@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/game_result_usage.cpp
+.. includeexamplesource:: game_result_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/game_result_usage.out
+.. includeexampleoutput:: game_result_usage
    :language: none

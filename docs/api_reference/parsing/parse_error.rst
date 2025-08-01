@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/parse_error_usage.cpp
+.. includeexamplesource:: parse_error_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/parse_error_usage.out
+.. includeexampleoutput:: parse_error_usage
    :language: none

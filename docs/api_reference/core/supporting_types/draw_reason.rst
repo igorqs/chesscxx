@@ -12,10 +12,10 @@ Helper classes
 Examples
 --------
 
-.. literalinclude:: /../examples/draw_reason_usage.cpp
+.. includeexamplesource:: draw_reason_usage
    :language: cpp
 
 Output:
 
-.. literalinclude:: /../build/examples/draw_reason_usage.out
+.. includeexampleoutput:: draw_reason_usage
    :language: none
