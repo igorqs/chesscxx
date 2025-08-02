@@ -74,12 +74,14 @@ jobs:
       run: docker load --input ${{ runner.temp }}/chesscxx.tar
 
     - name: Cache docker-build directory
+      id: cache-build-dir
       uses: actions/cache@v4
       with:
         path: docker-build
         key: ${{ runner.os }}-docker-build-${{ hashFiles('examples/CMakeLists.txt', 'tests/CMakeLists.txt', 'CMakePresets.json', 'CMakeLists.txt', 'cmake/**') }}
 
     - name: Configure
+      if: steps.cache-build-dir.outputs.cache-hit != 'true'
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
 
     - name: Build
