@@ -372,6 +372,7 @@
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">parseAndPrint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">parsed_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chesscxx</span><span class="o">::</span><span class="n">parse</span><span class="o">&lt;</span><span class="n">chesscxx</span><span class="o">::</span><span class="n">File</span><span class="o">&gt;</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+
 <span class="w">  </span><span class="n">printErrorOrValue</span><span class="p">(</span><span class="n">parsed_file</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="p">}</span><span class="w">  </span><span class="c1">// namespace</span>
