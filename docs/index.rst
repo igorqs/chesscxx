@@ -5,10 +5,9 @@
 
 For more details, explore the sections below:
 
-.. rubric:: Contents
-
 .. toctree::
-   :maxdepth: 2
+   :titlesonly:
+   :maxdepth: 1
 
    getting_started/index
    api_reference/index
