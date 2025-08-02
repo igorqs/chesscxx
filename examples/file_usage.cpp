@@ -21,6 +21,7 @@ void parseAndPrint(std::string_view str) {
 
 auto main() -> int {
   chesscxx::File file = chesscxx::File::kE;
+
   std::println("{}", file);
 
   parseAndPrint("a");
