@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -270,35 +270,55 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="chesscxx-documentation">
-<h1>chesscxx documentation<a class="headerlink" href="#chesscxx-documentation" title="Link to this heading">¶</a></h1>
-<p>Overview goes here</p>
+          <section id="chesscxx-a-c-23-chess-library">
+<h1>chesscxx - A C++23 Chess Library<a class="headerlink" href="#chesscxx-a-c-23-chess-library" title="Link to this heading">¶</a></h1>
+<p><strong>chesscxx</strong> is a C++23 library for chess programming.
+It provides the essential tools for working with chess: simulating games, parsing and formatting moves and positions, and generating legal moves.</p>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Game simulation</strong> — Create and manage chess games, apply validated moves, and query game state.</p></li>
+<li><p><strong>Parsing</strong> — Read moves (SAN, UCI), positions (FEN), and games (PGN).</p></li>
+<li><p><strong>Formatting</strong> — Convert moves, positions, and games to multiple string formats.</p></li>
+<li><p><strong>Move generation</strong> — Generate all legal moves for any position.</p></li>
+<li><p><strong>Documentation</strong> — Comprehensive API reference with examples. <a class="reference external" href="https://igorqs.github.io/chesscxx/">Read the docs →</a></p></li>
+<li><p><strong>Quality assurance</strong> — Tested and validated to ensure correctness and reliability.</p></li>
+</ul>
+</section>
+<section id="compiler-compatibility">
+<h2>Compiler Compatibility<a class="headerlink" href="#compiler-compatibility" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Compiler</p></th>
+<th class="head"><p>Minimum Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GCC (libstdc++)</p></td>
+<td><p>15.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<p>For more details, explore the sections below:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#examples">Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api_reference/core/index.html">Core Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference/parsing/index.html">Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference/formatting/index.html">Formatting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference/hashing/index.html">Hashing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference/movegen/index.html">Move Generation</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing_to_chesscxx/index.html">Contributing to chesscxx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license/index.html">License</a></li>
 </ul>
 </div>
-</section>
 
         </article>
       </div>
@@ -333,8 +353,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">chesscxx - A C++23 Chess Library</a><ul>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#compiler-compatibility">Compiler Compatibility</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
