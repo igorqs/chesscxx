@@ -15,6 +15,7 @@ void printErrorOrValue(auto parsed_value) {
 
 void parseAndPrint(std::string_view str) {
   auto parsed_file = chesscxx::parse<chesscxx::File>(str);
+
   printErrorOrValue(parsed_file);
 }
 }  // namespace
