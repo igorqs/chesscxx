@@ -3,8 +3,6 @@
 **chesscxx** is a C++23 library for chess programming.  
 It provides the essential tools for working with chess: simulating games, parsing and formatting moves and positions, and generating legal moves.  
 
----
-
 ## Features
 
 - **Game simulation** — Create and manage chess games, apply validated moves, and query game state.  
@@ -13,8 +11,6 @@ It provides the essential tools for working with chess: simulating games, parsin
 - **Move generation** — Generate all legal moves for any position.  
 - **Documentation** — Comprehensive API reference with examples. [Read the docs →](https://igorqs.github.io/chesscxx/) 
 - **Quality assurance** — Tested and validated to ensure correctness and reliability. 
-
----
 
 ## Compiler Compatibility
 
