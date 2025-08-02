@@ -111,7 +111,7 @@ jobs:
       with: { python-version: "3.12" }
 
     - name: Install dependencies
-      run: pip3 install sphinx breathe furo sphinx-inline-tabs
+      run: pip3 install sphinx breathe furo sphinx-inline-tabs myst-parser
 
     - name: Install Doxygen
       run: sudo apt-get update -q

@@ -1,8 +1,11 @@
-chesscxx documentation
-======================
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
 
-Overview goes here
+----
 
+For more details, explore the sections below:
+
+.. rubric:: Contents
 
 .. toctree::
    :maxdepth: 2

@@ -16,7 +16,7 @@ author = 'igorqs'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [ "breathe", "sphinx_inline_tabs" ]
+extensions = [ "breathe", "sphinx_inline_tabs", "myst_parser" ]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
@@ -46,6 +46,12 @@ class IncludeExampleSource(LiteralInclude):
         self.arguments[0] = f"{_examples_source_dir}/{self.arguments[0]}.cpp"
         return super().run()
 
+class IncludeExampleData(LiteralInclude):
+    def run(self):
+        self.arguments[0] = f"{_examples_source_dir}/{self.arguments[0]}"
+        return super().run()
+
 def setup(app):
     app.add_directive("includeexampleoutput", IncludeExampleOutput)
     app.add_directive("includeexamplesource", IncludeExampleSource)
+    app.add_directive("includeexampledata", IncludeExampleData)

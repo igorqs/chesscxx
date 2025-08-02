@@ -30,5 +30,5 @@ Parsing games from a file
 
 .. tab:: Input file:
 
-    .. includeexamplesource:: data/games.pgn
+    .. includeexampledata:: data/games.pgn
        :language: none
