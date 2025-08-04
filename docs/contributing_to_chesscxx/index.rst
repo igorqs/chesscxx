@@ -1,4 +1,2 @@
-Contributing to chesscxx
-========================
-
-contributing goes here
+.. include:: /../CONTRIBUTING.md
+   :parser: myst_parser.sphinx_

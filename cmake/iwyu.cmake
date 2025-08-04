@@ -23,20 +23,9 @@ if(FIX)
 endif()
 
 file(GLOB_RECURSE files ${PATTERNS})
-list(LENGTH files total_files)
-set(counter 1)
 
-foreach(file IN LISTS files)
-  message("[${counter}/${total_files}] running iwyu command for \"${file}\"")
-
-  execute_process(
-      COMMAND "${IWYU_COMMAND}" ${flags} "${file}" -- -xc++ -std=c++23
-      WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-      RESULT_VARIABLE result
-  )
-
-  if(NOT result EQUAL "0")
-    message(FATAL_ERROR "'${file}': iwyu returned with ${result}")
-  endif()
-  MATH(EXPR counter "${counter}+1")
-endforeach()
+execute_process(
+  COMMAND "${IWYU_COMMAND}" ${flags} ${files} -- -xc++ -std=c++23
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  RESULT_VARIABLE result
+)
