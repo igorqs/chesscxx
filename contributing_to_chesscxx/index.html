@@ -182,7 +182,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -273,7 +273,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -281,7 +281,119 @@
         <article role="main" id="furo-main-content">
           <section id="contributing-to-chesscxx">
 <h1>Contributing to chesscxx<a class="headerlink" href="#contributing-to-chesscxx" title="Link to this heading">¶</a></h1>
-<p>contributing goes here</p>
+<p>Thank you for considering contributing to <strong>chesscxx</strong>!
+This document describes how to set up a development environment and use the available developer tools.</p>
+<section id="developer-mode">
+<h2>Developer mode<a class="headerlink" href="#developer-mode" title="Link to this heading">¶</a></h2>
+<p>Build system targets that are only useful for developers of this project are
+hidden if the <code class="docutils literal notranslate"><span class="pre">chesscxx_DEVELOPER_MODE</span></code> option is disabled. Enabling this
+option makes tests and other developer targets and options available. Not
+enabling this option means that you are a consumer of this project and thus you
+have no need for these targets and options.</p>
+<section id="presets">
+<h3>Presets<a class="headerlink" href="#presets" title="Link to this heading">¶</a></h3>
+<p>This project makes use of <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">presets</a> to simplify the process of configuring
+the project.</p>
+<p>You have a few options to pass <code class="docutils literal notranslate"><span class="pre">chesscxx_DEVELOPER_MODE</span></code> to the configure
+command, but this project prefers to use presets.</p>
+<p>As a developer, you should create a <code class="docutils literal notranslate"><span class="pre">CMakeUserPresets.json</span></code> file at the root of
+the project:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cmakeMinimumRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;major&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;minor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;configurePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;inherits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dev-mode&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ci-ubuntu&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;CMAKE_EXPORT_COMPILE_COMMANDS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ON&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;buildPresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;testPresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;outputOnFailure&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CMakeUserPresets.json</span></code> is also the perfect place in which you can put all
+sorts of things that you would otherwise want to pass to the configure command
+in the terminal.</p>
+</section>
+<section id="configure-build-and-test">
+<h3>Configure, build and test<a class="headerlink" href="#configure-build-and-test" title="Link to this heading">¶</a></h3>
+<p>If you followed the above instructions, then you can configure, build and test
+the project respectively with the following commands from the project root:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--preset<span class="o">=</span>dev
+cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>dev
+ctest<span class="w"> </span>--preset<span class="o">=</span>dev
+</pre></div>
+</div>
+</section>
+<section id="developer-mode-targets">
+<h3>Developer mode targets<a class="headerlink" href="#developer-mode-targets" title="Link to this heading">¶</a></h3>
+<p>These are targets you may invoke using the build command from above, with an
+additional <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">&lt;target&gt;</span></code> flag:</p>
+<section id="iwyu-check-and-iwyu-fix">
+<h4><code class="docutils literal notranslate"><span class="pre">iwyu-check</span></code> and <code class="docutils literal notranslate"><span class="pre">iwyu-fix</span></code><a class="headerlink" href="#iwyu-check-and-iwyu-fix" title="Link to this heading">¶</a></h4>
+<p>These targets run <code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> with the <a class="reference external" href="https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html">misc-include-cleaner</a> check
+on the header files to check IWYU errors and to fix them, respectively.
+Customization is available using the <code class="docutils literal notranslate"><span class="pre">IWYU_PATTERNS</span></code> and <code class="docutils literal notranslate"><span class="pre">IWYU_COMMAND</span></code>
+cache variables.</p>
+</section>
+<section id="format-check-and-format-fix">
+<h4><code class="docutils literal notranslate"><span class="pre">format-check</span></code> and <code class="docutils literal notranslate"><span class="pre">format-fix</span></code><a class="headerlink" href="#format-check-and-format-fix" title="Link to this heading">¶</a></h4>
+<p>These targets run the <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> tool on the codebase to check formatting errors and to
+fix them, respectively. Customization is available using the <code class="docutils literal notranslate"><span class="pre">FORMAT_PATTERNS</span></code> and
+<code class="docutils literal notranslate"><span class="pre">FORMAT_COMMAND</span></code> cache variables.</p>
+</section>
+<section id="spell-check-and-spell-fix">
+<h4><code class="docutils literal notranslate"><span class="pre">spell-check</span></code> and <code class="docutils literal notranslate"><span class="pre">spell-fix</span></code><a class="headerlink" href="#spell-check-and-spell-fix" title="Link to this heading">¶</a></h4>
+<p>These targets run the <code class="docutils literal notranslate"><span class="pre">codespell</span></code> tool on the codebase to check spelling errors and to fix
+them, respectively. Customization is available using the <code class="docutils literal notranslate"><span class="pre">SPELL_COMMAND</span></code> cache
+variable.</p>
+</section>
+<section id="run-examples-and-run-name">
+<h4><code class="docutils literal notranslate"><span class="pre">run-examples</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code><a class="headerlink" href="#run-examples-and-run-name" title="Link to this heading">¶</a></h4>
+<p>Runs all the examples created by the <code class="docutils literal notranslate"><span class="pre">add_example</span></code> command, or runs a single example.</p>
+</section>
+<section id="docs">
+<h4><code class="docutils literal notranslate"><span class="pre">docs</span></code><a class="headerlink" href="#docs" title="Link to this heading">¶</a></h4>
+<p>Builds the documentation using Doxygen + Breathe + Sphinx. The output will
+go to <code class="docutils literal notranslate"><span class="pre">&lt;binary-dir&gt;/docs</span></code>. Customization is available using the <code class="docutils literal notranslate"><span class="pre">DOXYGEN_COMMAND</span></code>
+and <code class="docutils literal notranslate"><span class="pre">SPHINX_COMMAND</span></code> cache variables.</p>
+<p>Since the documentation uses the examples’ outputs, you need to run the <code class="docutils literal notranslate"><span class="pre">run-examples</span></code>
+target before building the documentation.</p>
+</section>
+<section id="coverage">
+<h4><code class="docutils literal notranslate"><span class="pre">coverage</span></code><a class="headerlink" href="#coverage" title="Link to this heading">¶</a></h4>
+<p>This target processes the output of the previously run tests and generates a coverage
+report at <code class="docutils literal notranslate"><span class="pre">&lt;build_dir&gt;/coverage/index.html</span></code> using the <code class="docutils literal notranslate"><span class="pre">gcovr</span></code> tool. It requires the project
+to be built using the coverage flags, which can be done by using the <code class="docutils literal notranslate"><span class="pre">ci-coverage</span></code> preset.
+Customization is available using the <code class="docutils literal notranslate"><span class="pre">chesscxx_COVERAGE_COMMAND</span></code> cache variable.</p>
+</section>
+</section>
+</section>
 </section>
 
         </article>
@@ -330,8 +442,40 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Contributing to chesscxx</a><ul>
+<li><a class="reference internal" href="#developer-mode">Developer mode</a><ul>
+<li><a class="reference internal" href="#presets">Presets</a></li>
+<li><a class="reference internal" href="#configure-build-and-test">Configure, build and test</a></li>
+<li><a class="reference internal" href="#developer-mode-targets">Developer mode targets</a><ul>
+<li><a class="reference internal" href="#iwyu-check-and-iwyu-fix"><code class="docutils literal notranslate"><span class="pre">iwyu-check</span></code> and <code class="docutils literal notranslate"><span class="pre">iwyu-fix</span></code></a></li>
+<li><a class="reference internal" href="#format-check-and-format-fix"><code class="docutils literal notranslate"><span class="pre">format-check</span></code> and <code class="docutils literal notranslate"><span class="pre">format-fix</span></code></a></li>
+<li><a class="reference internal" href="#spell-check-and-spell-fix"><code class="docutils literal notranslate"><span class="pre">spell-check</span></code> and <code class="docutils literal notranslate"><span class="pre">spell-fix</span></code></a></li>
+<li><a class="reference internal" href="#run-examples-and-run-name"><code class="docutils literal notranslate"><span class="pre">run-examples</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code></a></li>
+<li><a class="reference internal" href="#docs"><code class="docutils literal notranslate"><span class="pre">docs</span></code></a></li>
+<li><a class="reference internal" href="#coverage"><code class="docutils literal notranslate"><span class="pre">coverage</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

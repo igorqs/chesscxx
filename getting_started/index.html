@@ -283,7 +283,82 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
-<p>Add installation instruction here</p>
+<p><code class="docutils literal notranslate"><span class="pre">chesscxx</span></code> is a <strong>header-only</strong> library, meaning no compilation or linking is required.
+To use it in your project, simply add the <cite>include</cite> directory to your compiler’s include path.</p>
+<p>For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/igorqs/chesscxx.git
+g++<span class="w"> </span>-I<span class="w"> </span>chesscxx/include<span class="w"> </span>your_program.cpp<span class="w"> </span>-o<span class="w"> </span>your_program<span class="w"> </span>-std<span class="o">=</span>c++23
+</pre></div>
+</div>
+<section id="building-with-cmake">
+<h3>Building with CMake<a class="headerlink" href="#building-with-cmake" title="Link to this heading">¶</a></h3>
+<p>If you prefer, you can build and install <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code> using CMake.
+This allows you to install the headers system-wide (e.g., into <cite>/usr/local/include/chesscxx-&lt;version&gt;/</cite>).</p>
+<section id="build">
+<h4>Build<a class="headerlink" href="#build" title="Link to this heading">¶</a></h4>
+<p>For single-configuration generators (like Unix Makefiles):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-D<span class="w"> </span><span class="nv">CMAKE_BUILD_TYPE</span><span class="o">=</span>Release
+cmake<span class="w"> </span>--build<span class="w"> </span>build
+</pre></div>
+</div>
+<p>For multi-configuration generators (like Visual Studio):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build
+cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>--config<span class="w"> </span>Release
+</pre></div>
+</div>
+</section>
+<section id="install">
+<h4>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h4>
+<p>After building, install the headers:</p>
+<p>For single-configuration generators:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--install<span class="w"> </span>build
+</pre></div>
+</div>
+<p>For multi-configuration generators:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--install<span class="w"> </span>build<span class="w"> </span>--config<span class="w"> </span>Release
+</pre></div>
+</div>
+<section id="cmake-package">
+<h5>CMake package<a class="headerlink" href="#cmake-package" title="Link to this heading">¶</a></h5>
+<p>Once installed, other CMake projects (targets) can depend on <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code> by using the <a class="reference external" href="https://cmake.org/cmake/help/latest/command/find_package.html">find_package</a>
+command of CMake:</p>
+<ul class="simple">
+<li><p>Package name: <cite>chesscxx</cite></p></li>
+<li><p>Target name: <cite>chesscxx::chesscxx</cite></p></li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">chesscxx</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># Declare the imported target as a build requirement using PRIVATE, where</span>
+<span class="c"># project_target is a target created in the consuming project</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span>
+<span class="w">    </span><span class="s">project_target</span><span class="w"> </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="s">chesscxx::chesscxx</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="using-with-fetchcontent">
+<h3>Using with FetchContent<a class="headerlink" href="#using-with-fetchcontent" title="Link to this heading">¶</a></h3>
+<p>If you prefer not to install <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code> system-wide, you can use CMake’s
+<a class="reference external" href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a> module
+to fetch the library directly from its repository at configure time:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">chesscxx</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/igorqs/chesscxx.git</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w"> </span><span class="s">main</span><span class="w">   </span><span class="c"># &lt;-- or a specific commit/tag for stability</span>
+<span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">chesscxx</span><span class="p">)</span>
+
+<span class="nb">target_link_libraries</span><span class="p">(</span>
+<span class="w">    </span><span class="s">project_target</span><span class="w"> </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="s">chesscxx::chesscxx</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
@@ -601,7 +676,18 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#building-with-cmake">Building with CMake</a><ul>
+<li><a class="reference internal" href="#build">Build</a></li>
+<li><a class="reference internal" href="#install">Install</a><ul>
+<li><a class="reference internal" href="#cmake-package">CMake package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-with-fetchcontent">Using with FetchContent</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#examples">Examples</a><ul>
 <li><a class="reference internal" href="#full-game">Full Game</a></li>
 <li><a class="reference internal" href="#using-the-move-generator">Using the Move Generator</a></li>
