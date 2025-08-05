@@ -57,103 +57,85 @@ jobs:
     - name: IWYU check
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/iwyu.cmake
 
-#    - name: Install clang-tidy-19
-#      run: sudo apt-get update -q
-#        && sudo apt-get install clang-tidy-19 -q -y
-#
-#    - name: IWYU check
-#      run: cmake -D IWYU_COMMAND=clang-tidy-19 -P cmake/iwyu.cmake
-#
-#  test:
-#    needs: [iwyu]
-#
-#    runs-on: ubuntu-24.04
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - name: Set up Docker Buildx
-#      uses: docker/setup-buildx-action@v3
-#
-#    - name: Build and export
-#      uses: docker/build-push-action@v6
-#      with:
-#        tags: chesscxx:latest
-#        outputs: type=docker,dest=${{ runner.temp }}/chesscxx.tar
-#
-#    - name: Upload Docker image
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: chesscxx
-#        path: ${{ runner.temp }}/chesscxx.tar
-#
-#    - name: Load Docker image
-#      run: docker load --input ${{ runner.temp }}/chesscxx.tar
-#
-#    - name: Configure
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
-#
-#    - name: Build
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
-#
-#    - name: Install
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
-#
-#    - name: Test
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
-#
-#    - name: Generate examples outputs
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
-#
-#    - name: Upload build directory
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: build-dir
-#        path: docker-build
-#
-#  docs:
-#    needs: [test]
-#
-#    runs-on: ubuntu-24.04
-#
-#    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.repository_owner == 'igorqs'
-#
-#    permissions:
-#      contents: write
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - uses: actions/setup-python@v5
-#      with: { python-version: "3.12" }
-#
-#    - name: Install dependencies
-#      run: pip3 install sphinx breathe furo sphinx-inline-tabs myst-parser
-#
-#    - name: Install Doxygen
-#      run: sudo apt-get update -q
-#        && sudo apt-get install doxygen -q -y
-#
-#    - name: Download Docker image
-#      uses: actions/download-artifact@v4
-#      with:
-#        name: chesscxx
-#        path: ${{ runner.temp }}
-#
-#    - name: Load Docker image
-#      run: docker load --input ${{ runner.temp }}/chesscxx.tar
-#
-#    - name: Download build directory
-#      uses: actions/download-artifact@v4
-#      with:
-#        name: build-dir
-#        path: docker-build
-#
-#    - name: Build docs
-#      run: cmake "-DPROJECT_SOURCE_DIR=$PWD" "-DPROJECT_BINARY_DIR=$PWD/build" "-DEXAMPLES_BINARY_DIR=$PWD/docker-build" -P cmake/docs.cmake
-#
-#    - name: Deploy docs
-#      uses: peaceiris/actions-gh-pages@v4
-#      with:
-#        github_token: ${{ secrets.GITHUB_TOKEN }}
-#        publish_dir: build/docs/sphinx
+  test:
+    needs: [iwyu]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image (cached)
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: chesscxx:latest
+        load: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Configure
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu -B docker-build
+
+    - name: Build
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build --config Release -j 2
+
+    - name: Install
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install docker-build --config Release --prefix prefix
+
+    - name: Test
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest ctest --test-dir=docker-build --output-on-failure --no-tests=error -C Release -j 2
+
+    - name: Generate examples outputs
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build docker-build -t run-examples
+
+    - name: Upload build directory
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-dir
+        path: docker-build
+
+  docs:
+    needs: [test]
+
+    runs-on: ubuntu-24.04
+
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.repository_owner == 'igorqs'
+
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image (cached)
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: chesscxx:latest
+        load: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Download build directory
+      uses: actions/download-artifact@v4
+      with:
+        name: build-dir
+        path: docker-build
+
+    - name: Build docs
+      run: |
+        docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
+        cmake "-DPROJECT_SOURCE_DIR=$PWD" "-DPROJECT_BINARY_DIR=$PWD/build" "-DEXAMPLES_BINARY_DIR=$PWD/docker-build" -P cmake/docs.cmake
+
+    - name: Deploy docs
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build/docs/sphinx
