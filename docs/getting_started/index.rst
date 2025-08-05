@@ -65,7 +65,7 @@ For multi-configuration generators:
   cmake --install build --config Release
 
 CMake package
-"""""""""""""
+^^^^^^^^^^^^^
 
 Once installed, other CMake projects (targets) can depend on ``chesscxx`` by using the `find_package <https://cmake.org/cmake/help/latest/command/find_package.html>`_
 command of CMake:
