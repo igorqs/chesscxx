@@ -29,7 +29,7 @@ jobs:
         cache-to: type=gha,mode=max
 
     - name: Lint
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -D FORMAT_COMMAND=clang-format-19 -P cmake/lint.cmake
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/lint.cmake
 
     - name: Spell check
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/spell.cmake
