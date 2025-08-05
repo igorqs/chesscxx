@@ -10,55 +10,55 @@ on:
     - main
 
 jobs:
-#  lint:
-#    runs-on: ubuntu-24.04
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - name: Set up Docker Buildx
-#      uses: docker/setup-buildx-action@v3
-#
-#    - name: Build Docker image (cached)
-#      uses: docker/build-push-action@v6
-#      with:
-#        context: .
-#        tags: chesscxx:latest
-#        load: true
-#        cache-from: type=gha
-#        cache-to: type=gha,mode=max
-#
-#    - name: Lint
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/lint.cmake
-#
-#    - name: Spell check
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/spell.cmake
-#
-#  iwyu:
-#    needs: [lint]
-#
-#    runs-on: ubuntu-24.04
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - name: Set up Docker Buildx
-#      uses: docker/setup-buildx-action@v3
-#
-#    - name: Build Docker image (cached)
-#      uses: docker/build-push-action@v6
-#      with:
-#        context: .
-#        tags: chesscxx:latest
-#        load: true
-#        cache-from: type=gha
-#        cache-to: type=gha,mode=max
-#
-#    - name: IWYU check
-#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/iwyu.cmake
+  lint:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image (cached)
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: chesscxx:latest
+        load: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Lint
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/lint.cmake
+
+    - name: Spell check
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/spell.cmake
+
+  iwyu:
+    needs: [lint]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image (cached)
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: chesscxx:latest
+        load: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: IWYU check
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake -P cmake/iwyu.cmake
 
   test:
-#    needs: [iwyu]
+    needs: [iwyu]
 
     runs-on: ubuntu-24.04
 
