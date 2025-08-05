@@ -52,9 +52,9 @@ Alternatively, instead of entering the container, you can run each command direc
 ```sh
 docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx <command>
 # Examples:
-docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --preset=dev -B docker-build
-docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --build docker-build --preset=dev
-docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx ctest --test-dir=docker-build --preset=dev
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --preset=dev
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --build --preset=dev
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx ctest --preset=dev
 ```
 
 ### Presets
