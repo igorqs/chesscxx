@@ -556,6 +556,74 @@
 </pre></div>
 </div>
 <p>Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[Result &quot;*&quot;]
+
+*
+
+[Result &quot;*&quot;]
+
+*
+
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+rnbqkbnr
+pppppppp
+........
+........
+........
+........
+PPPPPPPP
+RNBQKBNR
+Active color: white
+Castling availability: KQkq
+En passant target square: -
+Halfmove clock: 0
+Fullmove number: 1
+
+{ white king: [e1], white queen: [d1], white bishops: [f1, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, g2, f2, e2, d2, c2, b2, a2], black pawns: [h7, g7, f7, e7, d7, c7, b7, a7], black king: [e8], black queen: [d8], black bishops: [f8, c8], black knights: [g8, b8], black rooks: [h8, a8] }
+Active color: white
+Castling availability: KQkq
+En passant target square: -
+Halfmove clock: 0
+Fullmove number: 1
+
+{ &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+[Result &quot;1-0&quot;]
+
+1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6 4. Qxf7# 1-0
+
+[Result &quot;1-0&quot;]
+
+1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6 4. Qxf7# 1-0
+
+r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4
+
+r.bqkb.r
+pppp.Qpp
+..n..n..
+....p...
+..B.P...
+........
+PPPP.PPP
+RNB.K.NR
+Active color: black
+Castling availability: KQkq
+En passant target square: -
+Halfmove clock: 0
+Fullmove number: 4
+
+{ white king: [e1], white queen: [f7], white bishops: [c4, c1], white knights: [g1, b1], white rooks: [h1, a1], white pawns: [h2, g2, f2, d2, c2, e4, b2, a2], black pawns: [e5, h7, g7, d7, c7, b7, a7], black king: [e8], black queen: [d8], black bishops: [f8, c8], black knights: [f6, c6], black rooks: [h8, a8] }
+Active color: black
+Castling availability: KQkq
+En passant target square: -
+Halfmove clock: 0
+Fullmove number: 4
+
+{ &quot;r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq -&quot;: 1, &quot;r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq -&quot;: 1, &quot;r1bqkbnr/pppp1ppp/2n5/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq -&quot;: 1, &quot;r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppp1ppp/8/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+</pre></div>
+</div>
 </section>
 <section id="general">
 <h3>General<a class="headerlink" href="#general" title="Link to this heading">¶</a></h3>
@@ -617,6 +685,15 @@
 </pre></div>
 </div>
 <p>Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>uci moves: [g8f6, e4e5]
+san moves: [Nf6, e5]
+[Result &quot;*&quot;]
+[FEN &quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1&quot;]
+[SetUp &quot;1&quot;]
+
+*
+</pre></div>
+</div>
 </section>
 <section id="repetition">
 <h3>Repetition<a class="headerlink" href="#repetition" title="Link to this heading">¶</a></h3>
@@ -684,6 +761,26 @@
 </pre></div>
 </div>
 <p>Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+{ &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 1, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 1 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 1, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 2 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 1, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 1, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 2 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 1, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 2 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 2, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 2 }
+
+{ &quot;r1bqkbnr/pppppppp/2n5/8/8/8/PPPPPPPP/RNBQKBNR b KQkq -&quot;: 2, &quot;r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq -&quot;: 2, &quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -&quot;: 3 }
+
+</pre></div>
+</div>
 </section>
 <section id="hashing">
 <h3>Hashing<a class="headerlink" href="#hashing" title="Link to this heading">¶</a></h3>
@@ -746,6 +843,9 @@
 </pre></div>
 </div>
 <p>Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
