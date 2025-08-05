@@ -4,7 +4,7 @@ include(cmake/prelude.cmake)
 
 project(
   chesscxx
-  VERSION 1.0.0
+  VERSION 0.1.0
   DESCRIPTION "A modern C++23 chess library for parsing, formatting, move generation, and validation."
   LANGUAGES CXX
 )
