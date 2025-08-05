@@ -281,7 +281,7 @@
         <article role="main" id="furo-main-content">
           <section id="contributing-to-chesscxx">
 <h1>Contributing to chesscxx<a class="headerlink" href="#contributing-to-chesscxx" title="Link to this heading">¶</a></h1>
-<p>Thank you for considering contributing to <strong>chesscxx</strong>!
+<p>Thank you for considering contributing to <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code>!
 This document describes how to set up a development environment and use the available developer tools.</p>
 <section id="developer-mode">
 <h2>Developer mode<a class="headerlink" href="#developer-mode" title="Link to this heading">¶</a></h2>
@@ -290,6 +290,45 @@ hidden if the <code class="docutils literal notranslate"><span class="pre">chess
 option makes tests and other developer targets and options available. Not
 enabling this option means that you are a consumer of this project and thus you
 have no need for these targets and options.</p>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
+<p>To set up a development environment for <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code>, you’ll need:</p>
+<ul class="simple">
+<li><p><strong>C++23</strong> compatible compiler (<a class="reference external" href="https://igorqs.github.io/chesscxx/#compiler-compatibility">See the docs →</a> for a list of supported compilers)</p></li>
+<li><p><strong>CMake</strong> 3.28+ and a compatible generator (e.g., <strong>Ninja</strong>, <strong>Make</strong>, or <strong>Visual Studio</strong>)</p></li>
+<li><p><strong>clang-tidy</strong> (for IWYU &amp; static analysis checks)</p></li>
+<li><p><strong>clang-format</strong> (for code formatting)</p></li>
+<li><p><strong>cppcheck</strong> (for additional static analysis)</p></li>
+<li><p><strong>codespell</strong> (for spell checking)</p></li>
+<li><p><strong>Doxygen</strong> (for generating documentation)
+Extra packages: <code class="docutils literal notranslate"><span class="pre">sphinx</span></code>, <code class="docutils literal notranslate"><span class="pre">breathe</span></code>, <code class="docutils literal notranslate"><span class="pre">furo</span></code>, <code class="docutils literal notranslate"><span class="pre">sphinx-inline-tabs</span></code>, <code class="docutils literal notranslate"><span class="pre">myst-parser</span></code></p></li>
+<li><p><strong>gcovr</strong> (for coverage reports)</p></li>
+<li><p><strong>GTest</strong>, <strong>yaml-cpp</strong>, <strong>magic-enum</strong> (for tests)</p></li>
+</ul>
+<p>You can install most of these tools via your system package manager or using <code class="docutils literal notranslate"><span class="pre">pip</span></code> for Python-based tools.</p>
+</section>
+<section id="docker">
+<h3>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h3>
+<p>If you prefer, you can use Docker instead of installing all dependencies manually.
+A <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> is provided at the project root that contains all required tools and libraries for building, testing, and running all targets of <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code>.</p>
+<p>First, install Docker, then build the image:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>chesscxx<span class="w"> </span>.
+</pre></div>
+</div>
+<p>To start an interactive container with the project mounted:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/chesscxx<span class="w"> </span>-w<span class="w"> </span>/chesscxx<span class="w"> </span>chesscxx
+</pre></div>
+</div>
+<p>From inside the container, you can run all the usual commands (e.g., <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--preset=dev</span></code>, <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">--preset=dev</span></code>, <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">--preset=dev</span></code>).</p>
+<p>Alternatively, instead of entering the container, you can run each command directly from your host system:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/chesscxx<span class="w"> </span>-w<span class="w"> </span>/chesscxx<span class="w"> </span>chesscxx<span class="w"> </span>&lt;command&gt;
+<span class="c1"># Examples:</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/chesscxx<span class="w"> </span>-w<span class="w"> </span>/chesscxx<span class="w"> </span>chesscxx<span class="w"> </span>cmake<span class="w"> </span>--preset<span class="o">=</span>dev<span class="w"> </span>-B<span class="w"> </span>docker-build
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/chesscxx<span class="w"> </span>-w<span class="w"> </span>/chesscxx<span class="w"> </span>chesscxx<span class="w"> </span>cmake<span class="w"> </span>--build<span class="w"> </span>docker-build<span class="w"> </span>--preset<span class="o">=</span>dev
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/chesscxx<span class="w"> </span>-w<span class="w"> </span>/chesscxx<span class="w"> </span>chesscxx<span class="w"> </span>ctest<span class="w"> </span>--test-dir<span class="o">=</span>docker-build<span class="w"> </span>--preset<span class="o">=</span>dev
+</pre></div>
+</div>
+</section>
 <section id="presets">
 <h3>Presets<a class="headerlink" href="#presets" title="Link to this heading">¶</a></h3>
 <p>This project makes use of <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html">presets</a> to simplify the process of configuring
@@ -375,7 +414,8 @@ variable.</p>
 </section>
 <section id="run-examples-and-run-name">
 <h4><code class="docutils literal notranslate"><span class="pre">run-examples</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code><a class="headerlink" href="#run-examples-and-run-name" title="Link to this heading">¶</a></h4>
-<p>Runs all the examples created by the <code class="docutils literal notranslate"><span class="pre">add_example</span></code> command, or runs a single example.</p>
+<p>Available if <code class="docutils literal notranslate"><span class="pre">BUILD_EXAMPLES</span></code> is enabled. Runs all the examples created by the <code class="docutils literal notranslate"><span class="pre">add_example</span></code> command,
+or runs a single example.</p>
 </section>
 <section id="docs">
 <h4><code class="docutils literal notranslate"><span class="pre">docs</span></code><a class="headerlink" href="#docs" title="Link to this heading">¶</a></h4>
@@ -456,6 +496,8 @@ Customization is available using the <code class="docutils literal notranslate">
             <ul>
 <li><a class="reference internal" href="#">Contributing to chesscxx</a><ul>
 <li><a class="reference internal" href="#developer-mode">Developer mode</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#docker">Docker</a></li>
 <li><a class="reference internal" href="#presets">Presets</a></li>
 <li><a class="reference internal" href="#configure-build-and-test">Configure, build and test</a></li>
 <li><a class="reference internal" href="#developer-mode-targets">Developer mode targets</a><ul>
