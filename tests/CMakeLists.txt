@@ -11,26 +11,11 @@ if(PROJECT_IS_TOP_LEVEL)
   enable_testing()
 endif()
 
-
-include(FetchContent)
-#FetchContent_Declare(
-#  googletest
-#  URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip
-#)
-#FetchContent_MakeAvailable(googletest)
-
-FetchContent_Declare(
-  magic_enum
-  URL https://github.com/Neargye/magic_enum/archive/e046b69a3736d314fad813e159b1c192eaef92cd.zip
-)
-FetchContent_MakeAvailable(magic_enum)
-
 # ---- Tests ----
-
-#include(GoogleTest)
 
 find_package(GTest REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(magic_enum REQUIRED)
 
 add_custom_target(copy_test_assets
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data ${PROJECT_BINARY_DIR}/data

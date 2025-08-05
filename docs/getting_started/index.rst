@@ -1,6 +1,16 @@
 Getting Started
 ===============
 
+Prerequisites
+-------------
+
+To use ``chesscxx``, you’ll need:
+
+- **C++23** compatible compiler
+  (see the :doc:`Overview <../index>` for a list of supported compilers)
+- **CMake** 3.28+ and a compatible generator (e.g., **Ninja**, **Make**, or **Visual Studio**)  
+  — only required if you want to build or install `chesscxx` with CMake or use it via `FetchContent`.
+
 Installation
 ------------
 
@@ -13,7 +23,6 @@ For example:
 
    git clone https://github.com/igorqs/chesscxx.git
    g++ -I chesscxx/include your_program.cpp -o your_program -std=c++23
-
 
 Building with CMake
 ~~~~~~~~~~~~~~~~~~~

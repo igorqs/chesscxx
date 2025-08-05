@@ -1,6 +1,6 @@
 # Contributing to chesscxx
 
-Thank you for considering contributing to **chesscxx**!
+Thank you for considering contributing to ``chesscxx``!
 This document describes how to set up a development environment and use the available developer tools.
 
 ## Developer mode
@@ -10,6 +10,52 @@ hidden if the `chesscxx_DEVELOPER_MODE` option is disabled. Enabling this
 option makes tests and other developer targets and options available. Not
 enabling this option means that you are a consumer of this project and thus you
 have no need for these targets and options.
+
+### Prerequisites
+
+To set up a development environment for `chesscxx`, you’ll need:
+
+- **C++23** compatible compiler ([See the docs →](https://igorqs.github.io/chesscxx/#compiler-compatibility) for a list of supported compilers)
+- **CMake** 3.28+ and a compatible generator (e.g., **Ninja**, **Make**, or **Visual Studio**)
+- **clang-tidy** (for IWYU & static analysis checks)
+- **clang-format** (for code formatting)
+- **cppcheck** (for additional static analysis)
+- **codespell** (for spell checking)
+- **Doxygen** (for generating documentation)
+  Extra packages: `sphinx`, `breathe`, `furo`, `sphinx-inline-tabs`, `myst-parser`
+- **gcovr** (for coverage reports)
+- **GTest**, **yaml-cpp**, **magic-enum** (for tests)
+
+You can install most of these tools via your system package manager or using `pip` for Python-based tools.
+
+### Docker
+
+If you prefer, you can use Docker instead of installing all dependencies manually.  
+A `Dockerfile` is provided at the project root that contains all required tools and libraries for building, testing, and running all targets of ``chesscxx``.
+
+First, install Docker, then build the image:
+
+```sh
+docker build -t chesscxx .
+```
+
+To start an interactive container with the project mounted:
+
+```sh
+docker run --rm -it -v $(pwd):/chesscxx -w /chesscxx chesscxx
+```
+
+From inside the container, you can run all the usual commands (e.g., `cmake --preset=dev`, `cmake --build --preset=dev`, `ctest --preset=dev`).
+
+Alternatively, instead of entering the container, you can run each command directly from your host system:
+
+```sh
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx <command>
+# Examples:
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --preset=dev -B docker-build
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx cmake --build docker-build --preset=dev
+docker run --rm -v $(pwd):/chesscxx -w /chesscxx chesscxx ctest --test-dir=docker-build --preset=dev
+```
 
 ### Presets
 
@@ -102,7 +148,8 @@ variable.
 
 #### `run-examples` and `run_<name>`
 
-Runs all the examples created by the `add_example` command, or runs a single example.
+Available if `BUILD_EXAMPLES` is enabled. Runs all the examples created by the `add_example` command,
+or runs a single example.
 
 #### `docs`
 
