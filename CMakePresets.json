@@ -40,7 +40,8 @@
       "name": "clang-tidy",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=^${sourceDir}/(include|examples|tests)/"
+        "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=^${sourceDir}/(include|examples|tests)/",
+        "CMAKE_CXX_COMPILER":"clang++"
       }
     },
     {
@@ -67,7 +68,7 @@
       "name": "ci-linux",
       "description": "Includes fortification with the CMake default release flags",
       "inherits": ["flags-gcc-clang", "ci-std"],
-      "generator": "Unix Makefiles",
+      "generator": "Ninja",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
