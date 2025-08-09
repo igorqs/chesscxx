@@ -78,19 +78,19 @@ jobs:
         cache-to: type=gha,mode=max
 
     - name: Configure
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest "cmake --preset=ci-ubuntu"
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu
 
     - name: Build
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest "cmake --build build --config Release -j \$(nproc)"
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest sh -c "cmake --build build --config Release -j \$(nproc)"
 
     - name: Install
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest "cmake --install build --config Release --prefix prefix"
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
 
     - name: Test
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest "ctest --test-dir=build --output-on-failure --no-tests=error -C Release -j \$(nproc)"
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest sh -c "ctest --test-dir=build --output-on-failure --no-tests=error -C Release -j \$(nproc)"
 
     - name: Generate examples outputs
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest "cmake --build build -t run-examples"
+      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build build -t run-examples
 
     - name: Upload build directory
       uses: actions/upload-artifact@v4
