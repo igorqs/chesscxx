@@ -91,7 +91,7 @@ jobs:
     - name: Build
       run: |
         docker run --rm -v $(pwd)/:/chesscxx -v ~/ccache:/root/.cache/ccache -w /chesscxx chesscxx:latest \
-        sh -c "ccache -p && ccache -s && cmake --build build --config Release -j \$(nproc) && ccache -s"
+        sh -c "ccache -p && ccache -s && ccache -z && cmake --build build --config Release -j \$(nproc) && ccache -s"
 
     - name: Install
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
