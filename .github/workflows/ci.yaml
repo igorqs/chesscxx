@@ -81,7 +81,9 @@ jobs:
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu
 
     - name: Build
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest sh -c "cmake --build build --config Release -j \$(nproc)"
+      run: |
+        docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
+        sh -c "ccache -p && ccache -s && cmake --build build --config Release -j \$(nproc) && ccache -s"
 
     - name: Install
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
