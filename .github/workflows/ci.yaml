@@ -77,12 +77,20 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    - name: Cache ccache directory
+      uses: actions/cache@v4
+      with:
+        path: ~/ccache
+        key: ${{ runner.os }}-ccache-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-ccache-
+
     - name: Configure
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu
 
     - name: Build
       run: |
-        docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
+        docker run --rm -v $(pwd)/:/chesscxx -v ~/ccache:/root/.cache/ccache -w /chesscxx chesscxx:latest \
         sh -c "ccache -p && ccache -s && cmake --build build --config Release -j \$(nproc) && ccache -s"
 
     - name: Install
