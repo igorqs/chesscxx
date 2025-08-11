@@ -41,7 +41,7 @@ add_custom_target(copy_example_assets
 
 function(add_example NAME)
   add_executable("${NAME}" "${NAME}.cpp")
-  target_link_libraries("${NAME}" PRIVATE chesscxx::chesscxx)
+  target_link_libraries("${NAME}" PRIVATE chesscxx::chesscxx pch)
   target_compile_features("${NAME}" PRIVATE cxx_std_23)
 
   target_precompile_headers("${NAME}" REUSE_FROM pch)
