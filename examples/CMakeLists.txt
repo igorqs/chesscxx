@@ -10,6 +10,27 @@ if(PROJECT_IS_TOP_LEVEL)
   find_package(chesscxx REQUIRED)
 endif()
 
+# ---- Pre compiled headers ----
+
+add_library(pch STATIC pch.cpp)
+target_precompile_headers(pch PUBLIC
+  <algorithm>
+  <bitset>
+  <cctype>
+  <cstddef>
+  <cstdlib>
+  <expected>
+  <fstream>
+  <functional>
+  <iostream>
+  <iterator>
+  <optional>
+  <print>
+  <ranges>
+  <string_view>
+  <vector>
+)
+
 # ---- Examples ----
 
 add_custom_target(run-examples)
@@ -22,6 +43,8 @@ function(add_example NAME)
   add_executable("${NAME}" "${NAME}.cpp")
   target_link_libraries("${NAME}" PRIVATE chesscxx::chesscxx)
   target_compile_features("${NAME}" PRIVATE cxx_std_23)
+
+  target_precompile_headers("${NAME}" REUSE_FROM pch)
 
   add_custom_target("run_${NAME}"
     COMMAND "${NAME}" | tee "${NAME}.out"
