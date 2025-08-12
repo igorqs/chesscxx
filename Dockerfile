@@ -3,7 +3,7 @@ FROM archlinux:latest
 # Install dependencies
 RUN pacman -Syu --noconfirm && \
   pacman -S git \
-  cmake ccache ninja mold clang codespell doxygen \
+  cmake ccache ninja mold clang cppcheck codespell doxygen \
   python-sphinx python-breathe python-sphinx-furo python-sphinx-inline-tabs python-myst-parser \
   gtest yaml-cpp --noconfirm && \
   git clone https://github.com/Neargye/magic_enum.git /tmp/magic_enum && \
