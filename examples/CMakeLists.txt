@@ -13,6 +13,7 @@ endif()
 # ---- Pre compiled headers ----
 
 add_library(pch STATIC pch.cpp)
+target_compile_features(pch PRIVATE cxx_std_23)
 target_precompile_headers(pch PUBLIC
   <algorithm>
   <bitset>
