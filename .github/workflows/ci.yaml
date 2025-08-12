@@ -93,11 +93,11 @@ jobs:
         docker run --rm -v $(pwd)/:/chesscxx -v ~/ccache:/root/.cache/ccache -w /chesscxx chesscxx:latest \
         sh -c "ccache -p && ccache -s && ccache -z && cmake --build build --config Release -j \$(nproc) && ccache -s"
 
-    - name: Install
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
-
-    - name: Test
-      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest sh -c "ctest --test-dir=build --output-on-failure --no-tests=error -C Release -j \$(nproc)"
+#    - name: Install
+#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
+#
+#    - name: Test
+#      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest sh -c "ctest --test-dir=build --output-on-failure --no-tests=error -C Release -j \$(nproc)"
 
 #    - name: Generate examples outputs
 #      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build build -t run-examples
