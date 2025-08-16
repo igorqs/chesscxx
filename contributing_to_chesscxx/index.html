@@ -294,8 +294,11 @@ have no need for these targets and options.</p>
 <h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
 <p>To set up a development environment for <code class="docutils literal notranslate"><span class="pre">chesscxx</span></code>, you’ll need:</p>
 <ul class="simple">
-<li><p><strong>C++23</strong> compatible compiler (<a class="reference external" href="https://igorqs.github.io/chesscxx/#compiler-compatibility">See the docs →</a> for a list of supported compilers)</p></li>
-<li><p><strong>CMake</strong> 3.28+ and a compatible generator (e.g., <strong>Ninja</strong>, <strong>Make</strong>, or <strong>Visual Studio</strong>)</p></li>
+<li><p><strong>C++23</strong> compatible compiler (<a class="reference external" href="https://igorqs.github.io/chesscxx/#compiler-compatibility">See the docs →</a> for a list of supported compilers; clang with
+libstdc++ is used in the CI)</p></li>
+<li><p><strong>CMake</strong> 3.28+ and a compatible generator (e.g., <strong>Ninja</strong>, <strong>Make</strong>, or <strong>Visual Studio</strong>; Ninja is used in the CI)</p></li>
+<li><p><strong>ccache</strong> (to speed up rebuilds)</p></li>
+<li><p><strong>ctcache</strong> (to speed up clang-tidy reruns)</p></li>
 <li><p><strong>clang-tidy</strong> (for IWYU &amp; static analysis checks)</p></li>
 <li><p><strong>clang-format</strong> (for code formatting)</p></li>
 <li><p><strong>cppcheck</strong> (for additional static analysis)</p></li>
