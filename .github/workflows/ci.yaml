@@ -120,7 +120,6 @@ jobs:
       with:
         name: build-dir
         path: build
-        include-hidden-files: true
 
   docs:
     needs: [test, iwyu]
