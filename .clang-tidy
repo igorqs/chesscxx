@@ -9,7 +9,6 @@ Checks: >
   -misc-non-private-member-variables-in-classes,
   -readability-braces-around-statements,
   -hicpp-braces-around-statements,
-  -modernize-use-constraints,
   -bugprone-exception-escape,
   -cert-dcl58-cpp,
   -readability-redundant-member-init
