@@ -15,8 +15,11 @@ have no need for these targets and options.
 
 To set up a development environment for `chesscxx`, you’ll need:
 
-- **C++23** compatible compiler ([See the docs →](https://igorqs.github.io/chesscxx/#compiler-compatibility) for a list of supported compilers)
-- **CMake** 3.28+ and a compatible generator (e.g., **Ninja**, **Make**, or **Visual Studio**)
+- **C++23** compatible compiler ([See the docs →](https://igorqs.github.io/chesscxx/#compiler-compatibility) for a list of supported compilers; clang with
+  libstdc++ is used in the CI)
+- **CMake** 3.28+ and a compatible generator (e.g., **Ninja**, **Make**, or **Visual Studio**; Ninja is used in the CI)
+- **ccache** (to speed up rebuilds)
+- **ctcache** (to speed up clang-tidy reruns)
 - **clang-tidy** (for IWYU & static analysis checks)
 - **clang-format** (for code formatting)
 - **cppcheck** (for additional static analysis)
