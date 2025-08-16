@@ -12,8 +12,7 @@ Checks: >
   -modernize-use-constraints,
   -bugprone-exception-escape,
   -cert-dcl58-cpp,
-  -readability-redundant-member-init,
-  -clang-diagnostic-unused-command-line-argument
+  -readability-redundant-member-init
 WarningsAsErrors: '*'
 CheckOptions:
   - { key: misc-include-cleaner.IgnoreHeaders,                         value: 'yaml-cpp/.*' }

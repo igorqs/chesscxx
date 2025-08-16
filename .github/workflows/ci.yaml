@@ -85,13 +85,26 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-ccache-
 
+    - name: Cache ctcache directory
+      uses: actions/cache@v4
+      with:
+        path: ~/ctcache
+        key: ${{ runner.os }}-ctcache-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-ctcache-
+
     - name: Configure
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --preset=ci-ubuntu
 
     - name: Build
       run: |
-        docker run --rm -v $(pwd)/:/chesscxx -v ~/ccache:/root/.cache/ccache -w /chesscxx chesscxx:latest \
-        sh -c "ccache -p && ccache -s && ccache -z && cmake --build build --config Release -j \$(nproc) && ccache -s"
+        docker run --rm -v $(pwd)/:/chesscxx -v ~/ccache:/root/.cache/ccache -v ~/ctcache:/tmp/ctcache-root -w /chesscxx chesscxx:latest \
+        sh -c "
+          ccache -p && ccache -s && ccache -z &&
+          clang-tidy-cache --cache-dir && clang-tidy-cache --show-stats && clang-tidy-cache --zero-stats &&
+          cmake --build build --config Release -j \$(nproc) &&
+          ccache -s && clang-tidy-cache --show-stats
+        "
 
 #    - name: Install
 #      run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --install build --config Release --prefix prefix
