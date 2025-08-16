@@ -3,7 +3,7 @@ FROM archlinux:latest
 # Install packages from pacman
 RUN pacman -Syu --noconfirm && \
   pacman -S --noconfirm \
-  git cmake ccache ninja gcc clang cppcheck codespell doxygen \
+  git cmake ccache ninja clang cppcheck codespell doxygen \
   python python-pipx python-sphinx python-breathe python-sphinx-furo python-sphinx-inline-tabs python-myst-parser \
   gtest yaml-cpp --noconfirm && \
   pacman -Scc --noconfirm
