@@ -10,6 +10,14 @@ default(IWYU_COMMAND clang-tidy)
 default(
     PATTERNS
     include/*.hpp include/*.h
+    tests/*.hpp tests/*.h
+    examples/*.hpp examples/*.h
+)
+default(
+    COMPILATION_OPTIONS
+    -xc++
+    -std=c++23
+    -Iinclude
 )
 default(FIX NO)
 
@@ -25,7 +33,6 @@ endif()
 file(GLOB_RECURSE files ${PATTERNS})
 
 execute_process(
-  COMMAND "${IWYU_COMMAND}" ${flags} ${files} -- -xc++ -std=c++23
+  COMMAND ${IWYU_COMMAND} ${flags} ${files} -- ${COMPILATION_OPTIONS}
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  RESULT_VARIABLE result
 )
