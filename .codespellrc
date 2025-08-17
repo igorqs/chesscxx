@@ -3,4 +3,4 @@ builtin = clear,rare,en-GB_to_en-US,names,informal,code
 check-filenames =
 check-hidden =
 ignore-words-list = FileTest, uint
-skip = */.git,*/build,*/docker-build,*/prefix
+skip = */.git,*/build,*/prefix

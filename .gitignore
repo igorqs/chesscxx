@@ -2,7 +2,9 @@
 .cache/
 CMakeUserPresets.json
 build/
-docker-build/
 prefix/
 Testing/
 cmake-build-*/
+
+venv/
+.venv
