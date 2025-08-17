@@ -19,4 +19,4 @@ RUN git clone https://github.com/Neargye/magic_enum.git /tmp/magic_enum && \
 ENV VIRTUAL_ENV=/opt/venv
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-RUN pip install sphinx breathe sphinx-furo sphinx-inline-tabs myst-parser git+https://github.com/matus-chochlik/ctcache.git
+RUN pip install sphinx breathe furo sphinx-inline-tabs myst-parser git+https://github.com/matus-chochlik/ctcache.git
