@@ -1,4 +1,4 @@
-# A Modern C++23 Chess Library
+# A Modern C++ Chess Library
 
 ``chesscxx`` is a C++23 library for chess programming.  
 It provides the essential tools for working with chess: simulating games, generating legal moves, parsing, and formatting.
