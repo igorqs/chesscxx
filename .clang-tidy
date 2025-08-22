@@ -11,7 +11,8 @@ Checks: >
   -hicpp-braces-around-statements,
   -bugprone-exception-escape,
   -cert-dcl58-cpp,
-  -readability-redundant-member-init
+  -readability-redundant-member-init,
+  -misc-no-recursion
 WarningsAsErrors: '*'
 CheckOptions:
   - { key: misc-include-cleaner.IgnoreHeaders,                         value: 'yaml-cpp/.*' }
