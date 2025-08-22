@@ -34,5 +34,6 @@ BENCHMARK(BM_Perft)->Arg(1)->Unit(benchmark::kMillisecond);
 BENCHMARK(BM_Perft)->Arg(2)->Unit(benchmark::kMillisecond);
 BENCHMARK(BM_Perft)->Arg(3)->Unit(benchmark::kMillisecond);
 BENCHMARK(BM_Perft)->Arg(4)->Unit(benchmark::kMillisecond);
+BENCHMARK(BM_Perft)->Arg(5)->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();
