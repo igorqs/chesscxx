@@ -3,6 +3,7 @@
 
 #include <array>
 #include <generator>
+#include <memory>
 #include <optional>
 #include <ranges>
 #include <utility>
@@ -23,29 +24,35 @@
 
 namespace chesscxx::internal {
 
-inline auto pseudoLegalPawnCaptures(Position position, Square origin,
-                                    Color color) -> std::generator<Square> {
+inline auto pseudoLegalPawnCaptures(std::shared_ptr<const Position> position,
+                                    Square origin, Color color)
+    -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnCaptures(origin, color) |
       std::views::filter([position, color](const Square& destination) {
-        return hasPieceAt(position.piecePlacement(), destination, !color) ||
-               destination == position.enPassantTargetSquare();
+        return hasPieceAt(position->piecePlacement(), destination, !color) ||
+               destination == position->enPassantTargetSquare();
       }));
 }
 
-inline auto pseudoLegalPawnMoves(Position position, Square square, Color color)
+inline auto pseudoLegalPawnMoves(std::shared_ptr<const Position> position,
+                                 Square square, Color color)
     -> std::generator<Square> {
+  const std::shared_ptr<const PiecePlacement> piece_placement(
+      position, &position->piecePlacement());
+
   co_yield std::ranges::elements_of(
-      pseudoLegalPawnPushs(position.piecePlacement(), square, color));
+      pseudoLegalPawnPushs(piece_placement, square, color));
   co_yield std::ranges::elements_of(
       pseudoLegalPawnCaptures(position, square, color));
 }
 
-inline auto pseudoLegalMoves(Position position, Square square)
-    -> std::generator<Square> {
-  const auto& piece_placement = position.piecePlacement();
+inline auto pseudoLegalRawMoves(std::shared_ptr<const Position> position,
+                                Square square) -> std::generator<Square> {
+  const std::shared_ptr<const PiecePlacement> piece_placement(
+      position, &position->piecePlacement());
 
-  auto piece = pieceAt(piece_placement, square);
+  auto piece = pieceAt(*piece_placement, square);
   if (!piece) co_return;
 
   using std::ranges::elements_of;
@@ -80,14 +87,15 @@ inline auto pseudoLegalMoves(Position position, Square square)
   }
 }
 
-inline auto pseudoLegalMoves(Position position) -> std::generator<RawMove> {
+inline auto pseudoLegalRawMoves(std::shared_ptr<const Position> position)
+    -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
-  const auto& piece_placement = position.piecePlacement();
-  const auto& color = position.activeColor();
+  const auto& piece_placement = position->piecePlacement();
+  const auto& color = position->activeColor();
 
   auto location_to_pseudo_legal_moves = [position](Square piece_location) {
-    return pseudoLegalMoves(position, piece_location) |
+    return pseudoLegalRawMoves(position, piece_location) |
            std::views::transform([piece_location](const Square& destination) {
              return RawMove(piece_location, destination);
            });
@@ -99,28 +107,30 @@ inline auto pseudoLegalMoves(Position position) -> std::generator<RawMove> {
                        std::views::join);
 }
 
-inline auto legalRawMoves(Position position) -> std::generator<RawMove> {
+inline auto legalRawMoves(std::shared_ptr<const Position> position)
+    -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
-  co_yield elements_of(pseudoLegalMoves(position) |
+  co_yield elements_of(pseudoLegalRawMoves(position) |
                        std::views::filter([position](const RawMove& move) {
                          return !moveResultsInSelfCheck(
-                             position.piecePlacement(), move,
-                             position.activeColor());
+                             position->piecePlacement(), move,
+                             position->activeColor());
                        }));
 }
 
-inline auto legalCastlings(Position position) -> std::generator<CastlingSide> {
+inline auto legalCastlings(std::shared_ptr<const Position> position)
+    -> std::generator<CastlingSide> {
   constexpr static std::array<CastlingSide, 2> kSides = {
       CastlingSide::kKingside, CastlingSide::kQueenside};
 
-  const auto& color = position.activeColor();
+  const auto& color = position->activeColor();
 
   for (const auto& side : kSides) {
-    bool const can_castle = position.castlingRights().canCastle(side, color);
+    bool const can_castle = position->castlingRights().canCastle(side, color);
     if (!can_castle) continue;
 
-    if (!castlingError(position.piecePlacement(), side, color)) co_yield side;
+    if (!castlingError(position->piecePlacement(), side, color)) co_yield side;
   }
 }
 
@@ -134,14 +144,15 @@ inline auto uciPromotions(RawMove raw_move) -> std::generator<UciMove> {
   }
 }
 
-inline auto legalNormalUciMoves(Position position) -> std::generator<UciMove> {
+inline auto legalNormalUciMoves(std::shared_ptr<const Position> position)
+    -> std::generator<UciMove> {
   using std::ranges::elements_of;
 
   for (auto raw_move : legalRawMoves(position)) {
-    auto piece = pieceAt(position.piecePlacement(), raw_move.origin);
+    auto piece = pieceAt(position->piecePlacement(), raw_move.origin);
     bool const is_pawn = piece && piece->type == PieceType::kPawn;
     bool const is_promotion_rank =
-        raw_move.destination.rank == promotionRank(position.activeColor());
+        raw_move.destination.rank == promotionRank(position->activeColor());
     bool const is_promotion = is_pawn && is_promotion_rank;
 
     if (is_promotion) {
@@ -153,13 +164,14 @@ inline auto legalNormalUciMoves(Position position) -> std::generator<UciMove> {
   }
 }
 
-inline auto legalMoves(Position position) -> std::generator<UciMove> {
+inline auto legalMoves(std::shared_ptr<const Position> position)
+    -> std::generator<UciMove> {
   using std::ranges::elements_of;
 
   co_yield elements_of(
       legalCastlings(position) |
       std::views::transform([&position](const auto& side) {
-        auto raw_move = castlingMoves(side, position.activeColor()).king_move;
+        auto raw_move = castlingMoves(side, position->activeColor()).king_move;
         return UciMove(raw_move.origin, raw_move.destination, std::nullopt);
       }));
 
@@ -167,7 +179,9 @@ inline auto legalMoves(Position position) -> std::generator<UciMove> {
 }
 
 inline auto hasLegalMove(const Position& position) -> bool {
-  auto moves = legalMoves(position);
+  auto shared_ptr = std::make_shared<const Position>(position);
+
+  auto moves = legalMoves(shared_ptr);
   return moves.begin() != moves.end();
 }
 

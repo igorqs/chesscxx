@@ -27,7 +27,7 @@ To set up a development environment for `chesscxx`, you’ll need:
 - **Doxygen** (for generating documentation)
   Extra packages: `sphinx`, `breathe`, `furo`, `sphinx-inline-tabs`, `myst-parser`
 - **gcovr** (for coverage reports)
-- **GTest**, **yaml-cpp**, **magic-enum** (for tests)
+- **GTest**, **yaml-cpp**, **magic-enum**, **Google Benchmark** (for testing and benchmarking)
 
 You can install most of these tools via your system package manager or using `pip` for Python-based tools.
 

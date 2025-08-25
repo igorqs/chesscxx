@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <generator>
+#include <memory>
 #include <optional>
 #include <ranges>
 #include <utility>
@@ -36,9 +37,11 @@ inline auto squaresWith(PiecePlacement piece_placement, const T& condition) {
 }
 
 template <typename T>
-inline auto squaresWithout(PiecePlacement piece_placement, const T& condition) {
+inline auto squaresWithout(
+    const std::shared_ptr<const PiecePlacement>& piece_placement,
+    const T& condition) {
   return std::views::filter([piece_placement, condition](const auto& square) {
-    return !hasPieceAt(piece_placement, square, condition);
+    return !hasPieceAt(*piece_placement, square, condition);
   });
 }
 
@@ -81,33 +84,36 @@ inline auto firstMatchingPieceInEachRange(
   });
 }
 
-inline auto pseudoLegalKnightMoves(PiecePlacement piece_placement,
-                                   Square square, Color color)
-    -> std::generator<Square> {
+inline auto pseudoLegalKnightMoves(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square square,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(knightMoves(square) |
                                     squaresWithout(piece_placement, color));
 }
 
-inline auto pseudoLegalKingMoves(PiecePlacement piece_placement, Square square,
-                                 Color color) -> std::generator<Square> {
+inline auto pseudoLegalKingMoves(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square square,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(kingMoves(square) |
                                     squaresWithout(piece_placement, color));
 }
 
-inline auto pseudoLegalPawnPushs(PiecePlacement piece_placement, Square origin,
-                                 Color color) -> std::generator<Square> {
+inline auto pseudoLegalPawnPushs(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square origin,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       pawnSlidingMove(origin, color) |
       std::views::take_while([piece_placement](const Square& destination) {
-        return !hasPieceAt(piece_placement, destination);
+        return !hasPieceAt(*piece_placement, destination);
       }));
 }
 
-inline auto takeWhileEmptyOrCapture(std::generator<Square> gen,
-                                    PiecePlacement piece_placement, Color color)
+inline auto takeWhileEmptyOrCapture(
+    std::generator<Square> gen,
+    std::shared_ptr<const PiecePlacement> piece_placement, Color color)
     -> std::generator<Square> {
   for (auto square : std::move(gen)) {
-    auto piece = pieceAt(piece_placement, square);
+    auto piece = pieceAt(*piece_placement, square);
     if (piece) {
       if (piece->color != color) co_yield square;
       co_return;
@@ -117,8 +123,9 @@ inline auto takeWhileEmptyOrCapture(std::generator<Square> gen,
   }
 }
 
-inline auto pseudoLegalRookMoves(PiecePlacement piece_placement, Square square,
-                                 Color color) -> std::generator<Square> {
+inline auto pseudoLegalRookMoves(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square square,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       rookSlidingMoves(square) |
       std::views::transform(
@@ -129,9 +136,9 @@ inline auto pseudoLegalRookMoves(PiecePlacement piece_placement, Square square,
       std::views::join);
 }
 
-inline auto pseudoLegalBishopMoves(PiecePlacement piece_placement,
-                                   Square square, Color color)
-    -> std::generator<Square> {
+inline auto pseudoLegalBishopMoves(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square square,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       bishopSlidingMoves(square) |
       std::views::transform(
@@ -142,8 +149,9 @@ inline auto pseudoLegalBishopMoves(PiecePlacement piece_placement,
       std::views::join);
 }
 
-inline auto pseudoLegalQueenMoves(PiecePlacement piece_placement, Square square,
-                                  Color color) -> std::generator<Square> {
+inline auto pseudoLegalQueenMoves(
+    std::shared_ptr<const PiecePlacement> piece_placement, Square square,
+    Color color) -> std::generator<Square> {
   co_yield std::ranges::elements_of(
       queenSlidingMoves(square) |
       std::views::transform(
