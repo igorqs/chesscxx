@@ -38,17 +38,21 @@ inline auto pseudoLegalPawnCaptures(std::shared_ptr<const Position> position,
 inline auto pseudoLegalPawnMoves(std::shared_ptr<const Position> position,
                                  Square square, Color color)
     -> std::generator<Square> {
+  const std::shared_ptr<const PiecePlacement> piece_placement(
+      position, &position->piecePlacement());
+
   co_yield std::ranges::elements_of(
-      pseudoLegalPawnPushs(position->piecePlacement(), square, color));
+      pseudoLegalPawnPushs(piece_placement, square, color));
   co_yield std::ranges::elements_of(
       pseudoLegalPawnCaptures(position, square, color));
 }
 
 inline auto pseudoLegalRawMoves(std::shared_ptr<const Position> position,
                                 Square square) -> std::generator<Square> {
-  const auto& piece_placement = position->piecePlacement();
+  const std::shared_ptr<const PiecePlacement> piece_placement(
+      position, &position->piecePlacement());
 
-  auto piece = pieceAt(piece_placement, square);
+  auto piece = pieceAt(*piece_placement, square);
   if (!piece) co_return;
 
   using std::ranges::elements_of;
