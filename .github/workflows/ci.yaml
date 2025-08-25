@@ -149,8 +149,8 @@ jobs:
 
     - name: Run benchmarks
       run: |
-        echo "0" | sudo tee /proc/sys/kernel/randomize_va_space && \
-        docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build build -t run-benchmarks
+        docker run --rm --privileged -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
+        sh -c "echo 0 > /proc/sys/kernel/randomize_va_space && cmake --build build -t run-benchmarks"
 
 #  docs:
 #    needs: [benchmarks, iwyu]
