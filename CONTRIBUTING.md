@@ -154,6 +154,11 @@ variable.
 Available if `BUILD_EXAMPLES` is enabled. Runs all the examples created by the `add_example` command,
 or runs a single example.
 
+#### `run-benchmarks` and `run_<name>`
+
+Available if `BUILD_BENCHMARKS` is enabled. Runs all the benchmarks created by the `add_benchmark` command,
+or runs a single benchmark.
+
 #### `docs`
 
 Builds the documentation using Doxygen + Breathe + Sphinx. The output will
