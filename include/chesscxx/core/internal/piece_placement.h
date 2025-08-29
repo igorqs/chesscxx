@@ -28,6 +28,10 @@ inline auto moveResultsInSelfCheck(PiecePlacement /*piece_placement*/,
                                    const RawMove& /*move*/,
                                    const Color& /*color*/) -> bool;
 
+inline auto enPassantCaptureResultsInSelfCheck(
+    PiecePlacement /*piece_placement*/, const RawMove& /*move*/,
+    const Square& /*captured_pawn_square*/, const Color& /*color*/) -> bool;
+
 inline auto castlingError(PiecePlacement /*piece_placement*/,
                           const CastlingSide& /*side*/, const Color& /*color*/)
     -> std::optional<MoveError>;
@@ -142,6 +146,32 @@ inline auto normalMoveError(const PiecePlacement& piece_placement,
   return std::nullopt;
 }
 
+inline auto enPassantCaptureError(const PiecePlacement& piece_placement,
+                                  const UciMove& uci,
+                                  const Square& captured_pawn_square)
+    -> std::optional<MoveError> {
+  const auto& origin = uci.origin;
+  const auto& destination = uci.destination;
+
+  auto piece = pieceAt(piece_placement, origin);
+  if (!piece) return MoveError::kNoPieceAtOrigin;
+
+  if (uci.promotion.has_value()) {
+    auto error = promotionError(*piece, destination.rank);
+    if (error) return error;
+  } else {
+    auto error = missingPromotionError(*piece, destination.rank);
+    if (error) return error;
+  }
+
+  if (enPassantCaptureResultsInSelfCheck(piece_placement, rawMoveFromUci(uci),
+                                         captured_pawn_square, piece->color)) {
+    return MoveError::kMoveLeavesOwnKingInCheck;
+  }
+
+  return std::nullopt;
+}
+
 class PiecePlacementModifier {
  public:
   static auto doNormalMove(PiecePlacement& piece_placement, const UciMove& uci)
@@ -159,6 +189,20 @@ class PiecePlacementModifier {
       piece_placement.updatePieceAt(uci.destination,
                                     Piece(toPieceType(*uci.promotion), color));
     }
+
+    return {};
+  }
+
+  static auto doEnPassantCapture(PiecePlacement& piece_placement,
+                                 const UciMove& uci,
+                                 const Square& captured_pawn_square)
+      -> std::expected<void, MoveError> {
+    auto error =
+        enPassantCaptureError(piece_placement, uci, captured_pawn_square);
+    if (error.has_value()) return std::unexpected(error.value());
+
+    relocatePiece(piece_placement, rawMoveFromUci(uci));
+    setPieceAt(piece_placement, captured_pawn_square, std::nullopt);
 
     return {};
   }
@@ -194,6 +238,15 @@ inline auto moveResultsInSelfCheck(PiecePlacement piece_placement,
                                    const RawMove& move, const Color& color)
     -> bool {
   PiecePlacementModifier::relocatePiece(piece_placement, move);
+  return isKingAttacked(piece_placement, color);
+}
+
+inline auto enPassantCaptureResultsInSelfCheck(
+    PiecePlacement piece_placement, const RawMove& move,
+    const Square& captured_pawn_square, const Color& color) -> bool {
+  PiecePlacementModifier::relocatePiece(piece_placement, move);
+  PiecePlacementModifier::setPieceAt(piece_placement, captured_pawn_square,
+                                     std::nullopt);
   return isKingAttacked(piece_placement, color);
 }
 

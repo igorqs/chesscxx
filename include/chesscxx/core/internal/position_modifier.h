@@ -115,10 +115,21 @@ class PositionModifier {
 
     bool const is_pawn_move = origin_piece->type == PieceType::kPawn;
     bool const is_normal_capture = destination_piece.has_value();
+
+    auto captured_pawn_square =
+        enPassantCapturedPawnSquare(uci.destination, active_color);
     auto partial_origin = partialOriginFromMove(position, rawMoveFromUci(uci));
 
+    bool const is_en_passant_capture =
+        is_pawn_move && position.enPassantTargetSquare() == uci.destination &&
+        captured_pawn_square;
+
     auto result =
-        PiecePlacementModifier::doNormalMove(position.piece_placement_, uci);
+        is_en_passant_capture
+            ? PiecePlacementModifier::doEnPassantCapture(
+                  position.piece_placement_, uci, *captured_pawn_square)
+            : PiecePlacementModifier::doNormalMove(position.piece_placement_,
+                                                   uci);
 
     if (result) {
       auto previous_castling_rights = castling_rights;
@@ -126,6 +137,7 @@ class PositionModifier {
       NormalMoveRecord move_record = {
           .piece_type = origin_piece->type,
           .partial_origin = *partial_origin,
+          .is_en_passant_capture = is_en_passant_capture,
           .uci_move = uci,
           .previous_en_passant_file = en_passant_file,
           .previous_halfmove_clock = halfmove_clock,
@@ -133,18 +145,6 @@ class PositionModifier {
 
       if (is_normal_capture) {
         move_record.captured_piece_type = destination_piece->type;
-      }
-
-      // Handle en passant capture
-      bool const is_en_passant_capture =
-          is_pawn_move && position.enPassantTargetSquare() == uci.destination;
-      if (is_en_passant_capture) {
-        if (auto captured_pawn_square =
-                enPassantCapturedPawnSquare(uci.destination, active_color)) {
-          move_record.is_en_passant_capture = true;
-          PiecePlacementModifier::setPieceAt(
-              position.piece_placement_, *captured_pawn_square, std::nullopt);
-        }
       }
 
       // Update castling rights

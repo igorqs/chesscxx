@@ -4,6 +4,7 @@
 #include <generator>
 #include <optional>
 #include <ranges>
+#include <utility>
 
 #include "../../core/internal/piece_placement.h"
 #include "../../core/internal/raw_move.h"
@@ -33,9 +34,17 @@ inline auto legalEnPassantCaptures(Position position)
 
   co_yield elements_of(pseudoLegalEnPassantCaptures(position) |
                        std::views::filter([position](const RawMove& move) {
-                         return !moveResultsInSelfCheck(
-                             position.piecePlacement(), move,
-                             position.activeColor());
+                         auto captured_pawn_square =
+                             enPassantCapturedPawnSquare(
+                                 move.destination, position.activeColor());
+
+                         if (captured_pawn_square) {
+                           return !enPassantCaptureResultsInSelfCheck(
+                               position.piecePlacement(), move,
+                               *captured_pawn_square, position.activeColor());
+                         }
+
+                         std::unreachable();
                        }));
 }
 

@@ -102,12 +102,28 @@ inline auto pseudoLegalMoves(Position position) -> std::generator<RawMove> {
 inline auto legalRawMoves(Position position) -> std::generator<RawMove> {
   using std::ranges::elements_of;
 
-  co_yield elements_of(pseudoLegalMoves(position) |
-                       std::views::filter([position](const RawMove& move) {
-                         return !moveResultsInSelfCheck(
-                             position.piecePlacement(), move,
-                             position.activeColor());
-                       }));
+  co_yield elements_of(
+      pseudoLegalMoves(position) |
+      std::views::filter([position](const RawMove& move) {
+        auto origin_piece = pieceAt(position.piecePlacement(), move.origin);
+        auto captured_pawn_square = enPassantCapturedPawnSquare(
+            move.destination, position.activeColor());
+
+        bool const is_pawn_move = origin_piece->type == PieceType::kPawn;
+        bool const is_en_passant_capture =
+            is_pawn_move &&
+            position.enPassantTargetSquare() == move.destination &&
+            captured_pawn_square;
+
+        if (is_en_passant_capture) {
+          return !enPassantCaptureResultsInSelfCheck(
+              position.piecePlacement(), move, *captured_pawn_square,
+              position.activeColor());
+        }
+
+        return !moveResultsInSelfCheck(position.piecePlacement(), move,
+                                       position.activeColor());
+      }));
 }
 
 inline auto legalCastlings(Position position) -> std::generator<CastlingSide> {

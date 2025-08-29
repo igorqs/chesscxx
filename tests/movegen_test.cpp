@@ -12,6 +12,7 @@
 
 #include <format>
 #include <magic_enum/magic_enum.hpp>
+#include <ostream>
 #include <ranges>
 #include <string_view>
 #include <unordered_set>
@@ -55,6 +56,11 @@ class MovegenFixture {
   }
   auto uci_moves() const -> const std::unordered_set<chesscxx::UciMove>& {
     return uci_moves_;
+  }
+
+  friend void PrintTo(const MovegenFixture& fixture, std::ostream* output) {
+    *output << std::format("{} {} {}", fixture.raw_, fixture.san_moves_,
+                           fixture.uci_moves_);
   }
 
  private:
@@ -111,7 +117,7 @@ TEST_P(MovegenSuite, GenerateLegalMovesCorrectly) {
   auto san_moves = fixture.san_moves();
 
   for (auto move : chesscxx::legalSanMoves(fixture.game())) {
-    EXPECT_TRUE(san_moves.contains(move));
+    EXPECT_TRUE(san_moves.contains(move)) << std::format("missing {}", move);
     san_moves.erase(move);
   }
 
@@ -120,7 +126,7 @@ TEST_P(MovegenSuite, GenerateLegalMovesCorrectly) {
   auto uci_moves = fixture.uci_moves();
 
   for (auto move : chesscxx::legalUciMoves(fixture.game())) {
-    EXPECT_TRUE(uci_moves.contains(move));
+    EXPECT_TRUE(uci_moves.contains(move)) << std::format("missing {}", move);
     uci_moves.erase(move);
   }
 
@@ -135,7 +141,9 @@ TEST_P(MovegenSuite, GeneratedLegalMovesAndLegalMovesAreConsistent) {
 
   for (const auto& move : kUciMoves) {
     auto result = game.move(move);
-    EXPECT_EQ(result.has_value(), uci_moves.contains(move));
+    EXPECT_EQ(result.has_value(), uci_moves.contains(move))
+        << std::format("{:fen} {} {} {}", game, move, result.has_value(),
+                       uci_moves.contains(move));
     if (result) game.undoMove();
   }
 }
@@ -146,7 +154,7 @@ TEST_P(OverflowMovegenSuite, GenerateLegalMovesCorrectly) {
   auto san_moves = fixture.san_moves();
 
   for (auto move : chesscxx::legalSanMoves(fixture.game())) {
-    EXPECT_TRUE(san_moves.contains(move));
+    EXPECT_TRUE(san_moves.contains(move)) << std::format("missing {}", move);
     san_moves.erase(move);
   }
 
@@ -155,7 +163,7 @@ TEST_P(OverflowMovegenSuite, GenerateLegalMovesCorrectly) {
   auto uci_moves = fixture.uci_moves();
 
   for (auto move : chesscxx::legalUciMoves(fixture.game())) {
-    EXPECT_TRUE(uci_moves.contains(move));
+    EXPECT_TRUE(uci_moves.contains(move)) << std::format("missing {}", move);
     uci_moves.erase(move);
   }
 
