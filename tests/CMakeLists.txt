@@ -11,11 +11,11 @@ if(PROJECT_IS_TOP_LEVEL)
   enable_testing()
 endif()
 
-# ---- Tests ----
-
 find_package(GTest REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(magic_enum REQUIRED)
+
+# ---- Tests ----
 
 add_custom_target(copy_test_assets
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data ${PROJECT_BINARY_DIR}/data
