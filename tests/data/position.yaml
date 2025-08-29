@@ -46,6 +46,7 @@ no_legal_en_passant_inputs:
   - "4k3/8/8/3p4/8/8/8/4K3 w - d6 0 1"
   - "4k3/4r3/8/3pP3/8/8/8/4K3 w - d6 0 1"
   - "4k3/b3r3/8/2PpP3/8/4K3/8/8 w - d6 0 1"
+  - "8/8/3p4/KPp4r/5p1k/1R6/4P1P1/8 w - c6 0 1"
 
 legal_en_passant_inputs:
   - "4k3/8/8/8/2pP4/8/8/4K3 b - d3 0 1"

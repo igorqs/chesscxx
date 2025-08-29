@@ -113,6 +113,9 @@ fixtures:
   - - "[FEN\"4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 2\"]"
     - [e6, exf6, Kd1, Kf1, Kd2, Ke2, Kf2]
     - [e5e6, e5f6, e1d1, e1f1, e1d2, e1e2, e1f2]
+  - - "[FEN\"8/8/3p4/KPp4r/5p1k/1R6/4P1P1/8 w - c6 0 1\"]"
+    - [Ka6, Kb6, Ka4, b6, Rb4, Rb2, Rb1, Ra3, Rc3, Rd3, Re3, Rf3, Rg3, Rh3+, e3, e4, g3+, g4]
+    - [a5a6, a5b6, a5a4, b5b6, b3b4, b3b2, b3b1, b3a3, b3c3, b3d3, b3e3, b3f3, b3g3, b3h3, e2e3, e2e4, g2g3, g2g4]
 
 overflow_fixtures:
   - - "[FEN \"K7/8/8/8/8/8/8/k7 w - - 4294967295 1\"]"
