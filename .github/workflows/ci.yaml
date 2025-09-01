@@ -118,8 +118,39 @@ jobs:
         name: build-dir
         path: build
 
+  benchmarks:
+    needs: [test]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image (cached)
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: chesscxx:latest
+        load: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Download build directory
+      uses: actions/download-artifact@v4
+      with:
+        name: build-dir
+        path: build
+
+    - name: Run benchmarks
+      run: |
+        docker run --rm --privileged -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
+        sh -c "echo 0 > /proc/sys/kernel/randomize_va_space && cmake --build build -t run-benchmarks"
+
   docs:
-    needs: [test, iwyu]
+    needs: [benchmarks, iwyu]
 
     runs-on: ubuntu-24.04
 
