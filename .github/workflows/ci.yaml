@@ -178,7 +178,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-dir
-        path: previous-build
+        path: build
 
     - name: Generate examples outputs
       run: docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest cmake --build build -t run-examples
