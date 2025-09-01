@@ -13,6 +13,7 @@
 #include "../../core/internal/piece_placement_piece_at.h"
 #include "../../core/internal/rank.h"
 #include "../../core/internal/raw_move.h"
+#include "../../core/internal/square.h"
 #include "../../piece.h"
 #include "../../piece_type.h"
 #include "../../position.h"

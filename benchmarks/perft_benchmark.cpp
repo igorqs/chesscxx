@@ -4,6 +4,7 @@
 #include <chesscxx/parse.h>
 
 #include <cstdint>
+#include <cstdlib>
 #include <utility>
 
 namespace {
