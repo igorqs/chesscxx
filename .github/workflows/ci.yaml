@@ -232,7 +232,7 @@ jobs:
     - name: Build docs
       run: |
         docker run --rm -v $(pwd)/:/chesscxx -w /chesscxx chesscxx:latest \
-        cmake -P cmake/docs.cmake
+        cmake "-DPROJECT_SOURCE_DIR=/chesscxx" "-DPROJECT_BINARY_DIR=/chesscxx/build" -P cmake/docs.cmake
 
     - name: Deploy docs
       uses: peaceiris/actions-gh-pages@v4
