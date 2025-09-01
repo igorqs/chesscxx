@@ -306,7 +306,7 @@ libstdc++ is used in the CI)</p></li>
 <li><p><strong>Doxygen</strong> (for generating documentation)
 Extra packages: <code class="docutils literal notranslate"><span class="pre">sphinx</span></code>, <code class="docutils literal notranslate"><span class="pre">breathe</span></code>, <code class="docutils literal notranslate"><span class="pre">furo</span></code>, <code class="docutils literal notranslate"><span class="pre">sphinx-inline-tabs</span></code>, <code class="docutils literal notranslate"><span class="pre">myst-parser</span></code></p></li>
 <li><p><strong>gcovr</strong> (for coverage reports)</p></li>
-<li><p><strong>GTest</strong>, <strong>yaml-cpp</strong>, <strong>magic-enum</strong> (for tests)</p></li>
+<li><p><strong>GTest</strong>, <strong>yaml-cpp</strong>, <strong>magic-enum</strong>, <strong>Google Benchmark</strong> (for testing and benchmarking)</p></li>
 </ul>
 <p>You can install most of these tools via your system package manager or using <code class="docutils literal notranslate"><span class="pre">pip</span></code> for Python-based tools.</p>
 </section>
@@ -420,6 +420,11 @@ variable.</p>
 <p>Available if <code class="docutils literal notranslate"><span class="pre">BUILD_EXAMPLES</span></code> is enabled. Runs all the examples created by the <code class="docutils literal notranslate"><span class="pre">add_example</span></code> command,
 or runs a single example.</p>
 </section>
+<section id="run-benchmarks-and-run-name">
+<h4><code class="docutils literal notranslate"><span class="pre">run-benchmarks</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code><a class="headerlink" href="#run-benchmarks-and-run-name" title="Link to this heading">¶</a></h4>
+<p>Available if <code class="docutils literal notranslate"><span class="pre">BUILD_BENCHMARKS</span></code> is enabled. Runs all the benchmarks created by the <code class="docutils literal notranslate"><span class="pre">add_benchmark</span></code> command,
+or runs a single benchmark.</p>
+</section>
 <section id="docs">
 <h4><code class="docutils literal notranslate"><span class="pre">docs</span></code><a class="headerlink" href="#docs" title="Link to this heading">¶</a></h4>
 <p>Builds the documentation using Doxygen + Breathe + Sphinx. The output will
@@ -508,6 +513,7 @@ Customization is available using the <code class="docutils literal notranslate">
 <li><a class="reference internal" href="#format-check-and-format-fix"><code class="docutils literal notranslate"><span class="pre">format-check</span></code> and <code class="docutils literal notranslate"><span class="pre">format-fix</span></code></a></li>
 <li><a class="reference internal" href="#spell-check-and-spell-fix"><code class="docutils literal notranslate"><span class="pre">spell-check</span></code> and <code class="docutils literal notranslate"><span class="pre">spell-fix</span></code></a></li>
 <li><a class="reference internal" href="#run-examples-and-run-name"><code class="docutils literal notranslate"><span class="pre">run-examples</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code></a></li>
+<li><a class="reference internal" href="#run-benchmarks-and-run-name"><code class="docutils literal notranslate"><span class="pre">run-benchmarks</span></code> and <code class="docutils literal notranslate"><span class="pre">run_&lt;name&gt;</span></code></a></li>
 <li><a class="reference internal" href="#docs"><code class="docutils literal notranslate"><span class="pre">docs</span></code></a></li>
 <li><a class="reference internal" href="#coverage"><code class="docutils literal notranslate"><span class="pre">coverage</span></code></a></li>
 </ul>
