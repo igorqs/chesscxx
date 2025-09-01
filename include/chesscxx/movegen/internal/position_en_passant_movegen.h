@@ -8,6 +8,7 @@
 
 #include "../../core/internal/piece_placement.h"
 #include "../../core/internal/raw_move.h"
+#include "../../core/internal/square.h"
 #include "../../core/position.h"
 #include "../../square.h"
 #include "piece_placement_movegen.h"
