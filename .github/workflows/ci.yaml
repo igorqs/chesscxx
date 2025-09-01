@@ -150,7 +150,7 @@ jobs:
         sh -c "echo 0 > /proc/sys/kernel/randomize_va_space && cmake --build build -t run-benchmarks"
 
   docs:
-    needs: [benchmarks, iwyu]
+    needs: [test, iwyu]
 
     runs-on: ubuntu-24.04
 
