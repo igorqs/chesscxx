@@ -4,7 +4,7 @@ FROM archlinux:latest
 RUN pacman -Syu --noconfirm && \
   pacman -S --noconfirm \
   git python cmake ccache ninja clang cppcheck codespell doxygen \
-  gtest yaml-cpp && \
+  benchmark gtest yaml-cpp && \
   pacman -Scc --noconfirm
 
 # Build and install magic_enum
